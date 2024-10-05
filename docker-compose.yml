@@ -1,0 +1,64 @@
+services:
+  client-web:
+    container_name: client-web
+    build:
+      context: ./client-web
+      dockerfile: dev.Dockerfile
+
+    # Set environment variables directly in the docker-compose file
+    # environment:
+      # ENV_VARIABLE: ${ENV_VARIABLE}
+      # NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+
+
+    # Set environment variables based on the .env file
+    env_file:
+      - /client-web/.env
+    volumes:
+      - ./client-web/src:/app/src
+      - ./client-web/public:/app/public
+    restart: always
+    ports:
+      - 3000:3000
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - client-web
+
+  file-server:
+    build:
+      context: ./server/file-server
+      dockerfile: dev.Dockerfile
+    container_name: file-server
+
+    ports:
+      - '5500:5500'
+    volumes:
+      - ./accounts:/accounts
+
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-container-bnk
+    environment:
+      POSTGRES_USER: alx
+      POSTGRES_PASSWORD: serbvn
+      POSTGRES_DB: trainerz_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres-data:
+    driver: local
+  accounts-driver:
+    driver: local
+
