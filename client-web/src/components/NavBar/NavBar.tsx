@@ -26,7 +26,7 @@ const NavBar = () => {
                 <h1 className="mt-10 self-center text-white">LOGO</h1>
                 <nav className="mt-10 flex flex-col gap-4 px-4">
                     <NavLink href="/">HOME</NavLink>
-                    <NavLink href="/account/projects">PROJECTS</NavLink>
+                    <NavLink href="/projects">PROJECTS</NavLink>
                     <NavLink href="/account/messages">CARDS/BANKS</NavLink>
                     <NavLink href="/account/my-subscriptions">TRANSACTIONS RAPOT</NavLink>
                 </nav>

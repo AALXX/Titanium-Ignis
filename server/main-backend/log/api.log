@@ -1,0 +1,18 @@
+[2024-09-24T18:04:40.747Z] [INFO] [BackendApp_Api] Api is runing on: 192.168.72.81:7070
+
+[2024-10-16T08:24:27.686Z] [ERROR] [GET_PROJECTS_FUNC] Cannot read properties of undefined (reading 'userPrivateToken')
+[2024-10-16T08:24:53.571Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T10:02:41.457Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T17:06:32.452Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T19:06:13.316Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:40:19.846Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:42:36.075Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:42:40.777Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:42:44.630Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:43:06.063Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-16T20:46:44.988Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-17T08:21:28.833Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-17T08:22:34.994Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-17T19:06:04.082Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-17T19:20:09.629Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-17T19:22:30.185Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070

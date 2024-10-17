@@ -1,11 +1,25 @@
 'use client'
 import React from 'react'
-import { signOut} from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
-const AccoutSettingsPopup = () => {
-    return <div>
-        <button onClick={() => signOut()} className='text-white self-center'>Sign out</button>
-    </div>
+const AccountSettingsPopup = () => {
+    const handleSignOut = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' })
+            await signOut({ callbackUrl: '/account/login-register' })
+        } catch (error) {
+            console.error('Error during sign out:', error)
+        }
+    }
+
+    return (
+        <div>
+            <button onClick={handleSignOut} className="self-center text-white">
+                Sign out
+            </button>
+            <br />
+        </div>
+    )
 }
 
-export default AccoutSettingsPopup
+export default AccountSettingsPopup
