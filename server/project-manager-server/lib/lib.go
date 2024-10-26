@@ -2,10 +2,13 @@ package lib
 
 import (
 	"database/sql"
-	"time"
 	"fmt"
 	"os"
-	// "project-manager-server/models"
+	"path/filepath"
+
+	"project-manager-server/models"
+	"time"
+
 	"github.com/golang-jwt/jwt/v5"
 	_ "github.com/lib/pq"
 )
@@ -20,7 +23,6 @@ func CreateToken() string {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 
-
 	// Sign the token using the secret key
 	tokenString, err := token.SignedString([]byte(jwtSecretKey))
 	if err != nil {
@@ -31,7 +33,7 @@ func CreateToken() string {
 }
 
 func GetPublicTokenByPrivateToken(PrivateToken string, db *sql.DB) string {
-	rows, err := db.Query("SELECT UserPublicToken FROM users WHERE UserPrivateToken=?;", PrivateToken)
+	rows, err := db.Query("SELECT UserPublicToken FROM users WHERE UserPrivateToken=$1;", PrivateToken)
 	if err != nil {
 		return "error"
 	}
@@ -52,24 +54,64 @@ func GetPublicTokenByPrivateToken(PrivateToken string, db *sql.DB) string {
 	return userPublicToken
 }
 
-func GetAccountRating(PublicToken string, db *sql.DB) int {
-	rows, err := db.Query("select Rating from users WHERE UserPublicToken=?;", PublicToken)
+func GetPrivateTokenBySessionToken(SessionToken string, db *sql.DB) string {
+	rows, err := db.Query("SELECT UserPrivateToken FROM users WHERE UserSessionToken=$1;", SessionToken)
 	if err != nil {
-		return 0
+		return "error"
 	}
 	defer rows.Close()
-
-	var Rating int
-
+	var UserPrivateToken string
 	for rows.Next() {
-		if err := rows.Scan(&Rating); err != nil {
-			return 0
+		if err := rows.Scan(&UserPrivateToken); err != nil {
+			return "error"
 		}
 	}
-
 	if err := rows.Err(); err != nil {
-		return 0
+		return "error"
+	}
+	return UserPrivateToken
+}
+
+
+
+///////////////////////////////////
+//		Projects Related		//
+//////////////////////////////////
+
+func GetDirectoryStructure(basePath string) ([]models.FileNode, error) {
+	var nodes []models.FileNode
+
+	files, err := os.ReadDir(basePath)
+	if err != nil {
+		return nil, err
 	}
 
-	return Rating
+	for _, file := range files {
+		node := models.FileNode{
+			Name:  file.Name(),
+			Path:  filepath.Join(basePath, file.Name()),
+			IsDir: file.IsDir(),
+		}
+
+		if file.IsDir() {
+			children, err := GetDirectoryStructure(filepath.Join(basePath, file.Name()))
+			if err != nil {
+				return nil, err
+			}
+			node.Children = children
+		}
+
+		nodes = append(nodes, node)
+	}
+
+	return nodes, nil
+}
+
+// Get file contents based on file path
+func GetFileContents(filePath string) (string, error) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
 }

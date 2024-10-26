@@ -5,7 +5,6 @@ import { signOut } from 'next-auth/react'
 const AccountSettingsPopup = () => {
     const handleSignOut = async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST' })
             await signOut({ callbackUrl: '/account/login-register' })
         } catch (error) {
             console.error('Error during sign out:', error)

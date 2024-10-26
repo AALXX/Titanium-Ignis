@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import logging from '../../config/logging';
 import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
-import { IProjectsDb, IProjectsMapped } from '../../Models/ProjectsModels';
+import { IProjectsDb, IProjectsResponse } from '../../Models/ProjectsModels';
 
 const NAMESPACE = 'PaymentServiceManager';
 
@@ -31,11 +31,13 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
     const connection = await connect(req.pool!);
 
     try {
-        const queryString = `SELECT * FROM projects WHERE checked_out_by = $1`;
-        const result: IProjectsDb[] = await query(connection!, queryString, [req.params.userPrivateToken]);
 
+        const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.params.userSessionToken);
+
+        const queryString = `SELECT * FROM projects WHERE checked_out_by = $1`;
+        const result: IProjectsDb[] = await query(connection!, queryString, [userPrivateToken]);
         // Map the result to new variable names
-        const mappedProjects: IProjectsMapped[] = result.map(({ project_name: ProjectName, project_token: ProjectToken, repo_url: RepoUrl, checked_out_by: CheckedOutBy, status: Status, type: Type }) => ({
+        const projectsResponse: IProjectsResponse[] = result.map(({ project_name: ProjectName, project_token: ProjectToken, repo_url: RepoUrl, checked_out_by: CheckedOutBy, status: Status, type: Type }) => ({
             ProjectName,
             ProjectToken,
             RepoUrl,
@@ -48,7 +50,7 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
 
         return res.status(200).json({
             error: false,
-            projects: mappedProjects,
+            projects: projectsResponse,
         });
     } catch (error: any) {
         logging.error('GET_PROJECTS_FUNC', error.message);
@@ -60,4 +62,47 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default { getAllProjects };
+const getProjectData = async (req: CustomRequest, res: Response) => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_PROJECT_DATA_FUNC', error.errorMsg);
+        });
+
+        return res.status(200).json({ error: true, errors: errors.array() });
+    }
+
+    const connection = await connect(req.pool!);
+
+    try {
+        const queryString = `SELECT * FROM projects WHERE project_token = $1`;
+        const result: IProjectsDb[] = await query(connection!, queryString, [req.params.projectToken]);
+
+        // Map the result to new variable names
+        const projectsResponse: IProjectsResponse = {
+            ProjectName: result[0].project_name,
+            ProjectToken: result[0].project_token,
+            RepoUrl: result[0].repo_url,
+            CheckedOutBy: result[0].checked_out_by,
+            Status: result[0].status,
+            Type: result[0].type,
+        };
+
+
+        connection?.release();
+
+        return res.status(200).json({
+            error: false,
+            project: projectsResponse,
+        });
+    } catch (error: any) {
+        logging.error('GET_PROJECT_DATA_FUNC', error.message);
+        connection?.release();
+        return res.status(200).json({
+            error: true,
+            errmsg: error.message,
+        });
+    }
+};
+
+export default { getAllProjects, getProjectData };

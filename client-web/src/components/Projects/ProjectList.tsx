@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import ProjectCardTemplate from '@/components/Projects/ProjectCardTemplate'
 import { IProjects } from '@/components/Projects/IProjects'
+import Link from 'next/link'
 
 interface ProjectListProps {
     initialProjects: IProjects[]
@@ -15,9 +16,11 @@ const ProjectList: React.FC<ProjectListProps> = ({ initialProjects }) => {
 
     return (
         <div className="flex h-full flex-col overflow-y-auto">
-            <button className="ml-4 mr-auto mt-10 rounded-xl border p-4 font-bold text-white hover:bg-white/10" onClick={() => router.push('/projects/create')}>
-                Add projects
-            </button>
+            <Link href="/projects/create">
+                <button className="ml-4 mr-auto mt-10 rounded-xl border p-4 font-bold text-white hover:bg-white/10" onClick={() => router.push('/projects/create')}>
+                    Add projects
+                </button>
+            </Link>
 
             <div className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {projects.map((project: IProjects, index: number) => (

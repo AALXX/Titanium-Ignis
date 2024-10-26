@@ -16,3 +16,71 @@
 [2024-10-17T19:06:04.082Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
 [2024-10-17T19:20:09.629Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
 [2024-10-17T19:22:30.185Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-18T18:37:36.652Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-19T17:15:47.144Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-20T20:21:03.369Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T08:47:42.691Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T19:32:18.902Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T20:29:24.836Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T20:52:47.964Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T20:58:04.790Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T20:58:13.976Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T21:00:05.744Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-22T21:00:20.554Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-23T17:05:41.825Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-23T20:00:28.917Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T08:40:31.751Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:36:56.451Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:37:01.206Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:37:06.355Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:37:26.799Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:37:56.277Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:38:07.089Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:39:32.144Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:40:37.544Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:41:02.082Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-24T16:42:01.575Z] [ERROR] [PG_QUERY_FUNC] column "lastlogin" of relation "users" does not exist
+[2024-10-24T16:42:01.575Z] [ERROR] [CREATE_PROJECT_ENTRY] column "lastlogin" of relation "users" does not exist
+[2024-10-24T21:11:31.570Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T08:59:09.955Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T08:59:29.327Z] [ERROR] [PG_QUERY_FUNC] column "lastlogin" of relation "users" does not exist
+[2024-10-25T08:59:29.328Z] [ERROR] [CREATE_PROJECT_ENTRY] column "lastlogin" of relation "users" does not exist
+[2024-10-25T08:59:51.046Z] [ERROR] [PG_QUERY_FUNC] column "lastlogin" of relation "users" does not exist
+[2024-10-25T08:59:51.047Z] [ERROR] [CREATE_PROJECT_ENTRY] column "lastlogin" of relation "users" does not exist
+[2024-10-25T09:00:09.142Z] [ERROR] [PG_QUERY_FUNC] column "lastlogin" of relation "users" does not exist
+[2024-10-25T09:00:09.143Z] [ERROR] [CREATE_PROJECT_ENTRY] column "lastlogin" of relation "users" does not exist
+[2024-10-25T10:14:11.097Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:14:56.954Z] [ERROR] [PG_QUERY_FUNC] column "lastlogin" of relation "users" does not exist
+[2024-10-25T10:14:56.954Z] [ERROR] [CREATE_PROJECT_ENTRY] column "lastlogin" of relation "users" does not exist
+[2024-10-25T10:15:53.848Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:16:16.799Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:16:21.267Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:16:28.841Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:16:36.161Z] [ERROR] [PG_QUERY_FUNC] syntax error at or near ")"
+[2024-10-25T10:16:36.162Z] [ERROR] [CREATE_PROJECT_ENTRY] syntax error at or near ")"
+[2024-10-25T10:17:04.561Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T10:17:07.094Z] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(150)
+[2024-10-25T10:17:07.094Z] [ERROR] [CREATE_PROJECT_ENTRY] value too long for type character varying(150)
+[2024-10-25T10:18:38.305Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:00:00.076Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:06:08.485Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:06:23.829Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:08:56.265Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:10:21.063Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:10:28.756Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:10:38.101Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:10:47.592Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:10:50.998Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:11:59.855Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:12:05.946Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:12:27.902Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:12:40.751Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:12:56.995Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:13:02.040Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:13:11.968Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:13:17.951Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:13:33.395Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:17:17.690Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:17:36.780Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:17:41.296Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070
+[2024-10-25T20:19:44.081Z] [INFO] [BackendApp_Api] Api is runing on: localhost:7070

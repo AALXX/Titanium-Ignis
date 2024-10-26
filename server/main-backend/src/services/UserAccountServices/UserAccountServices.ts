@@ -23,47 +23,121 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
         errors.array().map((error) => {
             logging.error('REGISTER_USER_FUNCTION', error.errorMsg);
         });
-
         return res.status(200).json({ error: true, errors: errors.array() });
     }
 
     const connection = await connect(req.pool!);
 
     try {
-        const CheckUserExiists = `SELECT * FROM users WHERE  UserEmail = $1`;
-
-        const accountresp = await query(connection!, CheckUserExiists, [req.body.userEmail]);
+        const CheckUserExists = `SELECT * FROM users WHERE UserEmail = $1`;
+        const accountresp = await query(connection!, CheckUserExists, [req.body.userEmail]);
 
         if (accountresp.length > 0) {
+            // User exists - update session token based on registration type
+            const existingUser = accountresp[0];
+            const newUserPublicToken = utilFunctions.CreateSesionToken();
+
+            let updateQuery = '';
+            let updateParams = [];
+
+            switch (req.body.registrationType) {
+                case 'google':
+                    // Update Google session token
+                    updateQuery = `
+                        UPDATE users 
+                        SET UserSessionToken = $1, 
+                            UserPublicToken = $2,
+                            LastLogin = CURRENT_TIMESTAMP
+                        WHERE UserEmail = $3 
+                        RETURNING UserPrivateToken, UserPublicToken
+                    `;
+                    updateParams = [req.body.userSessionToken, newUserPublicToken, req.body.userEmail];
+                    break;
+
+                case 'credentials':
+                    // Verify password before updating session
+                    // const isPasswordValid = await utilFunctions.ComparePassword(req.body.password, existingUser.userpwd);
+
+                    // if (!isPasswordValid) {
+                    //     connection?.release();
+                    //     return res.status(200).json({
+                    //         error: true,
+                    //         errmsg: 'Invalid credentials',
+                    //     });
+                    // }
+
+                    updateQuery = `
+                        UPDATE users 
+                        SET UserPublicToken = $1,
+                            LastLogin = CURRENT_TIMESTAMP
+                        WHERE UserEmail = $2 
+                        RETURNING UserPrivateToken, UserPublicToken
+                    `;
+                    updateParams = [newUserPublicToken, req.body.userEmail];
+                    break;
+
+                default:
+                    connection?.release();
+                    return res.status(200).json({
+                        error: true,
+                        errmsg: 'Invalid registration type',
+                    });
+            }
+
+            const updatedUser = await query(connection!, updateQuery, updateParams);
+
+            connection?.release();
             return res.status(200).json({
                 error: false,
-                userPrivateToken: accountresp[0].userprivatetoken,
-                userPublicToken: accountresp[0].userpublictoken,
+                userPrivateToken: updatedUser[0].userprivatetoken,
+                userPublicToken: updatedUser[0].userpublictoken,
             });
         }
 
+        // New user registration
         const UserPrivateToken = utilFunctions.CreateToken();
         const UserPublicToken = utilFunctions.CreateSesionToken();
+
         switch (req.body.registrationType) {
             case 'google':
                 const custompwd = await utilFunctions.HashPassword(utilFunctions.generateSecurePassword());
 
-                const AddAccountQueryString = `INSERT INTO users (UserName, UserEmail, UserPwd, UserPrivateToken, UserPublicToken, RegistrationType) VALUES ($1, $2, $3, $4, $5, $6)`;
+                const AddAccountQueryString = `
+                    INSERT INTO users (
+                        UserName, 
+                        UserEmail, 
+                        UserPwd, 
+                        UserPrivateToken, 
+                        UserSessionToken, 
+                        UserPublicToken, 
+                        RegistrationType
+                    ) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)
+                `;
 
-                await query(connection!, AddAccountQueryString, [req.body.userName, req.body.userEmail, custompwd, UserPrivateToken, UserPublicToken, req.body.registrationType]);
-
+                await query(connection!, AddAccountQueryString, [req.body.userName, req.body.userEmail, custompwd, UserPrivateToken, req.body.userSessionToken, UserPublicToken, req.body.registrationType]);
                 break;
+
             case 'credentials':
                 const hashedpwd = await utilFunctions.HashPassword(req.body.password);
 
-                const QueryString = `INSERT INTO users (UserName, UserEmail, UserPwd, UserPrivateToken) VALUES ($1, $2, $3)`;
+                const QueryString = `
+                    INSERT INTO users (
+                        UserName, 
+                        UserEmail, 
+                        UserPwd, 
+                        UserPrivateToken,
+                        UserPublicToken,
+                        RegistrationType
+                    ) 
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                `;
 
-                // await query(connection!, QueryString, [req.body.projectName, projectToken, req.body.repoUrl, req.body.userToken, req.body.status, req.body.type]);
-
+                await query(connection!, QueryString, [req.body.userName, req.body.userEmail, hashedpwd, UserPrivateToken, UserPublicToken, req.body.registrationType]);
                 break;
         }
-        connection?.release();
 
+        connection?.release();
         return res.status(200).json({
             error: false,
             userPrivateToken: UserPrivateToken,

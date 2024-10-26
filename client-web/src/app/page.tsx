@@ -1,8 +1,7 @@
-export const Home = () => {
+export const Home = async () => {
     return (
         <div className="flex h-full flex-col">
-            <h1>test</h1>
-            <h1>test</h1>
+            <h1>tesrt</h1>
         </div>
     )
 }

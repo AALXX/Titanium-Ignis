@@ -8,16 +8,16 @@ const router = express.Router();
 //* Owner Account data
 router.post(
     '/register-account',
-
     body('userName').not().isEmpty(),
     body('userEmail').isEmail().not().isEmpty(),
     // body('password').isLength({ min: 4 }).not().isEmpty().trim(),
     body('registrationType').not().isEmpty(),
+    body('userSessionToken').not().isEmpty(),
+
     AccountServices.RegisterUser,
 );
 
 // router.post('/login-account', body('userEmail').isEmail().not().isEmpty(), body('password').isLength({ min: 4 }).not().isEmpty().trim(), OwnerAccountServices.LoginUser);
-
 
 // router.get('/get-account-data/:accountPrivateToken', param('accountPrivateToken').not().isEmpty(), OwnerAccountServices.GetUserAccountData);
 
@@ -37,6 +37,5 @@ router.post(
 // router.post('/delete-user-account', body('userToken').not().isEmpty(), OwnerAccountServices.DeleteUserAccount);
 
 // router.post('/change-user-icon', OwnerAccountServices.ChangeUserIcon);
-
 
 export = router;

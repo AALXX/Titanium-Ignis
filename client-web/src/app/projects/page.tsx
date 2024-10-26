@@ -1,16 +1,17 @@
-import { cookies } from 'next/headers'
 import axios from 'axios'
 import ProjectList from '@/components/Projects/ProjectList'
+import { checkAccountStatus } from '@/hooks/useAccountServerside'
 
-export default async function ProjectsPage() {
-    const cookieStore = cookies()
-    const userPrivateToken = cookieStore.get('userPrivateToken')?.value
+const ProjectsPage = async () => {
 
+    const accountStatus = await checkAccountStatus()
     let projects = []
-    if (userPrivateToken) {
-        const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-projects/${userPrivateToken}`)
-        projects = await resp.data.projects
+    if (accountStatus.accessToken) {
+        const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-projects/${accountStatus.accessToken}`)
+        projects = resp.data.projects
     }
 
     return <ProjectList initialProjects={projects} />
 }
+
+export default ProjectsPage

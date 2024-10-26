@@ -125,6 +125,39 @@ const checkEmailExists = async (connection: PoolClient, userEmail: string): Prom
     }
 };
 
+
+/**
+ * Retrieves the user's private token from their public token.
+ *
+ * @param {PoolClient} connection - The database connection pool.
+ * @param {string} sessionToken - The user's public token.
+ * @return {string | null} The user's private token, or `null` if not found or an error occurred.
+ */
+const getUserPrivateTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
+    const NAMESPACE = 'GET_USER_PRIVATE_TOKEN_FUNC';
+    const QueryString = `SELECT UserPrivateToken FROM users WHERE UserSessionToken='${sessionToken}';`;
+
+    try {
+        if (sessionToken === 'undefined') {
+            return null;
+        }
+
+        if (connection == null) {
+            return null;
+        }
+        const userData = await query(connection, QueryString);
+        if (Object.keys(userData).length != 0) {
+            return userData[0].userprivatetoken;
+        } else {
+            return null;
+        }
+    } catch (error: any) {
+        connection?.release();
+        logging.error(NAMESPACE, error.message, error);
+        return null;
+    }
+}
+
 /**
  * Retrieves the user's private token from their public token.
  *
@@ -271,5 +304,6 @@ export default {
     getUserEmailFromPrivateToken,
     getUserPublicTokenFromPrivateToken,
     getUserPrivateTokenFromPublicToken,
+    getUserPrivateTokenFromSessionToken,
     RemoveDirectory,
 };

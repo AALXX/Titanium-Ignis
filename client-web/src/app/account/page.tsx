@@ -1,11 +1,10 @@
 import React from 'react'
 import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../api/auth/[...nextauth]/route'
 import UserProfile from '@/components/Account/UserProfile'
+import { auth } from '@/auth'
 
 const Account = async () => {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
 
     if (!session || !session.user) {
         // redirect('/api/auth/signin')

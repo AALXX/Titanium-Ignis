@@ -11,3 +11,4 @@ CREATE TABLE projects (
     type TEXT NOT NULL CHECK(type IN ('git', 'svn')),
     UNIQUE (project_token)
 );
+

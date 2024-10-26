@@ -7,7 +7,7 @@ export interface IProjectsDb {
     type: string;
 }
 
-export interface IProjectsMapped {
+export interface IProjectsResponse {
     ProjectName: string;
     ProjectToken: string;
     RepoUrl: string;
