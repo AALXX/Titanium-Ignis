@@ -133,6 +133,12 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
 
                 await query(connection!, QueryString, [req.body.userName, req.body.userEmail, hashedpwd, UserPrivateToken, UserPublicToken, req.body.registrationType]);
                 break;
+            default:
+                connection?.release();
+                return res.status(200).json({
+                    error: true,
+                    errmsg: 'Invalid registration type',
+                });
         }
 
         connection?.release();

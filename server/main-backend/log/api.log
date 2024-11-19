@@ -646,3 +646,35 @@
 [2024-11-19T21:04:07.163Z] [INFO] [START_SERVICE] Started process 3ce143eb-42d8-45b2-8aaa-64dd0956edb0
 [2024-11-19T21:04:11.340Z] [INFO] [STOP_SERVICE] Stopped process 3ce143eb-42d8-45b2-8aaa-64dd0956edb0
 [2024-11-19T21:27:41.918Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:31:41.917Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:33:00.440Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:33:06.114Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:36:14.622Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:36:23.999Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:36:40.742Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:36:50.491Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:37:14.122Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:37:22.094Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-19T21:41:38.795Z] [ERROR] [PG_QUERY_FUNC] client.query is not a function
+[2024-11-19T21:41:38.837Z] [ERROR] [CREATE_PROJECT_ENTRY] client.query is not a function
+[2024-11-19T21:41:38.887Z] [ERROR] [CREATE_PROJECT_ENTRY] client.query is not a function
+[2024-11-19T21:41:38.870Z] [ERROR] [CREATE_PROJECT_ENTRY] client.query is not a function
+[2024-11-19T21:41:38.880Z] [ERROR] [PG_QUERY_FUNC] client.query is not a function
+[2024-11-19T21:41:38.864Z] [ERROR] [PG_QUERY_FUNC] client.query is not a function
+[2024-11-19T22:15:51.621Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:15:51.649Z] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'stdout')
+[2024-11-19T22:15:51.661Z] [INFO] [STOP_SERVICE] Stopped process test-process-id
+[2024-11-19T22:17:37.182Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:17:37.200Z] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'stdout')
+[2024-11-19T22:17:37.208Z] [INFO] [STOP_SERVICE] Stopped process test-process-id
+[2024-11-19T22:19:18.253Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:20:39.827Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:20:39.840Z] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'stdout')
+[2024-11-19T22:20:39.845Z] [INFO] [STOP_SERVICE] Stopped process test-process-id
+[2024-11-19T22:21:07.342Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:21:07.354Z] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'stdout')
+[2024-11-19T22:21:07.360Z] [INFO] [STOP_SERVICE] Stopped process test-process-id
+[2024-11-19T22:21:28.737Z] [ERROR] [GET_PROJECTS_FUNC] Test error
+[2024-11-19T22:21:28.751Z] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'stdout')
+[2024-11-19T22:21:28.755Z] [INFO] [STOP_SERVICE] Stopped process test-process-id
+[2024-11-19T22:22:00.405Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
