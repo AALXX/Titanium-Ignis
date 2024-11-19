@@ -4,6 +4,10 @@ import logging from '../../config/logging';
 import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
 import { IProjectsDb, IProjectsResponse } from '../../Models/ProjectsModels';
+import { Socket } from 'socket.io';
+import { ChildProcess, spawn } from 'child_process';
+import { Pool } from 'pg';
+import { randomUUID } from 'crypto';
 
 const NAMESPACE = 'PaymentServiceManager';
 
@@ -31,7 +35,6 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
     const connection = await connect(req.pool!);
 
     try {
-
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.params.userSessionToken);
 
         const queryString = `SELECT * FROM projects WHERE checked_out_by = $1`;
@@ -88,7 +91,6 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
             Type: result[0].type,
         };
 
-
         connection?.release();
 
         return res.status(200).json({
@@ -105,4 +107,97 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default { getAllProjects, getProjectData };
+const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string; userSessionToken: string }) => {
+    // try {
+    //     const connection = await connect(pool);
+    // } catch (error: any) {
+    //     logging.error('JOIN_REPO_FUNC', error);
+    // }
+};
+
+const activeProcesses: Map<string, ChildProcess> = new Map();
+const startService = async (socket: Socket) => {
+    try {
+        // Generate a unique process ID
+        const processId = randomUUID();    
+
+
+        // Start the ping process
+        const pingProcess = spawn('ping', ['google.com']);
+
+        // Store the process
+        activeProcesses.set(processId, pingProcess);
+
+        // Send the process ID back to the client
+        socket.emit('service-started', { processId });
+
+        // Stream stdout to client
+        pingProcess.stdout.on('data', (data) => {
+            socket.emit('service-output', {
+                processId,
+                output: data.toString(),
+            });
+        });
+
+        // Handle errors
+        pingProcess.stderr.on('data', (data) => {
+            socket.emit('service-error', {
+                processId,
+                error: data.toString(),
+            });
+        });
+
+        // Handle process completion
+        pingProcess.on('close', (code) => {
+            socket.emit('service-closed', {
+                processId,
+                code,
+            });
+            activeProcesses.delete(processId);
+        });
+
+        logging.info('START_SERVICE', `Started process ${processId}`);
+    } catch (error: any) {
+        logging.error('START_SERVICE', error);
+        socket.emit('service-error', {
+            error: 'Failed to start service',
+        });
+    }
+};
+
+const stopService = async (socket: Socket, data: { processId: string }) => {
+    try {
+        const { processId } = data;
+        const process = activeProcesses.get(processId);
+
+        if (!process) {
+            logging.error('STOP_SERVICE', `Process ${processId} not found`);
+        }
+
+        // Kill the process
+        process!.kill();
+        activeProcesses.delete(processId);
+
+        socket.emit('service-stopped', { processId });
+        logging.info('STOP_SERVICE', `Stopped process ${processId}`);
+    } catch (error: any) {
+        logging.error('STOP_SERVICE', error);
+        socket.emit('service-error', {
+            processId: data.processId,
+            error: 'Failed to stop service',
+        });
+    }
+};
+
+const cleanupSocketProcesses = (socket: Socket) => {
+    for (const [processId, process] of activeProcesses.entries()) {
+        try {
+            process.kill();
+            activeProcesses.delete(processId);
+            logging.info('CLEANUP', `Cleaned up process ${processId}`);
+        } catch (error) {
+            logging.error('CLEANUP', `Failed to clean up process ${processId}`);
+        }
+    }
+};
+export default { getAllProjects, getProjectData, joinRepo, startService, stopService, cleanupSocketProcesses };

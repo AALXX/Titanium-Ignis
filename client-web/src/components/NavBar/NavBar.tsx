@@ -10,7 +10,7 @@ const NavBar = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const { data: session } = useSession()
     return (
-        <nav className="bg-navbar-grey flex h-24 w-full items-center justify-between bg-black/50 px-4">
+        <nav className="bg-navbar-grey flex h-24 w-full items-center justify-between bg-black/50 px-4 flex-grow-0">
             <div className={`fixed inset-0 bg-black transition-opacity duration-500 ease-in-out ${isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'}`} aria-hidden="true"></div>
             <div
                 className={`bg-navbar-grey fixed inset-y-0 left-0 z-30 flex h-screen w-60 transform flex-col bg-black/55 shadow-lg transition-transform duration-300 ease-in-out ${

@@ -2,21 +2,23 @@ package routes
 
 import (
 	"database/sql"
-	"github.com/gofiber/fiber/v3"
+
 	"project-manager-server/middleware"
 	"project-manager-server/services"
+
+	"github.com/gofiber/fiber/v3"
 )
 
 func InitRoutes(app *fiber.App, db *sql.DB) {
+	// Middleware setup
 	app.Use(middleware.XSSMiddleware())
 
-	// Or with custom config
 	app.Use(middleware.XSSMiddleware(middleware.XSSConfig{
-		SkipPaths:    []string{"/api/projects/repo-file"},
-		StrictPolicy: false, // Use UGC policy instead of strict
+		SkipPaths:    []string{"/api/projects/repo-file"}, // Add WebSocket path to skip
+		StrictPolicy: false,
 	}))
- 
-	// Example route
+
+	// Regular HTTP routes
 	app.Post("/api/projects/create-project-entry", func(c fiber.Ctx) error {
 		return services.CreateProjectEntry(c, db)
 	})

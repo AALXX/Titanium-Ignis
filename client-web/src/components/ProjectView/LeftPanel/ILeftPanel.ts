@@ -6,6 +6,7 @@ export interface FileNode {
     children?: FileNode[] // Optional because files don't have children
 }
 
+
 export interface ILeftPanel {
     ProjectName: string
     ProjectToken: string
@@ -13,6 +14,5 @@ export interface ILeftPanel {
     CheckedOutBy: string
     Status: string
     Type: string
-    node: FileNode
-    onFileClick: (path: string) => void // Callback when a file is clicked
+    onFileSelect: (filePath: string) => void    
 }

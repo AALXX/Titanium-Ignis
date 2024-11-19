@@ -2,37 +2,51 @@
 import React, { useState, useEffect } from 'react'
 import { ILeftPanel } from './ILeftPanel'
 import axios from 'axios'
+import DirectoryTree from './DirectoryTree'
+import { FileNode } from './ILeftPanel'
 
 const LeftPanel: React.FC<ILeftPanel> = props => {
-    const [expanded, setExpanded] = useState(false)
-    const [fileTree, setFileTree] = useState([])
-    const [fileContent, setFileContent] = useState('')
-    
+    const [fileTree, setFileTree] = useState<FileNode[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+
     useEffect(() => {
-        ;(async () => {
-            const projectTee = await axios.get(`${process.env.NEXT_PUBLIC_Projects_SERVER}/api/projects/repo-tree/${props.ProjectToken}`)
-        })()
+        const fetchFileTree = async () => {
+            setIsLoading(true)
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-tree`, {
+                    params: { projectToken: props.ProjectToken }
+                })
+                setFileTree(response.data)
+            } catch (error) {
+                console.error('Error fetching file tree:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchFileTree()
     }, [props.ProjectToken])
 
+    const handleFileClick = async (filePath: string) => {
+        props.onFileSelect(filePath)
+    }
+
     return (
-        <div className="flex h-full w-[10rem] flex-col bg-[#0000004d] 3xl:w-[20rem]">
-            {/* <h1 className="self-center text-white">{props.ProjectName}</h1>
-            <div onClick={() => setExpanded(!expanded)} style={{ cursor: 'pointer' }}>
-                {node.is_dir ? (expanded ? '📂 ' : '📁 ') : '📄 '}
-                {node.name}
+        <div className="flex h-full w-full flex-col overflow-hidden bg-[#0000004d] md:w-80 lg:w-96">
+            <div className="flex-shrink-0 p-4">
+                <h2 className="text-xl font-semibold text-white">File Tree</h2>
             </div>
-            {expanded && node.children && (
-                <div>
-                    {node.children.map(child => (
-                        <DirectoryTree key={child.path} node={child} onFileClick={onFileClick} />
-                    ))}
-                </div>
-            )}
-            {!node.is_dir && (
-                <div style={{ paddingLeft: 20, cursor: 'pointer' }} onClick={() => onFileClick(node.path)}>
-                    {node.name}
-                </div>
-            )} */}
+            <div className="h-[38rem] flex-grow-0 overflow-auto p-4 3xl:h-[52rem]">
+                {isLoading ? (
+                    <div className="flex h-full items-center justify-center">
+                        <div className="text-white">Loading...</div>
+                    </div>
+                ) : fileTree.length > 0 ? (
+                    fileTree.map((node: FileNode) => <DirectoryTree key={node.path} node={node} onFileClick={handleFileClick} />)
+                ) : (
+                    <div className="text-white">No files found</div>
+                )}
+            </div>
         </div>
     )
 }

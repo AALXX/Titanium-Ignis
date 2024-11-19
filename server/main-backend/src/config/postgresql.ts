@@ -2,9 +2,11 @@ import { Pool, PoolClient } from 'pg';
 import config from './config';
 import logging from './logging';
 import express from 'express';
+import { Server } from 'socket.io';
 
 interface CustomRequest extends express.Request {
     pool?: Pool;
+    ioServer?: Server;
 }
 
 /**

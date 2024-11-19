@@ -46,8 +46,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
                     updateQuery = `
                         UPDATE users 
                         SET UserSessionToken = $1, 
-                            UserPublicToken = $2,
-                            LastLogin = CURRENT_TIMESTAMP
+                            UserPublicToken = $2
                         WHERE UserEmail = $3 
                         RETURNING UserPrivateToken, UserPublicToken
                     `;
@@ -68,8 +67,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
 
                     updateQuery = `
                         UPDATE users 
-                        SET UserPublicToken = $1,
-                            LastLogin = CURRENT_TIMESTAMP
+                        SET UserPublicToken = $1
                         WHERE UserEmail = $2 
                         RETURNING UserPrivateToken, UserPublicToken
                     `;
