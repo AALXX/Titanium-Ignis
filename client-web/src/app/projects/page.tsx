@@ -1,9 +1,8 @@
 import axios from 'axios'
-import ProjectList from '@/components/Projects/ProjectList'
 import { checkAccountStatus } from '@/hooks/useAccountServerside'
+import ProjectList from '@/features/projects/components/ProjectList'
 
 const ProjectsPage = async () => {
-
     const accountStatus = await checkAccountStatus()
     let projects = []
     if (accountStatus.accessToken) {

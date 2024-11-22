@@ -5,8 +5,10 @@ import * as postgresql from '../../src/config/postgresql';
 import * as utilFunctions from '../../src/util/utilFunctions';
 import { Response } from 'express';
 import { CustomRequest } from '../../src/config/postgresql';
+import fs from 'fs';
 
 // Mock dependencies
+jest.mock('fs');
 jest.mock('../../src/config/postgresql');
 jest.mock('../../src/util/utilFunctions');
 jest.mock('child_process', () => ({
@@ -57,9 +59,38 @@ describe('ProjectsServices', () => {
             json: jest.fn(),
         };
 
-        // Mock postgresql connect
+        // Mock postgresql connect and query
         (postgresql.connect as jest.Mock).mockResolvedValue(mockConnection);
-        (postgresql.query as jest.Mock).mockResolvedValue([]);
+        (postgresql.query as jest.Mock).mockResolvedValue([
+            {
+                project_name: 'Test Project',
+                project_token: 'test-project-token',
+                repo_url: 'https://example.com',
+                checked_out_by: 'user-private-token',
+                status: 'active',
+                type: 'web',
+            },
+        ]);
+
+        // Mock process.env
+        process.env.REPOSITORIES_FOLDER_PATH = '../repos';
+
+        // Mock fs.readFileSync
+        (fs.readFileSync as jest.Mock).mockReturnValue(
+            JSON.stringify({
+                services: [
+                    {
+                        name: 'test-service',
+                        path: './test',
+                        'custom-commands': {
+                            install: 'npm install',
+                        },
+                        'start-command': 'npm run dev',
+                        port: 3000,
+                    },
+                ],
+            }),
+        );
     });
 
     describe('getAllProjects', () => {
@@ -122,14 +153,37 @@ describe('ProjectsServices', () => {
 
             await ProjectsServices.getProjectData(mockReq as CustomRequest, mockRes as Response);
 
+            expect(fs.readFileSync).toHaveBeenCalledWith('../repos/test-project-token/project-config.json', 'utf8');
+
             expect(mockRes.status).toHaveBeenCalledWith(200);
             expect(mockRes.json).toHaveBeenCalledWith(
                 expect.objectContaining({
                     error: false,
                     project: expect.objectContaining({
-                        ProjectName: 'Test Project',
-                        ProjectToken: 'test-token',
+                        ProjectName: '',
+                        RepoUrl: '',
+                        CheckedOutBy: '',
+                        Status: '',
+                        Type: '',
+                        ProjectConfig: '',
                     }),
+                }),
+            );
+        });
+
+        test('should handle file read errors', async () => {
+            // Simulate file read error
+            (fs.readFileSync as jest.Mock).mockImplementation(() => {
+                throw new Error('File not found');
+            });
+
+            await ProjectsServices.getProjectData(mockReq as CustomRequest, mockRes as Response);
+
+            expect(mockRes.status).toHaveBeenCalledWith(200);
+            expect(mockRes.json).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    error: true,
+                    errmsg: 'File not found',
                 }),
             );
         });

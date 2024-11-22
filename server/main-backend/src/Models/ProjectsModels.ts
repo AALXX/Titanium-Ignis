@@ -15,3 +15,12 @@ export interface IProjectsResponse {
     Status: string;
     Type: string;
 }
+
+export interface IProjectResponse {
+    ProjectName: string;
+    RepoUrl: string;
+    CheckedOutBy: string;
+    Status: string;
+    Type: string;
+    ProjectConfig: string;
+}

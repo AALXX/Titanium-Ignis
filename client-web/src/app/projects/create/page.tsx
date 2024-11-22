@@ -1,4 +1,4 @@
-import CreateProjectForm from '@/components/Projects/CreateProjectForm'
+import CreateProjectForm from '@/features/projects/components/CreateProjectForm'
 import { checkAccountStatus } from '@/hooks/useAccountServerside'
 
 const CreateProjectPage = async () => {

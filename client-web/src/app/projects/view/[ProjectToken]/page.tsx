@@ -1,4 +1,4 @@
-import ProjectViewWrapper from '@/components/ProjectView/ProjectViewWrapper'
+import ProjectViewWrapper from '@/features/codeEditor/ProjectViewWrapper'
 import axios from 'axios'
 import React from 'react'
 
@@ -22,7 +22,7 @@ const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) =>
     } catch (error) {
         return (
             <div className="h-full self-center">
-                <h1 className='text-white'>Error fetching project data</h1>
+                <h1 className="text-white">Error fetching project data</h1>
             </div>
         )
     }

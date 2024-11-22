@@ -1,7 +1,7 @@
 import React from 'react'
 import { redirect } from 'next/navigation'
-import UserProfile from '@/components/Account/UserProfile'
 import { auth } from '@/auth'
+import UserProfile from '@/features/account/UserProfile'
 
 const Account = async () => {
     const session = await auth()

@@ -3,11 +3,12 @@ import { validationResult } from 'express-validator';
 import logging from '../../config/logging';
 import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
-import { IProjectsDb, IProjectsResponse } from '../../Models/ProjectsModels';
+import { IProjectsDb, IProjectsResponse, IProjectResponse } from '../../Models/ProjectsModels';
 import { Socket } from 'socket.io';
 import { ChildProcess, spawn } from 'child_process';
 import { Pool } from 'pg';
 import { randomUUID } from 'crypto';
+import fs from 'fs';
 
 const NAMESPACE = 'PaymentServiceManager';
 
@@ -81,14 +82,29 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         const queryString = `SELECT * FROM projects WHERE project_token = $1`;
         const result: IProjectsDb[] = await query(connection!, queryString, [req.params.projectToken]);
 
+        //read file contents
+
+        let projectConfig: any;
+
+        try {
+            projectConfig = fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${req.params.projectToken}/project-config.json`, 'utf8');
+        } catch (error: any) {
+            logging.error('GET_PROJECT_DATA_FUNC', error.message);
+            connection?.release();
+            return res.status(200).json({
+                error: true,
+                errmsg: error.message,
+            });
+        }
+
         // Map the result to new variable names
-        const projectsResponse: IProjectsResponse = {
+        const projectsResponse: IProjectResponse = {
             ProjectName: result[0].project_name,
-            ProjectToken: result[0].project_token,
             RepoUrl: result[0].repo_url,
             CheckedOutBy: result[0].checked_out_by,
             Status: result[0].status,
             Type: result[0].type,
+            ProjectConfig: JSON.parse(projectConfig),
         };
 
         connection?.release();
@@ -119,8 +135,7 @@ const activeProcesses: Map<string, ChildProcess> = new Map();
 const startService = async (socket: Socket) => {
     try {
         // Generate a unique process ID
-        const processId = randomUUID();    
-
+        const processId = randomUUID();
 
         // Start the ping process
         const pingProcess = spawn('ping', ['google.com']);

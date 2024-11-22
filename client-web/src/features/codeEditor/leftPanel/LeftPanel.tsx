@@ -1,9 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { ILeftPanel } from './ILeftPanel'
 import axios from 'axios'
+import { FileNode, ILeftPanel } from './ILeftPanel'
 import DirectoryTree from './DirectoryTree'
-import { FileNode } from './ILeftPanel'
 
 const LeftPanel: React.FC<ILeftPanel> = props => {
     const [fileTree, setFileTree] = useState<FileNode[]>([])

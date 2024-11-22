@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import OptionPicker from '@/components/CommonUI/OptionPicker'
+import OptionPicker from '@/components/OptionPicker'
 import axios from 'axios'
 
 interface CreateProjectFormProps {

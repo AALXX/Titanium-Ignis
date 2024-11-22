@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import ProjectCardTemplate from '@/components/Projects/ProjectCardTemplate'
-import { IProjects } from '@/components/Projects/IProjects'
 import Link from 'next/link'
+import { IProjects } from './IProjects'
+import ProjectCardTemplate from './ProjectCardTemplate'
 
 interface ProjectListProps {
     initialProjects: IProjects[]

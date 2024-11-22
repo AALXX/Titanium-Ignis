@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import React from 'react'
-import PopupCanvas from '@/components/CommonUI/PopupCanvas'
+import PopupCanvas from '@/components/PopupCanvas'
 import AccoutSettingsPopup from './util/AccoutSettingsPopup'
 
 interface UserProfileProps {
@@ -72,7 +72,7 @@ const UserProfile: React.FC<UserProfileProps> = props => {
                         setToggledSettingsPopUp(!ToggledSettingsPopUp)
                     }}
                 >
-                    <AccoutSettingsPopup  />
+                    <AccoutSettingsPopup />
                 </PopupCanvas>
             ) : null}
 

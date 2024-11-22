@@ -138,7 +138,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
                 return res.status(200).json({
                     error: true,
                     errmsg: 'Invalid registration type',
-                });
+                }); 
         }
 
         connection?.release();

@@ -125,7 +125,7 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
     }
 
     return (
-        <div className="flex h-full w-full flex-col bg-[#1e1e1e] text-white">
+        <div className="flex h-fit w-full flex-col bg-[#1e1e1e] text-white">
             <div className="flex-shrink-0 border-b border-[#333333] p-4">
                 <h2 className="text-lg font-semibold">
                     {filePath ? (
