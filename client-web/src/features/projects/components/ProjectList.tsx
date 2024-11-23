@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { IProjects } from './IProjects'
+import { IProjects } from '../IProjects'
 import ProjectCardTemplate from './ProjectCardTemplate'
 
 interface ProjectListProps {

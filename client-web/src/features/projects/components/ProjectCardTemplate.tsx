@@ -1,6 +1,6 @@
+import TruncatedText from '@/components/TruncateText'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import TruncatedText from '@/components/TruncateText'
 
 interface ProjectCardTemplateProps {
     ProjectName: string

@@ -31,3 +31,24 @@
 [2024-11-22T23:50:53.184Z] [INFO] [STOP_SERVICE] Stopped process 49a299ac-3983-41cc-8538-39a48dd99db7
 [2024-11-22T23:53:30.672Z] [INFO] [START_SERVICE] Started process f7216ae9-8202-4af6-9b67-1883d974890c
 [2024-11-22T23:53:33.327Z] [INFO] [STOP_SERVICE] Stopped process f7216ae9-8202-4af6-9b67-1883d974890c
+[2024-11-22T23:56:28.161Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-22T23:58:28.311Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T00:02:18.210Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T00:02:44.851Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T00:08:12.041Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T14:18:44.201Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T15:15:06.513Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T15:17:38.890Z] [ERROR] [PG_CONNECT] connect ECONNREFUSED 0.0.0.0:5432
+[2024-11-23T15:17:38.891Z] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[2024-11-23T15:17:38.891Z] [ERROR] [GET_PROJECTS_FUNC] Cannot read properties of null (reading 'query')
+[2024-11-23T15:27:06.969Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T16:15:53.194Z] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[2024-11-23T16:48:31.485Z] [ERROR] [REGISTER_USER_FUNCTION] Invalid value
+[2024-11-23T16:48:31.486Z] [ERROR] [REGISTER_USER_FUNCTION] Invalid value
+[2024-11-23T16:48:31.486Z] [ERROR] [REGISTER_USER_FUNCTION] Invalid value
+[2024-11-23T16:48:31.487Z] [ERROR] [REGISTER_USER_FUNCTION] Invalid value
+[2024-11-23T16:48:31.487Z] [ERROR] [REGISTER_USER_FUNCTION] Invalid value
+[2024-11-23T17:13:41.142Z] [INFO] [START_SERVICE] Started process 2ee313ed-e075-42fc-b236-d17bd2a807c0
+[2024-11-23T17:13:43.458Z] [INFO] [STOP_SERVICE] Stopped process 2ee313ed-e075-42fc-b236-d17bd2a807c0
+[2024-11-23T17:43:35.406Z] [INFO] [START_SERVICE] Started process 9f959257-5c90-4a3e-a33f-049c94ce7a63
+[2024-11-23T17:43:36.956Z] [INFO] [STOP_SERVICE] Stopped process 9f959257-5c90-4a3e-a33f-049c94ce7a63

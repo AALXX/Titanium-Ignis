@@ -1,10 +1,10 @@
 'use client'
 
+import PopupCanvas from '@/components/PopupCanvas'
 import Image from 'next/image'
 import { useState } from 'react'
 import React from 'react'
-import PopupCanvas from '@/components/PopupCanvas'
-import AccoutSettingsPopup from './util/AccoutSettingsPopup'
+import AccoutSettingsPopup from '../util/AccoutSettingsPopup'
 
 interface UserProfileProps {
     name: string

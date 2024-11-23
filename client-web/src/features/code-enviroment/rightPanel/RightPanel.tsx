@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Socket } from 'socket.io-client'
 import FloatingTerminal from '../terminal/FloatingTerminal'
-import WindowsProvider, { useWindows } from '@/features/windows-system/WindowsWrapper'
+import { useWindows } from '@/features/windows-system/WindowsWrapper'
 
 interface IRightPanel {
     socket: Socket

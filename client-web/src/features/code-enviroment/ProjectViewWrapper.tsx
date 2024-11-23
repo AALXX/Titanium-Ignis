@@ -6,17 +6,9 @@ import CodeEditor from './middlePanel/CodeEditor'
 import RightPanel from './rightPanel/RightPanel'
 import { io, Socket } from 'socket.io-client'
 import WindowsProvider from '../windows-system/WindowsWrapper'
+import { IProjectViewWrapperProps } from './IProjectView'
 
-interface ProjectViewWrapperProps {
-    ProjectName: string
-    ProjectToken: string
-    RepoUrl: string
-    CheckedOutBy: string
-    Status: string
-    Type: string
-}
-
-const ProjectViewWrapper: React.FC<ProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type }) => {
+const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type }) => {
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null)
     const [socket, setSocket] = useState<Socket | null>(null)
 
@@ -53,10 +45,10 @@ const ProjectViewWrapper: React.FC<ProjectViewWrapperProps> = ({ ProjectName, Pr
                 newSocket.disconnect()
             }
         }
-    }, []) 
+    }, [])
 
     if (!socket) {
-        return <div>Connecting...</div> 
+        return <div>Connecting...</div>
     }
 
     return (

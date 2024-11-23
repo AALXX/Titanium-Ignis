@@ -31,7 +31,8 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
     }
 
     return (
-        <div className="flex h-full w-full flex-col overflow-hidden bg-[#0000004d] md:w-80 lg:w-96">
+        <div className="flex h-full w-full flex-col overflow-hidden border-r border-[#333333] bg-[#1e1e1e]  md:w-80 lg:w-96">
+
             <div className="flex-shrink-0 p-4">
                 <h2 className="text-xl font-semibold text-white">File Tree</h2>
             </div>

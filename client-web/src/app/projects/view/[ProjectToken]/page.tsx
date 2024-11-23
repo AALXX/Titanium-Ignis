@@ -1,4 +1,4 @@
-import ProjectViewWrapper from '@/features/codeEditor/ProjectViewWrapper'
+import ProjectViewWrapper from '@/features/code-enviroment/ProjectViewWrapper'
 import axios from 'axios'
 import React from 'react'
 

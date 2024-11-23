@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { Socket } from 'socket.io-client'
-import { WindowsProvider, useWindows } from '@/features/windows-system/WindowsWrapper'
+import { WindowsProvider, useWindows } from '@/components/windows-system/WindowsWrapper'
 
 interface TerminalProps {
     socket: Socket

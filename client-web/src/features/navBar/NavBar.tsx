@@ -27,8 +27,6 @@ const NavBar = () => {
                 <nav className="mt-10 flex flex-col gap-4 px-4">
                     <NavLink href="/">HOME</NavLink>
                     <NavLink href="/projects">PROJECTS</NavLink>
-                    <NavLink href="/account/messages">CARDS/BANKS</NavLink>
-                    <NavLink href="/account/my-subscriptions">TRANSACTIONS RAPOT</NavLink>
                 </nav>
             </div>
             <h1

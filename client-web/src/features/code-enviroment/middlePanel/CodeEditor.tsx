@@ -125,8 +125,8 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
     }
 
     return (
-        <div className="flex h-fit w-full flex-col bg-[#1e1e1e] text-white">
-            <div className="flex-shrink-0 border-b border-[#333333] p-4">
+        <div className="flex h-full w-full flex-col bg-[#1e1e1e] text-white">
+            <div className="flex-shrink-0  border-b border-[#333333] p-4">
                 <h2 className="text-lg font-semibold">
                     {filePath ? (
                         <>
@@ -138,7 +138,7 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
                     )}
                 </h2>
             </div>
-            <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-[53rem]">
+            <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-full ">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-white"></div>
