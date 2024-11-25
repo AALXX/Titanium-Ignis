@@ -1,26 +1,41 @@
 import ProjectViewWrapper from '@/features/code-enviroment/ProjectViewWrapper'
+import { checkAccountStatus } from '@/hooks/useAccountServerside'
 import axios from 'axios'
 import React from 'react'
 
 const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) => {
     const { ProjectToken } = await params
 
+    const accountStatus = await checkAccountStatus()
+
+
+    if (!accountStatus.isLoggedIn) {
+        return (
+            <div className="h-full self-center">
+                <h1 className="text-white">Please login to view your projects</h1>
+            </div>
+        )
+    }
+
     try {
         const ProjectData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-data/${ProjectToken}`)
         return (
             <div className="flex h-full w-full">
                 <ProjectViewWrapper
-                    ProjectName={ProjectData.data.ProjectName}
+                    ProjectName={ProjectData.data.project.ProjectName}
                     ProjectToken={ProjectToken}
-                    RepoUrl={ProjectData.data.RepoUrl}
-                    CheckedOutBy={ProjectData.data.CheckedOutBy}
-                    Status={ProjectData.data.Status}
-                    Type={ProjectData.data.Type}
+                    RepoUrl={ProjectData.data.project.RepoUrl}
+                    CheckedOutBy={ProjectData.data.project.CheckedOutBy}
+                    Status={ProjectData.data.project.Status}
+                    Type={ProjectData.data.project.Type}
+                    ProjectConfig={ProjectData.data.project.ProjectConfig}
+                    UserSessionToken={accountStatus.accessToken!}
+
                 />
             </div>
         )
     } catch (error) {
-        return (
+        return ( 
             <div className="h-full self-center">
                 <h1 className="text-white">Error fetching project data</h1>
             </div>

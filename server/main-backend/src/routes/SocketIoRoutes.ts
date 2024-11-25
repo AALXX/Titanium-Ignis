@@ -13,8 +13,8 @@ const initSorketioRoutes = (io: Server, pool: Pool) => {
             ProjectsServices.joinRepo(socket, pool, data);
         });
 
-        socket.on('start-service', (data: { processId?: string }) => {
-            ProjectsServices.startService(socket);
+        socket.on('start-service', (data: {userSessionToken: string,  projectToken: string ,serviceID: number }) => {
+            ProjectsServices.startService(socket, data.userSessionToken, data.projectToken, data.serviceID);
         });
 
         socket.on('stop-service', (data: { processId: string }) => {

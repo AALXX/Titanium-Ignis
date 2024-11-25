@@ -1,13 +1,14 @@
-interface IProjectConfig {
-    services: {
+export interface IProjectConfig {
+    services: Array<{
         id: number
-        name: string
+        name: string,
+        dir: string;
         'custom-commands': {
             [key: string]: string
         }
         "start-command": string
         port: number
-    }
+    }>
 }
 
 export interface IProjectViewWrapperProps {
@@ -17,5 +18,6 @@ export interface IProjectViewWrapperProps {
     CheckedOutBy: string
     Status: string
     Type: string
-    ProjectConfig?: IProjectConfig
+    ProjectConfig: IProjectConfig
+    UserSessionToken: string
 }

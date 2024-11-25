@@ -8,7 +8,7 @@ import { io, Socket } from 'socket.io-client'
 import WindowsProvider from '../windows-system/WindowsWrapper'
 import { IProjectViewWrapperProps } from './IProjectView'
 
-const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type }) => {
+const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type, ProjectConfig, UserSessionToken }) => {
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null)
     const [socket, setSocket] = useState<Socket | null>(null)
 
@@ -17,7 +17,6 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
     }
 
     useEffect(() => {
-        // Initialize socket connection
         const newSocket = io(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}`, {
             transports: ['websocket'],
             reconnection: true,
@@ -56,7 +55,7 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
             <WindowsProvider>
                 <LeftPanel ProjectName={ProjectName} ProjectToken={ProjectToken} RepoUrl={RepoUrl} CheckedOutBy={CheckedOutBy} Status={Status} Type={Type} onFileSelect={handleFileSelect} />
                 <CodeEditor filePath={selectedFilePath} />
-                <RightPanel socket={socket} />
+                <RightPanel socket={socket} projectConfig={ProjectConfig} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
             </WindowsProvider>
         </div>
     )

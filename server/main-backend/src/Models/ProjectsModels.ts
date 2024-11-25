@@ -1,3 +1,16 @@
+export interface IProjectConfig {
+    services: Array<{
+        id: number;
+        name: string;
+        dir: string;
+        'custom-commands': {
+            [key: string]: string;
+        };
+        'start-command': string;
+        port: number;
+    }>;
+}
+
 export interface IProjectsDb {
     project_name: string;
     project_token: string;
@@ -22,5 +35,5 @@ export interface IProjectResponse {
     CheckedOutBy: string;
     Status: string;
     Type: string;
-    ProjectConfig: string;
+    ProjectConfig: IProjectConfig;
 }

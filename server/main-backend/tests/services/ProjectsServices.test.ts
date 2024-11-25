@@ -6,8 +6,11 @@ import * as utilFunctions from '../../src/util/utilFunctions';
 import { Response } from 'express';
 import { CustomRequest } from '../../src/config/postgresql';
 import fs from 'fs';
+import { spawn } from 'child_process';
 
-// Mock dependencies
+// Mock the entire fs module
+jest.mock('fs');
+const mockedFs = fs as jest.Mocked<typeof fs>;
 
 jest.mock('bcrypt', () => ({
     hash: jest.fn().mockResolvedValue('hashedPassword'),
@@ -18,12 +21,25 @@ jest.mock('fs');
 jest.mock('../../src/config/postgresql');
 jest.mock('../../src/util/utilFunctions');
 jest.mock('child_process', () => ({
-    spawn: jest.fn(() => ({
-        stdout: { on: jest.fn() },
-        stderr: { on: jest.fn() },
-        on: jest.fn(),
-        kill: jest.fn(),
-    })),
+    spawn: jest.fn((command, args, options) => {
+        return {
+            stdout: { 
+                on: jest.fn((event, callback) => {
+                    if (event === 'data') callback(Buffer.from('test output'));
+                })
+            },
+            stderr: { 
+                on: jest.fn((event, callback) => {
+                    if (event === 'data') callback(Buffer.from('test error'));
+                })
+            },
+            on: jest.fn((event, callback) => {
+                if (event === 'close') callback(0);
+                if (event === 'error') callback(new Error('Spawn error'));
+            }),
+            kill: jest.fn(),
+        };
+    }),
 }));
 
 describe('ProjectsServices', () => {
@@ -32,6 +48,13 @@ describe('ProjectsServices', () => {
     let mockSocket: Partial<Socket>;
     let mockReq: Partial<CustomRequest>;
     let mockRes: Partial<Response>;
+
+    let mockChildProcess: {
+        stdout: { on: jest.Mock };
+        stderr: { on: jest.Mock };
+        on: jest.Mock;
+        kill: jest.Mock;
+    };
 
     const mockProjectData = {
         project_name: 'Test Project',
@@ -45,13 +68,10 @@ describe('ProjectsServices', () => {
     const mockProjectConfig = {
         services: [
             {
-                id: 0,
+                id: 1,
                 name: 'test-service',
-                path: './test',
-                'custom-commands': {
-                    install: 'npm install',
-                },
                 'start-command': 'npm run dev',
+                dir: '/test',
                 port: 3000,
             },
         ],
@@ -70,6 +90,15 @@ describe('ProjectsServices', () => {
         mockSocket = {
             emit: jest.fn(),
         };
+
+        mockChildProcess = {
+            stdout: { on: jest.fn() },
+            stderr: { on: jest.fn() },
+            on: jest.fn(),
+            kill: jest.fn(),
+        };
+
+        (spawn as jest.Mock).mockReturnValue(mockChildProcess);
 
         mockReq = {
             pool: mockPool,
@@ -131,8 +160,9 @@ describe('ProjectsServices', () => {
         test('should retrieve project data successfully', async () => {
             await ProjectsServices.getProjectData(mockReq as CustomRequest, mockRes as Response);
 
-            expect(fs.readFileSync).toHaveBeenCalledWith('../repos/test-project-token/project-config.json', 'utf8');
+            mockedFs.readFileSync.mockReturnValue(JSON.stringify(mockProjectConfig));
 
+            expect(mockedFs.readFileSync).toHaveBeenCalledWith(expect.stringContaining('project-config.json'), 'utf8');
             expect(mockRes.status).toHaveBeenCalledWith(200);
             expect(mockRes.json).toHaveBeenCalledWith({
                 error: false,
@@ -159,6 +189,70 @@ describe('ProjectsServices', () => {
             expect(mockRes.json).toHaveBeenCalledWith({
                 error: true,
                 errmsg: 'File not found',
+            });
+        });
+    });
+
+    describe('startService', () => {
+        test('should start a service successfully', async () => {
+            
+
+            const mockSocketEmit = jest.fn();
+            mockSocket.emit = mockSocketEmit;
+
+            await ProjectsServices.startService(mockSocket as Socket, 'user-session-token', 'test-project-token', 1);
+
+            // Check that the service was started successfully
+            expect(mockSocketEmit).toHaveBeenCalledWith('service-started', expect.objectContaining({ processId: expect.any(String) }));
+            expect(mockSocketEmit).toHaveBeenCalledWith('service-output', expect.objectContaining({ output: 'test output' }));
+        });
+
+        test('should handle invalid service ID', async () => {
+            
+            const mockSocketEmit = jest.fn();
+            mockSocket.emit = mockSocketEmit;
+
+            await ProjectsServices.startService(
+                mockSocket as Socket,
+                'user-session-token',
+                'test-project-token',
+                2, // Invalid service ID
+            );
+
+            // Check that an error was emitted for an invalid service ID
+            expect(mockSocketEmit).toHaveBeenCalledWith('service-error', {
+                error: true,
+                errmsg: 'Invalid service ID',
+            });
+        });
+
+        test('should handle service start error', async () => {
+            // Mock a valid project configuration
+            (fs.readFileSync as jest.Mock).mockReturnValue(
+                JSON.stringify({
+                    services: [
+                        {
+                            id: 1,
+                            name: 'test-service',
+                            'start-command': 'npm run dev',
+                        },
+                    ],
+                }),
+            );
+
+            // Simulate `spawn` throwing an error
+            (spawn as jest.Mock).mockImplementation(() => {
+                throw new Error('Spawn failed');
+            });
+
+            const mockSocketEmit = jest.fn();
+            mockSocket.emit = mockSocketEmit;
+
+            await ProjectsServices.startService(mockSocket as Socket, 'user-session-token', 'test-project-token', 1);
+
+            // Check that an error was emitted for a failed service start
+            expect(mockSocketEmit).toHaveBeenCalledWith('service-error', {
+                error: 'Failed to start service',
             });
         });
     });

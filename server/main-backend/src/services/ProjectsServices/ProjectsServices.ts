@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import logging from '../../config/logging';
 import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
-import { IProjectsDb, IProjectsResponse, IProjectResponse } from '../../Models/ProjectsModels';
+import { IProjectsDb, IProjectsResponse, IProjectResponse, IProjectConfig } from '../../Models/ProjectsModels';
 import { Socket } from 'socket.io';
 import { ChildProcess, spawn } from 'child_process';
 import { Pool } from 'pg';
@@ -84,10 +84,10 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
 
         //read file contents
 
-        let projectConfig: any;
+        let projectConfig: IProjectConfig;
 
         try {
-            projectConfig = fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${req.params.projectToken}/project-config.json`, 'utf8');
+            projectConfig = JSON.parse(fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${req.params.projectToken}/project-config.json`, 'utf8'));
         } catch (error: any) {
             logging.error('GET_PROJECT_DATA_FUNC', error.message);
             connection?.release();
@@ -104,7 +104,7 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
             CheckedOutBy: result[0].checked_out_by,
             Status: result[0].status,
             Type: result[0].type,
-            ProjectConfig: JSON.parse(projectConfig),
+            ProjectConfig: projectConfig,
         };
 
         connection?.release();
@@ -132,46 +132,80 @@ const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string
 };
 
 const activeProcesses: Map<string, ChildProcess> = new Map();
-const startService = async (socket: Socket) => {
+const startService = async (socket: Socket, userSessionToken: string, projectToken: string, serviceID: number) => {
     try {
         // Generate a unique process ID
         const processId = randomUUID();
 
-        // Start the ping process
-        const pingProcess = spawn('ping', ['google.com']);
+        let projectConfig: IProjectConfig = {
+            services: [],
+        };
+
+        try {
+            projectConfig = JSON.parse(fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
+        } catch (error: any) {
+            logging.error('STARTS_SERVICE_READING_FILE_FUNC', error.message);
+        }
+
+        if (projectConfig.services.length < serviceID) {
+            return socket.emit('service-error', {
+                error: true,
+                errmsg: 'Invalid service ID',
+            });
+        }
+
+        const startCommand = projectConfig.services[serviceID - 1]['start-command'];
+
+        const commandParts = startCommand.split(' ');
+        const command = commandParts[0];
+        const args = commandParts.slice(1);
+        let workinDir = `${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}`;
+
+        if (projectConfig.services[serviceID - 1].dir) {
+            workinDir = `${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
+        }
+
+        const serviceProcess = spawn(command, args, {
+            cwd: workinDir,
+            shell: true,
+        });
 
         // Store the process
-        activeProcesses.set(processId, pingProcess);
+        activeProcesses.set(processId, serviceProcess);
 
         // Send the process ID back to the client
         socket.emit('service-started', { processId });
 
-        // Stream stdout to client
-        pingProcess.stdout.on('data', (data) => {
+        // Error handling
+        serviceProcess.on('error', (err) => {
+            socket.emit('service-error', {
+                error: true,
+                errmsg: err.message,
+            })
+        });
+
+        serviceProcess.stdout.on('data', (data) => {
             socket.emit('service-output', {
                 processId,
                 output: data.toString(),
             });
         });
 
-        // Handle errors
-        pingProcess.stderr.on('data', (data) => {
+        serviceProcess.stderr.on('data', (data) => {
             socket.emit('service-error', {
                 processId,
                 error: data.toString(),
             });
         });
 
-        // Handle process completion
-        pingProcess.on('close', (code) => {
-            socket.emit('service-closed', {
+        serviceProcess.on('close', (code) => {
+            socket.emit('service-stopped', {
                 processId,
                 code,
             });
             activeProcesses.delete(processId);
         });
 
-        logging.info('START_SERVICE', `Started process ${processId}`);
     } catch (error: any) {
         logging.error('START_SERVICE', error);
         socket.emit('service-error', {

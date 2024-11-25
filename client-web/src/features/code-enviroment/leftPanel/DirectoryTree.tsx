@@ -6,7 +6,7 @@ interface DirectoryTreeProps {
     onFileClick: (path: string) => void
 }
 
-export default function DirectoryTree({ node, onFileClick }: DirectoryTreeProps) {
+const DirectoryTree = ({ node, onFileClick }: DirectoryTreeProps) => {
     const [expanded, setExpanded] = useState(false)
 
     const handleClick = () => {
@@ -33,3 +33,5 @@ export default function DirectoryTree({ node, onFileClick }: DirectoryTreeProps)
         </div>
     )
 }
+
+export default DirectoryTree
