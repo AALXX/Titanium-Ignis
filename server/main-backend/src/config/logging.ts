@@ -4,7 +4,7 @@ import path from 'path';
 const LOG_FILE_PATH = path.join(process.cwd(), '/log/api.log');
 
 const getTimeStamp = (): string => {
-    return new Date().toISOString();
+    return new Date().toLocaleString();
 };
 
 // Check if the log file exists, and if not, create the file and the directory

@@ -1,0 +1,11 @@
+# Project Manager
+
+**Project Manager** is a  tool designed to help you efficiently manage and launch projects. With an intuitive interface, it allows you to organize tasks, track milestones, collaborate with your team, and ensure deadlines are met. Whether you're working solo or with a group, this tool keeps your projects on track from start to finish.
+
+## Features:
+- Easy project launching and tracking (In development)
+- Task and milestone tracking (Not implemented yet)
+- Team collaboration and communication (Not implemented yet)
+- Deadline management and reminders (Not implemented yet)
+
+Stay organized and streamline your project workflow with **Project Manager**!
