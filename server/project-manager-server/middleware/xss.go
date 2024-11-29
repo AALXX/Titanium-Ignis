@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"encoding/json"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/microcosm-cc/bluemonday"
 )
@@ -22,7 +23,6 @@ var ConfigDefault = XSSConfig{
 
 // XSSMiddleware creates a middleware that sanitizes all input data
 func XSSMiddleware(config ...XSSConfig) fiber.Handler {
-	// Set default config
 	cfg := ConfigDefault
 	if len(config) > 0 {
 		cfg = config[0]

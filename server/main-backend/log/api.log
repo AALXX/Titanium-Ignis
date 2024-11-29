@@ -3,3 +3,9 @@
 [11/27/2024, 12:49:08 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
 [11/27/2024, 12:49:08 AM] [ERROR] [GET_PROJECT_DATA_FUNC] Cannot read properties of null (reading 'query')
 [11/27/2024, 12:50:37 AM] [INFO] [STOP_SERVICE] Stopped process ea61cd9d-d464-4929-ac9e-7b94b7ef6f06
+[11/27/2024, 12:59:33 AM] [INFO] [STOP_SERVICE] Stopped process 9fe6c3d8-632c-4561-bafa-8dc06851fc60
+[11/27/2024, 1:04:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/28/2024, 12:19:15 AM] [ERROR] [PG_CONNECT] connect ECONNREFUSED 0.0.0.0:5432
+[11/28/2024, 12:19:15 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[11/28/2024, 12:19:15 AM] [ERROR] [GET_PROJECT_DATA_FUNC] Cannot read properties of null (reading 'query')
+[11/29/2024, 1:39:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

@@ -10,6 +10,7 @@ import python from 'highlight.js/lib/languages/python'
 import css from 'highlight.js/lib/languages/css'
 import xml from 'highlight.js/lib/languages/xml'
 import 'highlight.js/styles/github-dark.css'
+import { stripReposPath } from './utils'
 
 // Register all languages
 hljs.registerLanguage('typescript', typescript)
@@ -21,9 +22,11 @@ hljs.registerLanguage('xml', xml)
 
 interface ICodeEditor {
     filePath: string | null
+    projectToken: string
+    userSessionToken: string
 }
 
-const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
+const CodeEditor: React.FC<ICodeEditor> = ({ filePath, projectToken, userSessionToken }) => {
     const [fileContent, setFileContent] = useState<string>('')
     const [highlightedContent, setHighlightedContent] = useState<string>('')
     const [isLoading, setIsLoading] = useState(false)
@@ -124,9 +127,28 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
         }
     }
 
+    const handleSaveFile = async () => {
+        if (filePath === null) {
+            console.error('No file path provided')
+            return
+        }
+
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/save-file`, {
+                path: stripReposPath(filePath),
+                projectToken: projectToken,
+                userSessionToken: userSessionToken,
+                content: fileContent
+            })
+            console.log('File saved successfully')
+        } catch (error) {
+            console.error('Error saving file:', error)
+        }
+    }
+
     return (
         <div className="flex h-full w-full flex-col bg-[#1e1e1e] text-white">
-            <div className="flex-shrink-0  border-b border-[#333333] p-4">
+            <div className="flex flex-shrink-0 border-b border-[#333333] p-4">
                 <h2 className="text-lg font-semibold">
                     {filePath ? (
                         <>
@@ -137,8 +159,11 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
                         'No file selected'
                     )}
                 </h2>
+                <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleSaveFile}>
+                    Save
+                </button>
             </div>
-            <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-full ">
+            <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-full">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-white"></div>
@@ -149,10 +174,10 @@ const CodeEditor: React.FC<ICodeEditor> = ({ filePath }) => {
                     <div className="flex h-full items-center justify-center text-gray-400">Select a file to view its contents</div>
                 ) : (
                     <div className="relative h-full w-full font-mono text-sm">
-                        <pre ref={preRef} className="pointer-events-none absolute inset-0 h-full w-full overflow-auto whitespace-pre p-4 " aria-hidden="true" dangerouslySetInnerHTML={{ __html: highlightedContent }} />
+                        <pre ref={preRef} className="pointer-events-none absolute inset-0 h-full w-full overflow-auto whitespace-pre p-4" aria-hidden="true" dangerouslySetInnerHTML={{ __html: highlightedContent }} />
                         <textarea
                             ref={textareaRef}
-                            className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-4 text-transparent caret-white outline-none "
+                            className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-4 text-transparent caret-white outline-none"
                             value={fileContent}
                             onChange={handleInput}
                             onScroll={handleScroll}

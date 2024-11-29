@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -94,4 +95,25 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	}
 
 	return c.SendString(content)
+}
+
+func SaveRepositoryFile(c fiber.Ctx, db *sql.DB) error {
+
+	body := new(models.SaveFileRequest)
+
+	
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+	}
+
+	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+
+
+	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
+	err := lib.SaveFile(fullFilePath, body.Content)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to save file")
+	}
+
+	return c.SendString("File saved successfully")
 }

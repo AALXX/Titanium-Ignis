@@ -1,5 +1,5 @@
 import ProjectViewWrapper from '@/features/code-enviroment/ProjectViewWrapper'
-import { checkAccountStatus } from '@/hooks/useAccountServerside'
+import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
 import React from 'react'
 

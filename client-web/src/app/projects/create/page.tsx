@@ -1,5 +1,5 @@
 import CreateProjectForm from '@/features/projects/components/CreateProjectForm'
-import { checkAccountStatus } from '@/hooks/useAccountServerside'
+import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 
 const CreateProjectPage = async () => {
     const { isLoggedIn, accessToken } = await checkAccountStatus()

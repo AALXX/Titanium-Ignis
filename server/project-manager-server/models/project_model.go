@@ -36,5 +36,12 @@ type FileNode struct {
 	Name     string     `json:"name"`
 	Path     string     `json:"path"`
 	IsDir    bool       `json:"is_dir"`
-	Children []FileNode `json:"children,		omitempty"`
+	Children []FileNode `json:"children,omitempty"`
+}
+
+type SaveFileRequest struct {
+	ProjectToken     string `json:"projectToken"`
+	UserSessionToken string `json:"userSessionToken"`
+	Path             string `json:"path"`
+	Content          string `json:"content"`
 }

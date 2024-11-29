@@ -10,11 +10,10 @@ import (
 )
 
 func InitRoutes(app *fiber.App, db *sql.DB) {
-	// Middleware setup
-	app.Use(middleware.XSSMiddleware())
-
 	app.Use(middleware.XSSMiddleware(middleware.XSSConfig{
-		SkipPaths:    []string{"/api/projects/repo-file"}, // Add WebSocket path to skip
+		SkipPaths: []string{
+			"/api/projects/save-file",
+		},
 		StrictPolicy: false,
 	}))
 
@@ -31,4 +30,7 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 		return services.GetRepositoryFile(c, db)
 	})
 
+	app.Post("/api/projects/save-file", func(c fiber.Ctx) error {
+		return services.SaveRepositoryFile(c, db)
+	})
 }

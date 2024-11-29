@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { checkAccountStatus } from '@/hooks/useAccountServerside'
+import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import ProjectList from '@/features/projects/components/ProjectList'
 
 const ProjectsPage = async () => {

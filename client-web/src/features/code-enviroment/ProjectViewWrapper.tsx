@@ -54,7 +54,7 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
         <div className="flex h-full w-full">
             <WindowsProvider>
                 <LeftPanel ProjectName={ProjectName} ProjectToken={ProjectToken} RepoUrl={RepoUrl} CheckedOutBy={CheckedOutBy} Status={Status} Type={Type} onFileSelect={handleFileSelect} />
-                <CodeEditor filePath={selectedFilePath} />
+                <CodeEditor filePath={selectedFilePath} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
                 <RightPanel socket={socket} projectConfig={ProjectConfig} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
             </WindowsProvider>
         </div>

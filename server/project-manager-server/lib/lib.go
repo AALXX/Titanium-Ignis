@@ -115,3 +115,11 @@ func GetFileContents(filePath string) (string, error) {
 	}
 	return string(content), nil
 }
+
+func SaveFile(filePath string, content string) error {
+	err := os.WriteFile(filePath, []byte(content), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
