@@ -9,3 +9,16 @@
 [11/28/2024, 12:19:15 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
 [11/28/2024, 12:19:15 AM] [ERROR] [GET_PROJECT_DATA_FUNC] Cannot read properties of null (reading 'query')
 [11/29/2024, 1:39:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/29/2024, 11:51:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:02:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:10:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:10:54 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:10:59 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:11:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:11:19 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:11:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:12:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:12:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:13:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 12:14:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/30/2024, 8:32:40 PM] [INFO] [STOP_SERVICE] Stopped process 8a2e1bef-0e1f-4f9c-a762-afc41f8726a0
