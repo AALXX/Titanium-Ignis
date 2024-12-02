@@ -22,3 +22,37 @@
 [11/30/2024, 12:13:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [11/30/2024, 12:14:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [11/30/2024, 8:32:40 PM] [INFO] [STOP_SERVICE] Stopped process 8a2e1bef-0e1f-4f9c-a762-afc41f8726a0
+[12/1/2024, 1:16:13 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.JgRDpakqws3PFHbX009NAiR2fwj682r675p93V7ayYw/project-config.json'
+[12/1/2024, 1:16:45 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.JgRDpakqws3PFHbX009NAiR2fwj682r675p93V7ayYw/project-config.json'
+[12/1/2024, 1:16:47 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.vsCnUoeqAztLPuX5VltiHLZYDnz1Kg4ueiDKsJut-Nc/project-config.json'
+[12/1/2024, 1:16:54 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.vsCnUoeqAztLPuX5VltiHLZYDnz1Kg4ueiDKsJut-Nc/project-config.json'
+[12/1/2024, 1:25:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/1/2024, 1:26:59 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.hBxEA3i6IADJgtkDyIxSsBSljjyxcbqsPDqV3sO08sc/project-config.json'
+[12/1/2024, 1:26:59 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.hBxEA3i6IADJgtkDyIxSsBSljjyxcbqsPDqV3sO08sc/project-config.json'
+[12/1/2024, 1:26:59 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.hBxEA3i6IADJgtkDyIxSsBSljjyxcbqsPDqV3sO08sc/project-config.json'
+[12/1/2024, 1:27:08 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.hBxEA3i6IADJgtkDyIxSsBSljjyxcbqsPDqV3sO08sc/project-config.json'
+[12/1/2024, 1:27:13 AM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.hBxEA3i6IADJgtkDyIxSsBSljjyxcbqsPDqV3sO08sc/project-config.json'
+[12/1/2024, 1:19:03 PM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.7gn32_3Rt1IVim_6DuNKVImnOrn9U9JO_fr-atxSVLs/project-config.json'
+[12/1/2024, 1:19:56 PM] [ERROR] [GET_PROJECT_DATA_FUNC] ENOENT: no such file or directory, open '../repos/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.iycgCAhfQCPXoMo0OhHZYeBwNL75FU9f58Yl-u2MQU0/project-config.json'
+[12/1/2024, 1:23:06 PM] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'start-command')
+[12/1/2024, 1:23:42 PM] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'start-command')
+[12/1/2024, 1:24:41 PM] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'start-command')
+[12/1/2024, 1:26:59 PM] [INFO] [STOP_SERVICE] Stopped process 6be5bb45-3a27-4ce6-9e85-438ba1400e79
+[12/1/2024, 1:27:24 PM] [INFO] [STOP_SERVICE] Stopped process 7a3a9df1-7f47-478f-be86-af6580bfd5e3
+[12/1/2024, 1:28:38 PM] [INFO] [STOP_SERVICE] Stopped process 521adb29-d5e1-4a96-b09b-824cb3eac089
+[12/1/2024, 1:28:49 PM] [ERROR] [STOP_SERVICE] Process 521adb29-d5e1-4a96-b09b-824cb3eac089 not found
+[12/1/2024, 1:28:49 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[12/1/2024, 1:29:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/1/2024, 1:30:13 PM] [INFO] [STOP_SERVICE] Stopped process 1a4924ed-7ae8-46a2-8ef4-40253c098e8e
+[12/1/2024, 1:30:25 PM] [ERROR] [STOP_SERVICE] Process 1a4924ed-7ae8-46a2-8ef4-40253c098e8e not found
+[12/1/2024, 1:30:25 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[12/1/2024, 1:30:48 PM] [INFO] [STOP_SERVICE] Stopped process e4c87136-12b9-4b7f-af36-fa6a92b065f1
+[12/1/2024, 1:31:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/1/2024, 1:31:16 PM] [INFO] [STOP_SERVICE] Stopped process 9d62b704-5d4e-41a7-a918-b8fe90695de5
+[12/2/2024, 12:28:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/2/2024, 10:34:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/2/2024, 10:54:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/2/2024, 11:07:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/2/2024, 11:59:01 PM] [INFO] [STOP_SERVICE] Stopped process 424f6512-7e00-4576-b3b8-d39a69f248ba
+[12/2/2024, 11:59:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 12:00:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

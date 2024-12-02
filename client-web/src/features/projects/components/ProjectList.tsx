@@ -16,7 +16,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ initialProjects }) => {
 
     return (
         <div className="flex h-full flex-col overflow-y-auto">
-            <Link href="/projects/create">
+            <Link href="/projects/add-project">
                 <button className="ml-4 mr-auto mt-10 rounded-xl border p-4 font-bold text-white hover:bg-white/10" onClick={() => router.push('/projects/create')}>
                     Add projects
                 </button>

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -33,6 +34,7 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 	projectType := strings.ToLower(body.Type)
 
 	projectToken := lib.CreateToken()
+	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
 
 	rows, err := db.Query("INSERT INTO projects (project_name, project_token, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, projectToken, repoURL, userPrivateToken, "checking-out", projectType)
 	if err != nil {
@@ -49,13 +51,26 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 		cmd = exec.Command("svn", "checkout", repoURL, projectToken)
 	}
 
-	cmd.Dir = "../repos" // Set the directory where repositories will be checked out
+	cmd.Dir = RepoPath
 	err = cmd.Run()
 	if err != nil {
 		log.Println("Error updating project status:", err)
 
 		return c.Status(500).SendString("Failed to check out project")
 	}
+
+
+	projectConfig := models.ProjectConfig{
+		Services: []models.ProjectService{},
+	}
+
+	// Convert to JSON
+	jsonConfig, err := json.Marshal(projectConfig)
+	if err != nil {
+		return err
+	}
+
+	os.WriteFile(fmt.Sprintf("%s/%s/project-config.json", RepoPath, projectToken), []byte(jsonConfig), 0644)
 
 	// Update project status in database
 	_, err = db.Exec("UPDATE projects SET status = 'checked-out' WHERE project_token = $1", projectToken)
@@ -72,8 +87,9 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 func GetRepositoryTree(c fiber.Ctx, db *sql.DB) error {
 	repoToken := c.Query("projectToken")
 
-	repoPath := "../repos"
-	tree, err := lib.GetDirectoryStructure(fmt.Sprintf("%s/%s", repoPath, repoToken))
+	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+
+	tree, err := lib.GetDirectoryStructure(fmt.Sprintf("%s/%s", RepoPath, repoToken))
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Failed to get directory structure")
 	}
@@ -83,13 +99,14 @@ func GetRepositoryTree(c fiber.Ctx, db *sql.DB) error {
 
 func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	filePath := c.Query("path")
+	projectToken := c.Query("projectToken")
 
-	// Ensure filePath is within the repo directory
+
 	if !strings.HasPrefix(filePath, filePath) {
 		return c.Status(403).SendString("Access to this file is not allowed")
 	}
 
-	content, err := lib.GetFileContents(filePath)
+	content, err := lib.GetFileContents(fmt.Sprintf("%s/%s/%s", os.Getenv("REPOSITORIES_FOLDER_PATH"), projectToken, filePath))
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Failed to read file")
 	}
@@ -101,13 +118,11 @@ func SaveRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 
 	body := new(models.SaveFileRequest)
 
-	
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 
 	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
-
 
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 	err := lib.SaveFile(fullFilePath, body.Content)

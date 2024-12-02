@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FileNode } from './ILeftPanel'
+import { stripReposPath } from '../utils'
 
 interface DirectoryTreeProps {
     node: FileNode
@@ -13,7 +14,7 @@ const DirectoryTree = ({ node, onFileClick }: DirectoryTreeProps) => {
         if (node.is_dir) {
             setExpanded(!expanded)
         } else {
-            onFileClick(node.path)
+            onFileClick(stripReposPath(node.path))
         }
     }
 

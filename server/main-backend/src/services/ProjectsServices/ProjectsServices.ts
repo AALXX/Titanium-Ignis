@@ -82,20 +82,6 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         const queryString = `SELECT * FROM projects WHERE project_token = $1`;
         const result: IProjectsDb[] = await query(connection!, queryString, [req.params.projectToken]);
 
-        //read file contents
-
-        let projectConfig: IProjectConfig;
-
-        try {
-            projectConfig = JSON.parse(fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${req.params.projectToken}/project-config.json`, 'utf8'));
-        } catch (error: any) {
-            logging.error('GET_PROJECT_DATA_FUNC', error.message);
-            connection?.release();
-            return res.status(200).json({
-                error: true,
-                errmsg: error.message,
-            });
-        }
 
         // Map the result to new variable names
         const projectsResponse: IProjectResponse = {
@@ -104,7 +90,6 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
             CheckedOutBy: result[0].checked_out_by,
             Status: result[0].status,
             Type: result[0].type,
-            ProjectConfig: projectConfig,
         };
 
         connection?.release();
@@ -122,6 +107,7 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         });
     }
 };
+
 
 const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string; userSessionToken: string }) => {
     // try {
@@ -167,7 +153,7 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
 
         const serviceProcess = spawn(command, args, {
             cwd: workinDir,
-            shell: true,
+            // shell: true,
         });
 
         // Store the process
@@ -181,7 +167,7 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             socket.emit('service-error', {
                 error: true,
                 errmsg: err.message,
-            })
+            });
         });
 
         serviceProcess.stdout.on('data', (data) => {
@@ -205,7 +191,6 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             });
             activeProcesses.delete(processId);
         });
-
     } catch (error: any) {
         logging.error('START_SERVICE', error);
         socket.emit('service-error', {

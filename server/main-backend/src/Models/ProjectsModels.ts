@@ -35,5 +35,4 @@ export interface IProjectResponse {
     CheckedOutBy: string;
     Status: string;
     Type: string;
-    ProjectConfig: IProjectConfig;
 }

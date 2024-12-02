@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import { Socket } from 'socket.io-client'
 import FloatingTerminal from '../terminal/FloatingTerminal'
 import { useWindows } from '@/features/windows-system/WindowsWrapper'
 import { IProjectConfig } from '../IProjectView'
 import CollapsibleList from '@/components/CollapsibleList'
+import Image from 'next/image'
+import axios from 'axios'
 
 interface IRightPanel {
     socket: Socket
-    projectConfig: IProjectConfig
     projectToken: string
     userSessionToken: string
 }
 
-const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectConfig, projectToken }) => {
+const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
     const [processId, setProcessId] = useState<string | null>(null)
     const { createWindow } = useWindows()
     const [isServiceRunning, setIsServiceRunning] = useState(false)
+    const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [] })
 
     useEffect(() => {
         socket.on('service-started', (data: { processId: string }) => {
             setProcessId(data.processId)
         })
-        // console.log(projectConfig)
     }, [socket])
 
     const startService = ({ serviceID, serviceName }: { serviceID: number; serviceName: string }) => {
@@ -47,8 +48,24 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectCo
         }
     }
 
+        
+
+    const refreshServiceList = async () => {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-file`, {
+            params: { path: 'project-config.json', projectToken: projectToken, userSessionToken: userSessionToken }
+        })
+        setProjectConfig(response.data)
+    }
+
+    useEffect(() => {
+        refreshServiceList()
+    }, [])
+
     return (
         <div className="flex h-full w-[22rem] flex-col border-l border-[#333333] bg-[#1e1e1e] p-4">
+            <div className="flex">
+                <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={refreshServiceList} className="ml-auto cursor-pointer" width={25} height={25} />
+            </div>
             {projectConfig.services.map((service, index) => (
                 <div key={index} className="mt-4">
                     <CollapsibleList title={service.name}>

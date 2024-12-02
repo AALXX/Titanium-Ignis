@@ -32,6 +32,18 @@ type ProjectResponse struct {
 	Type           string `json:"Type"`
 }
 
+type ProjectService struct {
+	ID             int               `json:"id"`
+	Name           string            `json:"name"`
+	Dir            string            `json:"dir"`
+	StartCommand   string            `json:"start-command"`
+}
+
+
+type ProjectConfig struct {
+	Services []ProjectService `json:"services"`
+}
+
 type FileNode struct {
 	Name     string     `json:"name"`
 	Path     string     `json:"path"`

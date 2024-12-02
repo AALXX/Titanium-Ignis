@@ -11,6 +11,7 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
     const [projectName, setProjectName] = useState<string>('')
     const [RepoURL, setRepoURL] = useState<string>('')
     const [RepoType, setRepoType] = useState<string>('Git')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const createProject = async () => {
         if (!userSessionToken) {
@@ -19,13 +20,14 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
         }
 
         try {
+            setIsLoading(true)
             const resp = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/create-project-entry`, {
                 ProjectName: projectName,
                 RepoUrl: RepoURL,
                 UserSessionToken: userSessionToken,
                 Type: RepoType
             })
-            console.log('Project created:', resp.data)
+            if (resp.data) setIsLoading(false)
         } catch (error) {
             console.error('Error creating project:', error)
         }
@@ -71,9 +73,15 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
                     />
                 </div>
 
-                <button className="mt-10 h-[4rem] w-full rounded-xl bg-[#00000048] text-xl text-white" onClick={createProject}>
-                    Create Project
-                </button>
+                {!isLoading ? (
+                    <button className="mt-10 h-[4rem] w-full rounded-xl bg-[#00000048] text-xl text-white" onClick={createProject}>
+                        Create Project
+                    </button>
+                ) : (
+                    <button className="mt-10 h-[4rem] w-full rounded-xl bg-[#00000048] text-xl text-white" disabled>
+                        Creating Project...
+                    </button>
+                )}
             </div>
         </div>
     )

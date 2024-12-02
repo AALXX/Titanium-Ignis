@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { Editor } from '@monaco-editor/react'
-import { stripReposPath, getLanguageFromFilePath } from './utils'
+import { stripReposPath, getLanguageFromFilePath } from '../utils'
 
 const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
     const [fileContent, setFileContent] = useState('')
@@ -22,7 +22,7 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
 
             try {
                 const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-file`, {
-                    params: { path: filePath }
+                    params: { path: filePath, projectToken: projectToken, userSessionToken: userSessionToken }
                 })
 
                 if (getLanguageFromFilePath(filePath) === 'json') {
@@ -43,8 +43,6 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
         getFileData()
     }, [filePath])
 
-    // Update the useEffect to use the memoized handleKeyDown
-
     const handleSaveFile = async () => {
         if (filePath === null) {
             console.error('No file path provided')
@@ -64,19 +62,32 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
         }
     }
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 's' && (event.metaKey || event.ctrlKey)) {
-            event.preventDefault()
-            handleSaveFile()
-        }
-    }
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.key === 's' && (event.metaKey || event.ctrlKey)) {
+                event.preventDefault()
+                handleSaveFile()
+            }
+            switch (event.key) {
+                case 's':
+                    if (event.metaKey || event.ctrlKey) {
+                        event.preventDefault()
+                        handleSaveFile()
+                    }
+                    break
+                default:
+                    break
+            }
+        },
+        [handleSaveFile]
+    )
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown)
         return () => {
             document.removeEventListener('keydown', handleKeyDown)
         }
-    }, [fileContent])
+    }, [handleKeyDown])
 
     return (
         <div className="flex h-full w-full flex-col bg-[#1e1e1e] text-white">

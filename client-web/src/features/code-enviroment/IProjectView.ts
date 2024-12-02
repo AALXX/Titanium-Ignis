@@ -18,6 +18,6 @@ export interface IProjectViewWrapperProps {
     CheckedOutBy: string
     Status: string
     Type: string
-    ProjectConfig: IProjectConfig
+    
     UserSessionToken: string
 }

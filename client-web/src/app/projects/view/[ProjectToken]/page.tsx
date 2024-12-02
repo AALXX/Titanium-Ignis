@@ -28,7 +28,6 @@ const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) =>
                     CheckedOutBy={ProjectData.data.project.CheckedOutBy}
                     Status={ProjectData.data.project.Status}
                     Type={ProjectData.data.project.Type}
-                    ProjectConfig={ProjectData.data.project.ProjectConfig}
                     UserSessionToken={accountStatus.accessToken!}
 
                 />
