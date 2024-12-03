@@ -14,41 +14,41 @@ interface IRightPanel {
 }
 
 const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
-    const [processId, setProcessId] = useState<string | null>(null)
     const { createWindow } = useWindows()
-    const [isServiceRunning, setIsServiceRunning] = useState(false)
     const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [] })
+    const [runningServices, setRunningServices] = useState<{ [serviceId: number]: string | null }>({})
 
     useEffect(() => {
-        socket.on('service-started', (data: { processId: string }) => {
-            setProcessId(data.processId)
+        socket.on('service-started', (data: { processId: string; serviceId: number }) => {
+            console.log('Service started:', data.processId, 'for service ID:', data.serviceId)
+            setRunningServices(prev => ({ ...prev, [data.serviceId]: data.processId }))
         })
+
+        socket.on('service-stopped', (data: { serviceId: number }) => {
+            console.log('Service stopped for service ID:', data.serviceId)
+            setRunningServices(prev => {
+                const updated = { ...prev }
+                delete updated[data.serviceId]
+                return updated
+            })
+        })
+
+        return () => {
+            socket.off('service-started')
+            socket.off('service-stopped')
+        }
     }, [socket])
 
     const startService = ({ serviceID, serviceName }: { serviceID: number; serviceName: string }) => {
         createWindow(serviceName, <FloatingTerminal socket={socket} terminalName={serviceName} />)
-
-        socket.emit('start-service', { userSessionToken: userSessionToken, projectToken: projectToken, serviceID })
-        socket.on('service-started', (data: { processId: string }) => {
-            setProcessId(data.processId)
-            setIsServiceRunning(true)
-        })
-        socket.on('service-stopped', () => {
-            setIsServiceRunning(false)
-        })
+        socket.emit('start-service', { userSessionToken, projectToken, serviceID })
     }
 
-    const stopService = () => {
-        if (processId) {
-            socket.emit('stop-service', { processId })
-            socket.on('service-stopped', () => {
-                setProcessId(null)
-                setIsServiceRunning(false)
-            })
+    const stopService = (serviceId: number) => {
+        if (runningServices[serviceId]) {
+            socket.emit('stop-service', { processId: runningServices[serviceId] })
         }
     }
-
-        
 
     const refreshServiceList = async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-file`, {
@@ -70,17 +70,12 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                 <div key={index} className="mt-4">
                     <CollapsibleList title={service.name}>
                         {service.port && <p className="text-sm text-white">port: {service.port}</p>}
-                        {isServiceRunning ? (
-                            <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={stopService}>
+                        {runningServices[service.id] ? (
+                            <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => stopService(service.id)}>
                                 Stop Service
                             </button>
                         ) : (
-                            <button
-                                className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white"
-                                onClick={() => {
-                                    startService({ serviceID: service.id, serviceName: service.name })
-                                }}
-                            >
+                            <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => startService({ serviceID: service.id, serviceName: service.name })}>
                                 Start Service
                             </button>
                         )}

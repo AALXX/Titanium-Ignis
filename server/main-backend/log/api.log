@@ -56,3 +56,18 @@
 [12/2/2024, 11:59:01 PM] [INFO] [STOP_SERVICE] Stopped process 424f6512-7e00-4576-b3b8-d39a69f248ba
 [12/2/2024, 11:59:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [12/3/2024, 12:00:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 12:38:17 AM] [INFO] [STOP_SERVICE] Stopped process 3a33c408-055c-4751-8a52-0b333021ccc2
+[12/3/2024, 12:38:27 AM] [INFO] [STOP_SERVICE] Stopped process 41b4cf0b-2386-4414-8ba0-b4609395a4ed
+[12/3/2024, 12:42:38 AM] [INFO] [STOP_SERVICE] Stopped process 63287999-9d93-4410-8fa5-62061dd48222
+[12/3/2024, 12:42:44 AM] [INFO] [STOP_SERVICE] Stopped process 14940950-1156-4b1f-bd6c-13e21cf62866
+[12/3/2024, 12:46:25 AM] [INFO] [CLEANUP] Cleaned up process ec06d68c-28b3-4ed4-957d-562d602e7d91
+[12/3/2024, 12:46:25 AM] [INFO] [CLEANUP] Cleaned up process a82d1a04-3da4-4879-a9ec-4bff98ceda68
+[12/3/2024, 12:46:58 AM] [INFO] [CLEANUP] Cleaned up process eaca7102-8457-4a1b-87c4-b137bfe1bd9c
+[12/3/2024, 12:49:13 AM] [INFO] [CLEANUP] Cleaned up process a3ef842e-e2f2-483b-86c7-1552ae74518c
+[12/3/2024, 12:49:13 AM] [INFO] [CLEANUP] Cleaned up process c0a2e0e5-fb22-4449-83b2-5fb110a2e163
+[12/3/2024, 1:09:30 AM] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'start-command')
+[12/3/2024, 1:09:44 AM] [ERROR] [START_SERVICE] TypeError: Cannot read properties of undefined (reading 'start-command')
+[12/3/2024, 1:10:10 AM] [INFO] [CLEANUP] Cleaned up process 6bd13e83-2bf2-461d-a03e-dcaaa27ff9df
+[12/3/2024, 5:54:53 PM] [INFO] [CLEANUP] Cleaned up process ee251b9f-7c69-47fc-b224-1c9d336f0b4e
+[12/3/2024, 6:34:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:21:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
