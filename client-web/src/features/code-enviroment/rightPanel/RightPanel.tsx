@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Socket } from 'socket.io-client'
 import FloatingTerminal from '../terminal/FloatingTerminal'
 import { useWindows } from '@/features/windows-system/WindowsWrapper'
@@ -16,20 +16,18 @@ interface IRightPanel {
 const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
     const { createWindow } = useWindows()
     const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [] })
-    const [runningServices, setRunningServices] = useState<{ [serviceId: number]: string | null }>({})
+    const [runningServices, setRunningServices] = useState<Record<number, string>>({})
 
     useEffect(() => {
-        socket.on('service-started', (data: { processId: string; serviceId: number }) => {
-            console.log('Service started:', data.processId, 'for service ID:', data.serviceId)
-            setRunningServices(prev => ({ ...prev, [data.serviceId]: data.processId }))
+        socket.on('service-started', (data: { processId: string; serviceID: number }) => {
+            setRunningServices(prev => ({ ...prev, [data.serviceID]: data.processId }))
         })
 
-        socket.on('service-stopped', (data: { serviceId: number }) => {
-            console.log('Service stopped for service ID:', data.serviceId)
+        socket.on('service-stopped', (data: { processId: string; serviceID: number }) => {
             setRunningServices(prev => {
-                const updated = { ...prev }
-                delete updated[data.serviceId]
-                return updated
+                const newState = { ...prev }
+                delete newState[data.serviceID]
+                return newState
             })
         })
 
@@ -39,14 +37,13 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         }
     }, [socket])
 
-    const startService = ({ serviceID, serviceName }: { serviceID: number; serviceName: string }) => {
-        createWindow(serviceName, <FloatingTerminal socket={socket} terminalName={serviceName} />)
-        socket.emit('start-service', { userSessionToken, projectToken, serviceID })
-    }
-
-    const stopService = (serviceId: number) => {
-        if (runningServices[serviceId]) {
-            socket.emit('stop-service', { processId: runningServices[serviceId] })
+    const toggleService = (service: { id: number; name: string }) => {
+        if (runningServices[service.id]) {
+            socket.emit('stop-service', { processId: runningServices[service.id], serviceID: service.id })
+            delete runningServices[service.id]
+        } else {
+            createWindow(service.name, <FloatingTerminal socket={socket} terminalName={service.name} />)
+            socket.emit('start-service', { userSessionToken, projectToken, serviceID: service.id })
         }
     }
 
@@ -66,19 +63,13 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             <div className="flex">
                 <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={refreshServiceList} className="ml-auto cursor-pointer" width={25} height={25} />
             </div>
-            {projectConfig.services.map((service, index) => (
-                <div key={index} className="mt-4">
+            {projectConfig.services.map(service => (
+                <div key={service.id} className="mt-4">
                     <CollapsibleList title={service.name}>
                         {service.port && <p className="text-sm text-white">port: {service.port}</p>}
-                        {runningServices[service.id] ? (
-                            <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => stopService(service.id)}>
-                                Stop Service
-                            </button>
-                        ) : (
-                            <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => startService({ serviceID: service.id, serviceName: service.name })}>
-                                Start Service
-                            </button>
-                        )}
+                        <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => toggleService(service)}>
+                            {runningServices[service.id] ? 'Stop Service' : 'Start Service'}
+                        </button>
                     </CollapsibleList>
                 </div>
             ))}

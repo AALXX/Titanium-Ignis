@@ -60,9 +60,9 @@ func ReplicateAll(postgresDB *sql.DB, redisClient *redis.Client, tableName strin
 		}
 
 		// Determine primary key
-		primaryKey, ok := rowMap["id"]
+		primaryKey, ok := rowMap["service_token"]
 		if !ok {
-			log.Printf("Primary key 'id' not found in row: %v", rowMap)
+			log.Printf("Primary key 'service_token' not found in row: %v", rowMap)
 			continue
 		}
 		primaryKeyStr := fmt.Sprintf("%v", primaryKey)
@@ -75,16 +75,7 @@ func ReplicateAll(postgresDB *sql.DB, redisClient *redis.Client, tableName strin
 		}
 		log.Printf("Replicated row with Redis key: %s", redisKey)
 
-		// Index by `service_id` (secondary key)
-		serviceID, ok := rowMap["service_id"]
-		if ok {
-			serviceIDStr := fmt.Sprintf("%v", serviceID)
-			if err := redisClient.HSet(fmt.Sprintf("%s:service_id_index", tableName), serviceIDStr, redisKey).Err(); err != nil {
-				log.Printf("Error indexing service_id '%s' for Redis key '%s': %v", serviceIDStr, redisKey, err)
-			} else {
-				log.Printf("Indexed service_id '%s' to Redis key '%s'", serviceIDStr, redisKey)
-			}
-		}
+		
 	}
 
 	// Check for row iteration errors
@@ -111,7 +102,7 @@ func insertIntoPostgres(db *sql.DB, service Service) error {
 }
 
 func ProcessRedisToPostgres(redisClient *redis.Client, postgresDB *sql.DB) {
-	ticker := time.NewTicker(1 * time.Minute)
+	ticker := time.NewTicker(5 * time.Minute)
 	defer ticker.Stop()
 
 	for range ticker.C {
@@ -148,14 +139,16 @@ func ProcessRedisToPostgres(redisClient *redis.Client, postgresDB *sql.DB) {
 					continue
 				}
 
+				log.Printf("record: %v", record)
+
 				// Check if timestamp exists and is older than 2 minutes
 				timestamp, ok := record["timestamp"].(float64)
 				if !ok {
 					log.Printf("Timestamp not found for key %s", key)
 					continue
 				}
-				
-				if time.Now().Unix()-int64(timestamp) < 120 {
+
+				if time.Now().Unix()-int64(timestamp) < 300 {
 					log.Printf("Key %s is not yet eligible for processing", key)
 					continue
 				}

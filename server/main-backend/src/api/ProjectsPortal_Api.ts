@@ -2,7 +2,6 @@ import express, { NextFunction } from 'express';
 import http from 'http'; // Add this import
 import { Server } from 'socket.io';
 
-
 //* imports from route folder
 import UserAccountManagerRoutes from '../routes/UserAccountManager';
 import ProjectsRoutes from '../routes/ProjectsRoutes';
@@ -12,9 +11,10 @@ import SocketIoRoutes from '../routes/SocketIoRoutes';
 import config from '../config/config';
 import logging from '../config/logging';
 import { createPool, CustomRequest } from '../config/postgresql';
+import { connectRedis } from '../config/redis';
 
 const NAMESPACE = 'ProjectsPortal_Api';
-const app = express(); 
+const app = express();
 const server = http.createServer(app);
 
 // Setup Socket.IO with CORS
@@ -33,6 +33,14 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 logging.ensureLogFileExists();
 
 const pool = createPool();
+
+try {
+    (async () => {
+        await connectRedis();
+    })();
+} catch (error) {
+    logging.error(NAMESPACE, 'Error connecting to PostgreSQL:', error);
+}
 
 //* Rules of Api
 app.use((req: CustomRequest, res: any, next: NextFunction) => {
@@ -62,8 +70,6 @@ app.use((req: any, res: any, next: NextFunction) => {
         message: error.message,
     });
 });
-
-
 
 //* Create The Server
 server.listen(config.server.port, () => {

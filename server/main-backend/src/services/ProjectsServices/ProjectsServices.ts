@@ -9,6 +9,7 @@ import { ChildProcess, spawn } from 'child_process';
 import { Pool } from 'pg';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
+import { redisClient } from '../../config/redis';
 
 const NAMESPACE = 'PaymentServiceManager';
 
@@ -82,7 +83,6 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         const queryString = `SELECT * FROM projects WHERE project_token = $1`;
         const result: IProjectsDb[] = await query(connection!, queryString, [req.params.projectToken]);
 
-
         // Map the result to new variable names
         const projectsResponse: IProjectResponse = {
             ProjectName: result[0].project_name,
@@ -107,7 +107,6 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         });
     }
 };
-
 
 const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string; userSessionToken: string }) => {
     // try {
@@ -159,11 +158,28 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         // Store the process
         activeProcesses.set(processId, serviceProcess);
 
+        try {
+            redisClient.set(
+                `active_services:${processId}`,
+                JSON.stringify({
+                    service_name: projectConfig.services[serviceID - 1].name,
+                    service_id: serviceID,
+                    service_status: 'active',
+                    service_token: processId,
+                    timestamp: Date.now() / 1000,
+                }),
+            );
+        } catch (error: any) {
+            logging.error('START_SERVICE', error);
+        }
+
         // Send the process ID back to the client
-        socket.emit('service-started', { processId });
+        socket.emit('service-started', { processId, serviceID });
 
         // Error handling
         serviceProcess.on('error', (err) => {
+            redisClient.del(`active_services:${processId}`);
+
             socket.emit('service-error', {
                 error: true,
                 errmsg: err.message,
@@ -178,6 +194,8 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         });
 
         serviceProcess.stderr.on('data', (data) => {
+            redisClient.del(`active_services:${processId}`);
+
             socket.emit('service-error', {
                 processId,
                 error: data.toString(),
@@ -185,6 +203,8 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         });
 
         serviceProcess.on('close', (code) => {
+            redisClient.del(`active_services:${processId}`);
+
             socket.emit('service-stopped', {
                 processId,
                 code,
@@ -210,6 +230,7 @@ const stopService = async (socket: Socket, data: { processId: string }) => {
 
         // Kill the process
         process!.kill();
+        redisClient.del(`active_services:${processId}`);
         activeProcesses.delete(processId);
 
         socket.emit('service-stopped', { processId });
@@ -227,6 +248,7 @@ const cleanupSocketProcesses = (socket: Socket) => {
     for (const [processId, process] of activeProcesses.entries()) {
         try {
             process.kill();
+            redisClient.del(`active_services:${processId}`);
             activeProcesses.delete(processId);
             logging.info('CLEANUP', `Cleaned up process ${processId}`);
         } catch (error) {

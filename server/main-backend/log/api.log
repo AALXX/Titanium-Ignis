@@ -71,3 +71,119 @@
 [12/3/2024, 5:54:53 PM] [INFO] [CLEANUP] Cleaned up process ee251b9f-7c69-47fc-b224-1c9d336f0b4e
 [12/3/2024, 6:34:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [12/3/2024, 10:21:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:25:20 PM] [INFO] [CLEANUP] Cleaned up process c41c15dd-83c3-4043-9a78-d508ed662826
+[12/3/2024, 10:38:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:41:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:41:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:41:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:46:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:47:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:47:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:48:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:48:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:49:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:50:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:50:27 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:50:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:52:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:52:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:52:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 10:53:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:11:22 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:15:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:15:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:16:22 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:21:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:21:42 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:22:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:22:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:22:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:23:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:23:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:24:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:24:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:24:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:24:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:25:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:25:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:25:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:26:06 PM] [ERROR] [START_SERVICE] TypeError [ERR_INVALID_ARG_VALUE]: The argument 'file' cannot be empty. Received ''
+[12/3/2024, 11:26:19 PM] [INFO] [CLEANUP] Cleaned up process 7f2a4290-47bd-4233-a2cb-493ebbc72835
+[12/3/2024, 11:26:43 PM] [ERROR] [START_SERVICE] Error: Socket already opened
+[12/3/2024, 11:26:52 PM] [ERROR] [START_SERVICE] Error: Socket already opened
+[12/3/2024, 11:27:07 PM] [INFO] [CLEANUP] Cleaned up process c4f19916-7c74-4d41-8f43-ec0e15b9f980
+[12/3/2024, 11:27:07 PM] [INFO] [CLEANUP] Cleaned up process 6375cfd4-1252-4e03-b726-1b2ee6e146fa
+[12/3/2024, 11:28:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:45:29 PM] [INFO] [ProjectsPortal_Api] Connected to PostgreSQL
+[12/3/2024, 11:45:29 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:46:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:47:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:47:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:47:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:48:12 PM] [INFO] [CLEANUP] Cleaned up process 09e7fe5c-fa15-4101-bace-4080c79a0bc9
+[12/3/2024, 11:48:12 PM] [INFO] [CLEANUP] Cleaned up process 5728d807-ae8f-44a0-9755-0984e34e52a6
+[12/3/2024, 11:48:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:49:20 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:49:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:49:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:50:33 PM] [INFO] [CLEANUP] Cleaned up process a0f5fd34-b157-43f2-95f6-c5b5c5fe3a63
+[12/3/2024, 11:51:20 PM] [INFO] [CLEANUP] Cleaned up process 56f414bf-c130-439f-99b3-fd49bb8b4625
+[12/3/2024, 11:51:20 PM] [INFO] [CLEANUP] Cleaned up process fee0e364-2315-4625-9532-91f16f5cab40
+[12/3/2024, 11:53:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:55:23 PM] [INFO] [CLEANUP] Cleaned up process 11650fe1-e9fb-43c4-a7c8-9b5d6931acd6
+[12/3/2024, 11:55:23 PM] [INFO] [CLEANUP] Cleaned up process 4570f94c-3edf-42a3-8724-300a41cc11f1
+[12/3/2024, 11:56:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/3/2024, 11:58:32 PM] [INFO] [CLEANUP] Cleaned up process f8c7125f-f1d8-4f32-9c10-9676c6b8d5e5
+[12/4/2024, 12:02:47 AM] [INFO] [CLEANUP] Cleaned up process 5288ced4-cbed-4bb5-a5bb-81d339ddf798
+[12/4/2024, 12:03:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:04:21 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:05:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:05:48 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:08:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:08:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:09:31 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:09:37 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:10:24 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:10:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:10:47 AM] [INFO] [CLEANUP] Cleaned up process b580a24e-9525-4897-940a-c19ba28b6195
+[12/4/2024, 12:11:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:11:43 AM] [INFO] [CLEANUP] Cleaned up process b4320403-5e48-4091-87cd-1615cb3d47cd
+[12/4/2024, 12:13:32 AM] [INFO] [CLEANUP] Cleaned up process 2d3e4c61-e9be-4ccc-a834-b1b24053be71
+[12/4/2024, 12:13:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:14:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:14:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:14:47 AM] [INFO] [CLEANUP] Cleaned up process 61623483-43e9-4746-9ba4-377d607f15a0
+[12/4/2024, 12:59:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:59:19 AM] [INFO] [CLEANUP] Cleaned up process eacd15b5-75e2-4028-9c7c-7d851a8b5658
+[12/4/2024, 12:59:39 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 12:59:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:00:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:02:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:02:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:03:15 AM] [INFO] [CLEANUP] Cleaned up process 9ddaeb48-5721-498f-8332-bb9e28a7981c
+[12/4/2024, 1:06:26 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:09:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:09:35 AM] [INFO] [CLEANUP] Cleaned up process eaec83a5-fae6-4c98-8d3e-f2d357f02d36
+[12/4/2024, 1:09:58 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:10:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:10:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:11:05 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:11:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:16:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:16:54 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:17:55 AM] [INFO] [CLEANUP] Cleaned up process 2b08fd2f-57c7-4277-a976-ed8cef0d538e
+[12/4/2024, 1:20:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[12/4/2024, 1:21:02 AM] [INFO] [CLEANUP] Cleaned up process bbe92c19-5eb4-4011-a61c-3dc1371557b1
+[12/4/2024, 1:23:27 AM] [INFO] [CLEANUP] Cleaned up process cbccfb64-1f93-495b-a844-961cc91ea003
+[12/4/2024, 1:23:39 AM] [INFO] [STOP_SERVICE] Stopped process d669d3ee-0780-40f9-b8e4-2c991ad38b43
+[12/4/2024, 1:24:10 AM] [ERROR] [STOP_SERVICE] Process d669d3ee-0780-40f9-b8e4-2c991ad38b43 not found
+[12/4/2024, 1:24:10 AM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[12/4/2024, 1:24:23 AM] [INFO] [STOP_SERVICE] Stopped process 16e7c5ad-b350-4229-a44a-d67117abcc57
+[12/4/2024, 1:24:24 AM] [INFO] [STOP_SERVICE] Stopped process 6dd2d7d9-cde0-44e1-8ce7-318a09fb2a79
+[12/4/2024, 1:24:25 AM] [ERROR] [STOP_SERVICE] Process d669d3ee-0780-40f9-b8e4-2c991ad38b43 not found
+[12/4/2024, 1:24:25 AM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[12/4/2024, 1:24:35 AM] [INFO] [STOP_SERVICE] Stopped process fb56c1ec-06ac-48f7-8a87-d2fd1fd2d782
+[12/4/2024, 1:24:55 AM] [INFO] [STOP_SERVICE] Stopped process 42574dc6-cfbc-4bc5-be6d-eb69b693ec13
+[12/4/2024, 1:25:14 AM] [INFO] [STOP_SERVICE] Stopped process 88c7743c-c4fb-47c9-a7d4-a88195bf97ad
+[12/4/2024, 1:25:16 AM] [INFO] [STOP_SERVICE] Stopped process 64271ae3-66e6-4868-929f-927b36ee652d
+[12/4/2024, 1:25:19 AM] [INFO] [STOP_SERVICE] Stopped process 98a15b41-06b2-4bd2-b71b-6579eb5e82ec
