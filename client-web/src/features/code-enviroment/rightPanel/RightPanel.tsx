@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+'use client'
+
+import React, { useState, useEffect, useCallback } from 'react'
 import { Socket } from 'socket.io-client'
 import FloatingTerminal from '../terminal/FloatingTerminal'
 import { useWindows } from '@/features/windows-system/WindowsWrapper'
@@ -13,50 +15,95 @@ interface IRightPanel {
     userSessionToken: string
 }
 
+interface RunningService {
+    serviceID: number
+    processId: string
+}
+
 const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
     const { createWindow } = useWindows()
     const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [] })
-    const [runningServices, setRunningServices] = useState<Record<number, string>>({})
+    const [runningServices, setRunningServices] = useState<{
+        byServiceID: Record<number, string>
+        byProcessId: Record<string, number>
+    }>({
+        byServiceID: {},
+        byProcessId: {}
+    })
+
+    const addRunningService = useCallback((serviceID: number, processId: string) => {
+        setRunningServices(prev => ({
+            byServiceID: { ...prev.byServiceID, [serviceID]: processId },
+            byProcessId: { ...prev.byProcessId, [processId]: serviceID }
+        }))
+    }, [])
+
+    const removeRunningService = useCallback((processId: string) => {
+        setRunningServices(prev => {
+            const serviceID = prev.byProcessId[processId]
+            const newByServiceID = { ...prev.byServiceID }
+            const newByProcessId = { ...prev.byProcessId }
+            delete newByServiceID[serviceID]
+            delete newByProcessId[processId]
+            return { byServiceID: newByServiceID, byProcessId: newByProcessId }
+        })
+    }, [])
 
     useEffect(() => {
-        socket.on('service-started', (data: { processId: string; serviceID: number }) => {
-            setRunningServices(prev => ({ ...prev, [data.serviceID]: data.processId }))
-        })
+        const handleServiceStarted = (data: { processId: string; serviceID: number }) => {
+            addRunningService(data.serviceID, data.processId)
+            const service = projectConfig.services.find(s => s.id === data.serviceID)
+            if (service) {
+                createWindow(service.name, <FloatingTerminal socket={socket} windowId={data.processId} />, data.processId)
+            }
+        }
 
-        socket.on('service-stopped', (data: { processId: string; serviceID: number }) => {
-            setRunningServices(prev => {
-                const newState = { ...prev }
-                delete newState[data.serviceID]
-                return newState
-            })
-        })
+        const handleServiceStopped = (data: { processId: string }) => {
+            removeRunningService(data.processId)
+        }
+
+        socket.on('service-started', handleServiceStarted)
+        socket.on('service-stopped', handleServiceStopped)
 
         return () => {
-            socket.off('service-started')
-            socket.off('service-stopped')
+            socket.off('service-started', handleServiceStarted)
+            socket.off('service-stopped', handleServiceStopped)
         }
-    }, [socket])
+    }, [socket, createWindow, projectConfig, addRunningService])
 
     const toggleService = (service: { id: number; name: string }) => {
-        if (runningServices[service.id]) {
-            socket.emit('stop-service', { processId: runningServices[service.id], serviceID: service.id })
-            delete runningServices[service.id]
+        if (runningServices.byServiceID[service.id]) {
+            socket.emit('stop-service', {
+                processId: runningServices.byServiceID[service.id],
+                serviceID: service.id
+            })
         } else {
-            createWindow(service.name, <FloatingTerminal socket={socket} terminalName={service.name} />)
-            socket.emit('start-service', { userSessionToken, projectToken, serviceID: service.id })
+            socket.emit('start-service', {
+                userSessionToken,
+                projectToken,
+                serviceID: service.id
+            })
         }
     }
 
-    const refreshServiceList = async () => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-file`, {
-            params: { path: 'project-config.json', projectToken: projectToken, userSessionToken: userSessionToken }
-        })
-        setProjectConfig(response.data)
-    }
+    const refreshServiceList = useCallback(async () => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-file`, {
+                params: {
+                    path: 'project-config.json',
+                    projectToken,
+                    userSessionToken
+                }
+            })
+            setProjectConfig(response.data)
+        } catch (error) {
+            console.error('Failed to refresh service list:', error)
+        }
+    }, [projectToken, userSessionToken])
 
     useEffect(() => {
         refreshServiceList()
-    }, [])
+    }, [refreshServiceList])
 
     return (
         <div className="flex h-full w-[22rem] flex-col border-l border-[#333333] bg-[#1e1e1e] p-4">
@@ -68,7 +115,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                     <CollapsibleList title={service.name}>
                         {service.port && <p className="text-sm text-white">port: {service.port}</p>}
                         <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => toggleService(service)}>
-                            {runningServices[service.id] ? 'Stop Service' : 'Start Service'}
+                            {runningServices.byServiceID[service.id] ? 'Stop Service' : 'Start Service'}
                         </button>
                     </CollapsibleList>
                 </div>

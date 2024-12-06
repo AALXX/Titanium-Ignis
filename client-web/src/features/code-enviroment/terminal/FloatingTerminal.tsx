@@ -2,15 +2,13 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { Socket } from 'socket.io-client'
-import { WindowsProvider, useWindows } from '@/components/windows-system/WindowsWrapper'
 
 interface TerminalProps {
     socket: Socket
-    terminalName: string
-    processId?: string
+    windowId: string
 }
 
-const FloatingTerminal: React.FC<TerminalProps> = ({ socket, terminalName, processId }) => {
+const FloatingTerminal: React.FC<TerminalProps> = ({ socket, windowId }) => {
     const [history, setHistory] = useState<string[]>([])
     const terminalRef = useRef<HTMLDivElement>(null)
 
@@ -24,19 +22,27 @@ const FloatingTerminal: React.FC<TerminalProps> = ({ socket, terminalName, proce
         if (!socket) return
 
         const handleOutput = (data: { processId: string; output: string }) => {
-            setHistory(prev => [...prev, data.output])
+            if (data.processId === windowId) {
+                setHistory(prev => [...prev, data.output])
+            }
         }
 
         const handleServiceStarted = (data: { processId: string }) => {
-            setHistory(prev => [...prev, `Process started with ID: ${data.processId}`])
+            if (data.processId === windowId) {
+                setHistory(prev => [...prev, `Process started with ID: ${data.processId}`])
+            }
         }
 
         const handleServiceStopped = (data: { processId: string }) => {
-            setHistory(prev => [...prev, `Process ${data.processId} stopped`])
+            if (data.processId === windowId) {
+                setHistory(prev => [...prev, `Process ${data.processId} stopped`])
+            }
         }
 
         const handleError = (data: { processId?: string; error: string }) => {
-            setHistory(prev => [...prev, `Error: ${data.error}`])
+            if (data.processId === windowId) {
+                setHistory(prev => [...prev, `Error: ${data.error}`])
+            }
         }
 
         socket.on('service-output', handleOutput)

@@ -7,6 +7,7 @@ import RightPanel from './rightPanel/RightPanel'
 import { io, Socket } from 'socket.io-client'
 import WindowsProvider from '../windows-system/WindowsWrapper'
 import { IProjectViewWrapperProps } from './IProjectView'
+import { LoadingScreen } from '@/components/LoadingScreen'
 
 const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type, UserSessionToken }) => {
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null)
@@ -47,7 +48,11 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
     }, [])
 
     if (!socket) {
-        return <div>Connecting...</div>
+        return (
+            <div className="flex h-full w-full">
+                <LoadingScreen />
+            </div>
+        )
     }
 
     return (
