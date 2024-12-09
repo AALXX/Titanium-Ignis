@@ -1,4 +1,4 @@
-import { auth } from '@/auth'
+import { auth } from '@/features/auth/auth'
 
 const checkAccountStatus = async () => {
     try {

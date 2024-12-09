@@ -59,7 +59,6 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(500).SendString("Failed to check out project")
 	}
 
-
 	projectConfig := models.ProjectConfig{
 		Services: []models.ProjectService{},
 	}
@@ -101,7 +100,6 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	filePath := c.Query("path")
 	projectToken := c.Query("projectToken")
 
-
 	if !strings.HasPrefix(filePath, filePath) {
 		return c.Status(403).SendString("Access to this file is not allowed")
 	}
@@ -112,6 +110,21 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	}
 
 	return c.SendString(content)
+}
+
+func CreateNewFile(c fiber.Ctx, db *sql.DB) error {
+	body := new(models.CreateNewFileRequest)
+
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+	}
+	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+
+	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
+
+	os.WriteFile(fullFilePath, []byte(""), 0644)
+
+	return c.JSON(fiber.Map{"error": false})
 }
 
 func SaveRepositoryFile(c fiber.Ctx, db *sql.DB) error {
@@ -127,8 +140,23 @@ func SaveRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 	err := lib.SaveFile(fullFilePath, body.Content)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Failed to save file")
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete file"})
 	}
 
-	return c.SendString("File saved successfully")
+	return c.JSON(fiber.Map{"error": false})
+}
+
+func DeleteFile(c fiber.Ctx, db *sql.DB) error {
+	body := new(models.DeleteFileRequest)
+
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+	}
+	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
+	err := os.Remove(fullFilePath)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete file"})
+	}
+	return c.JSON(fiber.Map{"error": false})
 }

@@ -179,10 +179,10 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         // Error handling
         serviceProcess.on('error', (err) => {
             redisClient.del(`active_services:${processId}`);
-
+            activeProcesses.delete(processId);
             socket.emit('service-error', {
-                error: true,
-                errmsg: err.message,
+                processId,
+                error: err.message,
             });
         });
 
@@ -193,14 +193,17 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             });
         });
 
-        serviceProcess.stderr.on('data', (data) => {
-            redisClient.del(`active_services:${processId}`);
+        // don't know if this is needed
+        // serviceProcess.stderr.on('data', (data) => {
+        //     redisClient.del(`active_services:${processId}`);
+        //     activeProcesses.delete(processId);
+        //     console.log(data);
 
-            socket.emit('service-error', {
-                processId,
-                error: data.toString(),
-            });
-        });
+        //     socket.emit('service-error', {
+        //         processId,
+        //         error: data.toString(),
+        //     });
+        // });
 
         serviceProcess.on('close', (code) => {
             redisClient.del(`active_services:${processId}`);

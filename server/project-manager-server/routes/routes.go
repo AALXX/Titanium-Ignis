@@ -17,7 +17,6 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 		StrictPolicy: false,
 	}))
 
-	// Regular HTTP routes
 	app.Post("/api/projects/create-project-entry", func(c fiber.Ctx) error {
 		return services.CreateProjectEntry(c, db)
 	})
@@ -32,5 +31,13 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 
 	app.Post("/api/projects/save-file", func(c fiber.Ctx) error {
 		return services.SaveRepositoryFile(c, db)
+	})
+
+	app.Post("/api/projects/new-file", func(c fiber.Ctx) error {
+		return services.CreateNewFile(c, db)
+	})
+
+	app.Delete("/api/projects/delete-file", func(c fiber.Ctx) error {
+		return services.DeleteFile(c, db)
 	})
 }

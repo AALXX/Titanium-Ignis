@@ -6,7 +6,8 @@ import axios from 'axios'
 
 const config: NextAuthConfig = {
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60
     },
     providers: [
         GitHub({
@@ -56,7 +57,7 @@ const config: NextAuthConfig = {
                 return true
             } catch (error) {
                 console.error('Error during sign-in', error)
-                return false // Sign-in failed
+                return false
             }
         }
     }

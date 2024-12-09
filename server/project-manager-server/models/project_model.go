@@ -57,3 +57,15 @@ type SaveFileRequest struct {
 	Path             string `json:"path"`
 	Content          string `json:"content"`
 }
+
+type CreateNewFileRequest struct {
+	ProjectToken     string `json:"projectToken"`
+	UserSessionToken string `json:"userSessionToken"`
+	Path             string `json:"path"`
+}
+
+type DeleteFileRequest struct {
+	ProjectToken     string `json:"projectToken"`
+	UserSessionToken string `json:"userSessionToken"`
+	Path             string `json:"path"`
+}
