@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/google/uuid"
+
 	"project-manager-server/models"
 	"time"
 
@@ -88,9 +90,11 @@ func GetDirectoryStructure(basePath string) ([]models.FileNode, error) {
 
 	for _, file := range files {
 		node := models.FileNode{
+			UUID:  uuid.New().String(),
 			Name:  file.Name(),
 			Path:  filepath.Join(basePath, file.Name()),
 			IsDir: file.IsDir(),
+			IsNew: false,
 		}
 
 		if file.IsDir() {

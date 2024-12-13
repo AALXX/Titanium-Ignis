@@ -45,9 +45,11 @@ type ProjectConfig struct {
 }
 
 type FileNode struct {
+	UUID     string     `json:"uuid"`
 	Name     string     `json:"name"`
 	Path     string     `json:"path"`
 	IsDir    bool       `json:"is_dir"`
+	IsNew    bool       `json:"is_new"`
 	Children []FileNode `json:"children,omitempty"`
 }
 
