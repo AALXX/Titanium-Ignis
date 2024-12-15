@@ -5,11 +5,12 @@ import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
 import { IProjectsDb, IProjectsResponse, IProjectResponse, IProjectConfig } from '../../Models/ProjectsModels';
 import { Socket } from 'socket.io';
-import { ChildProcess, spawn } from 'child_process';
+import child_process from 'child_process';
 import { Pool } from 'pg';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
 import { redisClient } from '../../config/redis';
+import { IProcess } from '../../Models/ProcessModels';
 
 const NAMESPACE = 'PaymentServiceManager';
 
@@ -109,14 +110,26 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
 };
 
 const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string; userSessionToken: string }) => {
-    // try {
-    //     const connection = await connect(pool);
-    // } catch (error: any) {
-    //     logging.error('JOIN_REPO_FUNC', error);
-    // }
+    try {
+        const connection = await connect(pool);
+
+        //Get running services
+        //check the redis chache first than the postgres db
+        const redisKey = `active_services_${data.projectToken}`;
+        let runningServices = await redisClient.get(redisKey);
+        if (!runningServices) {
+            const queryString = `SELECT * FROM active_services WHERE project_token = $1`;
+            const result: IProcess[] = await query(connection!, queryString, [data.projectToken]);
+
+            runningServices = JSON.stringify(result);
+            await redisClient.set(redisKey, runningServices);
+        }
+    } catch (error: any) {
+        logging.error('JOIN_REPO_FUNC', error);
+    }
 };
 
-const activeProcesses: Map<string, ChildProcess> = new Map();
+const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
 const startService = async (socket: Socket, userSessionToken: string, projectToken: string, serviceID: number) => {
     try {
         // Generate a unique process ID
@@ -150,35 +163,37 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             workinDir = `${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
         }
 
-        const serviceProcess = spawn(command, args, {
+        const serviceProcess = child_process.spawn(command, args, {
             cwd: workinDir,
+
             // shell: true,
         });
+
+        console.log(serviceProcess.pid);
 
         // Store the process
         activeProcesses.set(processId, serviceProcess);
 
-        try {
-            redisClient.set(
-                `active_services:${processId}`,
-                JSON.stringify({
-                    service_name: projectConfig.services[serviceID - 1].name,
-                    service_id: serviceID,
-                    service_status: 'active',
-                    service_token: processId,
-                    timestamp: Date.now() / 1000,
-                }),
-            );
-        } catch (error: any) {
-            logging.error('START_SERVICE', error);
+        if (
+            !(await utilFunctions.saveService(projectToken, {
+                service_token: processId,
+                service_name: projectConfig.services[serviceID - 1].name,
+                service_id: serviceID,
+                service_status: 'started',
+            }))
+        ) {
+            logging.error('STARTS_SERVICE_SAVING_SERVICE_FUNC', 'Failed to save service');
         }
 
         // Send the process ID back to the client
         socket.emit('service-started', { processId, serviceID });
 
         // Error handling
-        serviceProcess.on('error', (err) => {
-            redisClient.del(`active_services:${processId}`);
+        serviceProcess.on('error', async (err) => {
+            if (!(await utilFunctions.removeService(projectToken, processId))) {
+                logging.error('STARTS_SERVICE_REMOVING_SERVICE_FUNC', 'Failed to remove service');
+            }
+
             activeProcesses.delete(processId);
             socket.emit('service-error', {
                 processId,
@@ -205,9 +220,10 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         //     });
         // });
 
-        serviceProcess.on('close', (code) => {
-            redisClient.del(`active_services:${processId}`);
-
+        serviceProcess.on('close', async (code) => {
+            if (!(await utilFunctions.removeService(projectToken, processId))) {
+                logging.error('STARTS_SERVICE_REMOVING_SERVICE_FUNC', 'Failed to remove service');
+            }
             socket.emit('service-stopped', {
                 processId,
                 code,
@@ -222,22 +238,40 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
     }
 };
 
-const stopService = async (socket: Socket, data: { processId: string }) => {
+const stopService = async (socket: Socket, data: { projectToken: string, processId: string }) => {
     try {
-        const { processId } = data;
+        const { processId, projectToken } = data;
         const process = activeProcesses.get(processId);
 
         if (!process) {
             logging.error('STOP_SERVICE', `Process ${processId} not found`);
         }
 
-        // Kill the process
-        process!.kill();
-        redisClient.del(`active_services:${processId}`);
-        activeProcesses.delete(processId);
 
-        socket.emit('service-stopped', { processId });
-        logging.info('STOP_SERVICE', `Stopped process ${processId}`);
+        try {
+            process!.kill();
+            // // Wait for a short time to see if the process exits on its own
+            // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // // Check if the process is still running
+            // if (process!.killed === false) {
+            //     console.log(`Process ${process!.pid} did not exit gracefully. Forcing termination.`);
+            // }
+
+            if (!(await utilFunctions.removeService(projectToken, processId))) {
+                logging.error('STARTS_SERVICE_REMOVING_SERVICE_FUNC', 'Failed to remove service');
+            }
+            
+            activeProcesses.delete(processId);
+            socket.emit('service-stopped', { processId });
+            logging.info('STOP_SERVICE', `Stopped process ${processId}`);
+        } catch (error: any) {
+            logging.error('STOP_SERVICE', error);
+            socket.emit('service-error', {
+                processId: data.processId,
+                error: 'Failed to stop service',
+            });
+        }
     } catch (error: any) {
         logging.error('STOP_SERVICE', error);
         socket.emit('service-error', {

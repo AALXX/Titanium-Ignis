@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 import { Connection, Pool, PoolClient } from 'pg';
+import { redisClient } from '../config/redis';
 
 //* /////////////////////////////
 //*      Account related       //
@@ -125,7 +126,6 @@ const checkEmailExists = async (connection: PoolClient, userEmail: string): Prom
     }
 };
 
-
 /**
  * Retrieves the user's private token from their public token.
  *
@@ -156,7 +156,7 @@ const getUserPrivateTokenFromSessionToken = async (connection: PoolClient, sessi
         logging.error(NAMESPACE, error.message, error);
         return null;
     }
-}
+};
 
 /**
  * Retrieves the user's private token from their public token.
@@ -246,7 +246,6 @@ const getUserPublicTokenFromPrivateToken = async (connection: PoolClient, userPr
     }
 };
 
-
 const RemoveDirectory = (folderPath: string): Promise<void> => {
     return new Promise((resolve, reject) => {
         fs.readdir(folderPath, (err, files) => {
@@ -295,6 +294,104 @@ const RemoveDirectory = (folderPath: string): Promise<void> => {
     });
 };
 
+const saveService = async (
+    projectToken: string,
+    serviceData: {
+        service_token: string;
+        service_name: string;
+        service_id: number;
+        service_status: string;
+    },
+): Promise<boolean> => {
+    try {
+        // Store by project token
+        await redisClient.hSet(
+            `active_services:${projectToken}`,
+            serviceData.service_token,
+            JSON.stringify({
+                ...serviceData,
+                timestamp: Date.now() / 1000,
+            }),
+        );
+
+        // Create a separate set to track process IDs for quick retrieval
+        await redisClient.sAdd(`active_services_tokens:${projectToken}`, serviceData.service_token);
+        return true;
+    } catch (error: any) {
+        logging.error('SAVE_ACTIVE_SERVICE', error);
+        return false;
+    }
+};
+
+const getAllActiveServices = async (projectToken: string): Promise<any[]> => {
+    try {
+        // Retrieve all services for the project
+        const services = await redisClient.hGetAll(`active_services:${projectToken}`);
+
+        // Convert to array and parse
+        return Object.entries(services)
+            .map(([token, serviceJson]) => {
+                try {
+                    return JSON.parse(serviceJson);
+                } catch (parseError: any) {
+                    logging.error('PARSE_SERVICE_ERROR', parseError);
+                    return null;
+                }
+            })
+            .filter((service) => service !== null);
+    } catch (error: any) {
+        logging.error('GET_ACTIVE_SERVICES', error);
+        return [];
+    }
+};
+
+// Get a specific service by token
+const getServiceByToken = async (projectToken: string, serviceToken: string) => {
+    try {
+        const serviceJson = await redisClient.hGet(`active_services:${projectToken}`, serviceToken);
+
+        return serviceJson ? JSON.parse(serviceJson) : null;
+    } catch (error: any) {
+        logging.error('GET_SERVICE_BY_TOKEN', error);
+        return null;
+    }
+};
+
+// Remove a service
+const removeService = async (projectToken: string, serviceToken: string): Promise<boolean> => {
+    try {
+        // Remove from hash
+        await redisClient.hDel(`active_services:${projectToken}`, serviceToken);
+
+        // Remove from set of tokens
+        await redisClient.sRem(`active_services_tokens:${projectToken}`, serviceToken);
+        return true;
+    } catch (error: any) {
+        logging.error('REMOVE_ACTIVE_SERVICE', error);
+        throw false;
+    }
+};
+
+// Get all service tokens for a project
+const getActiveServiceTokens = async (projectToken: string) => {
+    try {
+        return await redisClient.sMembers(`active_services_tokens:${projectToken}`);
+    } catch (error: any) {
+        logging.error('GET_ACTIVE_SERVICE_TOKENS', error);
+        return [];
+    }
+};
+
+// Check if a service exists
+const serviceExists = async (projectToken: string, serviceToken: string) => {
+    try {
+        return await redisClient.hExists(`active_services:${projectToken}`, serviceToken);
+    } catch (error: any) {
+        logging.error('SERVICE_EXISTS_CHECK', error);
+        return false;
+    }
+};
+
 export default {
     HashPassword,
     generateSecurePassword,
@@ -306,4 +403,10 @@ export default {
     getUserPrivateTokenFromPublicToken,
     getUserPrivateTokenFromSessionToken,
     RemoveDirectory,
+    saveService,
+    getAllActiveServices,
+    getServiceByToken,
+    removeService,
+    getActiveServiceTokens,
+    serviceExists,
 };

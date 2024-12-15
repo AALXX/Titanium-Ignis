@@ -75,7 +75,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         if (runningServices.byServiceID[service.id]) {
             socket.emit('stop-service', {
                 processId: runningServices.byServiceID[service.id],
-                serviceID: service.id
+                projectToken: projectToken,
             })
         } else {
             socket.emit('start-service', {

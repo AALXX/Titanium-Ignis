@@ -7,23 +7,21 @@ const NAMESPACE = 'SocketIO';
 
 const initSorketioRoutes = (io: Server, pool: Pool) => {
     io.on('connection', (socket) => {
-
-
         socket.on('join-repo', (data) => {
             ProjectsServices.joinRepo(socket, pool, data);
         });
 
-        socket.on('start-service', (data: {userSessionToken: string,  projectToken: string ,serviceID: number }) => {
+        socket.on('start-service', (data: { userSessionToken: string; projectToken: string; serviceID: number }) => {
             ProjectsServices.startService(socket, data.userSessionToken, data.projectToken, data.serviceID);
         });
 
-        socket.on('stop-service', (data: { processId: string }) => {
+        socket.on('stop-service', (data: { projectToken: string; processId: string }) => {
             ProjectsServices.stopService(socket, data);
         });
 
         // Clean up processes when client disconnects
         socket.on('disconnect', () => {
-            ProjectsServices.cleanupSocketProcesses(socket);
+            // ProjectsServices.cleanupSocketProcesses(socket);
         });
     });
 };

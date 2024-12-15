@@ -6,10 +6,7 @@ import (
 	"replication-tool/redis"
 	"replication-tool/replicator"
 
-	// "your-module/internal/config"
-	// "your-module/internal/postgres"
-	// "your-module/internal/redis"
-	// "your-module/internal/replicator"
+
 	"github.com/joho/godotenv"
 )
 
