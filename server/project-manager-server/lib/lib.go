@@ -3,6 +3,7 @@ package lib
 import (
 	"database/sql"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 
@@ -74,8 +75,6 @@ func GetPrivateTokenBySessionToken(SessionToken string, db *sql.DB) string {
 	return UserPrivateToken
 }
 
-
-
 ///////////////////////////////////
 //		Projects Related		//
 //////////////////////////////////
@@ -126,4 +125,45 @@ func SaveFile(filePath string, content string) error {
 		return err
 	}
 	return nil
+}
+
+// Function to copy directory recursively
+func CopyDir(src string, dst string) error {
+	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Get relative path
+		relPath, err := filepath.Rel(src, path)
+		if err != nil {
+			return err
+		}
+		dstPath := filepath.Join(dst, relPath)
+
+		if info.IsDir() {
+			// Create directory
+			return os.MkdirAll(dstPath, info.Mode())
+		} else {
+			// Copy file
+			srcFile, err := os.Open(path)
+			if err != nil {
+				return err
+			}
+			defer srcFile.Close()
+
+			dstFile, err := os.Create(dstPath)
+			if err != nil {
+				return err
+			}
+			defer dstFile.Close()
+
+			_, err = io.Copy(dstFile, srcFile)
+			if err != nil {
+				return err
+			}
+
+			return os.Chmod(dstPath, info.Mode())
+		}
+	})
 }

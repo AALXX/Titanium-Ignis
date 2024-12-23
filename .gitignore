@@ -48,3 +48,4 @@ server/main-backend/next-env.d.ts
 server/file-server/.env
 server/project-manager-server/.env
 server/repos
+server/projects

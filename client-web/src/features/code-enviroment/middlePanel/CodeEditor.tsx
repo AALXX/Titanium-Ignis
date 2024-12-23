@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Editor } from '@monaco-editor/react'
 import { stripReposPath, getLanguageFromFilePath } from '../utils'
 
-const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
+const FileEditor = ({ filePath, projectToken, userSessionToken }: { filePath: string | null; projectToken: string; userSessionToken: string }) => {
     const [fileContent, setFileContent] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -89,6 +89,18 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
         }
     }, [handleKeyDown])
 
+    const handleGenereteRepository = async () => {
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/generate-repository`, {
+                projectToken: projectToken,
+                userSessionToken: userSessionToken
+            })
+            console.log('Repository generated:', response.data)
+        } catch (error) {
+            console.error('Error generating repository:', error)
+        }
+    }
+
     return (
         <div className="flex h-full w-full flex-col bg-[#1e1e1e] text-white">
             <div className="flex flex-shrink-0 border-b border-[#333333] p-4">
@@ -109,8 +121,8 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: any) => {
                         'No file selected'
                     )}
                 </h2>
-                <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleSaveFile}>
-                    Save
+                <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleGenereteRepository}>
+                    Generete Repository
                 </button>
             </div>
             <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-full">

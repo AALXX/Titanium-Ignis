@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "server": "nodemon --exec ts-node src/api/ProjectsPortal_Api.ts",
+        "server": "nodemon --exec ts-node  src/api/ProjectsPortal_Api.ts",
         "start": "node backend-build/api/BackendApp_Api.js",
         "build": "tsc ",
         "test": "jest",

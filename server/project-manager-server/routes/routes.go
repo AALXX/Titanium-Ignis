@@ -17,8 +17,16 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 		StrictPolicy: false,
 	}))
 
-	app.Post("/api/projects/create-project-entry", func(c fiber.Ctx) error {
-		return services.CreateProjectEntry(c, db)
+	///////////////////////////////////////////////////////////////
+	// 						PROJECTS							 //
+	///////////////////////////////////////////////////////////////
+
+	app.Post("/api/projects/add-project", func(c fiber.Ctx) error {
+		return services.AddProjectEntry(c, db)
+	})
+
+	app.Post("/api/projects/create-project", func(c fiber.Ctx) error {
+		return services.CreateProject(c, db)
 	})
 
 	app.Get("/api/projects/repo-tree", func(c fiber.Ctx) error {
@@ -39,5 +47,30 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 
 	app.Delete("/api/projects/delete-file", func(c fiber.Ctx) error {
 		return services.DeleteFile(c, db)
+	})
+
+	///////////////////////////////////////////////////////////////
+	// 						REPOSITORIES						 //
+	///////////////////////////////////////////////////////////////
+
+	app.Post("/api/repositories/generate-repository", func(c fiber.Ctx) error {
+		return services.GenerateRepository(c, db)
+
+	})
+
+	app.Post("/api/repositories/create/:repo", func(c fiber.Ctx) error {
+		return services.CreateRepo(c)
+	})
+
+	app.Get("/api/repositories/:repo/info/refs", func(c fiber.Ctx) error {
+		return services.HandleInfoRefs(c)
+	})
+
+	app.Post("/api/repositories/:repo/git-upload-pack", func(c fiber.Ctx) error {
+		return services.HandleRPC(c)
+	})
+
+	app.Post("/api/repositories/:repo/git-receive-pack", func(c fiber.Ctx) error {
+		return services.HandleRPC(c)
 	})
 }

@@ -105,23 +105,40 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         refreshServiceList()
     }, [refreshServiceList])
 
-    return (
-        <div className="flex h-full w-[22rem] flex-col border-l border-[#333333] bg-[#1e1e1e] p-4">
-            <div className="flex">
-                <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={refreshServiceList} className="ml-auto cursor-pointer" width={25} height={25} />
-            </div>
-            {projectConfig.services.map(service => (
-                <div key={service.id} className="mt-4">
-                    <CollapsibleList title={service.name}>
-                        {service.port && <p className="text-sm text-white">port: {service.port}</p>}
-                        <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => toggleService(service)}>
-                            {runningServices.byServiceID[service.id] ? 'Stop Service' : 'Start Service'}
-                        </button>
-                    </CollapsibleList>
-                </div>
-            ))}
-        </div>
-    )
+     return (
+         <div className="flex h-full w-[22rem] flex-col border-l border-[#333333] bg-[#1e1e1e] p-4">
+             <div className="flex">
+                 <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={refreshServiceList} className="ml-auto cursor-pointer" width={25} height={25} />
+             </div>
+
+             {Object.values(projectConfig).length === 0 ? (
+                 <div className="mt-4 text-white">No services are currently defined.</div>
+             ) : (
+                 <>
+                     {projectConfig.services.map((service, index) => (
+                         <React.Fragment key={`service-${index}`}>
+                             {service.id === undefined || service.name === undefined ? (
+                                 <div className="mt-4">
+                                     <CollapsibleList title="Error">
+                                         <p className="text-white">Error: Invalid service configuration (id or name is undefined).</p>
+                                     </CollapsibleList>
+                                 </div>
+                             ) : (
+                                 <div key={service.id} className="mt-4">
+                                     <CollapsibleList title={service.name}>
+                                         {service.port && <p className="text-sm text-white">port: {service.port}</p>}
+                                         <button className="mt-4 rounded-md bg-[#333333] px-4 py-2 text-white" onClick={() => toggleService(service)}>
+                                             {runningServices.byServiceID[service.id] ? 'Stop Service' : 'Start Service'}
+                                         </button>
+                                     </CollapsibleList>
+                                 </div>
+                             )}
+                         </React.Fragment>
+                     ))}
+                 </>
+             )}
+         </div>
+     )
 }
 
 export default RightPanel

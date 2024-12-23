@@ -119,7 +119,7 @@ describe('ProjectsServices', () => {
         (utilFunctions.default.getUserPrivateTokenFromSessionToken as jest.Mock).mockResolvedValue('user-private-token');
         (fs.readFileSync as jest.Mock).mockReturnValue(JSON.stringify(mockProjectConfig));
 
-        process.env.REPOSITORIES_FOLDER_PATH = '../repos';
+        process.env.PROJECTS_FOLDER_PATH = '../projects';
     });
 
     describe('getAllProjects', () => {

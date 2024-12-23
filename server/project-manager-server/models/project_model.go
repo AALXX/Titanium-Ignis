@@ -4,11 +4,16 @@ import (
 	"time"
 )
 
-type ProjectRequest struct {
+type AddProjectRequest struct {
 	Project_name string `json:"ProjectName"`
 	Repo_url     string `json:"RepoUrl"`
 	SessionToken string `json:"UserSessionToken"`
 	Type         string `json:"Type"`
+}
+
+type CreateProjectRequest struct {
+	Project_name string `json:"ProjectName"`
+	SessionToken string `json:"UserSessionToken"`
 }
 
 type Project struct {

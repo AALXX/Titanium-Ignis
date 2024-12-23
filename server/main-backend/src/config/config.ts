@@ -15,7 +15,6 @@ const POSTGRESQL = {
     database: POSTGRESQL_DATABASE,
 };
 
-
 //* API config
 const SERVER_HSOTNAME = process.env.SERVER_HSOTNAME || 'localhost';
 const SERVER_PORT = process.env.PORT || 7070;

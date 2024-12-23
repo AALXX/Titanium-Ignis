@@ -15,16 +15,21 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
+func AddProjectEntry(c fiber.Ctx, db *sql.DB) error {
 
 	//Get body from request
-	body := new(models.ProjectRequest)
+	body := new(models.AddProjectRequest)
 
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 
 	userPrivateToken := lib.GetPrivateTokenBySessionToken(body.SessionToken, db)
+
+	if userPrivateToken == "" {
+		return c.Status(500).SendString("Failed to create project")
+	}
+
 	// Check if the URL ends with .git and add it if not
 	repoURL := body.Repo_url
 	if !strings.HasSuffix(repoURL, ".git") {
@@ -34,7 +39,7 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 	projectType := strings.ToLower(body.Type)
 
 	projectToken := lib.CreateToken()
-	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 
 	rows, err := db.Query("INSERT INTO projects (project_name, project_token, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, projectToken, repoURL, userPrivateToken, "checking-out", projectType)
 	if err != nil {
@@ -83,10 +88,46 @@ func CreateProjectEntry(c fiber.Ctx, db *sql.DB) error {
 	})
 }
 
+func CreateProject(c fiber.Ctx, db *sql.DB) error {
+
+	body := new(models.CreateProjectRequest)
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+	}
+
+	ProjectToken := lib.CreateToken()
+
+	os.MkdirAll(fmt.Sprintf("%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken), 0755)
+	os.WriteFile(fmt.Sprintf("%s/%s/project-config.json", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken), []byte("{}"), 0644)
+	cmd := exec.Command("git", "init", ".")
+	cmd.Dir = fmt.Sprintf("%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken)
+	err := cmd.Run()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to create project")
+	}
+
+	userPrivateToken := lib.GetPrivateTokenBySessionToken(body.SessionToken, db)
+
+	if userPrivateToken == "" {
+		return c.Status(500).SendString("Failed to create project")
+	}
+
+	rows, err := db.Query("INSERT INTO projects (project_name, project_token, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, ProjectToken, "", userPrivateToken, "checking-out", "git")
+	if err != nil {
+		log.Println("Error creating project entry in database:", err)
+		return c.Status(500).SendString("Failed to create project entry in database")
+	}
+	defer rows.Close()
+
+	return c.JSON(fiber.Map{
+		"error": false,
+	})
+}
+
 func GetRepositoryTree(c fiber.Ctx, db *sql.DB) error {
 	repoToken := c.Query("projectToken")
-	
-	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 
 	tree, err := lib.GetDirectoryStructure(fmt.Sprintf("%s/%s", RepoPath, repoToken))
 	if err != nil {
@@ -104,7 +145,7 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(403).SendString("Access to this file is not allowed")
 	}
 
-	content, err := lib.GetFileContents(fmt.Sprintf("%s/%s/%s", os.Getenv("REPOSITORIES_FOLDER_PATH"), projectToken, filePath))
+	content, err := lib.GetFileContents(fmt.Sprintf("%s/%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), projectToken, filePath))
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Failed to read file")
 	}
@@ -115,15 +156,13 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 func CreateNewFile(c fiber.Ctx, db *sql.DB) error {
 	body := new(models.CreateNewFileRequest)
 
-
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
-	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 
-	
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
-	
+
 	err := os.WriteFile(fullFilePath, []byte(""), 0644)
 	if err != nil {
 		log.Println(err)
@@ -137,12 +176,12 @@ func CreateNewFile(c fiber.Ctx, db *sql.DB) error {
 func SaveRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 
 	body := new(models.SaveFileRequest)
-	
+
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 
-	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 	err := lib.SaveFile(fullFilePath, body.Content)
@@ -159,7 +198,7 @@ func DeleteFile(c fiber.Ctx, db *sql.DB) error {
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
-	RepoPath := os.Getenv("REPOSITORIES_FOLDER_PATH")
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 	err := os.Remove(fullFilePath)
 	if err != nil {

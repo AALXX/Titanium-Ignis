@@ -17,19 +17,24 @@ const ProjectCardTemplate = (props: ProjectCardTemplateProps) => {
     const handleMouseEnter = () => setShowTooltip(true)
     const handleMouseLeave = () => setShowTooltip(false)
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        setTooltipPosition({ x: e.clientX, y: e.clientY })
+        const rect = e.currentTarget.getBoundingClientRect()
+
+        setTooltipPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        })
     }
 
     return (
         <Link href={`/projects/view/${props.ProjectToken}`}>
-            <div className="relative flex h-[15rem] w-full rounded-xl bg-[#0000004d] transition-all hover:bg-[#0000008a]" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>
+            <div className="relative flex h-[15rem] w-full rounded-xl bg-[#0000004d] transition-all hover:bg-[#0000008a]" onMouseMove={handleMouseMove} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <TruncatedText characters={20} text={props.ProjectName} className="m-auto text-3xl font-bold text-white" />
                 {showTooltip && (
                     <div
                         className="absolute z-10 rounded bg-black px-2 py-1 text-sm text-white shadow-lg"
                         style={{
-                            left: `${tooltipPosition.x - 60}px`,
-                            top: `${tooltipPosition.y - 60}px`
+                            left: `${tooltipPosition.x + 60}px`,
+                            top: `${tooltipPosition.y + 60}px`
                         }}
                     >
                         {props.ProjectName}

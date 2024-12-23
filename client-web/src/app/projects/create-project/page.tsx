@@ -1,4 +1,4 @@
-import AddProjectForm from '@/features/projects/components/AddProjectForm'
+import CreateProjectForm from '@/features/projects/components/CreateProjectForm'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 
 const CreateProjectPage = async () => {
@@ -8,7 +8,7 @@ const CreateProjectPage = async () => {
         return <div className="h-full self-center text-white">Please login to create a project</div>
     }
 
-    return <AddProjectForm userSessionToken={accessToken} />
+    return <CreateProjectForm userSessionToken={accessToken} />
 }
 
 export default CreateProjectPage

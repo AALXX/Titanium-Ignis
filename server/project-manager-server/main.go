@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"project-manager-server/config"
+
 	// "project-manager-server/lib"
 	"project-manager-server/routes"
 
@@ -33,12 +34,18 @@ func main() {
 	defer db.Close()
 
 	// Create a Fiber app
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		StreamRequestBody: true,
+		ReadBufferSize:    4096,
+		WriteBufferSize:   4096,
+		BodyLimit:         50 * 1024 * 1024, // 50MB limit
+	})
 
-	// Enable CORS middleware
+	// Modify the CORS configuration:
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: cors.ConfigDefault.AllowOrigins,
-		AllowMethods: fiber.DefaultMethods,
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"GET", "POST", "HEAD", "PUT", "DELETE", "PATCH"},
+		AllowHeaders: []string{"*"},
 	}))
 
 	// Initialize routes

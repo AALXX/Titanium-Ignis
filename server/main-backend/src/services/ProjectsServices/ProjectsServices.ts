@@ -140,7 +140,7 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         };
 
         try {
-            projectConfig = JSON.parse(fs.readFileSync(`${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
+            projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
         } catch (error: any) {
             logging.error('STARTS_SERVICE_READING_FILE_FUNC', error.message);
         }
@@ -157,10 +157,10 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
         const commandParts = startCommand.split(' ');
         const command = commandParts[0];
         const args = commandParts.slice(1);
-        let workinDir = `${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}`;
+        let workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`;
 
         if (projectConfig.services[serviceID - 1].dir) {
-            workinDir = `${process.env.REPOSITORIES_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
+            workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
         }
 
         const serviceProcess = child_process.spawn(command, args, {

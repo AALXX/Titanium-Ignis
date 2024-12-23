@@ -9,11 +9,11 @@ interface CreateProjectFormProps {
 
 const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken }) => {
     const [projectName, setProjectName] = useState<string>('')
-    const [RepoURL, setRepoURL] = useState<string>('')
-    const [RepoType, setRepoType] = useState<string>('Git')
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [repoType, setRepoType] = useState<string>('')
 
-    const createProject = async () => {
+    const createProject = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         if (!userSessionToken) {
             console.error('User token not found')
             return
@@ -21,13 +21,11 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
 
         try {
             setIsLoading(true)
-            const resp = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/create-project-entry`, {
+            const resp = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/create-project`, {
                 ProjectName: projectName,
-                RepoUrl: RepoURL,
-                UserSessionToken: userSessionToken,
-                Type: RepoType
+                UserSessionToken: userSessionToken
             })
-            if (resp.data) setIsLoading(false)
+            if (resp.status === 200) setIsLoading(false)
         } catch (error) {
             console.error('Error creating project:', error)
         }
@@ -35,7 +33,7 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
 
     return (
         <div className="flex h-full justify-center">
-            <div className="flex h-[60vh] w-[90%] flex-col self-center rounded-3xl bg-[#0000004d] p-4 shadow-xl md:h-[80vh] md:w-[60%] xl:w-[50%]">
+            <form className="flex h-[60vh] w-[90%] flex-col self-center rounded-3xl bg-[#0000004d] p-4 shadow-xl md:h-[80vh] md:w-[60%] xl:w-[50%]" onSubmit={createProject}>
                 <h1 className="mt-4 self-center text-2xl font-bold text-white">Add A New Project</h1>
 
                 <div className="w-full lg:mt-10 3xl:mt-28">
@@ -48,41 +46,19 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
                     />
                 </div>
-
-                <div className="mt-8 w-full">
-                    <h1 className="text-white">Repository URL</h1>
-                    <input
-                        className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
-                        placeholder="Repository URL..."
-                        type="text"
-                        value={RepoURL}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRepoURL(e.target.value)}
-                    />
-                </div>
-
-                <div className="mt-8 w-full">
-                    <h1 className="text-white">Repository Type</h1>
-                    <OptionPicker
-                        label="Project Type"
-                        options={['Svn', 'Git']}
-                        value={RepoType}
-                        onChange={value => {
-                            setRepoType(value)
-                        }}
-                        className="mt-2 block h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-sm focus:outline-none"
-                    />
+                <div className="mt-10 w-full">
+                    <h1 className="text-white">Project version control</h1>
+                    <OptionPicker label='Type' options={['Git']} className='mt-4 w-full bg-[#00000048] text-white h-[4rem] rounded-xl' onChange={setRepoType} value={repoType} />
                 </div>
 
                 {!isLoading ? (
-                    <button className="mt-10 h-[4rem] w-full rounded-xl bg-[#00000048] text-xl text-white" onClick={createProject}>
-                        Create Project
-                    </button>
+                    <input className="mt-10 h-[4rem] w-full cursor-pointer rounded-xl bg-[#00000048] text-xl text-white" type="submit" value="Create Project" />
                 ) : (
                     <button className="mt-10 h-[4rem] w-full rounded-xl bg-[#00000048] text-xl text-white" disabled>
                         Creating Project...
                     </button>
                 )}
-            </div>
+            </form>
         </div>
     )
 }
