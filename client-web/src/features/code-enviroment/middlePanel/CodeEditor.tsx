@@ -3,12 +3,16 @@ import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { Editor } from '@monaco-editor/react'
 import { stripReposPath, getLanguageFromFilePath } from '../utils'
+import CopyTextDisplay from '@/components/CopyTextDisplay'
 
-const FileEditor = ({ filePath, projectToken, userSessionToken }: { filePath: string | null; projectToken: string; userSessionToken: string }) => {
+const FileEditor = ({ filePath, projectToken, userSessionToken, repoUrl }: { filePath: string | null; projectToken: string; userSessionToken: string; repoUrl: string }) => {
     const [fileContent, setFileContent] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [fileSaved, setFileSaved] = useState(true)
+
+    const [repositoryUrl, setRepositoryUrl] = useState(repoUrl)
+    const [isGeneratingRepository, setIsGeneratingRepository] = useState(false)
 
     useEffect(() => {
         const getFileData = async () => {
@@ -91,11 +95,17 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: { filePath: st
 
     const handleGenereteRepository = async () => {
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/generate-repository`, {
+            setIsGeneratingRepository(true)
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/repositories/generate-repository`, {
                 projectToken: projectToken,
                 userSessionToken: userSessionToken
             })
-            console.log('Repository generated:', response.data)
+
+            if (response.status === 200) {
+                setIsGeneratingRepository(false)
+                console.log(response.data.repoUrl)
+                setRepositoryUrl(response.data.repoUrl)
+            }
         } catch (error) {
             console.error('Error generating repository:', error)
         }
@@ -121,9 +131,23 @@ const FileEditor = ({ filePath, projectToken, userSessionToken }: { filePath: st
                         'No file selected'
                     )}
                 </h2>
-                <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleGenereteRepository}>
-                    Generete Repository
-                </button>
+                {repositoryUrl ? (
+                    <div className="flex w-[18rem] ml-auto">
+                        <CopyTextDisplay text={repositoryUrl} />
+                    </div>
+                ) : (
+                    <>
+                        {isGeneratingRepository ? (
+                            <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" disabled>
+                                Generete Repository
+                            </button>
+                        ) : (
+                            <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleGenereteRepository}>
+                                Generete Repository
+                            </button>
+                        )}
+                    </>
+                )}
             </div>
             <div className="relative h-[38rem] flex-grow-0 overflow-hidden 3xl:h-full">
                 {isLoading ? (

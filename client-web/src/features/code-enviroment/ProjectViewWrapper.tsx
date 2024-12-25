@@ -63,7 +63,7 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
             <StoreProvider>
                 <WindowsProvider>
                     <LeftPanel ProjectName={ProjectName} ProjectToken={ProjectToken} RepoUrl={RepoUrl} CheckedOutBy={CheckedOutBy} Status={Status} Type={Type} onFileSelect={handleFileSelect} />
-                    <CodeEditor filePath={selectedFilePath} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
+                    <CodeEditor filePath={selectedFilePath} projectToken={ProjectToken} userSessionToken={UserSessionToken} repoUrl={RepoUrl} />
                     <RightPanel socket={socket} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
                 </WindowsProvider>
             </StoreProvider>
