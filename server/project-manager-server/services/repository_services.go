@@ -41,15 +41,15 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"error": "Repository already exists"})
 	}
 
-	// Initialize and configure Git repository
-	gitPath := fmt.Sprintf("%s/.git", absProjectPath)
-	cmd := exec.Command("git", "config", "--global", "--add", "safe.directory", gitPath)
+	// Add the project directory to safe.directory configuration
+	cmd := exec.Command("git", "config", "--global", "--add", "safe.directory", absProjectPath)
 	if out, err := cmd.CombinedOutput(); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": fmt.Sprintf("Failed to configure safe.directory: %s", out),
 		})
 	}
 
+	gitPath := fmt.Sprintf("%s/.git", absProjectPath)
 	if _, err := os.Stat(gitPath); os.IsNotExist(err) {
 		log.Println("Git repository does not exist. Initializing...")
 		tmpDir, err := os.MkdirTemp("", "repo-init-*")
@@ -58,18 +58,15 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 		}
 		defer os.RemoveAll(tmpDir)
 
-		// Initialize regular repository
 		cmd = exec.Command("git", "init", tmpDir)
 		if out, err := cmd.CombinedOutput(); err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": fmt.Sprintf("Failed to initialize repository: %s", out)})
 		}
 
-		// Copy existing files
 		if err := lib.CopyDir(absProjectPath, tmpDir); err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": fmt.Sprintf("Failed to copy files: %s", err)})
 		}
 
-		// Configure Git user
 		cmd = exec.Command("git", "config", "user.email", os.Getenv("GIT_USER_EMAIL"))
 		cmd.Dir = tmpDir
 		if err := cmd.Run(); err != nil {
@@ -82,21 +79,18 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error configuring git user name"})
 		}
 
-		// Add all files
 		cmd = exec.Command("git", "add", ".")
 		cmd.Dir = tmpDir
 		if err := cmd.Run(); err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error adding files"})
 		}
 
-		// Create initial commit
 		cmd = exec.Command("git", "commit", "-m", "Initial commit")
 		cmd.Dir = tmpDir
 		if err := cmd.Run(); err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error creating initial commit"})
 		}
 
-		// Clone to bare repository
 		cmd = exec.Command("git", "clone", "--bare", tmpDir, absRepoPath)
 		if out, err := cmd.CombinedOutput(); err != nil {
 			os.RemoveAll(absRepoPath)
@@ -104,23 +98,74 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 		}
 	} else {
 		log.Println("Repository already exists, cloning...")
+
+		if _, err := os.Stat(gitPath); os.IsNotExist(err) {
+			cmd = exec.Command("git", "init")
+			cmd.Dir = absProjectPath
+			if out, err := cmd.CombinedOutput(); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"error": fmt.Sprintf("Failed to initialize repository: %s", out),
+				})
+			}
+
+			// Configure Git user
+			cmd = exec.Command("git", "config", "user.email", os.Getenv("GIT_USER_EMAIL"))
+			cmd.Dir = absProjectPath
+			if out, err := cmd.CombinedOutput(); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"error": fmt.Sprintf("Error configuring git user email: %s", out),
+				})
+			}
+
+			cmd = exec.Command("git", "config", "user.name", os.Getenv("GIT_USER"))
+			cmd.Dir = absProjectPath
+			if out, err := cmd.CombinedOutput(); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"error": fmt.Sprintf("Error configuring git user name: %s", out),
+				})
+			}
+		}
+
+		cmd = exec.Command("git", "add", ".")
+		cmd.Dir = absProjectPath
+		if out, err := cmd.CombinedOutput(); err != nil {
+			log.Printf("Error adding files: %s\n", out)
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": fmt.Sprintf("Error adding files: %s", out)})
+		}
+
+		cmd = exec.Command("git", "commit", "-m", "generate repository")
+		cmd.Dir = absProjectPath
+		if out, err := cmd.CombinedOutput(); err != nil {
+			if !strings.Contains(string(out), "nothing to commit") {
+				log.Printf("Error committing changes: %s\n", out)
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"error": fmt.Sprintf("Error creating commit: %s", out),
+				})
+			}
+			log.Println("Nothing to commit, continuing...")
+		}
+
 		cmd = exec.Command("git", "clone", "--bare", absProjectPath, absRepoPath)
 		if out, err := cmd.CombinedOutput(); err != nil {
 			os.RemoveAll(absRepoPath)
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": fmt.Sprintf("Failed to create bare repository: %s", out)})
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": fmt.Sprintf("Failed to create bare repository: %s", out),
+			})
 		}
 	}
 
+
 	//update project repoUrl
-	rows, err := db.Query("UPDATE projects SET repo_url = $1 WHERE project_token = $2;", fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"),body.ProjectToken), body.ProjectToken)
+	rows, err := db.Query("UPDATE projects SET repo_url = $1 WHERE project_token = $2;", fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken), body.ProjectToken)
 	if err != nil {
 		log.Println("Error updating project repoUrl in database:", err)
 		return c.Status(500).SendString("Failed to update project repoUrl in database")
 	}
 	defer rows.Close()
 
-	return c.JSON(fiber.Map{"error": false, "repoUrl": fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"),body.ProjectToken)})
+	return c.JSON(fiber.Map{"error": false, "repoUrl": fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken)})
 }
+
 func HandleInfoRefs(c fiber.Ctx) error {
 	repoName := c.Params("repo")
 	service := c.Query("service")
@@ -246,6 +291,18 @@ func HandleRPC(c fiber.Ctx) error {
 	}
 
 	log.Printf("Successfully handled RPC request for %s", repoName)
+
+	// if is a git-upload service update the project folder
+	// if rpcService == "git-upload-pack" {
+	// 	ProjectPath := fmt.Sprintf("%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), repoName)
+	// 	ProjectPath, err := filepath.Abs(ProjectPath)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+		
+	// 	cmd := exec.Command("git", "fetch", "--all")
+
+	// }
 	return nil
 }
 
