@@ -2,16 +2,19 @@ import { useState } from 'react'
 import { FileNode } from '../ILeftPanel'
 import { stripReposPath } from '../../utils'
 import Image from 'next/image'
+import AddFileOrFolder from './AddFileOrFolder'
 
 interface DirectoryTreeProps {
     node: FileNode
+    onFolderCreate: (path: string) => void
+    onFolderAdd: (fileId: string, folderName: string) => void
     onFileClick: (path: string) => void
     onFileCreate: (path: string) => void
     onFileAdd: (fileId: string, filename: string) => void
     onFileDelete: (path: string) => void
 }
 
-const DirectoryTree = ({ node, onFileClick, onFileAdd, onFileDelete, onFileCreate }: DirectoryTreeProps) => {
+const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileAdd, onFileDelete, onFileCreate }: DirectoryTreeProps) => {
     const [expanded, setExpanded] = useState<boolean>(false)
     const [isCreating, setIsCreating] = useState<boolean>(node.isNew || false)
     const [isEditingName, setIsEditingName] = useState<boolean>(false)
@@ -20,6 +23,7 @@ const DirectoryTree = ({ node, onFileClick, onFileAdd, onFileDelete, onFileCreat
     const handleClick = () => {
         if (node.is_dir) {
             setExpanded(!expanded)
+            // onFileClick(stripReposPath(node.path))
         } else {
             onFileClick(stripReposPath(node.path))
         }
@@ -30,6 +34,18 @@ const DirectoryTree = ({ node, onFileClick, onFileAdd, onFileDelete, onFileCreat
         if (node.is_dir) {
             setExpanded(true)
             onFileCreate(node.path)
+        } else {
+            onFileCreate(node.path)
+        }
+    }
+
+    const handleCreateNewFolder = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        if (node.is_dir) {
+            setExpanded(true)
+            onFolderCreate(node.path)
+        } else {
+            onFolderCreate(node.path)
         }
     }
 
@@ -43,13 +59,21 @@ const DirectoryTree = ({ node, onFileClick, onFileAdd, onFileDelete, onFileCreat
                     onChange={e => setName(e.target.value)}
                     onBlur={() => {
                         setIsCreating(false)
-                        onFileAdd(node.uuid, name)
-                        // onFileAdd(node.path.replace(node.name, name))
+                        if (node.is_dir) {
+                            onFolderAdd(node.uuid, name)
+                        } else {
+                            onFileAdd(node.uuid, name)
+                        }
                     }}
                     onKeyDown={e => {
                         if (e.key === 'Enter') {
                             setIsCreating(false)
-                            onFileAdd(node.uuid, name)
+
+                            if (node.is_dir) {
+                                onFolderAdd(node.uuid, name)
+                            } else {
+                                onFileAdd(node.uuid, name)
+                            }
                         }
                     }}
                     autoFocus
@@ -79,12 +103,25 @@ const DirectoryTree = ({ node, onFileClick, onFileAdd, onFileDelete, onFileCreat
                 ) : (
                     <>{name}</>
                 )}
-                {node.is_dir && <Image src="/Editor/Add_Icon.svg" alt="add" width={20} height={20} className="z-20 ml-auto cursor-pointer" onClick={handleCreateNewFile} />}
+                {node.is_dir && (
+                    <div className="self-center">
+                        <AddFileOrFolder isRoot={false} onCreateFile={handleCreateNewFile} onCreateFolder={handleCreateNewFolder} onCreateRootFile={() => {}} onCreateRootFolder={() => {}} />
+                    </div>
+                )}
             </div>
             {expanded && node.children && (
                 <div>
                     {node.children.map(child => (
-                        <DirectoryTree key={child.path} node={child} onFileClick={onFileClick} onFileCreate={onFileCreate} onFileAdd={onFileAdd} onFileDelete={onFileDelete} />
+                        <DirectoryTree
+                            key={child.path}
+                            node={child}
+                            onFileClick={onFileClick}
+                            onFileCreate={onFileCreate}
+                            onFileAdd={onFileAdd}
+                            onFileDelete={onFileDelete}
+                            onFolderCreate={onFolderCreate}
+                            onFolderAdd={onFolderAdd}
+                        />
                     ))}
                 </div>
             )}

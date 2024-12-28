@@ -300,9 +300,6 @@ func HandleRPC(c fiber.Ctx) error {
 	// 		log.Fatal(err)
 	// 	}
 		
-	// 	cmd := exec.Command("git", "fetch", "--all")
-
-	// }
 	return nil
 }
 

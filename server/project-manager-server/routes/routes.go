@@ -41,6 +41,10 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 		return services.SaveRepositoryFile(c, db)
 	})
 
+	app.Post("/api/projects/new-folder", func(c fiber.Ctx) error {
+		return services.CreateNewDirectory(c, db)
+	})
+
 	app.Post("/api/projects/new-file", func(c fiber.Ctx) error {
 		return services.CreateNewFile(c, db)
 	})

@@ -153,6 +153,26 @@ func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	return c.SendString(content)
 }
 
+func CreateNewDirectory(c fiber.Ctx, db *sql.DB) error {
+	body := new(models.CreateNewDirectoryRequest)
+
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+	}
+	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
+	
+	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
+
+	err := os.MkdirAll(fullFilePath, 0755)
+	if err != nil {
+		log.Println(err)
+
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create directory"})
+	}
+
+	return c.JSON(fiber.Map{"error": false})
+}
+
 func CreateNewFile(c fiber.Ctx, db *sql.DB) error {
 	body := new(models.CreateNewFileRequest)
 
@@ -160,7 +180,6 @@ func CreateNewFile(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
-
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 
 	err := os.WriteFile(fullFilePath, []byte(""), 0644)

@@ -8,7 +8,8 @@ import { stripReposPath } from '../utils'
 import { useSession } from 'next-auth/react'
 import { generateUniqueFileName } from './util/utils'
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'
-import { setFileTree, setIsLoading, createFile, deleteFile, addFile } from '@/features/code-enviroment/lib/fileTreeSlice'
+import { setFileTree, setIsLoading, createFile, deleteFile, addFile, createFolder, addFolder } from '@/features/code-enviroment/lib/fileTreeSlice'
+import AddFileOrFolder from './components/AddFileOrFolder'
 
 const LeftPanel: React.FC<ILeftPanel> = props => {
     const dispatch = useAppDispatch()
@@ -39,6 +40,29 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
         props.onFileSelect(filePath)
     }
 
+    const handleCreateRootFolder = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        const newFolderName = generateUniqueFileName(fileTree, '', 'New Folder')
+        dispatch(createFolder({ filePath: '', folderName: newFolderName }))
+    }
+    const handleCreateFolder = async (filePath: string) => {
+        const newFolderName = generateUniqueFileName(fileTree, filePath, 'New Folder')
+        dispatch(createFolder({ filePath, folderName: newFolderName }))
+    }
+
+    const handleAddFolder = async (folderId: string, folderName: string) => {
+        if (dispatch(addFolder({ fileId: folderId, folderName: folderName, userSessionToken: session.data?.accessToken!, projectToken: props.ProjectToken }))) {
+            // window.alert('Folder added successfully')
+        } else {
+            window.alert('Error adding folder')
+        }
+    }
+
+    const handleCreateRootFile = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        const newFileName = generateUniqueFileName(fileTree, '', 'New File')
+        dispatch(createFile({ filePath: '', fileName: newFileName }))
+    }
     const handleCreateFile = async (filePath: string) => {
         const newFileName = generateUniqueFileName(fileTree, filePath, 'New File')
         dispatch(createFile({ filePath, fileName: newFileName }))
@@ -50,8 +74,6 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
         } else {
             window.alert('Error adding file')
         }
-
-   
     }
 
     const handleDeleteFile = async (filePath: string) => {
@@ -63,8 +85,9 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
 
     return (
         <div className="flex h-full w-full flex-col overflow-hidden border-r border-[#333333] bg-[#1e1e1e] md:w-80 lg:w-[30rem]">
-            <div className="flex-shrink-0 p-4">
+            <div className="flex flex-shrink-0 p-4">
                 <h2 className="text-xl font-semibold text-white">File Tree</h2>
+                <AddFileOrFolder isRoot={true} onCreateFile={() => {}} onCreateFolder={() => {}} onCreateRootFile={handleCreateRootFile} onCreateRootFolder={handleCreateRootFolder} />
             </div>
             <div className="h-[38rem] flex-grow-0 overflow-auto p-4 3xl:h-[52rem]">
                 {isLoading ? (
@@ -72,7 +95,18 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
                         <div className="text-white">Loading...</div>
                     </div>
                 ) : fileTree.length > 0 ? (
-                    fileTree.map(node => <DirectoryTree key={node.path} node={node} onFileClick={handleFileClick} onFileAdd={handleAddFile} onFileDelete={handleDeleteFile} onFileCreate={handleCreateFile} />)
+                    fileTree.map(node => (
+                        <DirectoryTree
+                            key={node.path}
+                            node={node}
+                            onFolderCreate={handleCreateFolder}
+                            onFolderAdd={handleAddFolder}
+                            onFileClick={handleFileClick}
+                            onFileAdd={handleAddFile}
+                            onFileDelete={handleDeleteFile}
+                            onFileCreate={handleCreateFile}
+                        />
+                    ))
                 ) : (
                     <div className="text-white">No files found</div>
                 )}

@@ -65,6 +65,12 @@ type SaveFileRequest struct {
 	Content          string `json:"content"`
 }
 
+type CreateNewDirectoryRequest struct {
+	ProjectToken     string `json:"projectToken"`
+	UserSessionToken string `json:"userSessionToken"`
+	Path             string `json:"path"`
+}
+
 type CreateNewFileRequest struct {
 	ProjectToken     string `json:"projectToken"`
 	UserSessionToken string `json:"userSessionToken"`
