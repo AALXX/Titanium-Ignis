@@ -3,11 +3,9 @@ export interface IProjectConfig {
         id: number;
         name: string;
         dir: string;
-        'custom-commands': {
-            [key: string]: string;
-        };
+        setup?: Array<{ run: string }>;
         'start-command': string;
-        port: number;
+        port?: number;
     }>;
 }
 
@@ -36,4 +34,3 @@ export interface IProjectResponse {
     Status: string;
     Type: string;
 }
-

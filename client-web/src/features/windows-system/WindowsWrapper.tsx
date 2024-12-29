@@ -7,7 +7,7 @@ import { IWindow } from './IWindows-System'
 // Create a context for managing windows
 const WindowsContext = createContext<{
     windows: IWindow[]
-    createWindow: (title: string, content: React.ReactNode, windowId?: string) => void
+    createWindow: (title: string, content: React.ReactNode, windowUUID?: string) => void
     destroyWindow: (id: string) => void
     minimizeWindow: (id: string) => void
     maximizeWindow: (id: string) => void
@@ -25,10 +25,10 @@ export const WindowsProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [windows, setWindows] = useState<IWindow[]>([])
     const nextId = useRef(1)
 
-    const createWindow = useCallback((title: string, content: React.ReactNode, windowId?: string) => {
+    const createWindow = useCallback((title: string, content: React.ReactNode, windowUUID?: string) => {
         let id = `window-${nextId.current++}`
         
-        windowId? (id = `window-${windowId}`): id = id
+        windowUUID? (id = `window-${windowUUID}`): id = id
 
         setWindows(prev => [
             ...prev,

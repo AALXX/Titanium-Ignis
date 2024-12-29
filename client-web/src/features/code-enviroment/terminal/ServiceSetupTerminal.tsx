@@ -5,10 +5,10 @@ import { Socket } from 'socket.io-client'
 
 interface TerminalProps {
     socket: Socket
-    windowId: string
+    ServiceID: number
 }
 
-const FloatingTerminal: React.FC<TerminalProps> = ({ socket, windowId }) => {
+const ServicesetupTerminal: React.FC<TerminalProps> = ({ socket, ServiceID }) => {
     const [history, setHistory] = useState<string[]>([])
     const terminalRef = useRef<HTMLDivElement>(null)
 
@@ -21,42 +21,40 @@ const FloatingTerminal: React.FC<TerminalProps> = ({ socket, windowId }) => {
     useEffect(() => {
         if (!socket) return
 
-        const handleOutput = (data: { processId: string; output: string }) => {
-            if (data.processId === windowId) {
+        const handleOutput = (data: { serviceID: number; output: string }) => {
+            if (data.serviceID === ServiceID) {
                 setHistory(prev => [...prev, data.output])
             }
         }
 
-        const handleServiceStarted = (data: { processId: string }) => {
-            if (data.processId === windowId) {
-                setHistory(prev => [...prev, `Process started with ID: ${data.processId}`])
+        const handleSetupStarted = (data: { serviceID: number }) => {
+            if (data.serviceID === ServiceID) {
+                setHistory(prev => [...prev, `Process started with ID: ${data.serviceID}`])
             }
         }
 
-        const handleServiceStopped = (data: { processId: string }) => {
-            if (data.processId === windowId) {
-                setHistory(prev => [...prev, `Process ${data.processId} stopped`])
+        const handleServiceStopped = (data: { serviceID: number }) => {
+            if (data.serviceID === ServiceID) {
+                setHistory(prev => [...prev, `Process ${data.serviceID} stopped`])
             }
         }
 
-        const handleError = (data: { processId?: string; error: string }) => {
-            if (data.processId === windowId) {
+        const handleError = (data: { serviceID?: number; error: string }) => {
+            if (data.serviceID === ServiceID) {
                 setHistory(prev => [...prev, `Error: ${data.error}`])
             }
         }
 
-        socket.on('service-output', handleOutput)
-        socket.on('service-started', handleServiceStarted)
-        socket.on('service-stopped', handleServiceStopped)
-        socket.on('service-error', handleError)
-        socket.on('service-closed', handleServiceStopped)
+        socket.on('setup-output', handleOutput)
+        socket.on('setup-started', handleSetupStarted)
+        socket.on('setup-stopped', handleServiceStopped)
+        socket.on('setup-error', handleError)
 
         return () => {
-            socket.off('service-output', handleOutput)
-            socket.off('service-started', handleServiceStarted)
-            socket.off('service-stopped', handleServiceStopped)
-            socket.off('service-error', handleError)
-            socket.off('service-closed', handleServiceStopped)
+            socket.off('setup-output', handleOutput)
+            socket.off('setup-started', handleSetupStarted)
+            socket.off('setup-stopped', handleServiceStopped)
+            socket.off('setup-error', handleError)
         }
     }, [socket])
 
@@ -78,4 +76,4 @@ const FloatingTerminal: React.FC<TerminalProps> = ({ socket, windowId }) => {
     )
 }
 
-export default FloatingTerminal
+export default ServicesetupTerminal

@@ -19,6 +19,10 @@ const initSorketioRoutes = (io: Server, pool: Pool) => {
             ProjectsServices.stopService(socket, data);
         });
 
+        socket.on('start-setup', (data: { userSessionToken: string; projectToken: string; serviceID: number }) => {
+            ProjectsServices.startSetup(socket, data.userSessionToken, data.projectToken, data.serviceID);
+        });
+
         // Clean up processes when client disconnects
         socket.on('disconnect', () => {
             // ProjectsServices.cleanupSocketProcesses(socket);

@@ -129,6 +129,73 @@ const joinRepo = async (socket: Socket, pool: Pool, data: { projectToken: string
     }
 };
 
+const startSetup = async (socket: Socket, userSessionToken: string, projectToken: string, serviceID: number) => {
+    try {
+        let projectConfig: IProjectConfig = {
+            services: [],
+        };
+        try {
+            projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
+        } catch (error: any) {
+            logging.error('START_SETUP_READING_FILE_FUNC', error.message);
+        }
+
+        if (projectConfig.services.length < serviceID) {
+            socket.emit('setup-error', { error: 'Service not found' });
+            return;
+        }
+
+        const serviceSetup = projectConfig.services[serviceID - 1].setup;
+        if (!serviceSetup) {
+            socket.emit('setup-error', { error: 'Service does not have a setup' });
+            return;
+        }
+
+        socket.emit('setup-started', { serviceID });
+
+        for (let setupCommand of serviceSetup) {
+            const commandParts = setupCommand.run.split(' ');
+            const command = commandParts[0];
+            const args = commandParts.slice(1);
+            let workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`;
+
+            if (projectConfig.services[serviceID - 1].dir) {
+                workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
+            }
+
+            const serviceProcess = child_process.spawn(command, args, {
+                cwd: workinDir,
+
+                // shell: true,
+            });
+
+            serviceProcess.on('error', async (err) => {
+                socket.emit('setup-error', {
+                    serviceID,
+                    error: err.message,
+                });
+            });
+
+            serviceProcess.stdout.on('data', (data) => {
+                socket.emit('setup-output', {
+                    serviceID,
+                    output: data.toString(),
+                });
+            });
+
+            serviceProcess.on('close', async (code) => {
+                socket.emit('service-stopped', {
+                    serviceID,
+                    code,
+                });
+            });
+        }
+    } catch (error: any) {
+        logging.error('START_SETUP_FUNC', error.message);
+        socket.emit('setup-error', { error: 'Service not found' });
+    }
+};
+
 const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
 const startService = async (socket: Socket, userSessionToken: string, projectToken: string, serviceID: number) => {
     try {
@@ -169,8 +236,6 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             // shell: true,
         });
 
-        console.log(serviceProcess.pid);
-
         // Store the process
         activeProcesses.set(processId, serviceProcess);
 
@@ -208,18 +273,6 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
             });
         });
 
-        // don't know if this is needed
-        // serviceProcess.stderr.on('data', (data) => {
-        //     redisClient.del(`active_services:${processId}`);
-        //     activeProcesses.delete(processId);
-        //     console.log(data);
-
-        //     socket.emit('service-error', {
-        //         processId,
-        //         error: data.toString(),
-        //     });
-        // });
-
         serviceProcess.on('close', async (code) => {
             if (!(await utilFunctions.removeService(projectToken, processId))) {
                 logging.error('STARTS_SERVICE_REMOVING_SERVICE_FUNC', 'Failed to remove service');
@@ -238,7 +291,7 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
     }
 };
 
-const stopService = async (socket: Socket, data: { projectToken: string, processId: string }) => {
+const stopService = async (socket: Socket, data: { projectToken: string; processId: string }) => {
     try {
         const { processId, projectToken } = data;
         const process = activeProcesses.get(processId);
@@ -246,7 +299,6 @@ const stopService = async (socket: Socket, data: { projectToken: string, process
         if (!process) {
             logging.error('STOP_SERVICE', `Process ${processId} not found`);
         }
-
 
         try {
             process!.kill();
@@ -261,7 +313,7 @@ const stopService = async (socket: Socket, data: { projectToken: string, process
             if (!(await utilFunctions.removeService(projectToken, processId))) {
                 logging.error('STARTS_SERVICE_REMOVING_SERVICE_FUNC', 'Failed to remove service');
             }
-            
+
             activeProcesses.delete(processId);
             socket.emit('service-stopped', { processId });
             logging.info('STOP_SERVICE', `Stopped process ${processId}`);
@@ -293,4 +345,4 @@ const cleanupSocketProcesses = (socket: Socket) => {
         }
     }
 };
-export default { getAllProjects, getProjectData, joinRepo, startService, stopService, cleanupSocketProcesses };
+export default { getAllProjects, getProjectData, joinRepo, startSetup, startService, stopService, cleanupSocketProcesses };
