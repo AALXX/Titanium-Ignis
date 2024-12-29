@@ -10,28 +10,28 @@ import { generateUniqueFileName } from './util/utils'
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'
 import { setFileTree, setIsLoading, createFile, deleteFile, addFile, createFolder, addFolder } from '@/features/code-enviroment/lib/fileTreeSlice'
 import AddFileOrFolder from './components/AddFileOrFolder'
+import Image from 'next/image'
 
 const LeftPanel: React.FC<ILeftPanel> = props => {
     const dispatch = useAppDispatch()
     const { fileTree, isLoading } = useAppSelector(state => state.files)
 
     const session = useSession()
+    const fetchFileTree = async () => {
+        dispatch(setIsLoading(true))
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-tree`, {
+                params: { projectToken: props.ProjectToken }
+            })
+            dispatch(setFileTree(response.data))
+        } catch (error) {
+            console.error('Error fetching file tree:', error)
+        } finally {
+            dispatch(setIsLoading(false))
+        }
+    }
 
     useEffect(() => {
-        const fetchFileTree = async () => {
-            dispatch(setIsLoading(true))
-            try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-tree`, {
-                    params: { projectToken: props.ProjectToken }
-                })
-                dispatch(setFileTree(response.data))
-            } catch (error) {
-                console.error('Error fetching file tree:', error)
-            } finally {
-                dispatch(setIsLoading(false))
-            }
-        }
-
         fetchFileTree()
     }, [props.ProjectToken, dispatch])
 
@@ -87,6 +87,9 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
             <div className="flex flex-shrink-0 p-4">
                 <h2 className="text-xl font-semibold text-white">File Tree</h2>
                 <AddFileOrFolder isRoot={true} onCreateFile={() => {}} onCreateFolder={() => {}} onCreateRootFile={handleCreateRootFile} onCreateRootFolder={handleCreateRootFolder} />
+                <div className="flex">
+                    <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={fetchFileTree} className="ml-auto cursor-pointer" width={22} height={22} />
+                </div>
             </div>
             <div className="h-[38rem] flex-grow-0 overflow-auto p-4 3xl:h-[52rem]">
                 {isLoading ? (
