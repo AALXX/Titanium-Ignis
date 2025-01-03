@@ -26,7 +26,7 @@ const ProjectCardTemplate = (props: ProjectCardTemplateProps) => {
     }
 
     return (
-        <Link href={`/projects/view/${props.ProjectToken}`}>
+        <Link href={`/projects/${props.ProjectToken}/overview`}>
             <div className="relative flex h-[15rem] w-full rounded-xl bg-[#0000004d] transition-all hover:bg-[#0000008a]" onMouseMove={handleMouseMove} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <TruncatedText characters={20} text={props.ProjectName} className="m-auto text-3xl font-bold text-white" />
                 {showTooltip && (

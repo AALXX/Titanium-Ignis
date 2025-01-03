@@ -91,6 +91,19 @@ const CreateSesionToken = (): string => {
     return userprivateToken;
 };
 
+// create a public token bassed on user Name
+const CreatePublicToken = (userName: string): string => {
+    // Convert to uppercase and remove spaces
+    let tag = userName.toUpperCase().replace(/\s+/g, '');
+
+    // Remove vowels (except first character if it's a vowel)
+    tag = tag.charAt(0) + tag.slice(1).replace(/[AEIOU]/g, '');
+
+    // Replace letters with numbers
+    tag = tag.replace(/A/g, '4').replace(/E/g, '3').replace(/I/g, '1').replace(/O/g, '0').replace(/S/g, '5').replace(/B/g, '8');
+
+    return tag;
+};
 /**
  * Checks if a given email address exists in the users table.
  *
@@ -398,6 +411,7 @@ export default {
     checkEmailExists,
     CreateToken,
     CreateSesionToken,
+    CreatePublicToken,
     getUserEmailFromPrivateToken,
     getUserPublicTokenFromPrivateToken,
     getUserPrivateTokenFromPublicToken,

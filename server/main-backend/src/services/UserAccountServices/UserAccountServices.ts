@@ -35,7 +35,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
         if (accountresp.length > 0) {
             // User exists - update session token based on registration type
             const existingUser = accountresp[0];
-            const newUserPublicToken = utilFunctions.CreateSesionToken();
+            const newUserPublicToken = utilFunctions.CreatePublicToken(req.body.userName);
 
             let updateQuery = '';
             let updateParams = [];
@@ -94,7 +94,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
 
         // New user registration
         const UserPrivateToken = utilFunctions.CreateToken();
-        const UserPublicToken = utilFunctions.CreateSesionToken();
+        const UserPublicToken = utilFunctions.CreatePublicToken(req.body.userName);
 
         switch (req.body.registrationType) {
             case 'google':
@@ -138,7 +138,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
                 return res.status(200).json({
                     error: true,
                     errmsg: 'Invalid registration type',
-                }); 
+                });
         }
 
         connection?.release();
