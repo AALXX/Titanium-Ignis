@@ -73,5 +73,5 @@ app.use((req: any, res: any, next: NextFunction) => {
 
 //* Create The Server
 server.listen(config.server.port, () => {
-    logging.info(NAMESPACE, `Server is asd running on: ${config.server.hostname}:${config.server.port}`);
+    logging.info(NAMESPACE, `Server is running on: ${config.server.hostname}:${config.server.port}`);
 });

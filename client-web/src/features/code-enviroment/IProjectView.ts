@@ -9,11 +9,10 @@ export interface IProjectConfig {
     }>
 }
 
-export interface IProjectViewWrapperProps {
+export interface IProjectCodebaseWrapper {
     ProjectName: string
     ProjectToken: string
     RepoUrl: string
-    CheckedOutBy: string
     Status: string
     Type: string
 

@@ -11,9 +11,18 @@ type AddProjectRequest struct {
 	Type         string `json:"Type"`
 }
 
+// write this in golang
+type TeamMember struct {
+	Email string
+	Role string
+}
+
 type CreateProjectRequest struct {
-	Project_name string `json:"ProjectName"`
-	SessionToken string `json:"UserSessionToken"`
+	Project_name        string       `json:"ProjectName"`
+	Project_description string       `json:"ProjectDescription"`
+	Team_members        []TeamMember `json:"TeamMembers"`
+	Repo_type           string       `json:"RepoType"`
+	SessionToken        string       `json:"UserSessionToken"`
 }
 
 type Project struct {
@@ -38,12 +47,11 @@ type ProjectResponse struct {
 }
 
 type ProjectService struct {
-	ID             int               `json:"id"`
-	Name           string            `json:"name"`
-	Dir            string            `json:"dir"`
-	StartCommand   string            `json:"start-command"`
+	ID           int    `json:"id"`
+	Name         string `json:"name"`
+	Dir          string `json:"dir"`
+	StartCommand string `json:"start-command"`
 }
-
 
 type ProjectConfig struct {
 	Services []ProjectService `json:"services"`

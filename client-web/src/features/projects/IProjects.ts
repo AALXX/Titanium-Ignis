@@ -1,8 +1,7 @@
-export interface IProjects {
-    ProjectName: string
-    ProjectToken: string
-    RepoUrl: string
-    CheckedOutBy: string
-    Status: string
-    Type: string
+export type IProjects = {
+    projectname: string
+    projectdescription: string
+    projecttoken: string
+    projectownertoken: string
+    status: string
 }

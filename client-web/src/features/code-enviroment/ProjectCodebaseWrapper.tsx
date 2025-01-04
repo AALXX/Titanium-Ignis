@@ -6,13 +6,13 @@ import CodeEditor from './middlePanel/CodeEditor'
 import RightPanel from './rightPanel/RightPanel'
 import { io, Socket } from 'socket.io-client'
 import WindowsProvider from '../windows-system/WindowsWrapper'
-import { IProjectViewWrapperProps } from './IProjectView'
+import { IProjectCodebaseWrapper } from './IProjectView'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { StoreProvider } from './StoreProvider'
 
 
 
-const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, ProjectToken, RepoUrl, CheckedOutBy, Status, Type, UserSessionToken }) => {
+const ProjectCodebaseWrapper: React.FC<IProjectCodebaseWrapper> = ({ ProjectName, ProjectToken, RepoUrl, Status, Type, UserSessionToken }) => {
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null)
     const [socket, setSocket] = useState<Socket | null>(null)
 
@@ -62,7 +62,7 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
         <div className="flex h-full w-full">
             <StoreProvider>
                 <WindowsProvider>
-                    <LeftPanel ProjectName={ProjectName} ProjectToken={ProjectToken} RepoUrl={RepoUrl} CheckedOutBy={CheckedOutBy} Status={Status} Type={Type} onFileSelect={handleFileSelect} />
+                    <LeftPanel ProjectName={ProjectName} ProjectToken={ProjectToken} RepoUrl={RepoUrl}  Status={Status} Type={Type} onFileSelect={handleFileSelect} />
                     <CodeEditor filePath={selectedFilePath} projectToken={ProjectToken} userSessionToken={UserSessionToken} repoUrl={RepoUrl} />
                     <RightPanel socket={socket} projectToken={ProjectToken} userSessionToken={UserSessionToken} />
                 </WindowsProvider>
@@ -71,4 +71,4 @@ const ProjectViewWrapper: React.FC<IProjectViewWrapperProps> = ({ ProjectName, P
     )
 }
 
-export default ProjectViewWrapper
+export default ProjectCodebaseWrapper

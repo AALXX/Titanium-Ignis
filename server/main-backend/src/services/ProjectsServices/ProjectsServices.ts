@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import logging from '../../config/logging';
 import { connect, CustomRequest, query } from '../../config/postgresql';
 import utilFunctions from '../../util/utilFunctions';
-import { IProjectsDb, IProjectsResponse, IProjectResponse, IProjectConfig } from '../../Models/ProjectsModels';
+import { IProjectConfig, IProjectsDb } from '../../Models/ProjectsModels';
 import { Socket } from 'socket.io';
 import child_process from 'child_process';
 import { Pool } from 'pg';
@@ -40,18 +40,8 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
     try {
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.params.userSessionToken);
 
-        const queryString = `SELECT * FROM projects WHERE checked_out_by = $1`;
-        const result: IProjectsDb[] = await query(connection!, queryString, [userPrivateToken]);
-        // Map the result to new variable names
-        const projectsResponse: IProjectsResponse[] = result.map(({ project_name: ProjectName, project_token: ProjectToken, repo_url: RepoUrl, checked_out_by: CheckedOutBy, status: Status, type: Type }) => ({
-            ProjectName,
-            ProjectToken,
-            RepoUrl,
-            CheckedOutBy,
-            Status,
-            Type,
-        }));
-
+        const queryString = `SELECT * FROM projects WHERE ProjectOwnerToken = $1`;
+        const projectsResponse: IProjectsDb[] = await query(connection!, queryString, [userPrivateToken]);
         connection?.release();
 
         return res.status(200).json({
@@ -81,18 +71,8 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
     const connection = await connect(req.pool!);
 
     try {
-        const queryString = `SELECT * FROM projects WHERE project_token = $1`;
-        const result: IProjectsDb[] = await query(connection!, queryString, [req.params.projectToken]);
-
-        // Map the result to new variable names
-        const projectsResponse: IProjectResponse = {
-            ProjectName: result[0].project_name,
-            RepoUrl: result[0].repo_url,
-            CheckedOutBy: result[0].checked_out_by,
-            Status: result[0].status,
-            Type: result[0].type,
-        };
-
+        const queryString = `SELECT * FROM projects WHERE ProjectToken = $1`;
+        const projectsResponse: IProjectsDb = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
 
         return res.status(200).json({
@@ -102,6 +82,34 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
     } catch (error: any) {
         logging.error('GET_PROJECT_DATA_FUNC', error.message);
         connection?.release();
+        return res.status(200).json({
+            error: true,
+            errmsg: error.message,
+        });
+    }
+};
+
+const getProjectCodebaseData = async (req: CustomRequest, res: Response) => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
+        });
+
+        return res.status(200).json({ error: true, errors: errors.array() });
+    }
+
+    try {
+        const connection = await connect(req.pool!);
+        const queryString = `SELECT * FROM projects_codebase JOIN projects ON projects_codebase.ProjectToken = projects.ProjectToken WHERE projects_codebase.ProjectToken = $1`;
+        const projectsResponse = await query(connection!, queryString, [req.params.projectToken]);
+        connection?.release();
+        return res.status(200).json({
+            error: false,
+            project: projectsResponse,
+        });
+    } catch (error: any) {
+        logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.message);
         return res.status(200).json({
             error: true,
             errmsg: error.message,
@@ -345,4 +353,4 @@ const cleanupSocketProcesses = (socket: Socket) => {
         }
     }
 };
-export default { getAllProjects, getProjectData, joinRepo, startSetup, startService, stopService, cleanupSocketProcesses };
+export default { getAllProjects, getProjectData, getProjectCodebaseData, joinRepo, startSetup, startService, stopService, cleanupSocketProcesses };

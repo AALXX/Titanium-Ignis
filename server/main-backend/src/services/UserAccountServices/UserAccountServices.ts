@@ -157,4 +157,5 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default { RegisterUser };
+const GetUserAccountRole = async (req: CustomRequest, res: Response) => {};
+export default { RegisterUser, GetUserAccountRole };

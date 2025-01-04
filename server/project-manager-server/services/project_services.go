@@ -99,12 +99,6 @@ func CreateProject(c fiber.Ctx, db *sql.DB) error {
 
 	os.MkdirAll(fmt.Sprintf("%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken), 0755)
 	os.WriteFile(fmt.Sprintf("%s/%s/project-config.json", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken), []byte("{}"), 0644)
-	cmd := exec.Command("git", "init", ".")
-	cmd.Dir = fmt.Sprintf("%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), ProjectToken)
-	err := cmd.Run()
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Failed to create project")
-	}
 
 	userPrivateToken := lib.GetPrivateTokenBySessionToken(body.SessionToken, db)
 
@@ -112,12 +106,51 @@ func CreateProject(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(500).SendString("Failed to create project")
 	}
 
-	rows, err := db.Query("INSERT INTO projects (project_name, project_token, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, ProjectToken, "", userPrivateToken, "checking-out", "git")
+	query := `
+WITH project_insert AS (
+    INSERT INTO projects (ProjectName, ProjectDescription, ProjectToken, ProjectOwnerToken, Status)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING ProjectToken
+), 
+codebase_insert AS (
+    INSERT INTO projects_codebase (ProjectToken, RepositoryUrl, LastUserCommitUserToken, ProjectType)
+    VALUES ((SELECT ProjectToken FROM project_insert), $6, $7, $8)
+),
+owner_role_insert AS (
+    INSERT INTO projects_team_members (ProjectToken, UserPrivateToken, RoleId)
+    VALUES ((SELECT ProjectToken FROM project_insert), $4, 1)
+)
+SELECT ProjectToken FROM project_insert;
+`
+	rows, err := db.Query(query,
+		body.Project_name,
+		body.Project_description,
+		ProjectToken,
+		userPrivateToken,
+		"Started",
+		"", // Empty RepositoryUrl
+		userPrivateToken,
+		strings.ToLower(body.Repo_type),
+	)
 	if err != nil {
-		log.Println("Error creating project entry in database:", err)
-		return c.Status(500).SendString("Failed to create project entry in database")
+		log.Println("Error creating project and codebase entry in database:", err)
+		return c.Status(500).SendString("Failed to create project and codebase entry in database")
 	}
 	defer rows.Close()
+
+	if body.Team_members != nil {
+		for _, member := range body.Team_members {
+			query := `
+INSERT INTO projects_team_members (ProjectToken, UserPrivateToken, RoleId)
+VALUES ($1, (SELECT userPrivateToken FROM users WHERE UserEmail = $2), (SELECT id FROM roles WHERE Name = $3));
+`
+			_, err = db.Exec(query, ProjectToken, member.Email, member.Role)
+			if err != nil {
+				log.Println("Error creating project team member entry in database:", err)
+				return c.Status(500).SendString("Failed to create project team member entry in database")
+			}
+		}
+	}
 
 	return c.JSON(fiber.Map{
 		"error": false,
@@ -160,7 +193,7 @@ func CreateNewDirectory(c fiber.Ctx, db *sql.DB) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
-	
+
 	fullFilePath := fmt.Sprintf("%s/%s/%s", RepoPath, body.ProjectToken, body.Path)
 
 	err := os.MkdirAll(fullFilePath, 0755)

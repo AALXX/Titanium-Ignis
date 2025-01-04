@@ -1,0 +1,4 @@
+CREATE TABLE actions (
+    id SERIAL PRIMARY KEY,
+    Name VARCHAR(20) NOT NULL UNIQUE
+);

@@ -1,4 +1,4 @@
-import ProjectViewWrapper from '@/features/code-enviroment/ProjectViewWrapper'
+import ProjectCodebaseWrapper from '@/features/code-enviroment/ProjectCodebaseWrapper'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
 import React from 'react'
@@ -18,18 +18,16 @@ const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) =>
     }
 
     try {
-        const ProjectData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-data/${ProjectToken}`)
+        const ProjectData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-codebase-data/${ProjectToken}/${accountStatus.accessToken}`)
         return (
             <div className="flex h-full w-full">
-                <ProjectViewWrapper
-                    ProjectName={ProjectData.data.project.ProjectName}
+                <ProjectCodebaseWrapper
+                    ProjectName={ProjectData.data.project.projecttoken}
                     ProjectToken={ProjectToken}
-                    RepoUrl={ProjectData.data.project.RepoUrl}
-                    CheckedOutBy={ProjectData.data.project.CheckedOutBy}
-                    Status={ProjectData.data.project.Status}
-                    Type={ProjectData.data.project.Type}
+                    RepoUrl={ProjectData.data.project.repositoryurl}
+                    Status={ProjectData.data.project.status}
+                    Type={ProjectData.data.project.projecttype}
                     UserSessionToken={accountStatus.accessToken!}
-
                 />
             </div>
         )
@@ -40,6 +38,7 @@ const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) =>
             </div>
         )
     }
+
 }
 
 export default ProjectsView

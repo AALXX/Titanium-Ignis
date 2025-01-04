@@ -102,7 +102,7 @@ const CreatePublicToken = (userName: string): string => {
     // Replace letters with numbers
     tag = tag.replace(/A/g, '4').replace(/E/g, '3').replace(/I/g, '1').replace(/O/g, '0').replace(/S/g, '5').replace(/B/g, '8');
 
-    return tag;
+    return `@${tag}`;
 };
 /**
  * Checks if a given email address exists in the users table.

@@ -10,7 +10,7 @@ const ProjectsPage = async () => {
         projects = resp.data.projects
     }
 
-    return <ProjectList initialProjects={projects} />
+    return <ProjectList OwnerProjects={projects} />
 }
 
 export default ProjectsPage
