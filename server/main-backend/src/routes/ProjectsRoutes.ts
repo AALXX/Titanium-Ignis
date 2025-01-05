@@ -7,10 +7,8 @@ const router = express.Router();
 
 router.get('/get-projects/:userSessionToken', param('userSessionToken').not().isEmpty(), ProjectServices.getAllProjects);
 
-router.get('/get-project-data/:projectToken', param('projectToken').not().isEmpty(), ProjectServices.getProjectData);
+router.get('/get-project-data/:projectToken/:userSessionToken', rbacMiddleware('project', 'read'), param('projectToken').not().isEmpty(), ProjectServices.getProjectData);
 
 router.get('/get-project-codebase-data/:projectToken/:userSessionToken', rbacMiddleware('code', 'create'), [param('projectToken').not().isEmpty()], ProjectServices.getProjectCodebaseData);
 
-
 export = router;
-
