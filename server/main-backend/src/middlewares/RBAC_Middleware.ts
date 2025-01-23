@@ -13,7 +13,6 @@ export const rbacMiddleware = (resource: string, action: string) => {
             userToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.params.userSessionToken);
 
             if (!userToken) {
-
                 return res.status(401).json({
                     error: true,
                     errmsg: 'Authentication required',
@@ -33,7 +32,6 @@ export const rbacMiddleware = (resource: string, action: string) => {
         }
 
         if (!userToken || !projectToken) {
-
             connection?.release();
             return res.status(401).json({
                 error: true,
@@ -77,7 +75,8 @@ export const rbacMiddleware = (resource: string, action: string) => {
 
             const result = await query(connection!, permissionQuery, [userToken, projectToken, resource, action]);
             connection?.release();
-            if (!result || result.has_permission === false) {
+            if (!result || result[0].has_permission === false || result.length === 0) {
+                console.log(result[0]);
                 return res.status(403).json({
                     error: true,
                     errmsg: 'Insufficient permissions',

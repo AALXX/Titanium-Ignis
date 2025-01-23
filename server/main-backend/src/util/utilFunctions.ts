@@ -191,10 +191,9 @@ const getUserPrivateTokenFromPublicToken = async (connection: PoolClient, userTo
             return null;
         }
 
-        const Response = await query(connection, QueryString);
-        const userData = JSON.parse(JSON.stringify(Response));
+        const userData = await query(connection, QueryString);
         if (Object.keys(userData).length != 0) {
-            return userData[0].UserPrivateToken;
+            return userData[0].userprivatetoken;
         } else {
             return null;
         }

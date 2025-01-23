@@ -11,7 +11,6 @@ interface ProjectListProps {
 
 const ProjectList: React.FC<ProjectListProps> = ({ OwnerProjects }) => {
     const [projects, setProjects] = useState<IProjects[]>(OwnerProjects)
-    console.log(projects)
     return (
         <div className="flex h-full flex-col overflow-y-auto">
             <div className="flex flex-row">

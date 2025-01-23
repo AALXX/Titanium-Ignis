@@ -22,7 +22,7 @@ const PopupCanvas = (props: IPopupCanvasProps) => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
-                <div className="p-4 sm:p-6 md:p-8">{props.children}</div>
+                <div className="p-4 sm:p-6 md:p-8 flex h-full">{props.children}</div>
             </div>
         </div>
     )

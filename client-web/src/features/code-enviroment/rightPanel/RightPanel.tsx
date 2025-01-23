@@ -116,7 +116,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                 }
             })
 
-            // fix here when json is not right it crashes
+            //! fix here when json is not right it crashes
 
             setProjectConfig(response.data)
         } catch (error) {

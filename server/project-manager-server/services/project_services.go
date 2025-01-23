@@ -41,7 +41,7 @@ func AddProjectEntry(c fiber.Ctx, db *sql.DB) error {
 	projectToken := lib.CreateToken()
 	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
 
-	rows, err := db.Query("INSERT INTO projects (project_name, project_token, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, projectToken, repoURL, userPrivateToken, "checking-out", projectType)
+	rows, err := db.Query("INSERT INTO projects (projectname, projecttoken, repo_url, checked_out_by, status, type) VALUES ($1, $2, $3, $4, $5, $6);", body.Project_name, projectToken, repoURL, userPrivateToken, "checking-out", projectType)
 	if err != nil {
 		log.Println("Error creating project entry in database:", err)
 		return c.Status(500).SendString("Failed to create project entry in database")

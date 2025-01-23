@@ -6,7 +6,6 @@ CREATE TABLE projects_codebase (
     RepositoryUrl TEXT NOT NULL,
     LastUserCommitUserToken TEXT NOT NULL,
     ProjectType TEXT NOT NULL CHECK(ProjectType IN ('git', 'svn')),
-    -- LastCommitTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (ProjectToken)
 );
 
