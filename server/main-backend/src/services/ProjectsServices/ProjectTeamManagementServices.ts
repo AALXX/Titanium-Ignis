@@ -151,7 +151,6 @@ const removeTeamMember = async (req: CustomRequest, res: Response) => {
     try {
         const connection = await connect(req.pool!);
         const memberPrivateToken = await utilFunctions.getUserPrivateTokenFromPublicToken(connection!, req.body.memberPublicToken);
-        
 
         if (!memberPrivateToken) {
             return res.status(200).json({
@@ -175,6 +174,42 @@ const removeTeamMember = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         logging.error('REMOVE_TEAM_MEMBER_FUNC', error.message);
+        return res.status(200).json({
+            error: true,
+            errmsg: error.message,
+        });
+    }
+};
+
+const changeMemberRole = async (req: CustomRequest, res: Response) => {
+    console.log(req.body);
+
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('CHANGE_MEMBER_ROLE_FUNC', error.errorMsg);
+        });
+        return res.status(200).json({ error: true, errors: errors.array() });
+    }
+
+    try {
+        const connection = await connect(req.pool!);
+        const memberPrivateToken = await utilFunctions.getUserPrivateTokenFromPublicToken(connection!, req.body.memberPublicToken);
+        if (!memberPrivateToken) {
+            return res.status(200).json({
+                error: true,
+                errmsg: 'User not found',
+            });
+        }
+        const queryString = `UPDATE projects_team_members SET RoleId = (SELECT id FROM roles WHERE name = $1) WHERE ProjectToken = $2 AND UserPrivateToken = $3`;
+        await query(connection!, queryString, [req.body.newRoleName, req.body.projectToken, memberPrivateToken]);
+        connection?.release();
+      
+        return res.status(200).json({
+            error: false,
+        });
+    } catch (error: any) {
+        logging.error('CHANGE_MEMBER_ROLE_FUNC', error.message);
         return res.status(200).json({
             error: true,
             errmsg: error.message,
@@ -209,4 +244,4 @@ const createDivision = async (req: CustomRequest, res: Response) => {
         });
     }
 };
-export default { getProjectTeamData, addTeamMember, removeTeamMember, createDivision };
+export default { getProjectTeamData, addTeamMember, removeTeamMember, changeMemberRole, createDivision };

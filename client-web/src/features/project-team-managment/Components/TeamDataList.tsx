@@ -32,6 +32,10 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
 
     const [componentToShow, setComponentToShow] = useState<string>('TEAM_MEMBERS_PAGE')
 
+    const [togglePopupEditRole, setTogglePopupEditRole] = useState(false)
+    const [editedRole, setEditedRole] = useState<string>('')
+    const [editedMemberToken, setEditedMemberToken] = useState<string>('')
+
     const addTeamMember = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -100,6 +104,24 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
         setTeamMembers(prevMembers => prevMembers.filter(member => member.memberpublictoken !== memberPublicToken))
     }
 
+    const changeRole = async (memberPublicToken: string) => {
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/change-member-role`, {
+                projectToken: ProjectToken,
+                memberPublicToken: memberPublicToken,
+                newRoleName: editedRole,
+                userSessionToken: userSessionToken
+            })
+
+            if (response.status === 200 && response.data) {
+                setTeamMembers(prevMembers => prevMembers.map(member => (member.memberpublictoken === memberPublicToken ? { ...member, role: editedRole } : member)))
+                setTogglePopupEditRole(false)
+            } else {
+                window.alert('Failed to change role')
+            }
+        } catch (error) {}
+    }
+
     const renderComponent = () => {
         switch (componentToShow) {
             case 'TEAM_MEMBERS_PAGE':
@@ -117,8 +139,11 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                                 ProjectToken={ProjectToken}
                                 userSessionToken={userSessionToken}
                                 onRemove={removeMember}
+                                onChangeRole={(memberPublicToken: string) => {
+                                    setTogglePopupEditRole(true)
+                                    setEditedMemberToken(memberPublicToken)
+                                }}
                                 onChangeDivision={() => {}}
-                                onChangeRole={() => {}}
                             />
                         ))}
                     </div>
@@ -185,6 +210,25 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                         <input className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" placeholder="Division Name" onChange={e => setDivisionName(e.target.value)} value={divisionName} />
                         <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10" onClick={addDivision}>
                             Create Division
+                        </button>
+                    </div>
+                </PopupCanvas>
+            )}
+            {togglePopupEditRole && (
+                <PopupCanvas
+                    closePopup={() => {
+                        setTogglePopupEditRole(false)
+                    }}
+                >
+                    <div className="flex h-full w-full flex-col">
+                        <OptionPicker label="Role" options={Roles} className="mt-2 h-[3rem] w-full rounded-xl bg-[#00000048] text-white" onChange={setEditedRole} value={editedRole} />
+                        <button
+                            className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10"
+                            onClick={async () => {
+                                await changeRole(editedMemberToken)
+                            }}
+                        >
+                            Change Role
                         </button>
                     </div>
                 </PopupCanvas>

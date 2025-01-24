@@ -31,7 +31,7 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
                 userSessionToken: props.userSessionToken
             })
 
-            if (response.status === 200 && response.data.error === false   ) {
+            if (response.status === 200 && response.data.error === false) {
                 props.onRemove(props.memberpublictoken)
             } else {
                 window.alert('Failed to remove member')
@@ -48,14 +48,15 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
         }
     }
 
-    const handleChangeRole = () => {
-        // Implement change role logic
-        console.log('Change role')
+    const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
+        props.onChangeRole(props.memberpublictoken)
+
         setShowMenu(false)
     }
 
     const handleChangeDivision = () => {
-        // Implement change division logic
         console.log('Change division')
         setShowMenu(false)
     }

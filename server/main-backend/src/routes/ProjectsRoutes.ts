@@ -30,6 +30,13 @@ router.post(
 );
 
 router.post(
+    '/change-member-role',
+    rbacMiddleware('project', 'manage'),
+    [body('projectToken').not().isEmpty(), body('memberPublicToken').not().isEmpty(), body('newRoleName').not().isEmpty(), body('userSessionToken').not().isEmpty()],
+    ProjectTeamManagementServices.changeMemberRole,
+);
+
+router.post(
     '/create-division',
     rbacMiddleware('project', 'manage'),
     [body('projectToken').not().isEmpty(), body('divisionName').not().isEmpty(), body('userSessionToken').not().isEmpty()],

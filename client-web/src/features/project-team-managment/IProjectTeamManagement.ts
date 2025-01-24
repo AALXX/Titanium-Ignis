@@ -28,6 +28,6 @@ export interface ITeamMemberTemplate {
     userSessionToken: string | undefined
     ProjectToken: string
     onRemove: (memberPublicToken: string) => void
-    onChangeRole: (memberPublicToken: string, newRole: string) => void
-    onChangeDivision: (memberPublicToken: string, newDivision: string) => void
+    onChangeRole: (memberPublicToken: string) => void
+    onChangeDivision: (memberPublicToken: string) => void
 }
