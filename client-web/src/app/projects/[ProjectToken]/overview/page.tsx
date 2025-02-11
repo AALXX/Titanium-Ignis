@@ -3,12 +3,9 @@ import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 
-interface ProjectData {
-    // Define project data interface if needed
-    // Add relevant properties based on the actual API response
-}
+interface ProjectData {}
 
-async function getProjectData(ProjectToken: string, accessToken: string | undefined): Promise<ProjectData> {
+const getProjectData = async (ProjectToken: string, accessToken: string | undefined): Promise<ProjectData> => {
     try {
         const response = await axios.get<ProjectData>(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-data/${ProjectToken}/${accessToken}`)
         return response.data

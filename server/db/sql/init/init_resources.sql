@@ -20,4 +20,6 @@ INSERT INTO resources (Name, Description) VALUES
     ('ai', 'Artificial Intelligence resources'),
     ('cloud', 'Cloud infrastructure'),
     ('performance', 'Performance testing resources'),
-    ('security_test', 'Security testing resources');
+    ('security_test', 'Security testing resources'),
+    ('task_banner', 'Task banner management resources'),
+    ('task', 'Task management resources');

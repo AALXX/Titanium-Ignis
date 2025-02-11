@@ -36,6 +36,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
     const [editedRole, setEditedRole] = useState<string>('')
     const [editedMemberToken, setEditedMemberToken] = useState<string>('')
 
+
     const addTeamMember = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -80,6 +81,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                 divisionName: divisionName,
                 userSessionToken: userSessionToken
             })
+            
             if (response.status === 200 && response.data) {
                 const newDivision: ITeamDivisions = response.data
                 setDivisions(prevDivisions => [...prevDivisions, newDivision])
@@ -207,6 +209,8 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     }}
                 >
                     <div className="flex h-full w-full flex-col">
+                        <h1 className="self-center text-2xl font-bold text-white">Create Division</h1>
+
                         <input className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" placeholder="Division Name" onChange={e => setDivisionName(e.target.value)} value={divisionName} />
                         <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10" onClick={addDivision}>
                             Create Division
@@ -221,6 +225,8 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     }}
                 >
                     <div className="flex h-full w-full flex-col">
+                        <h1 className="self-center text-2xl font-bold text-white">Change Role</h1>
+
                         <OptionPicker label="Role" options={Roles} className="mt-2 h-[3rem] w-full rounded-xl bg-[#00000048] text-white" onChange={setEditedRole} value={editedRole} />
                         <button
                             className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10"
@@ -241,6 +247,8 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     }}
                 >
                     <div className="flex h-full w-full flex-col">
+                        <h1 className="self-center text-2xl font-bold text-white">Add Team Member</h1>
+
                         <input className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" placeholder="User Email" onChange={e => setNewMemberEmail(e.target.value)} value={newMemberEmail} aria-label="User Email" />
                         <OptionPicker label="Role" options={Roles} className="mt-2 h-[3rem] w-full rounded-xl bg-[#00000048] text-white" onChange={setNewMemberRole} value={newMemberRole} />
                         <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50" onClick={addTeamMember} disabled={isLoading}>

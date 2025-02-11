@@ -8,7 +8,6 @@ export const rbacMiddleware = (resource: string, action: string) => {
         let userToken;
         let projectToken;
         const connection = await connect(req.pool!);
-
         if (req.method === 'GET') {
             userToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.params.userSessionToken);
 
@@ -21,7 +20,6 @@ export const rbacMiddleware = (resource: string, action: string) => {
             projectToken = req.params.projectToken as string;
         } else if (req.method === 'POST') {
             userToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.body.userSessionToken);
-
             if (!userToken) {
                 return res.status(401).json({
                     error: true,
@@ -74,9 +72,8 @@ export const rbacMiddleware = (resource: string, action: string) => {
             `;
 
             const result = await query(connection!, permissionQuery, [userToken, projectToken, resource, action]);
-            connection?.release();
             if (!result || result[0].has_permission === false || result.length === 0) {
-                console.log(result[0]);
+                connection?.release();
                 return res.status(403).json({
                     error: true,
                     errmsg: 'Insufficient permissions',
@@ -88,6 +85,8 @@ export const rbacMiddleware = (resource: string, action: string) => {
                 });
             }
 
+            connection?.release();
+                
             // Add role information to the request for use in route handlers
             // req.userRole = {
             //     name: result.role_name,

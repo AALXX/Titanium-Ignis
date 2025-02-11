@@ -2,9 +2,10 @@ import React from 'react'
 
 interface OptionPickerProps {
     label: string
-    options: { label: string; value: string }[]
-    value: string
+    options: { label: string; value: string | number }[]
+    value: string | number 
     onChange: (value: string) => void
+    className?: string
 }
 
 /**
@@ -16,10 +17,10 @@ interface OptionPickerProps {
  * @param onChange - A callback function that is called when the selected value changes.
  * @returns A React element representing the dropdown select input.
  */
-const DoubleValueOptionPicker: React.FC<OptionPickerProps> = ({ label, options, value, onChange }) => {
+const DoubleValueOptionPicker: React.FC<OptionPickerProps> = ({ className, label, options, value, onChange }) => {
     return (
         <div className="mb-4 flex flex-col items-start">
-            <select value={value} onChange={e => onChange(e.target.value)} className="mt-2 block h-full w-full rounded-xl bg-[#474084] px-4 py-2 text-white shadow-sm focus:outline-none">
+            <select value={value} onChange={e => onChange(e.target.value)} className={className}>
                 <option value="">Select {label}</option>
                 {options.map((option, index) => (
                     <option key={index} value={option.value}>

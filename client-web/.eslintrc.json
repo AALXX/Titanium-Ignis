@@ -3,7 +3,13 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "google", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "google",
+        "prettier"
+    ],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -13,8 +19,14 @@
             "jsx": false
         }
     },
-    "plugins": ["react", "@typescript-eslint"],
-    "ignorePatterns": ["postcss.config.js", "tailwind.config.js"],
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "ignorePatterns": [
+        "postcss.config.js",
+        "tailwind.config.js"
+    ],
     "rules": {
         // Indent with 4 spaces
         "indent": [
@@ -25,9 +37,15 @@
             }
         ],
         // Indent JSX with 4 spaces
-        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent": [
+            "error",
+            4
+        ],
         // Indent props with 4 spaces
-        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-indent-props": [
+            "error",
+            4
+        ],
         // max line lenght
         "max-len": [
             "error",
@@ -35,7 +53,10 @@
                 "code": 220
             }
         ],
-        "object-curly-spacing": ["error", "always"],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
         "no-unused-vars": [
             1,
             {

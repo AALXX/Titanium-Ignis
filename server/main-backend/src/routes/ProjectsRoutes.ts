@@ -3,6 +3,7 @@ import { body, param } from 'express-validator';
 import ProjectServices from '../services/ProjectsServices/ProjectsServices';
 import ProjectCodeBaseServices from '../services/ProjectsServices/ProjectCodeBaseServices';
 import ProjectTeamManagementServices from '../services/ProjectsServices/ProjectTeamManagementServices';
+import ProjectTaskManagementServices from '../services/ProjectsServices/ProjectTaskManagementServices';
 import { rbacMiddleware } from '../middlewares/RBAC_Middleware';
 
 const router = express.Router();
@@ -42,5 +43,18 @@ router.post(
     [body('projectToken').not().isEmpty(), body('divisionName').not().isEmpty(), body('userSessionToken').not().isEmpty()],
     ProjectTeamManagementServices.createDivision,
 );
+
+router.get('/get-all-divisions/:projectToken', [param('projectToken').not().isEmpty()], ProjectTeamManagementServices.getAllDivisions);
+
+router.post(
+    '/create-task-banner',
+    rbacMiddleware('task_banner', 'create'),
+    [body('projectToken').not().isEmpty(), body('departmentAssignmentToId').not().isEmpty(), body('taskBannerName').not().isEmpty(), body('userSessionToken').not().isEmpty()],
+    ProjectTaskManagementServices.createTaskBanner,
+);
+
+router.get('/get-project-task-banners/:projectToken/:userSessionToken', rbacMiddleware('task_banner', 'manage'), [param('projectToken').not().isEmpty()], ProjectTaskManagementServices.getAllTaskBanners);
+
+router.post('/delete-banner', rbacMiddleware('task_banner', 'manage'), [body('bannerToken').not().isEmpty(), body('userSessionToken').not().isEmpty()], ProjectTaskManagementServices.deleteBanner);
 
 export = router;

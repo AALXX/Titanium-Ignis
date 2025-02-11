@@ -28,32 +28,25 @@ const getProjectTeamData = async (req: CustomRequest, res: Response) => {
 
     try {
         const connection = await connect(req.pool!);
-        const TeamQueryString = `SELECT 
-        roles.name AS role,
-        users.UserPublicToken AS MemberPublicToken,
-        users.UserEmail AS MemberEmail,
-        users.UserName AS MemberName,
-        project_divisions.DivisionName AS DivisionName,
-        project_divisions.Id AS DivisionId
-    FROM 
-        projects_team_members
-    JOIN 
-        users 
-    ON 
-        users.UserPrivateToken = projects_team_members.UserPrivateToken
-    LEFT JOIN 
-        roles 
-    ON
-        roles.Id = projects_team_members.RoleId
-    
-    LEFT JOIN 
-        project_divisions 
-    ON 
-        project_divisions.ProjectToken = projects_team_members.ProjectToken
-    WHERE 
-        projects_team_members.ProjectToken = $1;`;
+        const TeamQueryString = `SELECT DISTINCT
+    roles.name AS role,
+    users.UserPublicToken AS MemberPublicToken,
+    users.UserEmail AS MemberEmail,
+    users.UserName AS MemberName
+FROM 
+    projects_team_members
+JOIN 
+    users 
+ON 
+    users.UserPrivateToken = projects_team_members.UserPrivateToken
+LEFT JOIN 
+    roles 
+ON
+    roles.Id = projects_team_members.RoleId
+WHERE 
+    projects_team_members.ProjectToken = $1;`;
         const TeamResponse = await query(connection!, TeamQueryString, [req.params.projectToken]);
-
+        console.log(TeamResponse);
         const DivivisionQueryString = `SELECT * FROM project_divisions WHERE ProjectToken = $1`;
         const DivivisionResponse = await query(connection!, DivivisionQueryString, [req.params.projectToken]);
         connection?.release();
@@ -204,7 +197,7 @@ const changeMemberRole = async (req: CustomRequest, res: Response) => {
         const queryString = `UPDATE projects_team_members SET RoleId = (SELECT id FROM roles WHERE name = $1) WHERE ProjectToken = $2 AND UserPrivateToken = $3`;
         await query(connection!, queryString, [req.body.newRoleName, req.body.projectToken, memberPrivateToken]);
         connection?.release();
-      
+
         return res.status(200).json({
             error: false,
         });
@@ -244,4 +237,33 @@ const createDivision = async (req: CustomRequest, res: Response) => {
         });
     }
 };
-export default { getProjectTeamData, addTeamMember, removeTeamMember, changeMemberRole, createDivision };
+
+const getAllDivisions = async (req: CustomRequest, res: Response) => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_ALL_DIVISIONS_FUNC', error.errorMsg);
+        });
+        return res.status(200).json({ error: true, errors: errors.array() });
+    }
+
+    try {
+        const connection = await connect(req.pool!);
+        const queryString = `SELECT * FROM project_divisions WHERE ProjectToken = $1`;
+
+        const allDivisions = await query(connection!, queryString, [req.params.projectToken]);
+        connection?.release();
+        return res.status(200).json({
+            error: false,
+            divisions: allDivisions,
+        });
+    } catch (error: any) {
+        logging.error('GET_ALL_DIVISIONS_FUNC', error.message);
+        return res.status(200).json({
+            error: true,
+            errmsg: error.message,
+        });
+    }
+};
+
+export default { getProjectTeamData, addTeamMember, removeTeamMember, changeMemberRole, createDivision, getAllDivisions };
