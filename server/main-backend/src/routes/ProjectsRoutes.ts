@@ -57,4 +57,43 @@ router.get('/get-project-task-banners/:projectToken/:userSessionToken', rbacMidd
 
 router.post('/delete-banner', rbacMiddleware('task_banner', 'manage'), [body('bannerToken').not().isEmpty(), body('userSessionToken').not().isEmpty()], ProjectTaskManagementServices.deleteBanner);
 
+router.get(
+    '/get-project-tasks/:bannerToken',
+    // rbacMiddleware('task_banner', 'manage'),
+    [param('bannerToken').not().isEmpty()],
+    ProjectTaskManagementServices.getProjectTasks,
+);
+
+router.post(
+    '/create-task-container',
+    rbacMiddleware('task', 'create'),
+    [body('bannerToken').not().isEmpty(), body('taskContainerName').not().isEmpty(), body('userSessionToken').not().isEmpty(), body('taskContainerUUID')],
+    ProjectTaskManagementServices.createTaskContainer,
+);
+
+router.post(
+    '/delete-task-container',
+    rbacMiddleware('task', 'manage'),
+    [body('bannerToken').not().isEmpty(), body('userSessionToken').not().isEmpty(), body('taskContainerUUID')],
+    ProjectTaskManagementServices.deleteTaskContainer,
+);
+
+
+router.post(
+    '/create-task',
+    // rbacMiddleware('task', 'create'),
+    [
+        body('bannerToken').not().isEmpty(),
+        body('taskContainerUUID').not().isEmpty(),
+        body('taskName').not().isEmpty(),
+        body('taskDescription').not().isEmpty(),
+        body('taskAssigneePublicToken').not().isEmpty(),
+        body('userSessionToken').not().isEmpty(),
+        body('taskDueDate').not().isEmpty(),
+        body('taskStatus').not().isEmpty(),
+        body('taskImportance').not().isEmpty(),
+    ],
+    ProjectTaskManagementServices.createTask,
+);
+
 export = router;

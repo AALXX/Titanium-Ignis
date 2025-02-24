@@ -1,4 +1,4 @@
-import BannerTaskList from '@/features/team-tasks/components/BannerTaskList'
+import BannerTaskList from '@/features/team-tasks/banners/components/BannerTaskList'
 import { ITaskBanners, ITeamDivisions } from '@/features/team-tasks/ITeamTasks'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
@@ -29,7 +29,7 @@ const getAllDivisions = async (ProjectToken: string, accessToken: string | undef
     }
 }
 
-const Tasks: React.FC<{ params: { ProjectToken: string } }> = async ({ params }) => {
+const TaskBanners: React.FC<{ params: { ProjectToken: string } }> = async ({ params }) => {
     const { ProjectToken } = await params
     const accountStatus = await checkAccountStatus()
 
@@ -65,10 +65,16 @@ const Tasks: React.FC<{ params: { ProjectToken: string } }> = async ({ params })
                     <h1 className="text-white">You do not have access to this page</h1>
                 </div>
             )
+        } else if (error instanceof Error) {
+            return (
+                <div className="flex h-screen items-center justify-center">
+                    <h1 className="text-white">An error occurred while fetching data</h1>
+                </div>
+            )
         }
 
         notFound()
     }
 }
 
-export default Tasks
+export default TaskBanners

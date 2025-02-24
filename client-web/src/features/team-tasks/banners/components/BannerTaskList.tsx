@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import PopupCanvas from '@/components/PopupCanvas'
-import { ITaskBanners, ITeamDivisions } from '../ITeamTasks'
+import { ITaskBanners, ITeamDivisions } from '../../ITeamTasks'
 import DoubleValueOptionPicker from '@/components/DoubleValueOptionPicker'
 import BannerTaskTemplate from './BannerTemplate'
 
@@ -62,7 +62,7 @@ const BannerTaskList: React.FC<ITeamDataList> = ({ ProjectToken, userSessionToke
                 </button>
             </div>
 
-            <div className="flex flex-col gap-4 p-4 md:h-[70vh] lg:h-[75vh] 3xl:h-[85vh]">
+            <div className="flex flex-col gap-4 p-4 md:h-[70vh] lg:h-[75vh] 3xl:h-[80vh]">
                 {taskBanners.map((banner: ITaskBanners, index: number) => (
                     <BannerTaskTemplate key={index} {...banner} refreshTaskBanners={fetchTaskBanners} userSessionToken={userSessionToken} />
                 ))}

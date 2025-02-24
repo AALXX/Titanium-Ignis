@@ -21,6 +21,8 @@ export const rbacMiddleware = (resource: string, action: string) => {
         } else if (req.method === 'POST') {
             userToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, req.body.userSessionToken);
             if (!userToken) {
+            console.log("result");
+
                 return res.status(401).json({
                     error: true,
                     errmsg: 'Authentication required',
@@ -72,6 +74,7 @@ export const rbacMiddleware = (resource: string, action: string) => {
             `;
 
             const result = await query(connection!, permissionQuery, [userToken, projectToken, resource, action]);
+            console.log(result);
             if (!result || result[0].has_permission === false || result.length === 0) {
                 connection?.release();
                 return res.status(403).json({
