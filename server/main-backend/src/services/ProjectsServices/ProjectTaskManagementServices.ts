@@ -161,16 +161,19 @@ const getProjectTasks = async (req: CustomRequest, res: Response) => {
                 });
             }
 
-            tasks.push({
-                TaskUUID: row.taskuuid as string,
-                TaskName: row.taskname as string,
-                TaskDescription: row.taskdescription as string,
-                TaskStatus: row.taskstatus as string,
-                TaskImportance: row.taskimportance as string,
-                ContainerUUID: row.containeruuid as string,
-                State: TaskState.Created,
-            });
+            if (row.taskuuid) {
+                tasks.push({
+                    TaskUUID: row.taskuuid as string,
+                    TaskName: row.taskname as string,
+                    TaskDescription: row.taskdescription as string,
+                    TaskStatus: row.taskstatus as string,
+                    TaskImportance: row.taskimportance as string,
+                    ContainerUUID: row.containeruuid as string,
+                    State: TaskState.Created,
+                });
+            }
         });
+
 
         return res.status(200).json({
             error: false,
@@ -273,13 +276,13 @@ const deleteTaskContainer = async (req: CustomRequest, res: Response) => {
     }
     try {
         const connection = await connect(req.pool!);
-        
+
         const deleteContainerQueryString = `DELETE FROM banner_tasks_containers WHERE BannerToken = $1 AND ContainerUUID = $2`;
         await query(connection!, deleteContainerQueryString, [req.body.bannerToken, req.body.taskContainerUUID]);
 
         const deleteTasksQueryString = `DELETE FROM banner_tasks WHERE ContainerUUID = $1`;
         await query(connection!, deleteTasksQueryString, [req.body.taskContainerUUID]);
-        
+
         connection?.release();
         return res.status(200).json({
             error: false,
@@ -291,6 +294,6 @@ const deleteTaskContainer = async (req: CustomRequest, res: Response) => {
             errmsg: error.message,
         });
     }
-}
+};
 
 export default { createTaskBanner, getAllTaskBanners, deleteBanner, getProjectTasks, createTaskContainer, createTask, deleteTaskContainer };

@@ -11,9 +11,10 @@ interface ITaskContainerTemplateProps {
     onCreateTaskContainer: (newTaskContainerName: string) => Promise<boolean>
     onDeleteTaskContainer: (taskContainerUUID: string) => Promise<void>
     taskContainerUUID: string
+    children: React.ReactNode
 }
 
-const TaskContainerTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, containerState, onCreateTaskContainer, onDeleteTaskContainer, taskContainerUUID }) => {
+const TaskContainerTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, containerState, onCreateTaskContainer, onDeleteTaskContainer, taskContainerUUID, children }) => {
     const [ContainerState, setContainerState] = useState<EContainerState>(containerState)
     const [containerName, setContainerName] = useState<string>(title)
     const [showMenu, setShowMenu] = useState(false)
@@ -35,14 +36,14 @@ const TaskContainerTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, c
     switch (ContainerState) {
         case EContainerState.Created:
             return (
-                <div className="flex h-full w-64 flex-shrink-0 flex-col rounded-xl bg-[#00000058]">
-                    <div className="flex h-[5rem] w-full flex-col">
-                        <div className="flex h-full w-full items-center justify-between px-4">
-                            <div className="flex-grow" /> {/* This empty div pushes the title to the center */}
-                            <TruncatedText characters={20} text={containerName} className="text-xl font-bold text-white" />
-                            <div className="flex flex-grow justify-end" ref={menuRef}>
+                <div className="flex h-full w-full min-w-[16rem] max-w-xs flex-shrink-0 flex-col rounded-xl bg-[#00000058] ">
+                    <div className="flex h-full flex-col">
+                        <div className="mb-4 flex items-center justify-between p-4">
+                            <div className="flex-grow" />
+                            <TruncatedText characters={20} text={containerName} className="text-center text-xl font-bold text-white" />
+                            <div className="relative flex flex-grow justify-end" ref={menuRef}>
                                 <MoreVertical
-                                    className="z-10 cursor-pointer self-center text-white"
+                                    className="z-10 cursor-pointer text-white"
                                     onClick={e => {
                                         e.preventDefault()
                                         e.stopPropagation()
@@ -60,7 +61,10 @@ const TaskContainerTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, c
                                 )}
                             </div>
                         </div>
-                        <hr className="mt-auto w-full bg-white" />
+                        <hr className="mb-4 w-full bg-white" />
+                        <div className="flex-grow overflow-y-auto p-4">
+                            <div className="flex flex-col gap-2">{children}</div>
+                        </div>
                     </div>
                 </div>
             )

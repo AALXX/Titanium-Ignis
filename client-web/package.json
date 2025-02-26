@@ -13,6 +13,7 @@
         "@reduxjs/toolkit": "^2.5.0",
         "axios": "^1.7.7",
         "cookies-next": "^5.0.2",
+        "framer-motion": "^12.4.7",
         "highlight.js": "^11.10.0",
         "jsonwebtoken": "^9.0.2",
         "lucide-react": "^0.460.0",

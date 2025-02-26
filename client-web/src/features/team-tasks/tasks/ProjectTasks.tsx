@@ -5,6 +5,7 @@ import TaskContainerTemplate from './components/TaskContainerTemplate'
 import CreateTaskContainerButton from './components/CreateTaskContainerButton'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
+import TaskTemplate from './components/TaskTemplate'
 
 interface IProjectTasks {
     tasks: ITasks[]
@@ -16,7 +17,6 @@ interface IProjectTasks {
 
 const ProjectTasks: FC<IProjectTasks> = ({ tasks, taskContainers, userSessionToken, TaskBannerToken, projectToken }) => {
     const [allTasks, setAllTasks] = useState<ITasks[]>(tasks)
-
     const [allTaskContainers, setAllTaskContainers] = useState<ITaskContainers[]>(taskContainers)
     const [isCreatingTaskContainer, setIsCreatingTaskContainer] = useState<boolean>(false)
     const [lastContainerUUID, setLastContainerUUID] = useState<string | null>(null)
@@ -68,7 +68,23 @@ const ProjectTasks: FC<IProjectTasks> = ({ tasks, taskContainers, userSessionTok
                     onCreateTaskContainer={createTaskContainer}
                     taskContainerUUID={container.containeruuid}
                     onDeleteTaskContainer={deleteTaskContainer}
-                />
+                >
+                    {allTasks
+                        .filter(task => task.ContainerUUID === container.containeruuid)
+                        .map((task: ITasks, index: number) => (
+                            <TaskTemplate
+                                key={index}
+                                TaskUUID={task.TaskUUID}
+                                title={task.TaskName}
+                                taskState={task.State}
+                                onCreateTask={async newTasktaskName => {
+                                    return true
+                                }}
+                                onDeleteTask={async TaskUUID => {}}
+                                taskContainerUUID={container.containeruuid}
+                            />
+                        ))}
+                </TaskContainerTemplate>
             ))}
             <CreateTaskContainerButton
                 addTaskContainer={() => {

@@ -33,7 +33,6 @@ const Tasks: React.FC<{ params: { ProjectToken: string; TaskBannerToken: string 
 
     try {
         tasks = await getAllTasks(ProjectToken, TaskBannerToken)
-        console.log(tasks)
         return (
             <div className="h-full overflow-hidden">
                 <ProjectTasks tasks={tasks.tasks} taskContainers={tasks.containers} userSessionToken={accountStatus.accessToken} TaskBannerToken={TaskBannerToken} projectToken={ProjectToken} />

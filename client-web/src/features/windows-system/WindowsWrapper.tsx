@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useCallback, useRef, useEff
 import { X, Minimize2, Maximize2 } from 'lucide-react'
 import { IWindow } from './IWindows-System'
 
-// Create a context for managing windows
+//* Create a context for managing windows
 const WindowsContext = createContext<{
     windows: IWindow[]
     createWindow: (title: string, content: React.ReactNode, windowUUID?: string) => void
