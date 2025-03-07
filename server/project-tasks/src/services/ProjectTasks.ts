@@ -13,6 +13,7 @@ const getProjectBannerTasks = async (pool: Pool, io: Server, socket: Socket, ban
         SELECT 
     banner_tasks_containers.ContainerName,  
     banner_tasks_containers.ContainerUUID,
+    banner_tasks_containers.ContainerOrder,
     banner_tasks.TaskUUID,
     banner_tasks.TaskName,
     banner_tasks.TaskDescription,
@@ -37,12 +38,7 @@ const getProjectBannerTasks = async (pool: Pool, io: Server, socket: Socket, ban
 FROM banner_tasks_containers 
 LEFT JOIN banner_tasks ON banner_tasks.ContainerUUID = banner_tasks_containers.ContainerUUID
 WHERE banner_tasks_containers.BannerToken = $1
-ORDER BY 
-    CASE 
-        WHEN banner_tasks.TaskStatus = 'Done' THEN 2
-        ELSE 1
-    END,
-    banner_tasks.TaskDueDate ASC;
+ORDER BY banner_tasks_containers.ContainerOrder;
         `
 
         const rawResults = await query(connection!, queryString, [bannerToken])
@@ -96,23 +92,85 @@ const createTaskContainer = async (pool: Pool, io: Server, socket: Socket, userS
             })
         }
 
-        const queryString = `INSERT INTO banner_tasks_containers (BannerToken, ContainerName, ContainerUUID) VALUES ($1, $2, $3)`
-
         if (!containerUUID) {
             containerUUID = uuidv4()
         }
 
-        await query(connection!, queryString, [bannerToken, taskContainerName, containerUUID])
+        const getMaxOrderQuery = `
+            SELECT COALESCE(MAX(ContainerOrder), 0) as maxOrder
+            FROM banner_tasks_containers
+            WHERE BannerToken = $1
+        `
+        const maxOrderResult = await query(connection!, getMaxOrderQuery, [bannerToken])
+        const newOrder = maxOrderResult[0].maxorder + 1
+
+        const queryString = `
+            INSERT INTO banner_tasks_containers (
+                BannerToken, 
+                ContainerName, 
+                ContainerUUID, 
+                ContainerOrder
+            ) VALUES ($1, $2, $3, $4)
+        `
+
+        await query(connection!, queryString, [bannerToken, taskContainerName, containerUUID, newOrder])
 
         io.to(bannerToken).emit('CREATED_TASK_CONTAINER', {
             error: false,
-            containerUUID: containerUUID
+            containerUUID: containerUUID,
+            containerOrder: newOrder
         })
+
+        connection?.release()
     } catch (error: any) {
         logging.error('CREATED_TASK_CONTAINER', error.message)
         socket.emit('CREATED_TASK_CONTAINER', {
             error: true,
             message: 'Error creating task container'
+        })
+    }
+}
+
+const reorderTaskContainers = async (pool: Pool, socket: Socket, io: Server, userSessionToken: string, projectToken: string, bannerToken: string, newOrder: { containerUUID: string; order: number }[]) => {
+    try {
+        const connection = await connect(pool)
+
+        if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'manage')) === false) {
+            connection?.release()
+            return socket.emit('REORDERED_TASK_CONTAINERS', {
+                error: true,
+                message: 'You do not have permission to reorder task containers'
+            })
+        }
+
+        await query(connection!, 'BEGIN')
+
+        for (const item of newOrder) {
+            const queryString = `
+                UPDATE banner_tasks_containers 
+                SET ContainerOrder = $1 
+                WHERE ContainerUUID = $2 AND BannerToken = $3
+            `
+            await query(connection!, queryString, [item.order, item.containerUUID, bannerToken])
+        }
+
+        await query(connection!, 'COMMIT')
+
+        io.to(bannerToken).emit('REORDERED_TASK_CONTAINERS', {
+            error: false,
+            message: 'Task containers reordered successfully'
+        })
+
+        connection?.release()
+    } catch (error: any) {
+        const connection = await connect(pool)
+        await query(connection!, 'ROLLBACK')
+        connection?.release()
+
+        logging.error('REORDERED_TASK_CONTAINERS', error.message)
+        socket.emit('REORDERED_TASK_CONTAINERS', {
+            error: true,
+            message: 'Error reordering task containers'
         })
     }
 }
@@ -169,7 +227,7 @@ const createTask = async (
 ) => {
     try {
         const connection = await connect(pool)
-        
+
         console.log(projectToken, userSessionToken)
 
         if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
@@ -213,11 +271,9 @@ const createTask = async (
         )
         `
 
-        // Format the arrays for PostgreSQL if they exist
         const formattedLabels = taskLabels ? taskLabels : null
         const formattedDependencies = taskDependencies ? taskDependencies : null
 
-        // Format JSON for PostgreSQL if it exists
         const formattedCustomFields = taskCustomFields ? JSON.stringify(taskCustomFields) : null
 
         await query(connection!, queryString, [
@@ -255,4 +311,4 @@ const createTask = async (
     }
 }
 
-export default { getProjectBannerTasks, createTaskContainer, createTask, deleteTaskContainer }
+export default { getProjectBannerTasks, createTaskContainer, createTask, reorderTaskContainers, deleteTaskContainer }

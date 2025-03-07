@@ -17,6 +17,7 @@ export interface IAllTasksResp {
 export interface ITaskContainers {
     containeruuid: string
     containername: string
+    containerorder: number
     state: EContainerState  
 }
 

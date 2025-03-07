@@ -51,6 +51,7 @@ const checkForPermissions = async (connection: PoolClient, projectToken: string,
 
         return true
     } catch (error: any) {
+        
         logging.error('CHECK_FOR_PERMISSIONS', error.message)
         return false
     }

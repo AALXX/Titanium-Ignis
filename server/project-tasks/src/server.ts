@@ -6,7 +6,7 @@ import TasksService from './services/ProjectTasks'
 import { createPool } from './config/postgresql'
 
 const httpServer = http.createServer()
-const NAMESPACE = 'StreamPlatform_API'
+const NAMESPACE = 'ProjectTasks_API'
 
 const pool = createPool()
 
@@ -17,7 +17,6 @@ const io = new Server(httpServer, {
 })
 
 io.on('connection', socket => {
-    
     socket.on('join', ({ BannerToken }) => {
         socket.join(BannerToken)
     })
@@ -28,6 +27,17 @@ io.on('connection', socket => {
 
     socket.on('create-task-container', async ({ userSessionToken, projectToken, bannerToken, taskContainerName, containerUUID }) => {
         return TasksService.createTaskContainer(pool, io, socket, userSessionToken, projectToken, containerUUID, bannerToken, taskContainerName)
+    })
+
+    socket.on('reorder-task-containers', async ({ userSessionToken, projectToken, bannerToken, newOrder }) => {
+        if (!Array.isArray(newOrder) || newOrder.length === 0) {
+            return socket.emit('REORDERED_TASK_CONTAINERS', {
+                error: true,
+                message: 'Invalid order data. Expected array of container UUIDs and orders.'
+            })
+        }
+
+        return TasksService.reorderTaskContainers(pool, socket, io, userSessionToken, projectToken, bannerToken, newOrder)
     })
 
     socket.on('delete-task-container', async ({ userSessionToken, projectToken, bannerToken, containerUUID }) => {

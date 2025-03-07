@@ -162,3 +162,63 @@
 [3/7/2025, 5:35:55 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
 [3/7/2025, 5:36:17 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
 [3/7/2025, 5:36:35 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 7:24:23 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:24:04 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:24:13 PM] [ERROR] [CREATED_TASK_CONTAINER] Cannot read properties of undefined (reading '0')
+[3/7/2025, 8:24:16 PM] [ERROR] [CREATED_TASK_CONTAINER] Cannot read properties of undefined (reading '0')
+[3/7/2025, 8:24:50 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:26:33 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:26:38 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:26:45 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:29:56 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:30:12 PM] [INFO] [StreamPlatform_API] Api is runing on: localhost:7080
+[3/7/2025, 8:36:26 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 8:36:26 PM] [ERROR] [CREATED_TASK_CONTAINER] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 8:36:28 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 8:36:28 PM] [ERROR] [CREATED_TASK_CONTAINER] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 8:36:41 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 8:36:41 PM] [ERROR] [CREATED_TASK_CONTAINER] duplicate key value violates unique constraint "banner_tasks_containers_bannertoken_key"
+[3/7/2025, 9:18:24 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:40:52 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:42:08 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:48:13 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:48:21 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:48:24 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:51:55 PM] [ERROR] [ProjectTasks_API] Error in reorderTaskContainers {"length":108,"name":"error","severity":"ERROR","code":"42P01","position":"26","file":"parse_relation.c","line":"1449","routine":"parserOpenTable"}
+[3/7/2025, 9:52:21 PM] [ERROR] [ProjectTasks_API] Error in reorderTaskContainers {"length":108,"name":"error","severity":"ERROR","code":"42P01","position":"26","file":"parse_relation.c","line":"1449","routine":"parserOpenTable"}
+[3/7/2025, 9:52:25 PM] [ERROR] [ProjectTasks_API] Error in reorderTaskContainers {"length":108,"name":"error","severity":"ERROR","code":"42P01","position":"26","file":"parse_relation.c","line":"1449","routine":"parserOpenTable"}
+[3/7/2025, 9:52:26 PM] [ERROR] [ProjectTasks_API] Error in reorderTaskContainers {"length":108,"name":"error","severity":"ERROR","code":"42P01","position":"26","file":"parse_relation.c","line":"1449","routine":"parserOpenTable"}
+[3/7/2025, 9:53:11 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:53:17 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:53:23 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:53:26 PM] [ERROR] [ProjectTasks_API] Error updating container order {}
+[3/7/2025, 9:56:57 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 9:58:22 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:00:06 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:06 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:06 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:07 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:07 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:07 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:07 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:08 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:08 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:00:08 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:01 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:01:19 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:01:29 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:29 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:29 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:30 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:30 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:30 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:39 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:39 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:39 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:01:39 PM] [ERROR] [CHECK_FOR_PERMISSIONS] Cannot read properties of undefined (reading 'has_permission')
+[3/7/2025, 10:02:17 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:02:21 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:02:25 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:03:24 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:15:40 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/7/2025, 10:16:59 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080

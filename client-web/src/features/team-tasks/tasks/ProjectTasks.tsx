@@ -42,7 +42,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         socketRef.current.emit('join', {
             BannerToken: TaskBannerToken
         })
-        
+
         socketRef.current.emit('get-project-tasks', {
             BannerToken: TaskBannerToken
         })
@@ -53,16 +53,27 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         })
 
         socketRef.current.on('CREATED_TASK_CONTAINER', (data: any) => {
-            console.log(data)
             setIsCreatingTaskContainer(false)
         })
 
-        socketRef.current.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
+        socketRef.current?.on('REORDERED_TASK_CONTAINERS', (data: { error: boolean; message: string }) => {
             if (data.error) {
+                console.error('Error reordering task containers:', data.message)
+                // Optionally refresh data to ensure consistency
+                socketRef.current?.emit('get-project-tasks', {
+                    BannerToken: TaskBannerToken
+                })
+            }
+        })
+
+        socketRef.current.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
+            console.log(data)
+            if (data.error) {
+
                 return
             }
 
-            setAllTaskContainers(prevContainers => prevContainers.filter(container => container.containeruuid !== data.containerUUID))
+            setAllTaskContainers((prevContainers: ITaskContainers[]) => prevContainers.filter(container => container.containeruuid !== data.containerUUID))
         })
 
         socketRef.current.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string }) => {
@@ -138,6 +149,21 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     const handleReorder = (newOrder: ITaskContainers[]) => {
         if (Array.isArray(newOrder) && newOrder.length === allTaskContainers.length) {
             setAllTaskContainers(newOrder)
+
+            //* Prepare the data structure expected by the server
+            const reorderData = newOrder.map((container, index) => ({
+                containerUUID: container.containeruuid,
+                order: index + 1
+            }))
+
+            if (socketRef.current) {
+                socketRef.current.emit('reorder-task-containers', {
+                    userSessionToken: userSessionToken,
+                    projectToken: projectToken,
+                    bannerToken: TaskBannerToken,
+                    newOrder: reorderData
+                })
+            }
         }
     }
 
@@ -224,7 +250,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
                     if (!isCreatingTaskContainer) {
                         const uuid = uuidv4()
                         setLastContainerUUID(uuid)
-                        setAllTaskContainers([...allTaskContainers, { containeruuid: uuid, containername: '', state: EContainerState.Creating }])
+                        setAllTaskContainers([...allTaskContainers, { containeruuid: uuid, containername: '', state: EContainerState.Creating, containerorder: allTaskContainers.length + 1 }])
                     }
                 }}
             />
