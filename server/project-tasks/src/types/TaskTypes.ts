@@ -11,22 +11,17 @@ export interface ITaskContainers {
 }
 
 export interface ITasks {
-    TaskUUID: string;
-    TaskName: string;
-    TaskDescription: string;
-    TaskStatus: string;
-    TaskImportance: string;
-    ContainerUUID: string;
-    State: TaskState;
+    TaskUUID: string
+    TaskName: string
+    TaskDescription: string
+    TaskStatus: string
+    TaskImportance: string
+    ContainerUUID: string
+    TaskDueDate: Date
 }
+
 
 export enum ContainerState {
-    Creating,
-    Created,
-    Editing,
-}
-
-export enum TaskState {
     Creating,
     Created,
     Editing,

@@ -25,6 +25,8 @@ export interface ITasks {
     TaskUUID: string
     TaskName: string
     ContainerUUID: string
+    TaskImportance: string
+    TaskDueDate: Date
 }
 
 export interface ITeamDivisions {

@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { Server, Socket } from 'socket.io'
 import { connect, query } from '../config/postgresql'
-import { ContainerState, ITasks, TaskState } from '../types/TaskTypes'
+import { ContainerState, ITasks } from '../types/TaskTypes'
 import logging from '../config/logging'
 import { v4 as uuidv4 } from 'uuid'
 import { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken } from '../utils/utils'
@@ -52,7 +52,8 @@ ORDER BY banner_tasks_containers.ContainerOrder;
                 containersMap.set(row.containeruuid, {
                     containeruuid: row.containeruuid,
                     containername: row.containername,
-                    state: ContainerState.Created
+                    state: ContainerState.Created,
+                    order: row.containerorder
                 })
             }
 
@@ -64,7 +65,7 @@ ORDER BY banner_tasks_containers.ContainerOrder;
                     TaskStatus: row.taskstatus as string,
                     TaskImportance: row.taskimportance as string,
                     ContainerUUID: row.containeruuid as string,
-                    State: TaskState.Created
+                    TaskDueDate: row.taskduedate
                 })
             }
         })
@@ -300,7 +301,9 @@ const createTask = async (
             error: false,
             containerUUID: taskContainerUUID,
             taskUUID: TaskUUID,
-            taskName: taskName
+            taskName: taskName,
+            taskImportance: taskImportance,
+            taskDueDate: taskDueDate
         })
     } catch (error: any) {
         logging.error('CREATE_TASK_FUNC', error.message)
@@ -345,7 +348,6 @@ const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionT
             taskUUID: taskUUID,
             task: result[0]
         })
-
     } catch (error: any) {
         logging.error('REORDER_TASKS', error.message)
         socket.emit('REORDERED_TASKS', {

@@ -37,7 +37,7 @@ const TaskContainerTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, c
     switch (ContainerState) {
         case EContainerState.Created:
             return (
-                <div className="flex h-full w-full max-w-xs min-w-[16rem] shrink-0 flex-col rounded-xl bg-[#00000058]">
+                <div className="flex h-full w-full max-w-xs min-w-[18rem] shrink-0 flex-col rounded-xl bg-[#00000058]">
                     <div className="flex h-full flex-col">
                         <div className="mb-4 flex items-center justify-between p-4">
                             <div className="grow" />

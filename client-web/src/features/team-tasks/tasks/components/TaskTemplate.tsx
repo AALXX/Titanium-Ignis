@@ -1,37 +1,69 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import { ETaskState } from '../../ITeamTasks'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import TruncatedText from '@/components/TruncateText'
-import { MoreVertical } from 'lucide-react'
+import { Calendar, Flag } from 'lucide-react'
 
 interface ITaskContainerTemplateProps {
     title: string
     onDeleteTask: (TaskUUID: string) => Promise<void>
     TaskUUID: string
     taskContainerUUID: string
+    importance?: string
+    deadline?: Date | string
 }
 
-const TaskTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, onDeleteTask, taskContainerUUID }) => {
+const TaskTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, onDeleteTask, TaskUUID, importance = 'medium', deadline }) => {
     const [taskName, setTaskName] = useState<string>(title)
-    const [showMenu, setShowMenu] = useState(false)
-    const menuRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setShowMenu(false)
-            }
+    const getImportanceColor = () => {
+        switch (importance) {
+            case 'High':
+                return 'bg-red-500'
+            case 'Medium':
+                return 'bg-amber-500'
+            case 'Low':
+                return 'bg-green-500'
+            default:
+                return 'bg-amber-500'
         }
+    }
 
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-    }, [])
+    const formatDeadline = () => {
+        if (!deadline) return null
+
+        const date = deadline instanceof Date ? deadline : new Date(deadline)
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        })
+    }
 
     return (
-        <div className="flex h-[4rem] w-full shrink-0 flex-col rounded-xl bg-[#4e4e4e85]">
-            <TruncatedText characters={20} text={taskName} className="text-xl font-bold text-white m-auto" />
+        <div className="flex h-[8rem] w-full shrink-0 flex-col rounded-xl bg-[#4e4e4e85] p-3 transition-colors hover:bg-[#5a5a5a85]">
+            <div className="flex items-start justify-between">
+                <div className="flex-1">
+                    <TruncatedText characters={20} text={taskName} className="w-full text-lg font-bold text-white" />
+                </div>
+             
+            </div>
+
+            <div className="mt-auto flex items-center gap-3 text-xs text-white/80">
+                <div className="flex items-center gap-1">
+                    <Flag size={14} className="text-white" />
+                    <span className="capitalize">
+                        Importance: <span className={`rounded px-1.5 py-0.5 text-white ${getImportanceColor()}`}>{importance}</span>
+                    </span>
+                </div>
+
+                {deadline && (
+                    <div className="flex items-center gap-1">
+                        <Calendar size={14} className="text-white" />
+                        <span>Deadline: {formatDeadline()}</span>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

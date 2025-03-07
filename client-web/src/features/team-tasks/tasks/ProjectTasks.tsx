@@ -71,11 +71,11 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             setAllTaskContainers((prevContainers: ITaskContainers[]) => prevContainers.filter(container => container.containeruuid !== data.containerUUID))
         })
 
-        socketRef.current.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string }) => {
+        socketRef.current.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string; taskImportance: string; taskDueDate: Date }) => {
             if (data.error) {
                 return
             }
-            setAllTasks(prevTasks => [...prevTasks, { ContainerUUID: data.containerUUID, TaskUUID: data.taskUUID, TaskName: data.taskName }])
+            setAllTasks(prevTasks => [...prevTasks, { ContainerUUID: data.containerUUID, TaskUUID: data.taskUUID, TaskName: data.taskName, TaskDueDate: data.taskDueDate, TaskImportance: data.taskImportance }])
         })
 
         socketRef.current?.on('REORDERED_TASKS', (data: { error: boolean; containerUUID: string; taskUUID: string; task: ITasks; message: string }) => {
@@ -195,7 +195,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     }
 
     return (
-        <Reorder.Group axis="x" values={allTaskContainers} onReorder={handleReorder} as="div" className="flex h-full gap-4 p-4">
+        <Reorder.Group axis="x" values={allTaskContainers} onReorder={handleReorder} as="div" className="flex h-full gap-14 p-4">
             {allTaskContainers.map((container: ITaskContainers) => (
                 <Reorder.Item
                     key={container.containeruuid}
@@ -232,7 +232,15 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
                                 .filter(task => task.ContainerUUID === container.containeruuid)
                                 .map((task: ITasks, index: number) => (
                                     <div key={task.TaskUUID} draggable="true" onDragStart={() => handleTaskDragStart(task)} className="">
-                                        <TaskTemplate key={index} TaskUUID={task.TaskUUID} title={task.TaskName} onDeleteTask={async TaskUUID => {}} taskContainerUUID={container.containeruuid} />
+                                        <TaskTemplate
+                                            key={index}
+                                            title={task.TaskName}
+                                            onDeleteTask={async (TaskUUID: string) => {}}
+                                            TaskUUID={task.TaskUUID}
+                                            importance={task.TaskImportance}
+                                            deadline={task.TaskDueDate}
+                                            taskContainerUUID={task.ContainerUUID}
+                                        />
                                     </div>
                                 ))}
                         </TaskContainerTemplate>
