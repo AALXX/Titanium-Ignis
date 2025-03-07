@@ -59,17 +59,12 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         socketRef.current?.on('REORDERED_TASK_CONTAINERS', (data: { error: boolean; message: string }) => {
             if (data.error) {
                 console.error('Error reordering task containers:', data.message)
-                // Optionally refresh data to ensure consistency
-                socketRef.current?.emit('get-project-tasks', {
-                    BannerToken: TaskBannerToken
-                })
             }
         })
 
         socketRef.current.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
             console.log(data)
             if (data.error) {
-
                 return
             }
 
@@ -83,7 +78,14 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             setAllTasks(prevTasks => [...prevTasks, { ContainerUUID: data.containerUUID, TaskUUID: data.taskUUID, TaskName: data.taskName }])
         })
 
-        // Clean up the socket connection when the component unmounts
+        socketRef.current?.on('REORDERED_TASKS', (data: { error: boolean; containerUUID: string; taskUUID: string; task: ITasks; message: string }) => {
+            if (!data.error) {
+                setAllTasks(prevTasks => prevTasks.map(task => (task.TaskUUID === data.taskUUID ? { ...task, ContainerUUID: data.containerUUID } : task)))
+            } else {
+                console.error('Error reordering task:', data.message)
+            }
+        })
+
         return () => {
             if (socketRef.current) {
                 socketRef.current.disconnect()
@@ -171,7 +173,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         setDraggedTask(task)
     }
 
-    const handleTaskDrop = async (targetContainerUUID: string) => {
+    const handleTaskDrop = (targetContainerUUID: string) => {
         if (!draggedTask) return
 
         if (draggedTask.ContainerUUID === targetContainerUUID) {
@@ -179,22 +181,15 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             return
         }
 
-        try {
-            const updatedTasks = allTasks.map(task => (task.TaskUUID === draggedTask.TaskUUID ? { ...task, ContainerUUID: targetContainerUUID } : task))
+        setAllTasks(prevTasks => prevTasks.map(task => (task.TaskUUID === draggedTask.TaskUUID ? { ...task, ContainerUUID: targetContainerUUID } : task)))
 
-            setAllTasks(updatedTasks)
-
-            // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/update-task-container`, {
-            //     userSessionToken: userSessionToken,
-            //     projectToken: projectToken,
-            //     bannerToken: TaskBannerToken,
-            //     taskUUID: draggedTask.TaskUUID,
-            //     newContainerUUID: targetContainerUUID
-            // })
-        } catch (error) {
-            console.error('Failed to move task between containers', error)
-            setAllTasks(allTasks)
-        }
+        socketRef.current?.emit('reorder-task', {
+            userSessionToken: userSessionToken,
+            projectToken: projectToken,
+            bannerToken: TaskBannerToken,
+            taskContainerUUID: targetContainerUUID,
+            taskUUID: draggedTask.TaskUUID
+        })
 
         setDraggedTask(null)
     }

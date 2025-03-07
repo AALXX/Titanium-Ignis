@@ -108,6 +108,10 @@ io.on('connection', socket => {
         }
     )
 
+    socket.on('reorder-task', async ({ userSessionToken, projectToken, bannerToken, taskContainerUUID, taskUUID }) => {
+        return TasksService.reorderTasks(pool, socket, io, userSessionToken, projectToken, bannerToken, taskContainerUUID, taskUUID)
+    })
+
     socket.on('disconnect', () => {})
 })
 

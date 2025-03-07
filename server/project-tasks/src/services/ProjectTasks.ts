@@ -311,4 +311,48 @@ const createTask = async (
     }
 }
 
-export default { getProjectBannerTasks, createTaskContainer, createTask, reorderTaskContainers, deleteTaskContainer }
+const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionToken: string, projectToken: string, bannerToken: string, taskContainerUUID: string, taskUUID: string) => {
+    try {
+        const connection = await connect(pool)
+
+        if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'manage')) === false) {
+            logging.error('REORDER_TASKS', 'User does not have permission to reorder tasks')
+            return socket.emit('REORDERED_TASKS', {
+                error: true,
+                message: 'You do not have permission to reorder tasks'
+            })
+        }
+
+        console.log('Reordering task:', taskUUID, 'to container:', taskContainerUUID)
+
+        const queryString = `
+        UPDATE banner_tasks SET ContainerUUID = $1 WHERE TaskUUID = $2 RETURNING *`
+        const result = await query(connection!, queryString, [taskContainerUUID, taskUUID])
+
+        if (result.length === 0) {
+            logging.error('REORDER_TASKS', 'Task not found or not updated')
+            return socket.emit('REORDERED_TASKS', {
+                error: true,
+                message: 'Task not found or not updated'
+            })
+        }
+
+        connection?.release()
+
+        io.to(bannerToken).emit('REORDERED_TASKS', {
+            error: false,
+            containerUUID: taskContainerUUID,
+            taskUUID: taskUUID,
+            task: result[0]
+        })
+
+    } catch (error: any) {
+        logging.error('REORDER_TASKS', error.message)
+        socket.emit('REORDERED_TASKS', {
+            error: true,
+            message: 'Error reordering tasks: ' + error.message
+        })
+    }
+}
+
+export default { getProjectBannerTasks, createTaskContainer, createTask, reorderTaskContainers, reorderTasks, deleteTaskContainer }
