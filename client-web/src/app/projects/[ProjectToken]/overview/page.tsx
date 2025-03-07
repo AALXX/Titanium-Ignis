@@ -17,7 +17,7 @@ const getProjectData = async (ProjectToken: string, accessToken: string | undefi
     }
 }
 
-const ProjectOverview: React.FC<{ params: { ProjectToken: string } }> = async ({ params }) => {
+const ProjectOverview: React.FC<{ params: Promise<{ ProjectToken: string }> }> = async ({ params }) => {
     const { ProjectToken } = await params
     const accountStatus = await checkAccountStatus()
 

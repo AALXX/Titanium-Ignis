@@ -13,7 +13,7 @@ const Account = async () => {
 
     return (
         <div className="flex h-full flex-col">
-            <div className="flex h-[30vh] w-full flex-grow-0 flex-col">
+            <div className="flex h-[30vh] w-full grow-0 flex-col">
                 <div className="flex h-full w-[90%] flex-col self-center sm:flex-row lg:flex-row">
                     <UserProfile name={session.user.name as string} email={session.user.email as string} image={session.user.image as string} />
                 </div>

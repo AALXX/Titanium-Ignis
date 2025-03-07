@@ -69,7 +69,7 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ userSessionToken }) => 
                         onChange={value => {
                             setRepoType(value)
                         }}
-                        className="mt-2 block h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-sm focus:outline-none"
+                        className="mt-2 block h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden"
                     />
                 </div>
 

@@ -49,3 +49,6 @@ server/file-server/.env
 server/project-manager-server/.env
 server/repos
 server/projects
+
+server/project-tasks/.env
+server/project-tasks/node_modules

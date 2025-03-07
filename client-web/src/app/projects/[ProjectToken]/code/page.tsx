@@ -24,7 +24,7 @@ async function getProjectCodebaseData(ProjectToken: string, accessToken: string 
     }
 }
 
-const ProjectsView = async ({ params }: { params: { ProjectToken: string } }) => {
+const ProjectsView = async ({ params }: { params: Promise<{ ProjectToken: string }> }) => {
     const { ProjectToken } = await params
     const accountStatus = await checkAccountStatus()
 

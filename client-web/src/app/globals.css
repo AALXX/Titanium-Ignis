@@ -1,76 +1,112 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1600px;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@layer utilities {
+  :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
-}
+  }
 
-@media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
     :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
     }
-}
+  }
 
-body {
+  body {
     padding: 0;
     margin: 0;
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        Segoe UI,
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        Fira Sans,
-        Droid Sans,
-        Helvetica Neue,
-        sans-serif;
+      -apple-system,
+      BlinkMacSystemFont,
+      Segoe UI,
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      Fira Sans,
+      Droid Sans,
+      Helvetica Neue,
+      sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(45deg, #212121, #757575); /* Diagonal gradient */
+    background: linear-gradient(
+      45deg,
+      #212121,
+      #757575
+    ); /* Diagonal gradient */
 
     /* overflow: hidden; */
-}
+  }
 
-/* width */
-::-webkit-scrollbar {
+  /* width */
+  ::-webkit-scrollbar {
     width: 8px;
-}
+  }
 
-/* Track */
-::-webkit-scrollbar-track {
+  /* Track */
+  ::-webkit-scrollbar-track {
     border-radius: 100vh;
     background: #363636;
-}
+  }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
     background: #474747;
-}
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
     background: #5c5c5c;
-}
+  }
 
-::-webkit-slider-thumb {
+  ::-webkit-slider-thumb {
     height: 1em;
     width: 1em;
     border-radius: 5px;
     background: #ffffff;
     cursor: pointer;
     -webkit-appearance: none;
-}
-
-@layer utilities {
-    .text-balance {
-        text-wrap: balance;
-    }
+  }
 }

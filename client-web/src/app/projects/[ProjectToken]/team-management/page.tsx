@@ -21,7 +21,7 @@ async function getProjectData(ProjectToken: string, accessToken: string | undefi
     }
 }
 
-const TeamManagementPage = async function ({ params }: { params: { ProjectToken: string } }) {
+const TeamManagementPage = async function ({ params }: { params: Promise<{ ProjectToken: string }> }) {
     const { ProjectToken } = await params
     const accountStatus = await checkAccountStatus()
 

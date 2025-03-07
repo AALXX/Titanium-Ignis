@@ -121,74 +121,6 @@ const deleteBanner = async (req: CustomRequest, res: Response) => {
     }
 };
 
-const getProjectTasks = async (req: CustomRequest, res: Response) => {
-    const errors = CustomRequestValidationResult(req);
-    if (!errors.isEmpty()) {
-        errors.array().map((error) => {
-            logging.error('GET_PROJECT_TASKS_CONTAINERS_FUNC', error.errorMsg);
-        });
-        return res.status(200).json({ error: true, errors: errors.array() });
-    }
-
-    try {
-        const connection = await connect(req.pool!);
-        const queryString = `
-        SELECT 
-            banner_tasks_containers.ContainerName,  
-            banner_tasks_containers.ContainerUUID,
-            banner_tasks.TaskUUID,
-            banner_tasks.TaskName,
-            banner_tasks.TaskDescription,
-            banner_tasks.TaskStatus,
-            banner_tasks.TaskImportance
-        FROM banner_tasks_containers 
-        LEFT JOIN banner_tasks ON banner_tasks.ContainerUUID = banner_tasks_containers.ContainerUUID
-        WHERE banner_tasks_containers.BannerToken = $1;
-        `;
-
-        const rawResults = await query(connection!, queryString, [req.params.bannerToken]);
-        connection?.release();
-        //* Process data into separate arrays
-        const containersMap = new Map();
-        const tasks: ITasks[] = [];
-
-        rawResults.forEach((row: any) => {
-            if (!containersMap.has(row.containeruuid)) {
-                containersMap.set(row.containeruuid, {
-                    containeruuid: row.containeruuid,
-                    containername: row.containername,
-                    state: ContainerState.Created,
-                });
-            }
-
-            if (row.taskuuid) {
-                tasks.push({
-                    TaskUUID: row.taskuuid as string,
-                    TaskName: row.taskname as string,
-                    TaskDescription: row.taskdescription as string,
-                    TaskStatus: row.taskstatus as string,
-                    TaskImportance: row.taskimportance as string,
-                    ContainerUUID: row.containeruuid as string,
-                    State: TaskState.Created,
-                });
-            }
-        });
-
-
-        return res.status(200).json({
-            error: false,
-            containers: Array.from(containersMap.values()),
-            tasks: tasks,
-        });
-    } catch (error: any) {
-        logging.error('GET_PROJECT_TASKS_CONTAINERS_FUNC', error.message);
-        return res.status(500).json({
-            error: true,
-            errmsg: error.message,
-        });
-    }
-};
-
 const createTaskContainer = async (req: CustomRequest, res: Response) => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
@@ -296,4 +228,4 @@ const deleteTaskContainer = async (req: CustomRequest, res: Response) => {
     }
 };
 
-export default { createTaskBanner, getAllTaskBanners, deleteBanner, getProjectTasks, createTaskContainer, createTask, deleteTaskContainer };
+export default { createTaskBanner, getAllTaskBanners, deleteBanner,  };

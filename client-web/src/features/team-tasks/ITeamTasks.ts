@@ -23,11 +23,7 @@ export interface ITaskContainers {
 export interface ITasks {
     TaskUUID: string
     TaskName: string
-    TaskDescription: string
-    TaskStatus: string
-    TaskImportance: string
     ContainerUUID: string
-    State: ETaskState
 }
 
 export interface ITeamDivisions {

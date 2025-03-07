@@ -29,7 +29,7 @@ const getAllDivisions = async (ProjectToken: string, accessToken: string | undef
     }
 }
 
-const TaskBanners: React.FC<{ params: { ProjectToken: string } }> = async ({ params }) => {
+const TaskBanners: React.FC<{ params: Promise<{ ProjectToken: string }> }> = async ({ params }) => {
     const { ProjectToken } = await params
     const accountStatus = await checkAccountStatus()
 

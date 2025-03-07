@@ -64,7 +64,7 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
     return (
         <div className="relative">
             <Link href={`/user/${props.memberpublictoken}`}>
-                <div className="flex w-full flex-row rounded-lg bg-[#00000056] p-4 shadow-sm transition-all hover:bg-[#0000008a]">
+                <div className="flex w-full flex-row rounded-lg bg-[#00000056] p-4 shadow-xs transition-all hover:bg-[#0000008a]">
                     <img
                         className="h-12 w-12 self-center rounded-full"
                         // src={props.AvatarUrl || `/placeholder.svg?height=48&width=48`}

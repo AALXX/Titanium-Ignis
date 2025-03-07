@@ -1,27 +1,12 @@
-import { IAllTasksResp } from '@/features/team-tasks/ITeamTasks'
+import React from 'react'
 import ProjectTasks from '@/features/team-tasks/tasks/ProjectTasks'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
-import axios from 'axios'
 
 import { notFound } from 'next/navigation'
-
-const getAllTasks = async (ProjectToken: string, bannerToken: string | undefined): Promise<IAllTasksResp> => {
-    try {
-        const response = await axios.get<IAllTasksResp>(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-tasks/${bannerToken}`)
-        return response.data
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 403) {
-            throw new Error('Access Denied')
-        }
-        throw error
-    }
-}
-
-const Tasks: React.FC<{ params: { ProjectToken: string; TaskBannerToken: string } }> = async ({ params }) => {
+const Tasks: React.FC<{ params: Promise<{ ProjectToken: string; TaskBannerToken: string }> }> = async ({ params }) => {
     const { ProjectToken, TaskBannerToken } = await params
     const accountStatus = await checkAccountStatus()
 
-    let tasks: IAllTasksResp = { error: false, containers: [], tasks: [] }
 
     if (!accountStatus.isLoggedIn) {
         return (
@@ -32,10 +17,9 @@ const Tasks: React.FC<{ params: { ProjectToken: string; TaskBannerToken: string 
     }
 
     try {
-        tasks = await getAllTasks(ProjectToken, TaskBannerToken)
         return (
-            <div className="h-full overflow-hidden">
-                <ProjectTasks tasks={tasks.tasks} taskContainers={tasks.containers} userSessionToken={accountStatus.accessToken} TaskBannerToken={TaskBannerToken} projectToken={ProjectToken} />
+            <div className="h-full overflow-y-auto">
+                <ProjectTasks userSessionToken={accountStatus.accessToken} TaskBannerToken={TaskBannerToken} projectToken={ProjectToken} />
             </div>
         )
     } catch (error) {

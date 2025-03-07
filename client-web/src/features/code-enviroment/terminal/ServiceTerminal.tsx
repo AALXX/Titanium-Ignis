@@ -70,7 +70,7 @@ const ServiceTerminal: React.FC<TerminalProps> = ({ socket, windowUUID }) => {
                 ))}
             </div>
             <div className="flex justify-between bg-gray-800 p-2">
-                <button onClick={() => setHistory([])} className="text-gray-400 hover:text-white focus:outline-none">
+                <button onClick={() => setHistory([])} className="text-gray-400 hover:text-white focus:outline-hidden">
                     Clear Terminal
                 </button>
             </div>

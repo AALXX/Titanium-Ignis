@@ -12,7 +12,7 @@ const CreateTaskContainerButton: React.FC<ICreateTaskContainerButtonProps> = ({ 
 
 
     return (
-        <div className="flex h-full w-64 flex-shrink-0 cursor-pointer flex-col rounded-xl bg-[#00000058] hover:bg-[#000000a8]">
+        <div className="flex h-full w-64 shrink-0 cursor-pointer flex-col rounded-xl bg-[#00000058] hover:bg-[#000000a8]">
             <div
                 className="flex h-full w-full flex-col"
                 onClick={addTaskContainer}

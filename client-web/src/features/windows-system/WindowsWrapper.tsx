@@ -163,10 +163,10 @@ const FloatingWindow: React.FC<{ window: IWindow }> = ({ window }) => {
             <div className="flex items-center justify-between bg-[#494949] px-4 py-2" onMouseDown={handleMouseDown}>
                 <h2 className="text-lg font-semibold text-white">{window.title}</h2>
                 <div className="flex space-x-2">
-                    <button onClick={() => minimizeWindow(window.id)} className="text-white hover:text-gray-800 focus:outline-none" aria-label="Minimize window">
+                    <button onClick={() => minimizeWindow(window.id)} className="text-white hover:text-gray-800 focus:outline-hidden" aria-label="Minimize window">
                         <Minimize2 size={16} />
                     </button>
-                    <button onClick={() => destroyWindow(window.id)} className="text-white hover:text-gray-800 focus:outline-none" aria-label="Close window">
+                    <button onClick={() => destroyWindow(window.id)} className="text-white hover:text-gray-800 focus:outline-hidden" aria-label="Close window">
                         <X size={16} />
                     </button>
                 </div>

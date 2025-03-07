@@ -60,7 +60,7 @@ const AddFileOrFolder: React.FC<AddFileOrFolderProps> = ({ isRoot, onCreateFile,
                 <img src="/Editor/Add_icon.svg" alt="Add File or Folder" className="h-5 w-5" />
             </button>
             {isOpen && (
-                <div className="absolute z-10 mt-2 w-56  transform rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="absolute z-10 mt-2 w-56  transform rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden">
                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <button className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" onClick={handleAddFile} role="menuitem">
                             <FilePlus className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />

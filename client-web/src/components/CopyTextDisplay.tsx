@@ -24,7 +24,7 @@ const CopyTextDisplay = ({ text }: CopyTextDisplayProps) => {
     return (
         <div className="flex w-full items-center space-x-2 rounded-xl border p-2">
             <TruncatedText text={text} characters={30} />
-            <button onClick={copyToClipboard} className="flex-shrink-0">
+            <button onClick={copyToClipboard} className="shrink-0">
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
             </button>
         </div>

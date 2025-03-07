@@ -1,10 +1,10 @@
 'use client'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import { ITaskBanners } from '../ITeamTasks'
 import { MoreVertical } from 'lucide-react'
 import BannerTasksOptionsMenu from './BannerTasksOptionsMenu'
 import axios from 'axios';
+import { ITaskBanners } from '../../ITeamTasks'
 
 const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => void, userSessionToken: string | undefined }) => {
     const [showMenu, setShowMenu] = useState(false)

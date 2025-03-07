@@ -84,14 +84,14 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
 
     return (
         <div className="flex h-full w-full flex-col overflow-hidden border-r border-[#333333] bg-[#1e1e1e] md:w-80 lg:w-[30rem]">
-            <div className="flex flex-shrink-0 p-4">
+            <div className="flex shrink-0 p-4">
                 <h2 className="text-xl font-semibold text-white">File Tree</h2>
                 <AddFileOrFolder isRoot={true} onCreateFile={() => {}} onCreateFolder={() => {}} onCreateRootFile={handleCreateRootFile} onCreateRootFolder={handleCreateRootFolder} />
                 <div className="flex">
                     <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={fetchFileTree} className="ml-auto cursor-pointer" width={22} height={22} />
                 </div>
             </div>
-            <div className="h-[38rem] flex-grow-0 overflow-auto p-4 3xl:h-[52rem]">
+            <div className="h-[38rem] grow-0 overflow-auto p-4 3xl:h-[52rem]">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="text-white">Loading...</div>

@@ -120,7 +120,7 @@ const CreateProjectForm: React.FC<CreateProjectFormProps> = ({ userSessionToken 
                             <h1 className="text-white">Project Team</h1>
                             <div className="mt-4 flex space-x-2">
                                 <input
-                                    className="h-[4rem] flex-grow rounded-xl bg-[#00000048] indent-3 text-white"
+                                    className="h-[4rem] grow rounded-xl bg-[#00000048] indent-3 text-white"
                                     placeholder="Team Member Email"
                                     type="email"
                                     value={newMemberEmail}

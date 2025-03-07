@@ -1,102 +1,313 @@
 'use client'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { EContainerState, ITaskContainers, ITasks } from '../ITeamTasks'
 import TaskContainerTemplate from './components/TaskContainerTemplate'
 import CreateTaskContainerButton from './components/CreateTaskContainerButton'
 import { v4 as uuidv4 } from 'uuid'
-import axios from 'axios'
 import TaskTemplate from './components/TaskTemplate'
+import { Reorder } from 'framer-motion'
+import { io, Socket } from 'socket.io-client'
+import PopupCanvas from '@/components/PopupCanvas'
+import OptionPicker from '@/components/OptionPicker'
 
 interface IProjectTasks {
-    tasks: ITasks[]
-    taskContainers: ITaskContainers[]
     userSessionToken: string | undefined
     TaskBannerToken: string
     projectToken: string
 }
 
-const ProjectTasks: FC<IProjectTasks> = ({ tasks, taskContainers, userSessionToken, TaskBannerToken, projectToken }) => {
-    const [allTasks, setAllTasks] = useState<ITasks[]>(tasks)
-    const [allTaskContainers, setAllTaskContainers] = useState<ITaskContainers[]>(taskContainers)
+const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, projectToken }) => {
+    const [allTasks, setAllTasks] = useState<ITasks[]>([])
+    const [allTaskContainers, setAllTaskContainers] = useState<ITaskContainers[]>([])
     const [isCreatingTaskContainer, setIsCreatingTaskContainer] = useState<boolean>(false)
     const [lastContainerUUID, setLastContainerUUID] = useState<string | null>(null)
+    const [draggedTask, setDraggedTask] = useState<ITasks | null>(null)
+    const socketRef = useRef<Socket | null>(null)
 
-    const createTaskContainer = async (newTaskContainerName: string): Promise<boolean> => {
-        try {
-            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/create-task-container`, {
-                userSessionToken: userSessionToken,
-                projectToken: projectToken,
-                bannerToken: TaskBannerToken,
-                taskContainerName: newTaskContainerName,
-                taskContainerUUID: lastContainerUUID
-            })
+    const [createTaskPopup, setCreateTaskPopup] = useState<boolean>(false)
+    const [selectedTaskContainerUUID, setSelectedTaskContainerUUID] = useState<string | null>(null)
+    // Task creation states
+    const [taskName, setTaskName] = useState<string>('')
+    const [taskDescription, setTaskDescription] = useState<string>('')
+    const [taskStatus, setTaskStatus] = useState<string>('To Do')
+    const [taskDueDate, setTaskDueDate] = useState<Date>(new Date())
+    const [taskImportance, setTaskImportance] = useState<string>('Low')
+    const [taskEstimatedTime, setTaskEstimatedTime] = useState<number>(0)
+    const [taskLabels, setTaskLabels] = useState<string[]>([])
 
-            if (resp.data.error === true) {
-                return false
+    useEffect(() => {
+        // Initialize the socket connection
+        socketRef.current = io(process.env.NEXT_PUBLIC_TASKS_SERVER as string)
+
+        socketRef.current.emit('join', {
+            BannerToken: TaskBannerToken
+        })
+        
+        socketRef.current.emit('get-project-tasks', {
+            BannerToken: TaskBannerToken
+        })
+
+        socketRef.current.on('PROJECT_TASKS', (data: any) => {
+            setAllTasks(data.tasks)
+            setAllTaskContainers(data.containers)
+        })
+
+        socketRef.current.on('CREATED_TASK_CONTAINER', (data: any) => {
+            console.log(data)
+            setIsCreatingTaskContainer(false)
+        })
+
+        socketRef.current.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
+            if (data.error) {
+                return
             }
 
-            setIsCreatingTaskContainer(false)
-            return true
-        } catch (error) {
+            setAllTaskContainers(prevContainers => prevContainers.filter(container => container.containeruuid !== data.containerUUID))
+        })
+
+        socketRef.current.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string }) => {
+            if (data.error) {
+                return
+            }
+            setAllTasks(prevTasks => [...prevTasks, { ContainerUUID: data.containerUUID, TaskUUID: data.taskUUID, TaskName: data.taskName }])
+        })
+
+        // Clean up the socket connection when the component unmounts
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.disconnect()
+            }
+        }
+    }, [TaskBannerToken])
+
+    const createTaskContainer = async (newTaskContainerName: string): Promise<boolean> => {
+        if (!socketRef.current) {
+            console.error('Socket connection not established')
             return false
         }
+
+        socketRef.current.emit('create-task-container', {
+            userSessionToken: userSessionToken,
+            projectToken: projectToken,
+            bannerToken: TaskBannerToken,
+            taskContainerName: newTaskContainerName,
+            containerUUID: lastContainerUUID
+        })
+
+        setIsCreatingTaskContainer(false)
+        return true
     }
 
     const deleteTaskContainer = async (containerUUID: string): Promise<void> => {
+        if (!socketRef.current) {
+            console.error('Socket connection not established')
+            return
+        }
+
+        socketRef.current.emit('delete-task-container', {
+            userSessionToken: userSessionToken,
+            projectToken: projectToken,
+            bannerToken: TaskBannerToken,
+            containerUUID: containerUUID
+        })
+    }
+
+    const createTask = async (): Promise<void> => {
+        if (!socketRef.current) {
+            console.error('Socket connection not established')
+            return
+        }
+
+        socketRef.current.emit('create-task', {
+            userSessionToken: userSessionToken,
+            bannerToken: TaskBannerToken,
+            projectToken: projectToken,
+            taskContainerUUID: selectedTaskContainerUUID,
+            taskName: taskName,
+            taskDescription: taskDescription,
+            taskStatus: taskStatus,
+            taskDueDate: taskDueDate,
+            taskImportance: taskImportance,
+            taskEstimatedHours: taskEstimatedTime,
+            taskLabels: taskLabels
+        })
+
+        setCreateTaskPopup(false)
+    }
+
+    const handleReorder = (newOrder: ITaskContainers[]) => {
+        if (Array.isArray(newOrder) && newOrder.length === allTaskContainers.length) {
+            setAllTaskContainers(newOrder)
+        }
+    }
+
+    const handleTaskDragStart = (task: ITasks) => {
+        setDraggedTask(task)
+    }
+
+    const handleTaskDrop = async (targetContainerUUID: string) => {
+        if (!draggedTask) return
+
+        if (draggedTask.ContainerUUID === targetContainerUUID) {
+            setDraggedTask(null)
+            return
+        }
+
         try {
-            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/delete-task-container`, {
-                userSessionToken: userSessionToken,
-                bannerToken: TaskBannerToken,
-                taskContainerUUID: containerUUID,
-                projectToken: projectToken
-            })
+            const updatedTasks = allTasks.map(task => (task.TaskUUID === draggedTask.TaskUUID ? { ...task, ContainerUUID: targetContainerUUID } : task))
 
-            if (resp.data.error === true) {
-            }
+            setAllTasks(updatedTasks)
 
-            setAllTaskContainers(allTaskContainers.filter(container => container.containeruuid !== containerUUID))
-        } catch (error: any) {}
+            // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/update-task-container`, {
+            //     userSessionToken: userSessionToken,
+            //     projectToken: projectToken,
+            //     bannerToken: TaskBannerToken,
+            //     taskUUID: draggedTask.TaskUUID,
+            //     newContainerUUID: targetContainerUUID
+            // })
+        } catch (error) {
+            console.error('Failed to move task between containers', error)
+            setAllTasks(allTasks)
+        }
+
+        setDraggedTask(null)
     }
 
     return (
-        <div className="flex h-full gap-4 overflow-x-auto p-4">
-            {allTaskContainers.map((container: ITaskContainers, index: number) => (
-                <TaskContainerTemplate
-                    key={index}
-                    title={container.containername}
-                    containerState={container.state}
-                    onCreateTaskContainer={createTaskContainer}
-                    taskContainerUUID={container.containeruuid}
-                    onDeleteTaskContainer={deleteTaskContainer}
+        <Reorder.Group axis="x" values={allTaskContainers} onReorder={handleReorder} as="div" className="flex h-full gap-4 p-4">
+            {allTaskContainers.map((container: ITaskContainers) => (
+                <Reorder.Item
+                    key={container.containeruuid}
+                    value={container}
+                    as="div"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={{ left: 1, right: 1 }}
+                    dragMomentum={false}
+                    className="cursor-grab active:cursor-grabbing"
                 >
-                    {allTasks
-                        .filter(task => task.ContainerUUID === container.containeruuid)
-                        .map((task: ITasks, index: number) => (
-                            <TaskTemplate
-                                key={index}
-                                TaskUUID={task.TaskUUID}
-                                title={task.TaskName}
-                                taskState={task.State}
-                                onCreateTask={async newTasktaskName => {
-                                    return true
-                                }}
-                                onDeleteTask={async TaskUUID => {}}
-                                taskContainerUUID={container.containeruuid}
-                            />
-                        ))}
-                </TaskContainerTemplate>
+                    <div
+                        className="flex h-full w-64 shrink-0 cursor-pointer flex-col rounded-xl"
+                        onDragOver={e => {
+                            e.preventDefault()
+                        }}
+                        onDrop={e => {
+                            e.preventDefault()
+                            handleTaskDrop(container.containeruuid)
+                        }}
+                    >
+                        <TaskContainerTemplate
+                            title={container.containername}
+                            containerState={container.state}
+                            onCreateTaskContainer={createTaskContainer}
+                            taskContainerUUID={container.containeruuid}
+                            onDeleteTaskContainer={deleteTaskContainer}
+                            onCreateTask={async (taskContainerUUID: string) => {
+                                setCreateTaskPopup(true)
+                                setSelectedTaskContainerUUID(taskContainerUUID)
+                            }}
+                        >
+                            {allTasks
+                                .filter(task => task.ContainerUUID === container.containeruuid)
+                                .map((task: ITasks, index: number) => (
+                                    <div key={task.TaskUUID} draggable="true" onDragStart={() => handleTaskDragStart(task)} className="">
+                                        <TaskTemplate key={index} TaskUUID={task.TaskUUID} title={task.TaskName} onDeleteTask={async TaskUUID => {}} taskContainerUUID={container.containeruuid} />
+                                    </div>
+                                ))}
+                        </TaskContainerTemplate>
+                    </div>
+                </Reorder.Item>
             ))}
             <CreateTaskContainerButton
                 addTaskContainer={() => {
                     setIsCreatingTaskContainer(true)
                     if (!isCreatingTaskContainer) {
-                        let uuid = uuidv4()
+                        const uuid = uuidv4()
                         setLastContainerUUID(uuid)
                         setAllTaskContainers([...allTaskContainers, { containeruuid: uuid, containername: '', state: EContainerState.Creating }])
                     }
                 }}
             />
-        </div>
+            {createTaskPopup && (
+                <PopupCanvas closePopup={() => setCreateTaskPopup(false)}>
+                    <div className="flex h-full w-full flex-col overflow-y-auto p-4">
+                        <h1 className="self-center text-2xl font-bold text-white">Create Task</h1>
+
+                        <div className="mt-8 flex flex-col gap-6">
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Name</h2>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Task Name"
+                                    required
+                                    className="h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
+                                    onChange={e => setTaskName(e.target.value)}
+                                    value={taskName}
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Description*</h2>
+                                <textarea
+                                    placeholder="Enter Task Description"
+                                    className="h-[6rem] w-full rounded-xl bg-[#00000048] p-3 text-white"
+                                    onChange={e => setTaskDescription(e.target.value)}
+                                    value={taskDescription}
+                                />
+                            </div>
+
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Status</h2>
+                                <OptionPicker
+                                    options={['To Do', 'In Progress', 'Done']}
+                                    label="Task Status"
+                                    className="block h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden"
+                                    onChange={setTaskStatus}
+                                    value={taskStatus}
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Due Date</h2>
+                                <input
+                                    type="date"
+                                    required
+                                    className="h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden"
+                                    onChange={e => {
+                                        setTaskDueDate(new Date(e.target.value))
+                                    }}
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Importance</h2>
+                                <OptionPicker
+                                    options={['Low', 'Medium', 'High']}
+                                    label="Task Importance"
+                                    className="block h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden"
+                                    onChange={setTaskImportance}
+                                    value={taskImportance}
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Estimated Time*</h2>
+                                <input
+                                    type="number"
+                                    placeholder="Enter Task Estimated Time (in hours)"
+                                    className="h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden"
+                                    onChange={e => setTaskEstimatedTime(Number(e.target.value))}
+                                    value={taskEstimatedTime}
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold text-white">Task Labels*</h2>
+                                <input type="text" placeholder="Enter Task Labels (comma-separated)" className="h-[4rem] w-full rounded-xl bg-[#00000048] px-4 py-2 text-white shadow-xs focus:outline-hidden" />
+                            </div>
+                            <button className="h-[4rem] rounded-xl bg-[#00000048] px-4 py-2 text-white proportional-nums active:bg-[#00000065]" onClick={createTask}>
+                                Create Task
+                            </button>
+                        </div>
+                    </div>
+                </PopupCanvas>
+            )}
+        </Reorder.Group>
     )
 }
 

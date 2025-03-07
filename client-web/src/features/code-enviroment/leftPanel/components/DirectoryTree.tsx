@@ -54,7 +54,7 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
             <div className="flex items-center space-x-2 border">
                 <input
                     type="text"
-                    className="w-24 bg-transparent text-white outline-none"
+                    className="w-24 bg-transparent text-white outline-hidden"
                     value={name}
                     onChange={e => setName(e.target.value)}
                     onBlur={() => {
@@ -84,13 +84,13 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
 
     return (
         <div className="pl-5">
-            <div onClick={handleClick} className={`z-10 flex cursor-pointer rounded px-2 py-1 text-white hover:bg-[#ffffff1a] ${!node.is_dir ? 'hover:text-blue-400' : ''}`}>
+            <div onClick={handleClick} className={`z-10 flex cursor-pointer rounded-sm px-2 py-1 text-white hover:bg-[#ffffff1a] ${!node.is_dir ? 'hover:text-blue-400' : ''}`}>
                 {node.is_dir ? (expanded ? '📂 ' : '📁 ') : '📄 '}
 
                 {isEditingName ? (
                     <input
                         type="text"
-                        className="w-24 bg-transparent text-white outline-none"
+                        className="w-24 bg-transparent text-white outline-hidden"
                         value={name}
                         onChange={e => setName(e.target.value)}
                         onBlur={() => setIsEditingName(false)}
