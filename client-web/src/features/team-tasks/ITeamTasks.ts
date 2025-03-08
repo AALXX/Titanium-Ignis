@@ -18,7 +18,7 @@ export interface ITaskContainers {
     containeruuid: string
     containername: string
     containerorder: number
-    state: EContainerState  
+    state: EContainerState
 }
 
 export interface ITasks {
@@ -28,6 +28,33 @@ export interface ITasks {
     TaskImportance: string
     TaskDueDate: Date
 }
+
+export interface ITaskData {
+    assignedmemberusername: string | null
+    containeruuid: string
+    createdbyusername: string
+    id: number
+    taskactualhours: number | null
+    taskattachmentscount: number
+    taskcommentscount: number
+    taskcompleteddate: string | null
+    taskcreateddate: string
+    taskcustomfields: any[]
+    taskdependencies: any | null
+    taskdescription: string
+    taskduedate: string
+    taskestimatedhours: number | null
+    taskimportance: 'Low' | 'Medium' | 'High' | string
+    taskisarchived: boolean
+    tasklabels: string[]
+    tasklastupdated: string
+    tasklastupdatedby: string
+    taskname: string
+    taskreminderdate: string | null
+    taskstatus: 'To Do' | 'In Progress' | 'Done' | string
+    taskuuid: string
+}
+
 
 export interface ITeamDivisions {
     id: number

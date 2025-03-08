@@ -1,21 +1,18 @@
 'use client'
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
 import TruncatedText from '@/components/TruncateText'
 import { Calendar, Flag } from 'lucide-react'
 
 interface ITaskContainerTemplateProps {
     title: string
-    onDeleteTask: (TaskUUID: string) => Promise<void>
     TaskUUID: string
     taskContainerUUID: string
+    onOpenTask: (taskUUID: string) => void
     importance?: string
     deadline?: Date | string
 }
 
-const TaskTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, onDeleteTask, TaskUUID, importance = 'medium', deadline }) => {
-    const [taskName, setTaskName] = useState<string>(title)
-
+const TaskTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, TaskUUID, onOpenTask, importance = 'low', deadline }) => {
     const getImportanceColor = () => {
         switch (importance) {
             case 'High':
@@ -41,12 +38,11 @@ const TaskTemplate: React.FC<ITaskContainerTemplateProps> = ({ title, onDeleteTa
     }
 
     return (
-        <div className="flex h-[8rem] w-full shrink-0 flex-col rounded-xl bg-[#4e4e4e85] p-3 transition-colors hover:bg-[#5a5a5a85]">
+        <div className="flex h-[7rem] w-full shrink-0 flex-col rounded-xl bg-[#4e4e4e85] p-3 transition-colors hover:bg-[#5a5a5a85]" onClick={() => onOpenTask(TaskUUID)}>
             <div className="flex items-start justify-between">
                 <div className="flex-1">
-                    <TruncatedText characters={20} text={taskName} className="w-full text-lg font-bold text-white" />
+                    <TruncatedText characters={20} text={title} className="w-full text-lg font-bold text-white" />
                 </div>
-             
             </div>
 
             <div className="mt-auto flex items-center gap-3 text-xs text-white/80">

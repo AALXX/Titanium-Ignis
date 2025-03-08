@@ -229,8 +229,6 @@ const createTask = async (
     try {
         const connection = await connect(pool)
 
-        console.log(projectToken, userSessionToken)
-
         if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
             logging.error('CREATED_TASK', 'User does not have permission to create a task')
             return socket.emit('CREATED_TASK', {
@@ -326,7 +324,6 @@ const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionT
             })
         }
 
-        console.log('Reordering task:', taskUUID, 'to container:', taskContainerUUID)
 
         const queryString = `
         UPDATE banner_tasks SET ContainerUUID = $1 WHERE TaskUUID = $2 RETURNING *`
@@ -357,4 +354,65 @@ const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionT
     }
 }
 
-export default { getProjectBannerTasks, createTaskContainer, createTask, reorderTaskContainers, reorderTasks, deleteTaskContainer }
+const getTaskData = async (pool: Pool, socket: Socket, io: Server, userSessionToken: string, projectToken: string, taskUUID: string) => {
+    try {
+        const connection = await connect(pool)
+        // if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'read')) === false) {
+        //     logging.error('REORDER_TASKS', 'User does not have permission to reorder tasks')
+        //     return socket.emit('REORDERED_TASKS', {
+        //         error: true,
+        //         message: 'You do not have permission to reorder tasks'
+        //     })
+        // }
+
+        const queryString = `SELECT 
+    bt.TaskUUID,
+    bt.ContainerUUID,
+    bt.TaskName,
+    bt.TaskDescription,
+    bt.TaskStatus,
+    bt.TaskImportance,
+    bt.TaskCreatedDate,
+    bt.TaskDueDate,
+    bt.TaskCompletedDate,
+    bt.TaskEstimatedHours,
+    bt.TaskActualHours,
+    bt.TaskLabels,
+    bt.TaskAttachmentsCount,
+    bt.TaskCommentsCount,
+    bt.TaskReminderDate,
+    bt.TaskIsArchived,
+    bt.TaskLastUpdated,
+    bt.TaskLastUpdatedBy,
+    bt.TaskDependencies,
+    bt.TaskCustomFields, 
+    u1.UserName AS CreatedByUserName, 
+    u2.UserName AS AssignedMemberUserName
+FROM banner_tasks bt
+LEFT JOIN users u1 ON u1.UserPrivateToken = bt.CreatedByUserPrivateToken
+LEFT JOIN users u2 ON u2.UserPrivateToken = bt.AssignedMemberPrivateToken
+WHERE bt.TaskUUID = $1;`
+        const result = await query(connection!, queryString, [taskUUID])
+        connection?.release()
+        if (result.length === 0) {
+            logging.error('GET_TASKS', 'Task not found or not updated')
+            return socket.emit('TASKS_DATA', {
+                error: true,
+                message: 'Task not found or not updated'
+            })
+        }
+
+        return socket.emit('TASKS_DATA', {
+            error: false,
+            task: result[0]
+        })
+    } catch (error: any) {
+        logging.error('GET_TASKS', error.message)
+        socket.emit('TASKS_DATA', {
+            error: true,
+            message: 'Error reordering tasks: ' + error.message
+        })
+    }
+}
+
+export default { getProjectBannerTasks, createTaskContainer, createTask, reorderTaskContainers, reorderTasks, deleteTaskContainer, getTaskData }

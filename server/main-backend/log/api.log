@@ -118,3 +118,4 @@
 [3/7/2025, 11:56:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [3/7/2025, 11:56:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [3/7/2025, 11:57:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/8/2025, 8:10:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

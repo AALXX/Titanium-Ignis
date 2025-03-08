@@ -9,6 +9,7 @@ import { Reorder } from 'framer-motion'
 import { io, Socket } from 'socket.io-client'
 import PopupCanvas from '@/components/PopupCanvas'
 import OptionPicker from '@/components/OptionPicker'
+import ViewTaskPopup from './components/ViewTaskPopup'
 
 interface IProjectTasks {
     userSessionToken: string | undefined
@@ -24,8 +25,8 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     const [draggedTask, setDraggedTask] = useState<ITasks | null>(null)
     const socketRef = useRef<Socket | null>(null)
 
-    const [createTaskPopup, setCreateTaskPopup] = useState<boolean>(false)
-    const [selectedTaskContainerUUID, setSelectedTaskContainerUUID] = useState<string | null>(null)
+    const [createTaskPopup, setCreateTaskPopup] = useState<{ open: boolean; TaskContainerUUID: string }>({ open: false, TaskContainerUUID: '' })
+
     // Task creation states
     const [taskName, setTaskName] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
@@ -34,6 +35,8 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     const [taskImportance, setTaskImportance] = useState<string>('Low')
     const [taskEstimatedTime, setTaskEstimatedTime] = useState<number>(0)
     const [taskLabels, setTaskLabels] = useState<string[]>([])
+
+    const [viewTask, setViewTask] = useState<{ open: boolean; TaskUUID: string }>({ open: false, TaskUUID: '' })
 
     useEffect(() => {
         // Initialize the socket connection
@@ -135,7 +138,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             userSessionToken: userSessionToken,
             bannerToken: TaskBannerToken,
             projectToken: projectToken,
-            taskContainerUUID: selectedTaskContainerUUID,
+            taskContainerUUID: createTaskPopup.TaskContainerUUID,
             taskName: taskName,
             taskDescription: taskDescription,
             taskStatus: taskStatus,
@@ -145,7 +148,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             taskLabels: taskLabels
         })
 
-        setCreateTaskPopup(false)
+        setCreateTaskPopup({ open: false, TaskContainerUUID: '' })
     }
 
     const handleReorder = (newOrder: ITaskContainers[]) => {
@@ -194,6 +197,10 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         setDraggedTask(null)
     }
 
+    const openTask = (TaskUUID: string) => {
+        setViewTask({ open: true, TaskUUID: TaskUUID })
+    }
+
     return (
         <Reorder.Group axis="x" values={allTaskContainers} onReorder={handleReorder} as="div" className="flex h-full gap-14 p-4">
             {allTaskContainers.map((container: ITaskContainers) => (
@@ -224,8 +231,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
                             taskContainerUUID={container.containeruuid}
                             onDeleteTaskContainer={deleteTaskContainer}
                             onCreateTask={async (taskContainerUUID: string) => {
-                                setCreateTaskPopup(true)
-                                setSelectedTaskContainerUUID(taskContainerUUID)
+                                setCreateTaskPopup({ open: true, TaskContainerUUID: taskContainerUUID })
                             }}
                         >
                             {allTasks
@@ -235,11 +241,11 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
                                         <TaskTemplate
                                             key={index}
                                             title={task.TaskName}
-                                            onDeleteTask={async (TaskUUID: string) => {}}
                                             TaskUUID={task.TaskUUID}
                                             importance={task.TaskImportance}
                                             deadline={task.TaskDueDate}
                                             taskContainerUUID={task.ContainerUUID}
+                                            onOpenTask={openTask}
                                         />
                                     </div>
                                 ))}
@@ -257,8 +263,14 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
                     }
                 }}
             />
-            {createTaskPopup && (
-                <PopupCanvas closePopup={() => setCreateTaskPopup(false)}>
+            {viewTask.open && (
+                <PopupCanvas closePopup={() => setViewTask({ open: false, TaskUUID: '' })}>
+                    <ViewTaskPopup socketRef={socketRef} taskUUID={viewTask.TaskUUID} />
+                </PopupCanvas>
+            )}
+
+            {createTaskPopup.open && (
+                <PopupCanvas closePopup={() => setCreateTaskPopup({ open: false, TaskContainerUUID: '' })}>
                     <div className="flex h-full w-full flex-col overflow-y-auto p-4">
                         <h1 className="self-center text-2xl font-bold text-white">Create Task</h1>
 

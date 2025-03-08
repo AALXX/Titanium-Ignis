@@ -67,7 +67,7 @@ FROM
             'TASK_BANNER_MANAGE',
             'Manage tasks and assignments',
             'task_banner',
-            'manage'
+            'manage',
         UNION
         SELECT
             'TASK_CREATE',

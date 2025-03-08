@@ -112,6 +112,10 @@ io.on('connection', socket => {
         return TasksService.reorderTasks(pool, socket, io, userSessionToken, projectToken, bannerToken, taskContainerUUID, taskUUID)
     })
 
+    socket.on('get-task-data', async ({ userSessionToken, projectToken,  taskUUID }) => {
+        return TasksService.getTaskData(pool, socket, io, userSessionToken, projectToken,  taskUUID)
+    })
+
     socket.on('disconnect', () => {})
 })
 
