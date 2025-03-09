@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import logging from '../config/logging';
 import ProjectCodeBaseServices from '../services/ProjectsServices/ProjectCodeBaseServices';
+import ProjectCodeBaseDeployments from '../services/ProjectsServices/ProjectCodeBaseDeployments';
 
 import { Pool } from 'pg';
 
@@ -22,6 +23,10 @@ const initSorketioRoutes = (io: Server, pool: Pool) => {
 
         socket.on('start-setup', (data: { userSessionToken: string; projectToken: string; serviceID: number }) => {
             ProjectCodeBaseServices.startSetup(socket, data.userSessionToken, data.projectToken, data.serviceID);
+        });
+
+        socket.on('start-deployment', (data: { userSessionToken: string; projectToken: string; deploymentID: number }) => {
+            ProjectCodeBaseDeployments.startDeploymentProcedure(socket, data.userSessionToken, data.projectToken, data.deploymentID);
         });
 
         // Clean up processes when client disconnects

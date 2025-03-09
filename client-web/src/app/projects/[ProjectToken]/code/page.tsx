@@ -2,6 +2,7 @@ import ProjectCodebaseWrapper from '@/features/code-enviroment/ProjectCodebaseWr
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import React from 'react'
 
 interface ProjectCodebaseData {
     project: {
@@ -38,7 +39,6 @@ const ProjectsView = async ({ params }: { params: Promise<{ ProjectToken: string
 
     try {
         const projectData = await getProjectCodebaseData(ProjectToken, accountStatus.accessToken)
-
         return (
             <div className="flex h-full w-full">
                 <ProjectCodebaseWrapper

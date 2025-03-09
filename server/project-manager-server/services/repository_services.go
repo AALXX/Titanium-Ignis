@@ -156,7 +156,7 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 
 
 	//update project repoUrl
-	rows, err := db.Query("UPDATE projects SET repo_url = $1 WHERE project_token = $2;", fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken), body.ProjectToken)
+	rows, err := db.Query("UPDATE projects_codebase SET RepositoryUrl = $1 WHERE ProjectToken = $2;", fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken), body.ProjectToken)
 	if err != nil {
 		log.Println("Error updating project repoUrl in database:", err)
 		return c.Status(500).SendString("Failed to update project repoUrl in database")

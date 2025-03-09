@@ -3,10 +3,10 @@ import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { MoreVertical } from 'lucide-react'
 import BannerTasksOptionsMenu from './BannerTasksOptionsMenu'
-import axios from 'axios';
+import axios from 'axios'
 import { ITaskBanners } from '../../ITeamTasks'
 
-const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => void, userSessionToken: string | undefined }) => {
+const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => void; userSessionToken: string | undefined }) => {
     const [showMenu, setShowMenu] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null)
 
@@ -28,7 +28,7 @@ const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => vo
             <div className="flex h-[11rem] w-full rounded-xl bg-[#0000005d] p-4 transition-all hover:bg-[#0000008a]">
                 <div className="flex w-full flex-col self-center">
                     <h1 className="text-3xl font-bold text-white">{props.bannername}</h1>
-                    <h1 className="text-md mb-2 mt-2 text-white">Departament assigned: {props.departamentassignedto}</h1>
+                    <h1 className="text-md mt-2 mb-2 text-white">Departament assigned: {props.departamentassignedto}</h1>
                     <h1 className="text-md text-white">
                         Asigned By: {props.asignername}, {props.asignerrole}
                     </h1>
@@ -44,15 +44,16 @@ const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => vo
                     />
                     {showMenu && (
                         <BannerTasksOptionsMenu
-                            onChangeDeadline={() => {
+                            onChangeDeadline={async (e: React.MouseEvent<HTMLButtonElement>) => {
+                                e.preventDefault()
+                                e.stopPropagation()
                                 console.log('Change deadline')
-
                             }}
-                            
-                            onChangeDivision={() => {
+                            onChangeDivision={async (e: React.MouseEvent<HTMLButtonElement>) => {
+                                e.preventDefault()
+                                e.stopPropagation()
                                 console.log('Change division')
                             }}
-
                             onRemove={async (e: React.MouseEvent<HTMLButtonElement>) => {
                                 e.preventDefault()
                                 e.stopPropagation()
@@ -64,10 +65,9 @@ const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => vo
 
                                 if (resp.status === 200) {
                                     props.refreshTaskBanners()
-                                }else{
+                                } else {
                                     window.alert('Error deleting banner')
                                 }
-
                             }}
                         />
                     )}

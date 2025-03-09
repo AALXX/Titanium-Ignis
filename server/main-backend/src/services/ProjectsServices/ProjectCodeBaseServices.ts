@@ -40,7 +40,7 @@ const getProjectCodebaseData = async (req: CustomRequest, res: Response) => {
         connection?.release();
         return res.status(200).json({
             error: false,
-            project: projectsResponse,
+            project: projectsResponse[0],
         });
     } catch (error: any) {
         logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.message);
@@ -75,6 +75,7 @@ const startSetup = async (socket: Socket, userSessionToken: string, projectToken
     try {
         let projectConfig: IProjectConfig = {
             services: [],
+            deployments: [],
         };
         try {
             projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
@@ -102,6 +103,7 @@ const startSetup = async (socket: Socket, userSessionToken: string, projectToken
             let workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`;
 
             if (projectConfig.services[serviceID - 1].dir) {
+                // here we don't have a / between the project token and the service dir because the service dir is defined as a relative path in project-config.json
                 workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
             }
 
@@ -146,6 +148,7 @@ const startService = async (socket: Socket, userSessionToken: string, projectTok
 
         let projectConfig: IProjectConfig = {
             services: [],
+            deployments: [],
         };
 
         try {

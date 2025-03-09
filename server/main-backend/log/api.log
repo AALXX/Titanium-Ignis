@@ -119,3 +119,103 @@
 [3/7/2025, 11:56:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [3/7/2025, 11:57:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [3/8/2025, 8:10:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:28:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:29:22 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:33:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:46:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:48:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:49:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:49:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:51:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:51:32 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:52:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:52:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:52:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 11:31:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 11:53:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 11:56:46 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 11:59:27 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 11:59:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:00:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:00:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:00:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:02:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:02:22 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:03:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:03:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:04:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:32:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:34:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:35:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:37:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:38:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:38:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:38:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:38:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:39:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:39:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:40:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:40:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:40:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:40:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:48:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 12:49:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:02:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:03:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:03:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:03:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:04:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:04:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:04:31 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:05:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:05:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:10:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:12:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:14:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:16:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:20:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:22:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:22:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 1:22:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:04:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:05:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:05:15 PM] [ERROR] [START_DEPLOYMENT] Error: ENOENT: no such file or directory, mkdir '../deployments/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc'
+[3/9/2025, 2:06:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:07:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:07:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:10:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:11:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:11:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:15:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:15:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:15:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:16:20 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:17:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:17:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:17:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:17:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:19:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:20:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:20:50 PM] [INFO] [START_DEPLOYMENT] project cloned successfully
+[3/9/2025, 2:21:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:23:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:24:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:24:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:26:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:26:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:27:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:27:04 PM] [ERROR] [START_DEPLOYMENT] Error: spawn ENOMEM
+[3/9/2025, 2:27:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:27:40 PM] [ERROR] [START_DEPLOYMENT] Error: spawn ENOMEM
+[3/9/2025, 2:28:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:28:06 PM] [ERROR] [START_DEPLOYMENT] Error: spawn ENOMEM
+[3/9/2025, 2:28:22 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:28:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:30:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:30:31 PM] [INFO] [START_DEPLOYMENT] project cloned successfully
+[3/9/2025, 2:30:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:31:31 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:32:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 2:32:09 PM] [INFO] [START_DEPLOYMENT] project cloned successfully
+[3/9/2025, 2:32:11 PM] [INFO] [START_DEPLOYMENT] Docker compose up success
+[3/9/2025, 2:32:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

@@ -14,7 +14,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <Meta title="BMA" description="BMA" keywords="bank management " />
+            <Meta
+                title="Titanium Ignis"
+                description="Titanium Ignis is a platform for project management, task management, team collaboration, code management, and deployment"
+                keywords="project management, task management, team collaboration, code management, deployment"
+            />
             <body className={`${inter.className} flex h-screen flex-col`}>
                 <SessionProvider>
                     <NavBar />

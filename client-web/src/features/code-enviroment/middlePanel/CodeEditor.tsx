@@ -103,7 +103,6 @@ const FileEditor = ({ filePath, projectToken, userSessionToken, repoUrl }: { fil
 
             if (response.status === 200) {
                 setIsGeneratingRepository(false)
-                console.log(response.data.repoUrl)
                 setRepositoryUrl(response.data.repoUrl)
             }
         } catch (error) {
@@ -132,24 +131,24 @@ const FileEditor = ({ filePath, projectToken, userSessionToken, repoUrl }: { fil
                     )}
                 </h2>
                 {repositoryUrl ? (
-                    <div className="flex w-[18rem] ml-auto">
+                    <div className="ml-auto flex w-[18rem]">
                         <CopyTextDisplay text={repositoryUrl} />
                     </div>
                 ) : (
                     <>
                         {isGeneratingRepository ? (
-                            <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" disabled>
+                            <button className="ml-auto cursor-pointer rounded-xl bg-[#333333] px-4 py-2 text-white" disabled>
                                 Generete Repository
                             </button>
                         ) : (
-                            <button className="ml-auto rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleGenereteRepository}>
+                            <button className="ml-auto cursor-pointer rounded-xl bg-[#333333] px-4 py-2 text-white" onClick={handleGenereteRepository}>
                                 Generete Repository
                             </button>
                         )}
                     </>
                 )}
             </div>
-            <div className="relative h-[38rem] grow-0 overflow-hidden 3xl:h-full">
+            <div className="3xl:h-full relative h-[38rem] grow-0 overflow-hidden">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-white"></div>

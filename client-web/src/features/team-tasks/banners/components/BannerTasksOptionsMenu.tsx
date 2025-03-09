@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { UserMinus, UserCog, ArrowUpDown, DiamondMinus, CogIcon, Calendar } from 'lucide-react'
+import { ArrowUpDown, DiamondMinus, Calendar } from 'lucide-react'
 
 interface ManagementOptionsMenuProps {
     onRemove: (e: React.MouseEvent<HTMLButtonElement>) => void
