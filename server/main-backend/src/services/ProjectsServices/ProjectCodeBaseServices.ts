@@ -77,66 +77,121 @@ const startSetup = async (socket: Socket, userSessionToken: string, projectToken
             services: [],
             deployments: [],
         };
-        try {
-            projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
-        } catch (error: any) {
-            logging.error('START_SETUP_READING_FILE_FUNC', error.message);
+
+        const projectPath = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`;
+        if (!fs.existsSync(projectPath)) {
+            logging.error('START_SETUP_FUNC', `Project path does not exist: ${projectPath}`);
+            socket.emit('setup-error', { error: 'Project path not found' });
+            return;
         }
 
-        if (projectConfig.services.length < serviceID) {
-            socket.emit('setup-error', { error: 'Service not found' });
+        // Try to read the config file safely
+        try {
+            const configPath = `${projectPath}/project-config.json`;
+            if (fs.existsSync(configPath)) {
+                projectConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+            } else {
+                logging.error('START_SETUP_FUNC', `Config file not found: ${configPath}`);
+                socket.emit('setup-error', { error: 'Project configuration file not found' });
+                return;
+            }
+        } catch (error: any) {
+            logging.error('START_SETUP_READING_FILE_FUNC', error.message);
+            socket.emit('setup-error', { error: `Failed to parse project configuration: ${error.message}` });
+            return;
+        }
+
+        if (!projectConfig.services || projectConfig.services.length === 0) {
+            socket.emit('setup-error', { error: 'No services configured for this project' });
+            return;
+        }
+
+        if (serviceID < 1 || serviceID > projectConfig.services.length) {
+            socket.emit('setup-error', { error: `Service ID ${serviceID} not found (valid range: 1-${projectConfig.services.length})` });
             return;
         }
 
         const serviceSetup = projectConfig.services[serviceID - 1].setup;
-        if (!serviceSetup) {
-            socket.emit('setup-error', { error: 'Service does not have a setup' });
+        if (!serviceSetup || !Array.isArray(serviceSetup) || serviceSetup.length === 0) {
+            socket.emit('setup-error', { error: 'Service does not have a valid setup configuration' });
             return;
         }
 
         socket.emit('setup-started', { serviceID });
 
         for (let setupCommand of serviceSetup) {
+            if (!setupCommand.run || typeof setupCommand.run !== 'string') {
+                socket.emit('setup-warning', {
+                    serviceID,
+                    message: 'Skipping invalid setup command',
+                });
+                continue;
+            }
+
             const commandParts = setupCommand.run.split(' ');
             const command = commandParts[0];
             const args = commandParts.slice(1);
-            let workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`;
+            let workingDir = projectPath;
 
             if (projectConfig.services[serviceID - 1].dir) {
-                // here we don't have a / between the project token and the service dir because the service dir is defined as a relative path in project-config.json
-                workinDir = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}${projectConfig.services[serviceID - 1].dir}`;
+                workingDir = `${projectPath}/${projectConfig.services[serviceID - 1].dir}`;
+
+                // Check if the service directory exists
+                if (!fs.existsSync(workingDir)) {
+                    socket.emit('setup-error', {
+                        serviceID,
+                        error: `Service directory not found: ${workingDir}`,
+                    });
+                    continue; 
+                }
             }
 
-            const serviceProcess = child_process.spawn(command, args, {
-                cwd: workinDir,
+            try {
+                const serviceProcess = child_process.spawn(command, args, {
+                    cwd: workingDir,
+                    shell: true, 
+                });
 
-                // shell: true,
-            });
+                serviceProcess.on('error', async (err) => {
+                    socket.emit('setup-error', {
+                        serviceID,
+                        error: `Command execution error: ${err.message}`,
+                    });
+                });
 
-            serviceProcess.on('error', async (err) => {
+                serviceProcess.stdout.on('data', (data) => {
+                    socket.emit('setup-output', {
+                        serviceID,
+                        output: data.toString(),
+                    });
+                });
+
+                serviceProcess.stderr.on('data', (data) => {
+                    socket.emit('setup-error', {
+                        serviceID,
+                        error: data.toString(),
+                    });
+                });
+
+                serviceProcess.on('close', async (code) => {
+                    socket.emit('service-stopped', {
+                        serviceID,
+                        code,
+                        message: code === 0 ? 'Command completed successfully' : `Command exited with code ${code}`,
+                    });
+                });
+
+            } catch (error: any) {
                 socket.emit('setup-error', {
                     serviceID,
-                    error: err.message,
+                    error: `Failed to start command: ${error.message}`,
                 });
-            });
-
-            serviceProcess.stdout.on('data', (data) => {
-                socket.emit('setup-output', {
-                    serviceID,
-                    output: data.toString(),
-                });
-            });
-
-            serviceProcess.on('close', async (code) => {
-                socket.emit('service-stopped', {
-                    serviceID,
-                    code,
-                });
-            });
+                logging.error('START_SETUP_SPAWN_FUNC', error.message);
+            }
         }
     } catch (error: any) {
         logging.error('START_SETUP_FUNC', error.message);
-        socket.emit('setup-error', { error: 'Service not found' });
+        socket.emit('setup-error', { error: `Setup initialization failed: ${error.message}` });
     }
 };
 

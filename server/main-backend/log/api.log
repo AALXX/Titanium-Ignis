@@ -219,3 +219,95 @@
 [3/9/2025, 2:32:09 PM] [INFO] [START_DEPLOYMENT] project cloned successfully
 [3/9/2025, 2:32:11 PM] [INFO] [START_DEPLOYMENT] Docker compose up success
 [3/9/2025, 2:32:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:18:27 PM] [INFO] [STOP_SERVICE] Stopped process 2c26f74c-1d72-43e1-aa4f-63712d8dc842
+[3/9/2025, 3:18:32 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:32 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:34 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:34 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] Process 2c26f74c-1d72-43e1-aa4f-63712d8dc842 not found
+[3/9/2025, 3:18:35 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:00 PM] [INFO] [STOP_SERVICE] Stopped process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3
+[3/9/2025, 3:19:00 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:00 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:00 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:00 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:01 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] Process 4f219ddb-9bcc-4a25-b889-e975ca94a1d3 not found
+[3/9/2025, 3:19:02 PM] [ERROR] [STOP_SERVICE] TypeError: Cannot read properties of undefined (reading 'kill')
+[3/9/2025, 3:23:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:23:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:23:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:24:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:24:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:24:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:25:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:25:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:25:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:27:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:27:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:28:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:28:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:28:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 3:30:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 4:37:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[3/9/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/9/2025, 10:40:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/10/2025, 11:27:36 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/10/2025, 1:11:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/10/2025, 6:46:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/10/2025, 9:38:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/11/2025, 10:08:36 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/11/2025, 10:08:36 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:36 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 10:08:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[3/11/2025, 6:15:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[3/12/2025, 10:06:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

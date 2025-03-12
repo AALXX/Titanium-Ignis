@@ -4,7 +4,7 @@ import axios from 'axios'
 import OptionPicker from '@/components/OptionPicker'
 import { Stepper } from '../utils/Stepper'
 import { Roles } from '../utils/Roels'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface CreateProjectFormProps {
     userSessionToken: string | undefined
