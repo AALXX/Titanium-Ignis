@@ -20,11 +20,10 @@ interface ICreteDeployment {
     sokcetRef: Socket
     userSessionToken: string
     projectToken: string
-    depoymentID: number
-    services: Array<{ serviceName: string; serviceID: number }>
+    deployments: Array<{ deployName: string; deployID: number }>
 }
 
-const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionToken, projectToken, depoymentID, services }) => {
+const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionToken, projectToken, deployments }) => {
     const [deploymentData, setDeploymentData] = useState<DeploymentData>({
         name: '',
         type: 'docker',
@@ -37,7 +36,7 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
 
     const [errors, setErrors] = useState<Partial<Record<keyof DeploymentData, string>>>({})
 
-    const [serviceID, setServiceID] = useState<number>(0)
+    const [deploymentID, setDeploymentID] = useState<number>(0)
 
     const handleChange = (field: keyof DeploymentData, value: string | boolean) => {
         setDeploymentData(prev => ({
@@ -51,8 +50,6 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                 [field]: undefined
             }))
         }
-
-        sokcetRef.emit('start-deployment', { userSessionToken: userSessionToken, projectToket: projectToken, deploymentID: depoymentID })
     }
 
     const validateForm = (): boolean => {
@@ -88,6 +85,8 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
         if (validateForm()) {
             console.log('Submitting deployment data:', deploymentData)
         }
+
+        sokcetRef.emit('start-deployment', { userSessionToken: userSessionToken, projectToken: projectToken, deploymentID: deploymentID })
     }
 
     return (
@@ -215,16 +214,16 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                         </div>
                     </div>
                     <div className="mt-4 flex flex-col gap-2 rounded-lg bg-[#3a3a3a] p-4">
-                        {services.length === 0 ? (
+                        {deployments.length === 0 ? (
                             <div className="flex items-center justify-center">
-                                <p className="text-white/50">No services found</p>
+                                <p className="text-white/50">No deployments found</p>
                             </div>
                         ) : (
                             <DoubleValueOptionPicker
-                                label="Service"
-                                options={services.map(service => ({ label: service.serviceName, value: service.serviceID }))}
-                                value={serviceID}
-                                onChange={value => setServiceID(Number(value))}
+                                label="Deployment"
+                                options={deployments.map(deployment => ({ label: deployment.deployName, value: deployment.deployID }))}
+                                value={deploymentID}
+                                onChange={value => setDeploymentID(Number(value))}
                                 className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
                             />
                         )}

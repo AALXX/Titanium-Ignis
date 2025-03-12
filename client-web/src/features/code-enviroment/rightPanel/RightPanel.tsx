@@ -28,7 +28,7 @@ interface Deployment {
 
 const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
     const { createWindow } = useWindows()
-    const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [] })
+    const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [], deployments: [] })
     const [runningServices, setRunningServices] = useState<{
         byServiceID: Record<number, string>
         byProcessId: Record<string, number>
@@ -261,12 +261,11 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                 <PopupCanvas closePopup={() => setDeployPopup(false)}>
                     <CreateDeployment
                         sokcetRef={socket}
-                        depoymentID={1}
                         projectToken={projectToken}
                         userSessionToken={userSessionToken}
-                        services={projectConfig.services.map(service => ({
-                            serviceName: service.name,
-                            serviceID: service.id
+                        deployments={projectConfig.deployments.map(deployment => ({
+                            deployName: deployment.name,
+                            deployID: deployment.id
                         }))}
                     />
                 </PopupCanvas>

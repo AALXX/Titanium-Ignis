@@ -14,6 +14,7 @@ import { validationResult } from 'express-validator';
 
 const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
 const startDeploymentProcedure = async (socket: Socket, userSessionToken: string, projectToken: string, deploymentID: number) => {
+
     try {
         // Generate a unique process ID
         const processId = randomUUID();
@@ -132,7 +133,7 @@ const DeploayWithDockerCompose = async (socket: Socket, projectConfig: IProjectC
 
                     if (projectConfig.deployments[deploymentID - 1]['docker-compose-file']) {
                         const dockerComposeProcess: child_process.ChildProcess = child_process.spawn('docker-compose.exe', ['up', '-d'], {
-                            cwd: `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}`,
+                            cwd: `${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`,
                         });
 
                         dockerComposeProcess.on('exit', (code) => {
