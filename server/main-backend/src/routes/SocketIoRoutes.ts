@@ -25,8 +25,27 @@ const initSorketioRoutes = (io: Server, pool: Pool) => {
             ProjectCodeBaseServices.startSetup(socket, data.userSessionToken, data.projectToken, data.serviceID);
         });
 
-        socket.on('start-deployment', (data: { userSessionToken: string; projectToken: string; deploymentID: number }) => {
-            ProjectCodeBaseDeployments.startDeploymentProcedure(socket, data.userSessionToken, data.projectToken, data.deploymentID);
+        socket.on(
+            'start-deployment',
+            (data: { userSessionToken: string; projectToken: string; name: string; deploymentID: number; branch: string; version: string; server: string; domain: string; description: string }) => {
+                ProjectCodeBaseDeployments.startDeploymentProcedure(
+                    socket,
+                    pool,
+                    data.userSessionToken,
+                    data.name,
+                    data.projectToken,
+                    data.deploymentID,
+                    data.branch,
+                    data.version,
+                    data.server,
+                    data.domain,
+                    data.description,
+                );
+            },
+        );
+
+        socket.on('get-deployments', (data: { userSessionToken: string; projectToken: string }) => {
+            ProjectCodeBaseDeployments.getDeployments(socket, pool, data.userSessionToken, data.projectToken);
         });
 
         // Clean up processes when client disconnects

@@ -14,29 +14,29 @@ interface DeploymentData {
     domain: string
     description: string
     server: string
+    deploymentID: number
 }
 
 interface ICreteDeployment {
-    sokcetRef: Socket
+    socketRef: Socket
     userSessionToken: string
     projectToken: string
     deployments: Array<{ deployName: string; deployID: number }>
 }
 
-const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionToken, projectToken, deployments }) => {
+const CreateDeployment: React.FC<ICreteDeployment> = ({ socketRef, userSessionToken, projectToken, deployments }) => {
     const [deploymentData, setDeploymentData] = useState<DeploymentData>({
         name: '',
         type: 'docker',
         branch: 'main',
         version: 'latest',
-        domain: '',
+        domain: `${projectToken}.ti.dev`,
         description: '',
-        server: 'localhost'
+        server: 'localhost',
+        deploymentID: 0
     })
 
     const [errors, setErrors] = useState<Partial<Record<keyof DeploymentData, string>>>({})
-
-    const [deploymentID, setDeploymentID] = useState<number>(0)
 
     const handleChange = (field: keyof DeploymentData, value: string | boolean) => {
         setDeploymentData(prev => ({
@@ -75,6 +75,10 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
             newErrors.server = 'Server is required'
         }
 
+        if (!deploymentData.deploymentID) {
+            newErrors.deploymentID = 'Deployment ID is required'
+        }
+
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -82,11 +86,21 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        if (validateForm()) {
-            console.log('Submitting deployment data:', deploymentData)
+        if (!validateForm()) {
+            return
         }
 
-        sokcetRef.emit('start-deployment', { userSessionToken: userSessionToken, projectToken: projectToken, deploymentID: deploymentID })
+        socketRef.emit('start-deployment', {
+            userSessionToken: userSessionToken,
+            projectToken: projectToken,
+            name: deploymentData.name,
+            deploymentID: deploymentData.deploymentID,
+            branch: deploymentData.branch,
+            version: deploymentData.version,
+            server: deploymentData.server,
+            domain: deploymentData.domain,
+            description: deploymentData.description
+        })
     }
 
     return (
@@ -174,6 +188,7 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                                     onChange={e => handleChange('version', e.target.value)}
                                     className="w-full rounded-md border-0 bg-[#2e2e2e] px-3 py-2 pl-9 text-white placeholder:text-white/30 focus:ring-2 focus:ring-white focus:outline-none"
                                 />
+                                {errors.version && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                             </div>
                         </div>
                     </div>
@@ -195,6 +210,7 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                                     onChange={e => handleChange('server', e.target.value)}
                                     className="w-full rounded-md border-0 bg-[#2e2e2e] px-3 py-2 pl-9 text-white placeholder:text-white/30 focus:ring-2 focus:ring-white focus:outline-none"
                                 />
+                                {errors.server && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                             </div>
                         </div>
                         <div className="flex flex-col gap-2 rounded-lg bg-[#3a3a3a] p-4">
@@ -205,8 +221,8 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                                 <Computer className="absolute top-2.5 left-3 h-4 w-4 text-white/50" />
                                 <input
                                     id="version"
-                                    placeholder="latest"
-                                    value={deploymentData.version}
+                                    placeholder="example.com"
+                                    value={deploymentData.domain}
                                     onChange={e => handleChange('domain', e.target.value)}
                                     className="w-full rounded-md border-0 bg-[#2e2e2e] px-3 py-2 pl-9 text-white placeholder:text-white/30 focus:ring-2 focus:ring-white focus:outline-none"
                                 />
@@ -219,13 +235,16 @@ const CreateDeployment: React.FC<ICreteDeployment> = ({ sokcetRef, userSessionTo
                                 <p className="text-white/50">No deployments found</p>
                             </div>
                         ) : (
-                            <DoubleValueOptionPicker
-                                label="Deployment"
-                                options={deployments.map(deployment => ({ label: deployment.deployName, value: deployment.deployID }))}
-                                value={deploymentID}
-                                onChange={value => setDeploymentID(Number(value))}
-                                className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
-                            />
+                            <>
+                                <DoubleValueOptionPicker
+                                    label="Deployment"
+                                    options={deployments.map(deployment => ({ label: deployment.deployName, value: deployment.deployID }))}
+                                    value={deploymentData.deploymentID}
+                                    onChange={value => handleChange('deploymentID', value)}
+                                    className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
+                                />
+                                {errors.deploymentID && <p className="mt-1 text-sm text-red-500">{errors.deploymentID}</p>}
+                            </>
                         )}
                     </div>
                 </div>

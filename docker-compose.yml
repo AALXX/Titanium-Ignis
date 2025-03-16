@@ -4,14 +4,6 @@ services:
     build:
       context: ./client-web
       dockerfile: dev.Dockerfile
-
-    # Set environment variables directly in the docker-compose file
-    # environment:
-      # ENV_VARIABLE: ${ENV_VARIABLE}
-      # NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
-
-
-    # Set environment variables based on the .env file
     env_file:
       - /client-web/.env
     volumes:
@@ -20,6 +12,8 @@ services:
     restart: always
     ports:
       - 3000:3000
+    networks:
+      - mda-network
 
   main-backend-api:
     container_name: main-backend-api
@@ -28,7 +22,6 @@ services:
       dockerfile: dev.Dockerfile
     volumes:
       - ./server/main-backend:/usr/src/app
-
     ports:
       - 7070:7070
     env_file:
@@ -37,17 +30,20 @@ services:
     depends_on:
       - postgres-db
       - redis-db
+    networks:
+      - mda-network
 
   file-server:
     build:
       context: ./server/file-server
       dockerfile: dev.Dockerfile
     container_name: file-server
-
     ports:
       - '5500:5500'
     volumes:
       - ./accounts:/accounts
+    networks:
+      - mda-network
 
   postgres-db:
     image: postgres:latest
@@ -61,9 +57,12 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       # - ./server:/docker-entrypoint-initdb.d   TODO: implement table initialization script
-
     restart: always
-    # Redis Cache Service
+    networks:
+      - mda-network
+    # Adding hostname for easier connection
+    hostname: postgres
+    
   redis-db:
     image: redis:latest
     container_name: redis-db
@@ -74,6 +73,9 @@ services:
     ports:
       - "6379:6379"
     command: ["redis-server", "--requirepass", "serbvn"]
+    networks:
+      - mda-network
+    hostname: redis
 
 volumes:
   postgres-data:
@@ -83,3 +85,7 @@ volumes:
   redis_data:
     driver: local
 
+# Define a custom network
+networks:
+  mda-network:
+    driver: bridge

@@ -11,6 +11,7 @@ import ServicesetupTerminal from '../terminal/ServiceSetupTerminal'
 import { RefreshCw, Server, Globe, Play, Square, Settings, Clock, ChevronRight } from 'lucide-react'
 import PopupCanvas from '@/components/PopupCanvas'
 import CreateDeployment from './components/CreateDeployment'
+import { eDeploymentStatus } from './types/RightPanelTypes'
 
 interface IRightPanel {
     socket: Socket
@@ -19,9 +20,9 @@ interface IRightPanel {
 }
 
 interface Deployment {
-    id: string
+    id: number
     name: string
-    status: 'running' | 'stopped' | 'failed' | 'building'
+    status: eDeploymentStatus
     environment: string
     timestamp: string
 }
@@ -39,22 +40,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
 
     const [deployPopup, setDeployPopup] = useState(false)
 
-    const [deployments, setDeployments] = useState<Deployment[]>([
-        {
-            id: 'dep-1',
-            name: 'Production',
-            status: 'building',
-            environment: 'production',
-            timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-        },
-        {
-            id: 'dep-3',
-            name: 'Staging',
-            status: 'stopped',
-            environment: 'staging',
-            timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
-        }
-    ])
+    const [deployments, setDeployments] = useState<Deployment[]>([])
 
     const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -77,6 +63,12 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
     }, [])
 
     useEffect(() => {
+        
+        socket.emit('get-deployments', {
+            userSessionToken,
+            projectToken
+        })
+
         const handleSetupStarted = (data: { serviceID: number }) => {
             const service = projectConfig.services.find(s => s.id === data.serviceID)
             if (service) {
@@ -96,14 +88,61 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             removeRunningService(data.processId)
         }
 
+
+        const handleGetAllDeployments = (data: { deployments: Deployment[] }) => {
+            if (data.deployments.length > 0) {
+                setDeployments(data.deployments)
+            }
+        }
+
+        const handleDeploymentStarted = (data: { deploymentID: number; deploymentName: string; status: eDeploymentStatus; environment: string; timestamp: string }) => {
+            setDeployments(prev => [
+                ...prev,
+                {
+                    id: prev.length + 1,
+                    name: data.deploymentName,
+                    status: data.status,
+                    environment: data.environment,
+                    timestamp: data.timestamp
+                }
+            ])
+        }
+
+        const handleDeploymentUpdate = (data: { deploymentID: number; status: eDeploymentStatus }) => {
+
+            setDeployments(prev =>
+                prev.map(deployment => {
+                    if (deployment.id === data.deploymentID) {
+                        return { ...deployment, status: data.status }
+                    }
+                    return deployment
+                })
+            )
+
+            // this is here to update the circle color immediately
+            setTimeout(() => {
+                const statusIndicator = document.querySelector(`.status-indicator[data-deployment-id="${data.deploymentID}"]`)
+                if (statusIndicator) {
+                    statusIndicator.classList.remove('bg-green-500', 'bg-gray-500', 'bg-red-500', 'bg-yellow-500')
+                    statusIndicator.classList.add(getStatusColor(data.status))
+                }
+            }, 0)
+        }
+
         socket.on('setup-started', handleSetupStarted)
         socket.on('service-started', handleServiceStarted)
         socket.on('service-stopped', handleServiceStopped)
+
+
+        socket.on('all-deployments', handleGetAllDeployments)
+        socket.on('deployment-started', handleDeploymentStarted)
+        socket.on('deployment-update', handleDeploymentUpdate)
 
         return () => {
             socket.off('setup-started', handleSetupStarted)
             socket.off('service-started', handleServiceStarted)
             socket.off('service-stopped', handleServiceStopped)
+            socket.off('deployment-started', handleDeploymentStarted)
         }
     }, [socket, createWindow, projectConfig, addRunningService, removeRunningService])
 
@@ -164,13 +203,13 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'running':
+            case eDeploymentStatus.DEPLOYED:
                 return 'bg-green-500'
-            case 'stopped':
+            case eDeploymentStatus.STOPPED:
                 return 'bg-gray-500'
-            case 'failed':
+            case eDeploymentStatus.FAILED || eDeploymentStatus.CANCELLED:
                 return 'bg-red-500'
-            case 'building':
+            case eDeploymentStatus.DEPLOYING:
                 return 'bg-yellow-500'
             default:
                 return 'bg-gray-500'
@@ -260,7 +299,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             {deployPopup ? (
                 <PopupCanvas closePopup={() => setDeployPopup(false)}>
                     <CreateDeployment
-                        sokcetRef={socket}
+                        socketRef={socket}
                         projectToken={projectToken}
                         userSessionToken={userSessionToken}
                         deployments={projectConfig.deployments.map(deployment => ({
@@ -291,7 +330,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                                 <div key={deployment.id} className="flex flex-col rounded-md border border-[#333333] bg-[#252525] p-3 hover:bg-[#2a2a2a]">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2">
-                                            <div className={`h-2.5 w-2.5 rounded-full ${getStatusColor(deployment.status)}`}></div>
+                                            <div className={`status-indicator h-2.5 w-2.5 rounded-full ${getStatusColor(deployment.status)}`} data-deployment-id={deployment.id}></div>
                                             <span className="font-medium text-white">{deployment.name}</span>
                                             <span className="rounded-md bg-[#333333] px-2 py-0.5 text-xs text-white">{deployment.environment}</span>
                                         </div>
@@ -302,7 +341,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                                         Deployed on {formatDate(deployment.timestamp)}
                                     </div>
 
-                                    <div className="mt-3 flex justify-end">
+                                    <div className="mt-3 flex items-center justify-between">
                                         <button className="flex cursor-pointer items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
                                             View details <ChevronRight size={12} />
                                         </button>

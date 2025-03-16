@@ -27,8 +27,8 @@ const CollapsibleList = ({ title, children, defaultOpen = false, className = '' 
     }, [isOpen])
 
     return (
-        <div className={`w-full overflow-hidden rounded-xl bg-[#4e4e4e85] ${className}`}>
-            <button className="flex w-full items-center justify-between p-3 font-medium text-white transition-colors hover:bg-[#5a5a5a85]" onClick={toggleOpen} aria-expanded={isOpen}>
+        <div className={`w-full overflow-hidden rounded-xl bg-[#4e4e4e85] ${className} `}>
+            <button className="flex w-full cursor-pointer items-center justify-between p-3 font-medium text-white transition-colors hover:bg-[#5a5a5a85]" onClick={toggleOpen} aria-expanded={isOpen}>
                 <div className="flex items-center gap-2 text-left">{title}</div>
                 {isOpen ? <ChevronUp className="h-4 w-4 text-white/70" /> : <ChevronDown className="h-4 w-4 text-white/70" />}
             </button>

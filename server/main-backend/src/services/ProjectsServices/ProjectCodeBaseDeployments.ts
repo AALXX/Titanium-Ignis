@@ -11,10 +11,22 @@ import fs from 'fs';
 import { redisClient } from '../../config/redis';
 import { IProcess } from '../../Models/ProcessModels';
 import { validationResult } from 'express-validator';
+import { eDeploymentStatus } from '../../types/DeploymentTypes';
 
 const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
-const startDeploymentProcedure = async (socket: Socket, userSessionToken: string, projectToken: string, deploymentID: number) => {
-
+const startDeploymentProcedure = async (
+    socket: Socket,
+    pool: Pool,
+    userSessionToken: string,
+    name: string,
+    projectToken: string,
+    deploymentID: number,
+    branch: string,
+    version: string,
+    server: string,
+    domain: string,
+    description?: string,
+) => {
     try {
         // Generate a unique process ID
         const processId = randomUUID();
@@ -39,20 +51,95 @@ const startDeploymentProcedure = async (socket: Socket, userSessionToken: string
 
         switch (projectConfig.deployments[deploymentID - 1].type) {
             case eDeploymentType.DOCKER_COMPOSE:
-                DeploayWithDockerCompose(socket, projectConfig, deploymentID, projectToken);
+                const connection = await connect(pool);
+
+                const checkQuery = `SELECT id, Status FROM projects_deployments WHERE ProjectToken = $1 AND DeploymentID = $2`;
+                const existingDeployment = await connection!.query(checkQuery, [projectToken, deploymentID]);
+
+                if (existingDeployment.rows.length > 0) {
+                    const updateQuery = `UPDATE projects_deployments SET Status = $1 WHERE ProjectToken = $2 AND DeploymentID = $3`;
+                    await connection!.query(updateQuery, [eDeploymentStatus.STOPPED, projectToken, deploymentID]);
+
+                    logging.info('START_DEPLOYMENT', `Found existing deployment with ID ${deploymentID}. Setting status to STOPPED.`);
+                }
+
+                const insertQuery = `INSERT INTO projects_deployments (ProjectToken, DeploymentID, Name, type, Branch, Version, DeploymentUrl, Server, Status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                await connection!.query(insertQuery, [projectToken, deploymentID, name, projectConfig.deployments[deploymentID - 1].type, branch, version, domain, server, eDeploymentStatus.DEPLOYING]);
+
+                socket.emit('deployment-started', {
+                    deploymentID,
+                    deploymentName: name,
+                    status: eDeploymentStatus.DEPLOYING,
+                    environment: 'production',
+                    timestamp: new Date(Date.now()).toISOString(),
+                });
+
+                const deploymentResult = await DeployWithDockerCompose(socket, pool, projectConfig, deploymentID, projectToken);
+
+                if (deploymentResult.success) {
+                    const updateQuery = `UPDATE projects_deployments SET Status = $1, additinaldata = $2 WHERE ProjectToken = $3 AND DeploymentID = $4`;
+                    await connection!.query(updateQuery, [
+                        eDeploymentStatus.DEPLOYED,
+                        JSON.stringify({ containerId: deploymentResult.containerId, containerName: deploymentResult.containerName }),
+                        projectToken,
+                        deploymentID,
+                    ]);
+                    connection!.release();
+                    socket.emit('deployment-update', {
+                        deploymentID,
+                        status: eDeploymentStatus.DEPLOYED,
+                    });
+                } else {
+                    connection!.release();
+                    return socket.emit('deployment-update', {
+                        deploymentID,
+                        status: eDeploymentStatus.FAILED,
+                    });
+                }
                 break;
 
             default:
+                connection!.release();
+
                 break;
         }
     } catch (error: any) {
-        logging.error('START_SERVICE', error);
-        socket.emit('service-error', {
-            error: 'Failed to start service',
+        logging.error('START_DEPLOYMENT', error);
+        return socket.emit('deployment-update', {
+            deploymentID,
+            status: eDeploymentStatus.FAILED,
         });
     }
 };
 
+const getDeployments = async (socket: Socket, pool: Pool, userSessionToken: string, projectToken: string) => {
+    try {
+        // TODO Get all containers id under this project toke (docker)
+        // TODO Check if the container is running
+
+        const connection = await connect(pool);
+        const getQuery = `SELECT * FROM projects_deployments WHERE ProjectToken = $1`;
+        const deployments = await query(connection!, getQuery, [projectToken]);
+
+        // Map the deployments to the desired format
+        const mappedDeployments = deployments.map((deployment: any) => ({
+            id: deployment.deploymentid,
+            name: deployment.name,
+            status: deployment.status as eDeploymentStatus,
+            environment: 'production',
+            timestamp: deployment.deployedat,
+        }));
+
+        connection!.release();
+        return socket.emit('all-deployments', { deployments: mappedDeployments });
+    } catch (error: any) {
+        logging.error('GET_DEPLOYMENTS', error.message);
+        return socket.emit('get-deployments-error', {
+            error: true,
+            errmsg: 'Failed to connect to database',
+        });
+    }
+};
 const stopService = async (socket: Socket, data: { projectToken: string; processId: string }) => {
     try {
         const { processId, projectToken } = data;
@@ -108,67 +195,103 @@ const cleanupSocketProcesses = (socket: Socket) => {
     }
 };
 
-const DeploayWithDockerCompose = async (socket: Socket, projectConfig: IProjectConfig, deploymentID: number, projectToken: string) => {
+const DeployWithDockerCompose = async (
+    socket: Socket,
+    pool: Pool,
+    projectConfig: IProjectConfig,
+    deploymentID: number,
+    projectToken: string,
+): Promise<{ success: boolean; containerId?: string; containerName?: string }> => {
     try {
         if (projectConfig.deployments[deploymentID - 1].server === 'localhost') {
-            if (!fs.existsSync(`${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`)) {
-                fs.mkdirSync(`${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`);
-            } else {
-                fs.rmSync(`${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`, { recursive: true });
-                fs.mkdirSync(`${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`);
+            const deploymentPath = `${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`;
+
+            if (fs.existsSync(deploymentPath)) {
+                fs.rmSync(deploymentPath, { recursive: true });
             }
+            fs.mkdirSync(deploymentPath);
 
-            const deploymentProcess: child_process.ChildProcess = child_process.spawn(`git clone ${process.env.GIT_REPOSITORY}/${projectToken}.git `, {
-                cwd: `${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/`,
-                shell: true,
-            });
+            return new Promise<{ success: boolean; containerId?: string; containerName?: string }>((resolve, reject) => {
+                const deploymentProcess: child_process.ChildProcess = child_process.spawn('git', ['clone', `${process.env.GIT_REPOSITORY}/${projectToken}.git`, deploymentPath], {
+                    cwd: process.env.PROJECT_DEPLOYMENT_FOLDER_PATH,
+                    shell: true,
+                });
 
-            deploymentProcess.on('exit', (code) => {
-                if (code === 0) {
-                    logging.info('START_DEPLOYMENT', 'project cloned successfully');
-                    socket.emit('deployment-success', {
-                        deploymentID,
-                        deploymentName: projectConfig.deployments[deploymentID - 1].name,
-                    });
+                deploymentProcess.on('error', (error) => {
+                    logging.error('START_DEPLOYMENT', `Git clone error: ${error.message}`);
+                    resolve({ success: false });
+                });
 
-                    if (projectConfig.deployments[deploymentID - 1]['docker-compose-file']) {
-                        const dockerComposeProcess: child_process.ChildProcess = child_process.spawn('docker-compose.exe', ['up', '-d'], {
-                            cwd: `${process.env.PROJECT_DEPLOYMENT_FOLDER_PATH}/${projectToken}`,
-                        });
+                deploymentProcess.on('exit', async (code) => {
+                    if (code === 0) {
+                        logging.info('START_DEPLOYMENT', 'Project cloned successfully');
 
-                        dockerComposeProcess.on('exit', (code) => {
-                            if (code === 0) {
-                                logging.info('START_DEPLOYMENT', 'Docker compose up success');
-                                socket.emit('deployment-success', {
-                                    deploymentID,
-                                    deploymentName: projectConfig.deployments[deploymentID - 1].name,
-                                });
-                            } else {
-                                logging.error('START_DEPLOYMENT', 'Docker compose up failed');
-                                socket.emit('deployment-error', {
-                                    error: true,
-                                    errmsg: 'Docker compose up failed',
-                                });
-                            }
-                        });
+                        if (projectConfig.deployments[deploymentID - 1]['docker-compose-file']) {
+                            const dockerComposeProcess: child_process.ChildProcess = child_process.spawn('docker-compose', ['up', '-d'], {
+                                cwd: deploymentPath,
+                            });
+
+                            dockerComposeProcess.on('error', (error) => {
+                                logging.error('START_DEPLOYMENT', `Docker compose error: ${error.message}`);
+                                resolve({ success: false });
+                            });
+
+                            dockerComposeProcess.on('exit', (dockerCode) => {
+                                if (dockerCode === 0) {
+                                    logging.info('START_DEPLOYMENT', 'Docker compose up success');
+
+                                    const getContainerInfoProcess = child_process.spawn('docker-compose', ['ps', '--format', '{{.ID}}:{{.Names}}'], {
+                                        cwd: deploymentPath,
+                                    });
+
+                                    let containerData = '';
+                                    getContainerInfoProcess.stdout.on('data', (data) => {
+                                        containerData += data.toString();
+                                    });
+
+                                    getContainerInfoProcess.on('error', (error) => {
+                                        logging.error('START_DEPLOYMENT', `Failed to get container info: ${error.message}`);
+                                        resolve({ success: true });
+                                    });
+
+                                    getContainerInfoProcess.on('exit', (infoCode) => {
+                                        if (infoCode === 0 && containerData) {
+                                            const containerInfo = containerData.trim().split('\n')[0];
+                                            const [containerId, containerName] = containerInfo.split(':');
+
+                                            logging.info('START_DEPLOYMENT', `Container ID: ${containerId}, Name: ${containerName}`);
+                                            resolve({
+                                                success: true,
+                                                containerId: containerId,
+                                                containerName: containerName,
+                                            });
+                                        } else {
+                                            // If we can't get container info, still consider deployment successful
+                                            resolve({ success: true });
+                                        }
+                                    });
+                                } else {
+                                    logging.error('START_DEPLOYMENT', 'Docker compose up failed');
+                                    resolve({ success: false });
+                                }
+                            });
+                        } else {
+                            logging.error('START_DEPLOYMENT', 'Docker compose file not found');
+                            resolve({ success: false });
+                        }
+                    } else {
+                        logging.error('START_DEPLOYMENT', 'Git clone failed');
+                        resolve({ success: false });
                     }
-                } else {
-                    logging.error('START_DEPLOYMENT', 'Deployment failed');
-                    socket.emit('deployment-error', {
-                        error: true,
-                        errmsg: 'Deployment failed',
-                    });
-                }
+                });
             });
         } else {
             logging.error('START_DEPLOYMENT', 'Deployment server not supported');
+            return { success: false };
         }
     } catch (error: any) {
         logging.error('START_DEPLOYMENT', error);
-        return socket.emit('service-error', {
-            error: 'Failed to start service',
-        });
+        return { success: false };
     }
 };
-
-export default { startDeploymentProcedure, stopService, cleanupSocketProcesses };
+export default { startDeploymentProcedure, getDeployments, stopService, cleanupSocketProcesses };

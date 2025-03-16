@@ -50,7 +50,7 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
     }
 
     const handleAddFolder = async (folderId: string, folderName: string) => {
-        if (dispatch(addFolder({ fileId: folderId, folderName: folderName, userSessionToken: session.data?.accessToken!, projectToken: props.ProjectToken }))) {
+        if (dispatch(addFolder({ fileId: folderId, folderName: folderName, userSessionToken: session.data!.accessToken!, projectToken: props.ProjectToken }))) {
             // window.alert('Folder added successfully')
         } else {
             window.alert('Error adding folder')

@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FileNode } from '../ILeftPanel'
 import { stripReposPath } from '../../utils'
-import Image from 'next/image'
 import AddFileOrFolder from './AddFileOrFolder'
+import { File, Folder, FolderOpen } from 'lucide-react'
 
 interface DirectoryTreeProps {
     node: FileNode
@@ -84,8 +84,8 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
 
     return (
         <div className="pl-5">
-            <div onClick={handleClick} className={`z-10 flex cursor-pointer rounded-sm px-2 py-1 text-white hover:bg-[#ffffff1a] ${!node.is_dir ? 'hover:text-blue-400' : ''}`}>
-                {node.is_dir ? (expanded ? '📂 ' : '📁 ') : '📄 '}
+            <div onClick={handleClick} className={`z-10 flex cursor-pointer items-center rounded-sm px-2 py-1 text-white hover:bg-[#ffffff1a] ${!node.is_dir ? 'hover:text-blue-400' : ''}`}>
+                {node.is_dir ? expanded ? <FolderOpen className="mr-1 h-4 w-4" /> : <Folder className="mr-1 h-4 w-4" /> : <File className="mr-1 h-4 w-4" />}
 
                 {isEditingName ? (
                     <input
@@ -104,7 +104,7 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
                     <>{name}</>
                 )}
                 {node.is_dir && (
-                    <div className="self-center">
+                    <div className="ml-1 self-center">
                         <AddFileOrFolder isRoot={false} onCreateFile={handleCreateNewFile} onCreateFolder={handleCreateNewFolder} onCreateRootFile={() => {}} onCreateRootFolder={() => {}} />
                     </div>
                 )}
@@ -128,5 +128,4 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
         </div>
     )
 }
-
 export default DirectoryTree
