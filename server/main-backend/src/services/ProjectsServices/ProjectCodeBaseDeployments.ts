@@ -114,8 +114,7 @@ const startDeploymentProcedure = async (
 
 const getDeployments = async (socket: Socket, pool: Pool, userSessionToken: string, projectToken: string) => {
     try {
-        // TODO Get all containers id under this project toke (docker)
-        // TODO Check if the container is running
+
 
         const connection = await connect(pool);
         const getQuery = `SELECT * FROM projects_deployments WHERE ProjectToken = $1`;

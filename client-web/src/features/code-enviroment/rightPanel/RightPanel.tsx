@@ -11,14 +11,14 @@ import ServicesetupTerminal from '../terminal/ServiceSetupTerminal'
 import { RefreshCw, Server, Globe, Play, Square, Settings, Clock, ChevronRight } from 'lucide-react'
 import PopupCanvas from '@/components/PopupCanvas'
 import CreateDeployment from './components/CreateDeployment'
-import { eDeploymentStatus } from './types/RightPanelTypes'
+import { ContainerEvent, eDeploymentStatus } from './types/RightPanelTypes'
 
 interface IRightPanel {
-    socket: Socket
+    main_socket: Socket
+    deployments_socket: Socket
     projectToken: string
     userSessionToken: string
 }
-
 interface Deployment {
     id: number
     name: string
@@ -27,7 +27,7 @@ interface Deployment {
     timestamp: string
 }
 
-const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectToken }) => {
+const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, userSessionToken, projectToken }) => {
     const { createWindow } = useWindows()
     const [projectConfig, setProjectConfig] = useState<IProjectConfig>({ services: [], deployments: [] })
     const [runningServices, setRunningServices] = useState<{
@@ -39,10 +39,10 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
     })
 
     const [deployPopup, setDeployPopup] = useState(false)
-
     const [deployments, setDeployments] = useState<Deployment[]>([])
-
     const [isRefreshing, setIsRefreshing] = useState(false)
+
+    // Fix: Removed isFirstRender ref as it was causing a race condition
 
     const addRunningService = useCallback((serviceID: number, processId: string) => {
         setRunningServices(prev => ({
@@ -63,16 +63,49 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
     }, [])
 
     useEffect(() => {
-        
-        socket.emit('get-deployments', {
-            userSessionToken,
-            projectToken
+        deployments_socket.emit('join-project', {
+            projectToken: projectToken
         })
 
+        deployments_socket.emit('get-deployments', {
+            userSessionToken,
+            projectToken: projectToken
+        })
+
+        const handleGetAllDeployments = (data: { deployments: Deployment[] }) => {
+            console.log(data)
+            if (data.deployments.length > 0) {
+                setDeployments(data.deployments)
+            }
+        }
+
+        const updateDeploymentStatus = (data: ContainerEvent) => {
+            switch (data.currentState) {
+                case 'running':
+                    setDeployments(prev => prev.map(deployment => (deployment.id === data.deploymentId ? { ...deployment, status: eDeploymentStatus.DEPLOYED } : deployment)))
+                    break
+                case 'exited':
+                    setDeployments(prev => prev.map(deployment => (deployment.id === data.deploymentId ? { ...deployment, status: eDeploymentStatus.STOPPED } : deployment)))
+                    break
+                default:
+                    break
+            }
+        }
+
+        deployments_socket.on('all-deployments', handleGetAllDeployments)
+        deployments_socket.on('deployment-event', updateDeploymentStatus)
+
+        return () => {
+            deployments_socket.off('all-deployments', handleGetAllDeployments)
+        }
+    }, [deployments_socket, projectToken, userSessionToken])
+
+    // Fix: Separate useEffect for service-related socket events
+    useEffect(() => {
         const handleSetupStarted = (data: { serviceID: number }) => {
             const service = projectConfig.services.find(s => s.id === data.serviceID)
             if (service) {
-                createWindow(service.name, <ServicesetupTerminal socket={socket} ServiceID={service.id} />, String(data.serviceID))
+                createWindow(service.name, <ServicesetupTerminal socket={main_socket} ServiceID={service.id} />, String(data.serviceID))
             }
         }
 
@@ -80,7 +113,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             addRunningService(data.serviceID, data.processId)
             const service = projectConfig.services.find(s => s.id === data.serviceID)
             if (service) {
-                createWindow(service.name, <ServiceTerminal socket={socket} windowUUID={data.processId} />, data.processId)
+                createWindow(service.name, <ServiceTerminal socket={main_socket} windowUUID={data.processId} />, data.processId)
             }
         }
 
@@ -88,13 +121,19 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             removeRunningService(data.processId)
         }
 
+        main_socket.on('setup-started', handleSetupStarted)
+        main_socket.on('service-started', handleServiceStarted)
+        main_socket.on('service-stopped', handleServiceStopped)
 
-        const handleGetAllDeployments = (data: { deployments: Deployment[] }) => {
-            if (data.deployments.length > 0) {
-                setDeployments(data.deployments)
-            }
+        return () => {
+            main_socket.off('setup-started', handleSetupStarted)
+            main_socket.off('service-started', handleServiceStarted)
+            main_socket.off('service-stopped', handleServiceStopped)
         }
+    }, [main_socket, createWindow, projectConfig, addRunningService, removeRunningService])
 
+    // Fix: Separate useEffect for deployment-related socket events
+    useEffect(() => {
         const handleDeploymentStarted = (data: { deploymentID: number; deploymentName: string; status: eDeploymentStatus; environment: string; timestamp: string }) => {
             setDeployments(prev => [
                 ...prev,
@@ -109,7 +148,6 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         }
 
         const handleDeploymentUpdate = (data: { deploymentID: number; status: eDeploymentStatus }) => {
-
             setDeployments(prev =>
                 prev.map(deployment => {
                     if (deployment.id === data.deploymentID) {
@@ -119,7 +157,6 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
                 })
             )
 
-            // this is here to update the circle color immediately
             setTimeout(() => {
                 const statusIndicator = document.querySelector(`.status-indicator[data-deployment-id="${data.deploymentID}"]`)
                 if (statusIndicator) {
@@ -129,31 +166,23 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             }, 0)
         }
 
-        socket.on('setup-started', handleSetupStarted)
-        socket.on('service-started', handleServiceStarted)
-        socket.on('service-stopped', handleServiceStopped)
-
-
-        socket.on('all-deployments', handleGetAllDeployments)
-        socket.on('deployment-started', handleDeploymentStarted)
-        socket.on('deployment-update', handleDeploymentUpdate)
+        main_socket.on('deployment-started', handleDeploymentStarted)
+        main_socket.on('deployment-update', handleDeploymentUpdate)
 
         return () => {
-            socket.off('setup-started', handleSetupStarted)
-            socket.off('service-started', handleServiceStarted)
-            socket.off('service-stopped', handleServiceStopped)
-            socket.off('deployment-started', handleDeploymentStarted)
+            main_socket.off('deployment-started', handleDeploymentStarted)
+            main_socket.off('deployment-update', handleDeploymentUpdate)
         }
-    }, [socket, createWindow, projectConfig, addRunningService, removeRunningService])
+    }, [main_socket])
 
     const toggleService = (service: { id: number; name: string }) => {
         if (runningServices.byServiceID[service.id]) {
-            socket.emit('stop-service', {
+            main_socket.emit('stop-service', {
                 processId: runningServices.byServiceID[service.id],
                 projectToken: projectToken
             })
         } else {
-            socket.emit('start-service', {
+            main_socket.emit('start-service', {
                 userSessionToken,
                 projectToken,
                 serviceID: service.id
@@ -162,13 +191,14 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
     }
 
     const startSetup = (service: { id: number; name: string }) => {
-        socket.emit('start-setup', {
+        main_socket.emit('start-setup', {
             userSessionToken,
             projectToken,
             serviceID: service.id
         })
     }
 
+    // Fix: Memoized refreshServiceList function with proper dependencies
     const refreshServiceList = useCallback(async () => {
         try {
             setIsRefreshing(true)
@@ -188,6 +218,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         }
     }, [projectToken, userSessionToken])
 
+    // Fix: Only fetch project config once on mount
     useEffect(() => {
         refreshServiceList()
     }, [refreshServiceList])
@@ -216,6 +247,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
         }
     }
 
+    // Rest of the component remains the same...
     return (
         <div className="flex h-full w-[26rem] flex-col border-l border-[#333333] bg-[#1e1e1e]">
             <div className="flex h-1/2 flex-col overflow-hidden">
@@ -299,7 +331,7 @@ const RightPanel: React.FC<IRightPanel> = ({ socket, userSessionToken, projectTo
             {deployPopup ? (
                 <PopupCanvas closePopup={() => setDeployPopup(false)}>
                     <CreateDeployment
-                        socketRef={socket}
+                        socketRef={main_socket}
                         projectToken={projectToken}
                         userSessionToken={userSessionToken}
                         deployments={projectConfig.deployments.map(deployment => ({

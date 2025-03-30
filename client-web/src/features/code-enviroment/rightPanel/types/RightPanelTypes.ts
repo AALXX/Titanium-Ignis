@@ -5,3 +5,11 @@ export enum eDeploymentStatus {
     CANCELLED = 'cancelled',
     STOPPED = 'stopped'
 }
+
+export type ContainerEvent = {
+    type: string,
+    containerId:  number,
+    deploymentId: number,
+    currentState: string,
+    reason: string
+}

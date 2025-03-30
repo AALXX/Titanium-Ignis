@@ -54,4 +54,7 @@ server/local-deployments
 server/project-tasks/.env
 server/project-tasks/node_modules
 
+server/deployments-monitoring/.env
+server/deployments-monitoring/node_modules
+
 tools/table-replication/.env

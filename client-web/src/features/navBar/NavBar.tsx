@@ -60,7 +60,7 @@ const NavBar = () => {
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <Link href={href} className="w-full">
-        <button className="h-11 w-full rounded-xl border-2 bg-none text-white transition-colors hover:bg-white/10">{children}</button>
+        <button className="h-11 cursor-pointer w-full rounded-xl border-2 bg-none text-white transition-colors hover:bg-white/10">{children}</button>
     </Link>
 )
 

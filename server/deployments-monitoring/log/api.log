@@ -1,0 +1,621 @@
+[3/25/2025, 6:04:29 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:7080
+[3/25/2025, 6:23:44 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:24:12 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:24:23 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:24:25 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:24:26 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:27:52 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:27:54 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:28:07 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:28:13 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:28:19 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:32:45 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:32:47 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:35:41 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:35:52 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:00 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:07 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:09 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:10 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:12 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:13 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:49 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:36:54 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5060
+[3/25/2025, 6:37:15 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:37:38 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:37:51 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:38:00 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:53:46 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:56:01 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:58:07 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 6:59:01 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 7:02:46 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 7:06:41 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:26:15 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:26:27 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:28:11 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:28:13 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:44:56 PM] [ERROR] [PG_QUERY_FUNC] column "project_token" does not exist
+[3/25/2025, 8:44:56 PM] [ERROR] [GET_ALL_DEPLOYMENTS] column "project_token" does not exist
+[3/25/2025, 8:44:56 PM] [ERROR] [PG_QUERY_FUNC] column "project_token" does not exist
+[3/25/2025, 8:44:56 PM] [ERROR] [GET_ALL_DEPLOYMENTS] column "project_token" does not exist
+[3/25/2025, 8:45:06 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:45:07 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:45:20 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:45:22 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:47:40 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:47:43 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:48:02 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:48:13 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 8:48:19 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:42:10 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:00 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:01 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:19 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:39 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:47 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:43:55 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:44:08 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:53:12 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 9:53:15 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/25/2025, 10:15:02 PM] [INFO] [DeploymentsMonitoring_API] Api is runing on: localhost:5090
+[3/26/2025, 9:48:34 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:49:01 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:49:26 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:49:38 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:50:53 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:50:54 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:51:11 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:51:15 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:51:16 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:51:23 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:59:07 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:59:20 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 9:59:26 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 10:33:37 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 10:35:27 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 10:37:22 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/26/2025, 10:37:46 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 12:38:12 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 12:51:03 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:05 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:14 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:15 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:17 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:19 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:21 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:23 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:24 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:26 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:28 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:30 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:45 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:10:53 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:11:02 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:15:09 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:15:17 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:15:28 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:15:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:16:13 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:16:40 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:16:52 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:24:57 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:25:04 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:25:13 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:25:31 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:26:05 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:26:42 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:26:52 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:26:59 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:28:09 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:28:09 AM] [ERROR] [DeploymentsMonitoring_API] Error fetching project tokens {"length":181,"name":"error","severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"projects.projecttoken\".","position":"17","file":"parse_relation.c","line":"3723","routine":"errorMissingColumn"}
+[3/28/2025, 1:28:09 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:28:13 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:28:13 AM] [ERROR] [DeploymentsMonitoring_API] Error fetching project tokens {"length":181,"name":"error","severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"projects.projecttoken\".","position":"17","file":"parse_relation.c","line":"3723","routine":"errorMissingColumn"}
+[3/28/2025, 1:28:13 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:28:14 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:28:15 AM] [ERROR] [DeploymentsMonitoring_API] Error fetching project tokens {"length":181,"name":"error","severity":"ERROR","code":"42703","hint":"Perhaps you meant to reference the column \"projects.projecttoken\".","position":"17","file":"parse_relation.c","line":"3723","routine":"errorMissingColumn"}
+[3/28/2025, 1:28:15 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:29:20 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:29:20 AM] [ERROR] [DeploymentsMonitoring_API] Error fetching project tokens {"length":106,"name":"error","severity":"ERROR","code":"42703","position":"50","file":"parse_relation.c","line":"3716","routine":"errorMissingColumn"}
+[3/28/2025, 1:29:20 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:29:25 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:29:25 AM] [ERROR] [DeploymentsMonitoring_API] Error fetching project tokens {"length":106,"name":"error","severity":"ERROR","code":"42703","position":"62","file":"parse_relation.c","line":"3716","routine":"errorMissingColumn"}
+[3/28/2025, 1:29:25 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:29:44 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:29:44 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:29:44 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: undefined
+[3/28/2025, 1:29:47 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:29:47 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:29:47 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: undefined
+[3/28/2025, 1:30:28 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:30:28 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:30:35 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:30:35 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:30:52 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:30:52 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[3/28/2025, 1:31:10 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:31:10 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:31:10 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:31:14 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:31:14 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:31:14 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:31:24 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:31:24 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:31:24 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:15 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:15 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:15 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:18 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:18 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:18 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:21 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:21 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:21 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:30 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:30 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:30 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:39 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:39 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:39 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:32:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:32:43 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:32:43 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:33:03 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:33:03 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:33:03 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:33:06 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:33:06 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:33:06 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:33:07 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:33:07 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:33:07 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:33:44 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:33:44 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:33:44 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:33:51 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:33:51 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:33:51 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:37:01 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:37:01 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:37:01 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:37:04 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:37:04 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:37:04 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 1:37:50 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 1:37:50 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 1:37:50 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:45:59 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:45:59 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:45:59 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:46:57 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:46:57 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:46:57 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:49:31 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:49:31 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:49:31 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:58:44 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:58:44 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:58:44 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:58:47 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:58:47 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:58:47 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 8:59:41 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 8:59:41 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 8:59:41 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:00:35 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:00:35 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:00:35 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:02:44 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:02:44 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:02:44 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:08:05 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:08:05 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:08:05 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:08:10 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:08:10 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:08:10 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:10:13 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:10:13 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:10:13 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:13:01 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:13:01 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:13:01 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:13:45 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:13:45 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:13:45 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:14:25 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:14:25 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:14:25 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:14:57 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:14:57 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:14:57 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:15:00 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:15:00 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:15:00 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:15:01 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:15:02 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:15:02 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:15:44 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:15:44 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:15:44 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:15:49 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:15:49 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:15:49 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:18:38 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:18:38 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:18:38 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:22:28 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:22:28 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:22:28 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:22:50 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:22:50 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:22:50 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:22:57 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:22:57 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:22:57 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:23 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:23 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:23 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:25 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:25 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:25 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:30 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:30 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:30 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:32 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:32 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:32 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:46 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:46 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:46 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:48 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:48 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:48 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:23:50 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:23:50 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:23:50 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:24:13 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:24:13 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:24:13 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:24:17 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:24:17 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:24:17 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:24:21 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:24:21 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:24:21 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: [object Object]
+[3/28/2025, 9:24:44 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:24:44 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:24:44 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:24:50 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:24:50 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:24:50 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:25:03 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:25:03 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:25:03 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:49:36 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:49:36 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:49:36 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:49:43 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:49:43 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:49:43 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:51:46 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:51:46 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:51:46 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:51:47 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:51:48 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:51:48 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:53:28 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:53:28 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:53:28 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:57:21 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:57:21 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:57:21 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:57:30 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:57:30 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:57:30 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:09 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:09 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:09 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:24 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:24 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:24 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:37 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:37 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:37 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:39 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:39 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:39 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:46 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:46 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:46 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:48 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:48 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:48 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 9:58:55 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:58:55 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:58:55 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 9:59:09 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:59:09 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:59:09 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 9:59:33 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 9:59:33 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 9:59:33 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 10:00:17 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:00:17 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:00:17 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 10:00:35 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:00:35 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:00:35 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 10:00:45 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:00:45 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:00:45 PM] [ERROR] [DeploymentsMonitoring_API] Failed to start events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc {}
+[3/28/2025, 10:00:52 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:00:52 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:00:52 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:01:03 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:01:03 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:01:03 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:01:12 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:01:12 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:01:12 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:01:32 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:01:32 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:01:32 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:01:37 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:01:37 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:01:37 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:04:24 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:04:24 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:04:24 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:04:27 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:04:27 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:04:27 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:04:30 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:04:30 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:04:30 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/28/2025, 10:09:21 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/28/2025, 10:09:21 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/28/2025, 10:09:21 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:30:23 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:30:23 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:30:23 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:30:38 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:30:38 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:30:38 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:30:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:30:43 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:30:43 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:35:15 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:35:15 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:35:15 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:35:27 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:35:27 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:35:27 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:36:49 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:37:48 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:37:48 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:37:48 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:38:02 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:38:02 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:38:02 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:38:06 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:38:06 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:38:06 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:39:45 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:39:45 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:39:45 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:39:46 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:39:46 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:39:46 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:39:48 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:39:48 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:39:48 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:40:40 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:40:40 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:40:40 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:04 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:04 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:04 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:10 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:10 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:10 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:11 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:11 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:11 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:30 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:30 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:30 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:43 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:43 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:41:45 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:41:45 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:41:45 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:04 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:04 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:04 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:20 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:20 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:20 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:23 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:23 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:23 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:38 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:42:52 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:42:52 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:42:52 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:06 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:06 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:06 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:12 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:12 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:12 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:26 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:26 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:26 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:29 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:29 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:29 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:36 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:36 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:36 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:43:41 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:43:41 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:43:41 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:44:27 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:44:27 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:44:27 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:44:37 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:44:37 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:44:37 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:44:39 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:44:39 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:44:39 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:45:03 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:45:03 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:45:03 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 12:45:20 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 12:45:20 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 12:45:20 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:46:14 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:46:14 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:46:14 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:46:22 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:46:22 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:46:22 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:46:25 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:46:25 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:46:25 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:46:27 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:46:27 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:46:27 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:53:29 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:53:30 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:53:30 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:53:40 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:53:40 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:53:40 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:54:10 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:54:10 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:54:10 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:54:56 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:54:56 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:54:56 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:55:36 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:55:36 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:55:36 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:55:39 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:55:39 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:55:39 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:56:54 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:56:54 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:56:54 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:56:59 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:56:59 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:56:59 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:57:13 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:57:13 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:57:13 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:57:46 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:57:46 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:57:46 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:57:54 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:57:54 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:57:54 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:57:55 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:57:56 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:57:56 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:58:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:58:43 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:58:43 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:58:47 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:58:47 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:58:47 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:58:49 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:58:49 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:58:49 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:58:59 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:58:59 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:58:59 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:59:09 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:59:09 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:59:09 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/29/2025, 1:59:24 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/29/2025, 1:59:24 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/29/2025, 1:59:24 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:49:31 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:49:31 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:49:31 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:54:27 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:54:27 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:54:27 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:54:28 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:54:28 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:54:28 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:54:30 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:54:30 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:54:30 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:54:59 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:54:59 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:54:59 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:55:02 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:55:02 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:55:02 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:55:08 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:55:08 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:55:08 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:55:26 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:55:26 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:55:26 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:55:34 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:55:55 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:55:55 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:55:55 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:04 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:04 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:04 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:10 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:10 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:10 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:20 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:20 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:20 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:23 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:24 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:24 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:25 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:25 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:25 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:56:32 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:56:52 AM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(50)
+[3/30/2025, 1:57:02 AM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(50)
+[3/30/2025, 1:57:02 AM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(50)
+[3/30/2025, 1:57:02 AM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(50)
+[3/30/2025, 1:57:28 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:57:28 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:57:28 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[3/30/2025, 1:57:31 AM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(50)
+[3/30/2025, 1:59:05 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[3/30/2025, 1:59:05 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[3/30/2025, 1:59:05 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc

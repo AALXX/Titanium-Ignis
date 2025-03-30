@@ -1,0 +1,13 @@
+[3/30/2025, 2:04:48 AM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/30/2025, 2:04:55 AM] [ERROR] [PG_CONNECT] password authentication failed for user "alx"
+[3/30/2025, 2:04:55 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:04:55 AM] [ERROR] [PROJECT_TASKS] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:05:28 AM] [INFO] [ProjectTasks_API] Api is runing on: host.docker.internal:7080
+[3/30/2025, 2:05:32 AM] [ERROR] [PG_CONNECT] password authentication failed for user "alx"
+[3/30/2025, 2:05:32 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:05:32 AM] [ERROR] [PROJECT_TASKS] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:05:48 AM] [INFO] [ProjectTasks_API] Api is runing on: host.docker.internal:7080
+[3/30/2025, 2:05:51 AM] [ERROR] [PG_CONNECT] password authentication failed for user "alx"
+[3/30/2025, 2:05:51 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:05:51 AM] [ERROR] [PROJECT_TASKS] Cannot read properties of null (reading 'query')
+[3/30/2025, 2:06:21 AM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
