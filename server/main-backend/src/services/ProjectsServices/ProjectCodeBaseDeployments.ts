@@ -114,8 +114,6 @@ const startDeploymentProcedure = async (
 
 const getDeployments = async (socket: Socket, pool: Pool, userSessionToken: string, projectToken: string) => {
     try {
-
-
         const connection = await connect(pool);
         const getQuery = `SELECT * FROM projects_deployments WHERE ProjectToken = $1`;
         const deployments = await query(connection!, getQuery, [projectToken]);
@@ -293,4 +291,78 @@ const DeployWithDockerCompose = async (
         return { success: false };
     }
 };
-export default { startDeploymentProcedure, getDeployments, stopService, cleanupSocketProcesses };
+
+const getDeploymentsOverviewData = async (req: CustomRequest, res: Response) => {
+    try {
+        const connection = await connect(req.pool!);
+
+        const getRequestQuery = `SELECT * FROM request_logs WHERE ProjectToken = $1`;
+        const requestsResult = await query(connection!, getRequestQuery, [req.params.projectToken]);
+
+        requestsResult.sort((a: any, b: any) => b.timestamp - a.timestamp);
+        const requests = requestsResult.map((request: any) => {
+            return {
+                id: request.id,
+                method: request.method,
+                path: request.path,
+                status: request.status,
+                time: request.responsetime,
+                timestamp: new Date(request.timestamp).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                }),
+                ip: request.requestip,
+            };
+        });
+
+        // nub of request per hour and average response time as array
+        const requestPerHour = requests.reduce((acc: any, request: any) => {
+            const hour = new Date(request.timestamp).getHours();
+            if (!acc[hour]) {
+                acc[hour] = {
+                    count: 1,
+                    totalTime: request.time,
+                };
+            } else {
+                acc[hour].count++;
+                acc[hour].totalTime += request.time;
+            }
+            return acc;
+        }, {});
+
+        const reequestPerHour = Object.keys(requestPerHour).map((hour: any) => {
+            return {
+                name: `${hour.toString().padStart(2, '0')}:00`, //we use hour as name because we want to display it as x-axis in the chart
+                requests: requestPerHour[hour].count,
+                responseTime: (requestPerHour[hour].totalTime / requestPerHour[hour].count).toFixed(1),
+            };
+        });
+
+
+        const avgResponseTime = requests.reduce((total: any, request: any) => total + request.time, 0) / requests.length;
+
+        const projectDeploymentsQuery = `SELECT * FROM projects_deployments WHERE projecttoken = $1`;
+        const projectDeploymentsResult = await query(connection!, projectDeploymentsQuery, [req.params.projectToken]);
+
+        const activeDeployments = projectDeploymentsResult.filter((deployment: any) => deployment.status === 'deployed');
+
+        connection?.release();
+        return res.status(200).json({
+            error: false,
+            requests: requests,
+            avgResponseTime: avgResponseTime.toFixed(1),
+            totalRequests: requests.length,
+            totalDeployments: projectDeploymentsResult.length,
+            activeDeployments: activeDeployments.length,
+            requestPerHour: reequestPerHour,
+        });
+    } catch (error: any) {
+        logging.error('GET_PROJECT_REQUESTS', error);
+    }
+};
+
+export default { startDeploymentProcedure, getDeployments, stopService, cleanupSocketProcesses, getDeploymentsOverviewData };

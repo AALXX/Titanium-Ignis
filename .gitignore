@@ -58,3 +58,4 @@ server/deployments-monitoring/.env
 server/deployments-monitoring/node_modules
 
 tools/table-replication/.env
+tools/request-monitoring/node_modules

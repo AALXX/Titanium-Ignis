@@ -36,7 +36,6 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
     const [editedRole, setEditedRole] = useState<string>('')
     const [editedMemberToken, setEditedMemberToken] = useState<string>('')
 
-
     const addTeamMember = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -81,7 +80,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                 divisionName: divisionName,
                 userSessionToken: userSessionToken
             })
-            
+
             if (response.status === 200 && response.data) {
                 const newDivision: ITeamDivisions = response.data
                 setDivisions(prevDivisions => [...prevDivisions, newDivision])
@@ -121,7 +120,14 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             } else {
                 window.alert('Failed to change role')
             }
-        } catch (error) {}
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setError(error.response?.data?.message || 'An error occurred while adding the team member')
+            } else {
+                setError('An unexpected error occurred')
+            }
+            console.error('Error adding team member:', error)
+        }
     }
 
     const renderComponent = () => {

@@ -1,3 +1,4 @@
+import React from 'react'
 import LinkCards from '@/components/LinkCard'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
@@ -39,6 +40,7 @@ const ProjectOverview: React.FC<{ params: Promise<{ ProjectToken: string }> }> =
                     <LinkCards Title="TEAM MANAGEMENT" linkRef={`/projects/${ProjectToken}/team-management`} className="ml-2 h-[3rem] w-[14rem] cursor-pointer justify-center rounded-t-xl bg-[#0000003d]" />
                     <LinkCards Title="TASK LIST" linkRef={`/projects/${ProjectToken}/tasks`} className="ml-2 h-[3rem] w-[10rem] cursor-pointer justify-center rounded-t-xl bg-[#0000003d]" />
                     <LinkCards Title="CODE" linkRef={`/projects/${ProjectToken}/code`} className="ml-2 h-[3rem] w-[10rem] cursor-pointer justify-center rounded-t-xl bg-[#0000003d]" />
+                    <LinkCards Title="DEPLOYMENTS" linkRef={`/projects/${ProjectToken}/deployments`} className="ml-2 h-[3rem] w-[10rem] cursor-pointer justify-center rounded-t-xl bg-[#0000003d]" />
                 </div>
                 <hr className="h-px w-full border-0 bg-gray-200" />
                 <div className="flex h-[40vh] flex-row overflow-y-auto md:h-2/5">{/* Content for bottom section */}</div>

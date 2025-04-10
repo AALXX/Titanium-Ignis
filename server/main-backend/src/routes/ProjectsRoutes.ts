@@ -4,6 +4,8 @@ import ProjectServices from '../services/ProjectsServices/ProjectsServices';
 import ProjectCodeBaseServices from '../services/ProjectsServices/ProjectCodeBaseServices';
 import ProjectTeamManagementServices from '../services/ProjectsServices/ProjectTeamManagementServices';
 import ProjectTaskManagementServices from '../services/ProjectsServices/ProjectTaskManagementServices';
+import ProjectCodeBaseDeployments from '../services/ProjectsServices/ProjectCodeBaseDeployments';
+
 import { rbacMiddleware } from '../middlewares/RBAC_Middleware';
 
 const router = express.Router();
@@ -57,5 +59,7 @@ router.get('/get-project-task-banners/:projectToken/:userSessionToken', rbacMidd
 
 router.post('/delete-banner', rbacMiddleware('task_banner', 'manage'), [body('bannerToken').not().isEmpty(), body('userSessionToken').not().isEmpty()], ProjectTaskManagementServices.deleteBanner);
 
+
+router.get('/get-deployments-overview-data/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectCodeBaseDeployments.getDeploymentsOverviewData);
 
 export = router;

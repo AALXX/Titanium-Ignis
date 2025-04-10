@@ -11,3 +11,4 @@
 [3/30/2025, 2:05:51 AM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
 [3/30/2025, 2:05:51 AM] [ERROR] [PROJECT_TASKS] Cannot read properties of null (reading 'query')
 [3/30/2025, 2:06:21 AM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[3/30/2025, 2:33:12 AM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080

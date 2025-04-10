@@ -12,6 +12,7 @@ import { RefreshCw, Server, Globe, Play, Square, Settings, Clock, ChevronRight }
 import PopupCanvas from '@/components/PopupCanvas'
 import CreateDeployment from './components/CreateDeployment'
 import { ContainerEvent, eDeploymentStatus } from './types/RightPanelTypes'
+import Link from 'next/link'
 
 interface IRightPanel {
     main_socket: Socket
@@ -41,8 +42,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
     const [deployPopup, setDeployPopup] = useState(false)
     const [deployments, setDeployments] = useState<Deployment[]>([])
     const [isRefreshing, setIsRefreshing] = useState(false)
-
-    // Fix: Removed isFirstRender ref as it was causing a race condition
 
     const addRunningService = useCallback((serviceID: number, processId: string) => {
         setRunningServices(prev => ({
@@ -100,7 +99,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         }
     }, [deployments_socket, projectToken, userSessionToken])
 
-    // Fix: Separate useEffect for service-related socket events
     useEffect(() => {
         const handleSetupStarted = (data: { serviceID: number }) => {
             const service = projectConfig.services.find(s => s.id === data.serviceID)
@@ -132,7 +130,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         }
     }, [main_socket, createWindow, projectConfig, addRunningService, removeRunningService])
 
-    // Fix: Separate useEffect for deployment-related socket events
     useEffect(() => {
         const handleDeploymentStarted = (data: { deploymentID: number; deploymentName: string; status: eDeploymentStatus; environment: string; timestamp: string }) => {
             setDeployments(prev => [
@@ -198,7 +195,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         })
     }
 
-    // Fix: Memoized refreshServiceList function with proper dependencies
     const refreshServiceList = useCallback(async () => {
         try {
             setIsRefreshing(true)
@@ -218,7 +214,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         }
     }, [projectToken, userSessionToken])
 
-    // Fix: Only fetch project config once on mount
     useEffect(() => {
         refreshServiceList()
     }, [refreshServiceList])
@@ -247,7 +242,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         }
     }
 
-    // Rest of the component remains the same...
     return (
         <div className="flex h-full w-[26rem] flex-col border-l border-[#333333] bg-[#1e1e1e]">
             <div className="flex h-1/2 flex-col overflow-hidden">
@@ -374,9 +368,9 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
                                     </div>
 
                                     <div className="mt-3 flex items-center justify-between">
-                                        <button className="flex cursor-pointer items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
+                                        <Link href={`/projects/${projectToken}/deployments/${deployment.id}`} className="flex cursor-pointer items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
                                             View details <ChevronRight size={12} />
-                                        </button>
+                                        </Link>
                                     </div>
                                 </div>
                             ))}
