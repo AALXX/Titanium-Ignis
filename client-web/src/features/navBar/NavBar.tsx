@@ -23,10 +23,11 @@ const NavBar = () => {
                     setIsOpen(false)
                 }}
             >
-                <h1 className="mt-10 self-center text-white font-bold text-2xl">Titanium Ignis</h1>
+                <h1 className="mt-10 self-center text-2xl font-bold text-white">Titanium Ignis</h1>
                 <nav className="mt-10 flex flex-col gap-4 px-4">
                     <NavLink href="/">HOME</NavLink>
                     <NavLink href="/projects">PROJECTS</NavLink>
+                    <NavLink href="/messages">MESSAGES</NavLink>
                 </nav>
             </div>
             <h1
@@ -60,7 +61,7 @@ const NavBar = () => {
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <Link href={href} className="w-full">
-        <button className="h-11 w-full rounded-xl border-2 bg-none text-white transition-colors hover:bg-white/10">{children}</button>
+        <button className="h-11 w-full cursor-pointer  rounded-xl border-2 bg-none text-white transition-colors hover:bg-white/10">{children}</button>
     </Link>
 )
 

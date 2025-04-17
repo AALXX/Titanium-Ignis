@@ -1,49 +1,49 @@
 services:
-  client-web:
-    container_name: client-web
-    build:
-      context: ./client-web
-      dockerfile: dev.Dockerfile
-    env_file:
-      - /client-web/.env
-    volumes:
-      - ./client-web/src:/app/src
-      - ./client-web/public:/app/public
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - mda-network
+  # client-web:
+  #   container_name: client-web
+  #   build:
+  #     context: ./client-web
+  #     dockerfile: dev.Dockerfile
+  #   env_file:
+  #     - /client-web/.env
+  #   volumes:
+  #     - ./client-web/src:/app/src
+  #     - ./client-web/public:/app/public
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - mda-network
 
-  main-backend-api:
-    container_name: main-backend-api
-    build:
-      context: ./server/main-backend
-      dockerfile: dev.Dockerfile
-    volumes:
-      - ./server/main-backend:/usr/src/app
-    ports:
-      - 7070:7070
-    env_file:
-      - ./server/main-backend/.env
-    restart: always
-    depends_on:
-      - postgres-db
-      - redis-db
-    networks:
-      - mda-network
+  # main-backend-api:
+  #   container_name: main-backend-api
+  #   build:
+  #     context: ./server/main-backend
+  #     dockerfile: dev.Dockerfile
+  #   volumes:
+  #     - ./server/main-backend:/usr/src/app
+  #   ports:
+  #     - 7070:7070
+  #   env_file:
+  #     - ./server/main-backend/.env
+  #   restart: always
+  #   depends_on:
+  #     - postgres-db
+  #     - redis-db
+  #   networks:
+  #     - mda-network
 
-  file-server:
-    build:
-      context: ./server/file-server
-      dockerfile: dev.Dockerfile
-    container_name: file-server
-    ports:
-      - '5500:5500'
-    volumes:
-      - ./accounts:/accounts
-    networks:
-      - mda-network
+  # file-server:
+  #   build:
+  #     context: ./server/file-server
+  #     dockerfile: dev.Dockerfile
+  #   container_name: file-server
+  #   ports:
+  #     - '5500:5500'
+  #   volumes:
+  #     - ./accounts:/accounts
+  #   networks:
+  #     - mda-network
 
   postgres-db:
     image: postgres:latest
@@ -77,12 +77,56 @@ services:
       - mda-network
     hostname: redis
 
+  scylla-node1:
+    image: scylladb/scylla:latest
+    container_name: scylla-node1
+
+    environment:
+      - SCYLLA_DD='cassandra'
+      - SCYLLA_PASSWORD='serbvn'
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+      - "7000:7000"
+      - "7001:7001"
+      - "7199:7199"
+      - "9180:9180"
+    volumes:
+      - scylla-data-node1:/var/lib/scylla
+    command: --reactor-backend=epoll
+    
+  scylla-node2:
+    image: scylladb/scylla:latest
+    container_name: scylla-node2
+    environment:
+      - SCYLLA_DD='cassandra'
+      - SCYLLA_PASSWORD='serbvn'
+    volumes:
+      - scylla-data-node2:/var/lib/scylla
+    command: --seeds=scylla-node1 --reactor-backend=epoll
+  scylla-node3:
+    image: scylladb/scylla:latest
+    container_name: scylla-node3
+    environment:
+      - SCYLLA_DD='cassandra'
+      - SCYLLA_PASSWORD='serbvn'
+    volumes:
+    - scylla-data-node2:/var/lib/scylla
+    command: --seeds=scylla-node1 --reactor-backend=epoll
+
+
 volumes:
   postgres-data:
     driver: local
   accounts-driver:
     driver: local
   redis_data:
+    driver: local
+  scylla-data-node1:
+    driver: local
+  scylla-data-node2:
+    driver: local
+  scylla-data-node3:
     driver: local
 
 # Define a custom network
