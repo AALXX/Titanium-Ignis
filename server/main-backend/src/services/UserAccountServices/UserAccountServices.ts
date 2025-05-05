@@ -17,13 +17,14 @@ const CustomRequestValidationResult = validationResult.withDefaults({
     },
 });
 
-const RegisterUser = async (req: CustomRequest, res: Response) => {
+const RegisterUser = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('REGISTER_USER_FUNCTION', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     const connection = await connect(req.pool!);
@@ -76,20 +77,22 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
 
                 default:
                     connection?.release();
-                    return res.status(200).json({
+                    res.status(200).json({
                         error: true,
                         errmsg: 'Invalid registration type',
                     });
+                    return;
             }
 
             const updatedUser = await query(connection!, updateQuery, updateParams);
 
             connection?.release();
-            return res.status(200).json({
+            res.status(200).json({
                 error: false,
                 userPrivateToken: updatedUser[0].userprivatetoken,
                 userPublicToken: updatedUser[0].userpublictoken,
             });
+            return;
         }
 
         // New user registration
@@ -135,25 +138,28 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
                 break;
             default:
                 connection?.release();
-                return res.status(200).json({
+                res.status(200).json({
                     error: true,
                     errmsg: 'Invalid registration type',
                 });
+                return;
         }
 
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             userPrivateToken: UserPrivateToken,
             userPublicToken: UserPublicToken,
         });
+        return;
     } catch (error: any) {
         logging.error('CREATE_PROJECT_ENTRY', error.message);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 

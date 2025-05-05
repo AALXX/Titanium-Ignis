@@ -132,7 +132,7 @@ const FileEditor = ({ filePath, projectToken, userSessionToken, repoUrl }: { fil
                 </h2>
                 {repositoryUrl ? (
                     <div className="ml-auto flex w-[18rem]">
-                        <CopyTextDisplay text={repositoryUrl} />
+                        <CopyTextDisplay text={repositoryUrl} className="flex w-full items-center space-x-2 rounded-xl border p-2" />
                     </div>
                 ) : (
                     <>

@@ -3,7 +3,7 @@ import { connect, CustomRequest, query } from '../config/postgresql';
 import logging from '../config/logging';
 import utilFunctions from '../util/utilFunctions';
 
-export const rbacMiddleware = (resource: string, action: string) => {
+export const rbacMiddleware = (resource: string, action: string): any => {
     return async (req: CustomRequest, res: Response, next: NextFunction) => {
         let userToken;
         let projectToken;

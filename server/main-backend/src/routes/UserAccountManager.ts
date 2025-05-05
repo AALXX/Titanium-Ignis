@@ -13,7 +13,6 @@ router.post(
     // body('password').isLength({ min: 4 }).not().isEmpty().trim(),
     body('registrationType').not().isEmpty(),
     body('userSessionToken').not().isEmpty(),
-
     AccountServices.RegisterUser,
 );
 

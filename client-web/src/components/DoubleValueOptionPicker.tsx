@@ -4,7 +4,7 @@ interface OptionPickerProps {
     label: string
     options: { label: string; value: string | number }[]
     value: string | number 
-    onChange: (value: string) => void
+    onChange: (value: any) => void
     className?: string
 }
 

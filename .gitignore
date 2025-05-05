@@ -59,3 +59,5 @@ server/deployments-monitoring/node_modules
 
 tools/table-replication/.env
 tools/request-monitoring/node_modules
+
+server/db/backup.sql

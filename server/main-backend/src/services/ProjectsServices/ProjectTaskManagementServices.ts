@@ -18,13 +18,14 @@ const CustomRequestValidationResult = validationResult.withDefaults({
     },
 });
 
-const createTaskBanner = async (req: CustomRequest, res: Response) => {
+const createTaskBanner = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('CREATE_TASK_BANNER_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -37,25 +38,28 @@ const createTaskBanner = async (req: CustomRequest, res: Response) => {
 
         await query(connection!, queryString, [req.body.projectToken, bannerToken, req.body.taskBannerName, req.body.departmentAssignmentToId, assignerPrivateToken]);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_ALL_DIVISIONS_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const getAllTaskBanners = async (req: CustomRequest, res: Response) => {
+const getAllTaskBanners = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_ALL_TASK_BANNERS_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -83,41 +87,48 @@ const getAllTaskBanners = async (req: CustomRequest, res: Response) => {
 
         const allBanners = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
-        return res.status(200).json({
+
+        res.status(200).json({
             error: false,
             allBanners: allBanners,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_ALL_DIVISIONS_FUNC', error.message);
-        return res.status(200).json({
+
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const deleteBanner = async (req: CustomRequest, res: Response) => {
+const deleteBanner = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('DELETE_BANNER_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
     try {
         const connection = await connect(req.pool!);
         const queryString = `DELETE FROM projects_task_banners WHERE BannerToken = $1`;
         await query(connection!, queryString, [req.body.bannerToken]);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
         });
+        return;
     } catch (error: any) {
         logging.error('DELETE_BANNER_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 

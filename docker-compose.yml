@@ -1,49 +1,51 @@
 services:
-  client-web:
-    container_name: client-web
-    build:
-      context: ./client-web
-      dockerfile: dev.Dockerfile
-    env_file:
-      - /client-web/.env
-    volumes:
-      - ./client-web/src:/app/src
-      - ./client-web/public:/app/public
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - mda-network
+  # client-web:
+  #   container_name: client-web
+  #   build:
+  #     context: ./client-web
+  #     dockerfile: dev.Dockerfile
+  #   env_file:
+  #     - /client-web/.env
+  #   volumes:
+  #     - ./client-web/src:/app/src
+  #     - ./client-web/public:/app/public
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - mda-network
 
-  main-backend-api:
-    container_name: main-backend-api
-    build:
-      context: ./server/main-backend
-      dockerfile: dev.Dockerfile
-    volumes:
-      - ./server/main-backend:/usr/src/app
-    ports:
-      - 7070:7070
-    env_file:
-      - ./server/main-backend/.env
-    restart: always
-    depends_on:
-      - postgres-db
-      - redis-db
-    networks:
-      - mda-network
+  # main-backend-api:
+  #   container_name: main-backend-api
+  #   build:
+  #     context: ./server/main-backend
+  #     dockerfile: dev.Dockerfile
+  #   volumes:
+  #     - ./server/main-backend:/usr/src/app
+  #   ports:
+  #     - 7070:7070
+  #   env_file:
+  #     - ./server/main-backend/.env
+  #   restart: always
+  #   depends_on:
+  #     - postgres-db
+  #     - redis-db
+  #   networks:
+  #     - mda-network
+  #   extra_hosts:
+  #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
 
-  file-server:
-    build:
-      context: ./server/file-server
-      dockerfile: dev.Dockerfile
-    container_name: file-server
-    ports:
-      - '5500:5500'
-    volumes:
-      - ./accounts:/accounts
-    networks:
-      - mda-network
+  # file-server:
+  #   build:
+  #     context: ./server/file-server
+  #     dockerfile: dev.Dockerfile
+  #   container_name: file-server
+  #   ports:
+  #     - '5500:5500'
+  #   volumes:
+  #     - ./accounts:/accounts
+  #   networks:
+  #     - mda-network
 
   postgres-db:
     image: postgres:latest
@@ -52,30 +54,43 @@ services:
       POSTGRES_USER: alx
       POSTGRES_PASSWORD: serbvn
       POSTGRES_DB: mda_db
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      # - ./server:/docker-entrypoint-initdb.d   TODO: implement table initialization script
+      - ./server/db/sql/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./server/db/sql/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
     restart: always
     networks:
       - mda-network
-    # Adding hostname for easier connection
     hostname: postgres
-    
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U alx -d mda_db"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 10s
+      
   redis-db:
     image: redis:latest
     container_name: redis-db
     environment:
       - REDIS_PASSWORD=serbvn
     volumes:
-      - redis_data:/var/lib/redis/data
+      - redis_data:/data
     ports:
       - "6379:6379"
-    command: ["redis-server", "--requirepass", "serbvn"]
+    command: ["redis-server", "--requirepass", "serbvn", "--bind", "0.0.0.0"]
     networks:
       - mda-network
     hostname: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "serbvn", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres-data:
@@ -85,7 +100,6 @@ volumes:
   redis_data:
     driver: local
 
-# Define a custom network
 networks:
   mda-network:
     driver: bridge

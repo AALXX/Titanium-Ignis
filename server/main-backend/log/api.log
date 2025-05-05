@@ -8076,3 +8076,587 @@
 [4/11/2025, 1:02:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [4/11/2025, 1:02:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [4/11/2025, 1:12:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/11/2025, 1:22:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/12/2025, 9:22:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/12/2025, 9:22:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/13/2025, 7:17:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/13/2025, 7:17:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/14/2025, 12:52:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[4/14/2025, 12:52:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 12:52:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 12:52:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 12:52:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:02:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/14/2025, 11:02:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:02:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:02:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:02:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/14/2025, 11:03:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/15/2025, 12:32:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/15/2025, 12:32:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[4/22/2025, 4:15:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/23/2025, 8:44:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/23/2025, 9:41:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/23/2025, 9:46:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/24/2025, 12:54:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/24/2025, 1:25:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/24/2025, 1:34:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[4/24/2025, 1:34:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/24/2025, 1:34:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/24/2025, 1:34:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/27/2025, 7:26:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/27/2025, 7:29:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 1:24:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[4/28/2025, 1:24:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 1:24:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 1:24:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 1:24:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 8:49:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[4/28/2025, 10:21:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:23:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:24:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:24:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:24:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:25:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:25:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:25:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:25:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:25:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:26:12 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:40:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:40:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:40:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:41:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:41:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:46:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:48:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:51:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:51:36 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 404) no such container - No such image: ubuntu:latest 
+[4/28/2025, 10:52:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:52:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:52:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:53:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:54:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:55:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:55:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:55:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:56:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:57:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:57:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:57:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:58:27 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:58:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:58:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 10:59:21 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 404) no such container - network my-custom-network not found 
+[4/28/2025, 11:01:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:01:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:01:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:02:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:02:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:03:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:05:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:05:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:06:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:13 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:07:39 PM] [ERROR] [PG_QUERY_FUNC] invalid input syntax for type integer: "{"id":"4","os":"ubuntu-24.04 LTS"}"
+[4/28/2025, 11:07:39 PM] [ERROR] [CREATE_DEPLOYMENT] error: invalid input syntax for type integer: "{"id":"4","os":"ubuntu-24.04 LTS"}"
+[4/28/2025, 11:07:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:08:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:10:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:17:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:17:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:17:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:26:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:26:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:26:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:27:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:27:45 PM] [ERROR] [CREATE_DEPLOYMENT] [object Object]
+[4/28/2025, 11:33:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/28/2025, 11:33:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:16:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:16:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:18:48 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:18:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:18:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[4/29/2025, 12:19:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:24:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:46 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:46 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:46 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:47 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:47 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:24:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:10 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:10 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:18 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:18 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:19 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:19 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:20 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:20 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:25:21 PM] [INFO] [CREATE_DEPLOYMENT] Container 366c13a6cd06a20db3509d6c9e282a14b2e8a8064158513c769cf2acfc447c22 created
+[5/2/2025, 10:25:21 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 366c13a6cd06a20db3509d6c9e282a14b2e8a8064158513c769cf2acfc447c22
+[5/2/2025, 10:26:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[5/2/2025, 10:26:20 PM] [INFO] [CREATE_DEPLOYMENT] Container d7bd9254f18e7dd8a1540e5d2d58b6956662fa6302ef8a672ccdc0ab17f443ad created
+[5/2/2025, 10:26:20 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in d7bd9254f18e7dd8a1540e5d2d58b6956662fa6302ef8a672ccdc0ab17f443ad
+[5/2/2025, 10:26:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:26:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:26:52 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 409) unexpected - Conflict. The container name "/alk" is already in use by container "d7bd9254f18e7dd8a1540e5d2d58b6956662fa6302ef8a672ccdc0ab17f443ad". You have to remove (or rename) that container to be able to reuse that name. 
+[5/2/2025, 10:27:00 PM] [INFO] [CREATE_DEPLOYMENT] Container de854ca418137cb326591a4607b59de76db3b3e4db820e6a67c491e734acd008 created
+[5/2/2025, 10:27:00 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in de854ca418137cb326591a4607b59de76db3b3e4db820e6a67c491e734acd008
+[5/2/2025, 10:27:00 PM] [ERROR] [CREATE_DEPLOYMENT] TypeError: Cannot read properties of null (reading '0')
+[5/2/2025, 10:27:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 10:27:37 PM] [INFO] [CREATE_DEPLOYMENT] Container d57bda3f9eb431d590f03c65a75ddc30be02887399c10ba2ad35c76278cb71fd created
+[5/2/2025, 10:27:37 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in d57bda3f9eb431d590f03c65a75ddc30be02887399c10ba2ad35c76278cb71fd
+[5/2/2025, 11:36:29 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 11:37:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 11:37:41 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 409) unexpected - Conflict. The container name "/alk" is already in use by container "d57bda3f9eb431d590f03c65a75ddc30be02887399c10ba2ad35c76278cb71fd". You have to remove (or rename) that container to be able to reuse that name. 
+[5/2/2025, 11:37:50 PM] [INFO] [CREATE_DEPLOYMENT] Container 53101cf90952f69ea33aa48c586597f20ae332a2662ef7f7950517fd35101e14 created
+[5/2/2025, 11:37:50 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 53101cf90952f69ea33aa48c586597f20ae332a2662ef7f7950517fd35101e14
+[5/2/2025, 11:37:50 PM] [ERROR] [CREATE_DEPLOYMENT] TypeError: Cannot read properties of null (reading '0')
+[5/2/2025, 11:39:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 11:39:12 PM] [INFO] [CREATE_DEPLOYMENT] Container 5f22959da0615da5e798b76f444aeb5cb643208136c523819246933839f3671a created
+[5/2/2025, 11:39:12 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 5f22959da0615da5e798b76f444aeb5cb643208136c523819246933839f3671a
+[5/2/2025, 11:39:12 PM] [ERROR] [CREATE_DEPLOYMENT] TypeError: Cannot read properties of null (reading '0')
+[5/2/2025, 11:43:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 11:43:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/2/2025, 11:43:35 PM] [INFO] [CREATE_DEPLOYMENT] Container afaad39427b00682dbe2a37de5f2db33cb46472bbce296df49dd77ec7bd1afc6 created
+[5/2/2025, 11:43:35 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in afaad39427b00682dbe2a37de5f2db33cb46472bbce296df49dd77ec7bd1afc6
+[5/2/2025, 11:44:07 PM] [ERROR] [CREATE_DEPLOYMENT] TypeError: Cannot read properties of null (reading '0')
+[5/3/2025, 12:13:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:14:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:14:12 AM] [INFO] [CREATE_DEPLOYMENT] Container e517bba0ced540064e2e1531900afe24cdd4f8d8fd9e61cc42f031aca643e9ad created
+[5/3/2025, 12:14:12 AM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in e517bba0ced540064e2e1531900afe24cdd4f8d8fd9e61cc42f031aca643e9ad
+[5/3/2025, 12:15:44 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:15:54 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:18:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:18:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:18:40 AM] [INFO] [CREATE_DEPLOYMENT] Container a8c1361dce45cd4e67af5efd13a978a55d86c5b32173df2a2bc4d86fbe2b696b created
+[5/3/2025, 12:18:40 AM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in a8c1361dce45cd4e67af5efd13a978a55d86c5b32173df2a2bc4d86fbe2b696b
+[5/3/2025, 12:26:08 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:26:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:27:27 AM] [ERROR] [CREATE_DEPLOYMENT] [object Object]
+[5/3/2025, 12:28:23 AM] [INFO] [CREATE_DEPLOYMENT] Container d854c2bdd31dc6a1797399a2ada4cb41f3477cef14a8ffb1c393758ec6bdf480 created
+[5/3/2025, 12:28:23 AM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in d854c2bdd31dc6a1797399a2ada4cb41f3477cef14a8ffb1c393758ec6bdf480
+[5/3/2025, 12:32:52 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:33:01 AM] [INFO] [CREATE_DEPLOYMENT] Container f851953f30ab8ab81645701d11b979ce0466d50488b8d4f2099b4115bc732abc created
+[5/3/2025, 12:33:01 AM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in f851953f30ab8ab81645701d11b979ce0466d50488b8d4f2099b4115bc732abc
+[5/3/2025, 12:34:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:34:21 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:34:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:34:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:35:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 12:35:16 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:18:20 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:41:41 PM] [INFO] [CREATE_DEPLOYMENT] Container 847e8652fa80229d0d530c4a7c0bf737cd055af9509b871fb420209bc1bdc969 created
+[5/3/2025, 6:41:41 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 847e8652fa80229d0d530c4a7c0bf737cd055af9509b871fb420209bc1bdc969
+[5/3/2025, 6:44:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:44:10 PM] [INFO] [CREATE_DEPLOYMENT] Container 3e85b1d3d52bda5b1f2dc0ae6debfdd0644103a81c655498ae13726d88b89298 created
+[5/3/2025, 6:44:10 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 3e85b1d3d52bda5b1f2dc0ae6debfdd0644103a81c655498ae13726d88b89298
+[5/3/2025, 6:44:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:45:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:46:13 PM] [INFO] [CREATE_DEPLOYMENT] Container 338e42b43281a404a2a56a6eca7127ca1f93e19d903423417f5583589c70377d created
+[5/3/2025, 6:46:13 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 338e42b43281a404a2a56a6eca7127ca1f93e19d903423417f5583589c70377d
+[5/3/2025, 6:48:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:48:57 PM] [INFO] [CREATE_DEPLOYMENT] Container 7b6b50bb1faef19b5acd1bf4686fca5f66b230eb56afcbef1c54578b13f2aaa2 created
+[5/3/2025, 6:48:57 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 7b6b50bb1faef19b5acd1bf4686fca5f66b230eb56afcbef1c54578b13f2aaa2
+[5/3/2025, 6:53:07 PM] [ERROR] [PG_CONNECT] connect EHOSTUNREACH 192.168.1.128:5432
+[5/3/2025, 6:54:15 PM] [ERROR] [PG_CONNECT] connect EHOSTUNREACH 192.168.1.128:5432
+[5/3/2025, 6:54:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:56:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:56:03 PM] [ERROR] [PG_CONNECT] password authentication failed for user "alx"
+[5/3/2025, 6:58:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 6:58:11 PM] [ERROR] [PG_CONNECT] connect EHOSTUNREACH 192.168.1.128:5432
+[5/3/2025, 8:45:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 9:56:38 PM] [INFO] [CREATE_DEPLOYMENT] Container 4a23413b5add0f956bc55d3d71753b40719deb686273ee5c11e6cf67533ce3b3 created
+[5/3/2025, 9:56:38 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 4a23413b5add0f956bc55d3d71753b40719deb686273ee5c11e6cf67533ce3b3
+[5/3/2025, 10:06:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:06:39 PM] [INFO] [CREATE_DEPLOYMENT] Container 1a36c34591708c8be7923fb60a9d21b11621ea526f8e38f41f1b15f634bdd691 created
+[5/3/2025, 10:06:39 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 1a36c34591708c8be7923fb60a9d21b11621ea526f8e38f41f1b15f634bdd691
+[5/3/2025, 10:09:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:09:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:09:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:09:26 PM] [INFO] [CREATE_DEPLOYMENT] Container 8e621de1ebbf0ad05d2fe780eb8f9d01698e50075c8f1cea158a7a28d4311c7b created
+[5/3/2025, 10:09:26 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in 8e621de1ebbf0ad05d2fe780eb8f9d01698e50075c8f1cea158a7a28d4311c7b
+[5/3/2025, 10:11:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:11:28 PM] [INFO] [CREATE_DEPLOYMENT] Container c684e49e4dc422c4ac023c3af19896a85a8b85c1b09a403e46f7db62ca75cfe6 created
+[5/3/2025, 10:11:28 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH server in c684e49e4dc422c4ac023c3af19896a85a8b85c1b09a403e46f7db62ca75cfe6
+[5/3/2025, 10:17:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:17:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:18:07 PM] [INFO] [CREATE_DEPLOYMENT] Container 33a6a3b485c36ea738db668408ef1aa13f9c8946967c2926f16d8d661eb3aaf3 created
+[5/3/2025, 10:18:07 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/3/2025, 10:18:25 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: test_machine, Password: test_machine
+[5/3/2025, 10:20:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:20:20 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/3/2025, 10:20:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:29:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:29:16 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:30:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:32:08 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:32:10 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:32:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:32:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:32:21 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:33:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:33:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:33:32 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:33:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:33:44 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:34:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:34:36 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:34:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:34:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:35:45 AM] [ERROR] [PG_QUERY_FUNC] relation "deployments" does not exist
+[5/4/2025, 12:35:45 AM] [ERROR] [CREATE_DEPLOYMENT] error: relation "deployments" does not exist
+[5/4/2025, 12:36:02 AM] [ERROR] [PG_QUERY_FUNC] relation "deployments" does not exist
+[5/4/2025, 12:36:02 AM] [ERROR] [CREATE_DEPLOYMENT] error: relation "deployments" does not exist
+[5/4/2025, 12:36:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:36:20 AM] [ERROR] [CREATE_DEPLOYMENT] error: syntax error at or near ","
+[5/4/2025, 12:36:20 AM] [ERROR] [PG_QUERY_FUNC] syntax error at or near ","
+[5/4/2025, 12:36:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:36:37 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:36:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:36:46 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:38:07 AM] [ERROR] [PG_QUERY_FUNC] column "os" of relation "projects_deployments" does not exist
+[5/4/2025, 12:38:07 AM] [ERROR] [CREATE_DEPLOYMENT] error: column "os" of relation "projects_deployments" does not exist
+[5/4/2025, 12:38:59 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:39:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:39:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:39:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:39:19 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 12:39:24 AM] [ERROR] [PG_QUERY_FUNC] null value in column "deploymentid" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 12:39:24 AM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "deploymentid" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 12:40:27 AM] [ERROR] [PG_QUERY_FUNC] null value in column "name" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 12:40:27 AM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "name" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:35:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:39 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:58 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:05 AM] [ERROR] [PG_QUERY_FUNC] null value in column "domain" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:36:05 AM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "domain" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:28:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:33:23 PM] [ERROR] [PG_QUERY_FUNC] null value in column "domain" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:33:23 PM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "domain" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:34:18 PM] [ERROR] [PG_QUERY_FUNC] null value in column "ipv4" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:34:18 PM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "ipv4" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:35:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:35:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:36:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:37:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:37:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:37:24 PM] [ERROR] [PG_QUERY_FUNC] null value in column "datacenterlocation" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:37:24 PM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "datacenterlocation" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:37:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:37:51 PM] [ERROR] [PG_QUERY_FUNC] null value in column "datacenterlocation" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:37:51 PM] [ERROR] [CREATE_DEPLOYMENT] error: null value in column "datacenterlocation" of relation "projects_deployments" violates not-null constraint
+[5/4/2025, 1:38:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 1:38:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:12:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:12:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:12:59 PM] [INFO] [CREATE_DEPLOYMENT] Container 8a6c76643baf7cd1b3b55c1260a0666d66fa6ba0faadfccd077d9e4c46a58b98 created
+[5/4/2025, 2:12:59 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 2:13:22 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: DA_machine, Password: DA_machine
+[5/4/2025, 2:16:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:16:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:17:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:17:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:17:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:18:07 PM] [INFO] [CREATE_DEPLOYMENT] Container 2f9f55ee1a486947dcc0d01380d5c79d3712b7ff711498423744fdbae2f0511e created
+[5/4/2025, 2:18:07 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 2:18:25 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: SMSS_machine, Password: SMSS_machine
+[5/4/2025, 2:18:25 PM] [ERROR] [PG_QUERY_FUNC] column "updated_at" of relation "projects_deployments" does not exist
+[5/4/2025, 2:18:25 PM] [ERROR] [CREATE_DEPLOYMENT] error: column "updated_at" of relation "projects_deployments" does not exist
+[5/4/2025, 2:18:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:20:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:20:30 PM] [INFO] [CREATE_DEPLOYMENT] Container 69561efa48a6dbad64d63b728fda404613beebe690716d31bcf5a2e7d41e1134 created
+[5/4/2025, 2:20:30 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 2:20:48 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: SMSS_machine, Password: SMSS_machine
+[5/4/2025, 2:20:48 PM] [ERROR] [PG_QUERY_FUNC] syntax error at or near "WHERE"
+[5/4/2025, 2:20:48 PM] [ERROR] [CREATE_DEPLOYMENT] error: syntax error at or near "WHERE"
+[5/4/2025, 2:21:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:21:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:21:12 PM] [INFO] [CREATE_DEPLOYMENT] Container cc4d5eec69b228e9532c3b50a87a72f5c59fe640cccde630e011fbf3fe0227c4 created
+[5/4/2025, 2:21:12 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 2:21:30 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: SMSS_machine, Password: SMSS_machine
+[5/4/2025, 2:22:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:22:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:22:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:22:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:23:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:23:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:23:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:23:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 2:24:09 PM] [INFO] [CREATE_DEPLOYMENT] Container bdd18f972507b664f84abecdce7ebe2070d596a863777adb10e02e3255a03827 created
+[5/4/2025, 2:24:09 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 2:24:31 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: Alx_machine, Password: Alx_machine
+[5/4/2025, 6:30:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:30:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:32:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:22 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:42 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:33:53 PM] [INFO] [CREATE_DEPLOYMENT] Container ec08f9e38f8be0d24700de13d4c6b0d722022dcb9afc8dc93300f21a8f40e130 created
+[5/4/2025, 6:33:53 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 6:34:11 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: Alx_machine, Password: Alx_machine
+[5/4/2025, 6:34:11 PM] [ERROR] [PG_QUERY_FUNC] syntax error at or near "WHERE"
+[5/4/2025, 6:34:11 PM] [ERROR] [CREATE_DEPLOYMENT] error: syntax error at or near "WHERE"
+[5/4/2025, 6:34:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:35:01 PM] [INFO] [CREATE_DEPLOYMENT] Container da322192356360dd42730446c421ec3280ab5f29789d0bf7b2bef97888fb1ebd created
+[5/4/2025, 6:35:01 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 6:35:23 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: Alx_machine, Password: Alx_machine
+[5/4/2025, 6:35:23 PM] [ERROR] [PG_QUERY_FUNC] malformed array literal: "{"22/tcp":["32774"]}"
+[5/4/2025, 6:35:23 PM] [ERROR] [CREATE_DEPLOYMENT] error: malformed array literal: "{"22/tcp":["32774"]}"
+[5/4/2025, 6:35:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:35:41 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:36:14 PM] [INFO] [CREATE_DEPLOYMENT] Container 805cc4d3f17a23c8665a0d5cceb97292f65fd7530c4b6bfbe9a9421dc04b4a2f created
+[5/4/2025, 6:36:14 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 6:36:32 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: Alx_machine, Password: Alx_machine
+[5/4/2025, 6:37:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:38:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 6:38:43 PM] [INFO] [CREATE_DEPLOYMENT] Container 1ec48577a7fca0db74b663e7f6a73d14996a0fe5450e7df26355e86bac4671e1 created
+[5/4/2025, 6:38:43 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/4/2025, 6:39:04 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: adadA_machine, Password: adadA_machine
+[5/4/2025, 6:39:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:40:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:41:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:41:42 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:42:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:43:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:44:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:44:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:45:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:45:31 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/4/2025, 8:52:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:06:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:06:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:07:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:07:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:07:31 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:07:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:07:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:08:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:09:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 1:10:53 AM] [INFO] [CREATE_DEPLOYMENT] Container dcc3a128114571957ea91c7bd510f24d71b8885682798876ce1fe6531c30ec2a created
+[5/5/2025, 1:10:53 AM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/5/2025, 1:11:11 AM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: das_machine, Password: das_machine
+[5/5/2025, 1:15:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:28:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:35:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:40:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:40:30 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:40:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:53:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:54:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:12 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:18 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:29 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:55:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:57:15 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 400) bad parameter - Invalid container name (s), only [a-zA-Z0-9][a-zA-Z0-9_.-] are allowed 
+[5/5/2025, 8:57:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:58:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 8:58:07 PM] [ERROR] [CREATE_DEPLOYMENT] Error: (HTTP code 400) bad parameter - Invalid container name (s), only [a-zA-Z0-9][a-zA-Z0-9_.-] are allowed 
+[5/5/2025, 9:00:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 9:00:38 PM] [INFO] [CREATE_DEPLOYMENT] Container 552f3ac145eefb9ca93d2b9c0b1eb03cc7c370602037442f84acb291a2167af7 created
+[5/5/2025, 9:00:38 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/5/2025, 9:00:55 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: ss_machine, Password: ss_machine
+[5/5/2025, 9:00:55 PM] [ERROR] [PG_QUERY_FUNC] column "deploymentid" does not exist
+[5/5/2025, 9:00:55 PM] [ERROR] [CREATE_DEPLOYMENT] column "deploymentid" does not exist
+[5/5/2025, 9:01:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 9:02:11 PM] [INFO] [CREATE_DEPLOYMENT] Container 891ee9196be040f499c34e1ce5924c3bc87df3b765234a30944484bd4eee8421 created
+[5/5/2025, 9:02:11 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/5/2025, 9:02:29 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: alex_machine, Password: alex_machine
+[5/5/2025, 10:19:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:19:29 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:19:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:20:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:20:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:20:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:20:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:20:31 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:21:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:21:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:21:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:21:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:21:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:22:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/5/2025, 10:24:02 PM] [INFO] [CREATE_DEPLOYMENT] Container efb8348582f586626e2d88d6a04f8f7cfb70941fc978deb3001d92d0098a5554 created
+[5/5/2025, 10:24:02 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/5/2025, 10:24:19 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: test_machine, Password: test_machine
+[5/5/2025, 10:28:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

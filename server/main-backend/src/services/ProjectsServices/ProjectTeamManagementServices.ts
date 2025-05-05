@@ -16,14 +16,15 @@ const CustomRequestValidationResult = validationResult.withDefaults({
     },
 });
 
-const getProjectTeamData = async (req: CustomRequest, res: Response) => {
+const getProjectTeamData = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_PROJECT_TEAM_DATA_FUNC', error.errorMsg);
         });
 
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -50,27 +51,30 @@ WHERE
         const DivivisionQueryString = `SELECT * FROM project_divisions WHERE ProjectToken = $1`;
         const DivivisionResponse = await query(connection!, DivivisionQueryString, [req.params.projectToken]);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             TeamDivisions: DivivisionResponse,
             TeamMembers: TeamResponse,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_PROJECT_TEAM_DATA_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const addTeamMember = async (req: CustomRequest, res: Response) => {
+const addTeamMember = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('ADD_TEAM_MEMBER_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -87,10 +91,11 @@ const addTeamMember = async (req: CustomRequest, res: Response) => {
 
         if (memberCheckResult[0].count !== '0') {
             connection?.release();
-            return res.status(200).json({
+            res.status(200).json({
                 error: true,
                 errmsg: 'User is already a team member',
             });
+            return;
         }
 
         // Insert the new team member and return the inserted data
@@ -112,33 +117,37 @@ const addTeamMember = async (req: CustomRequest, res: Response) => {
 
         if (response.length === 0) {
             connection?.release();
-            return res.status(200).json({
+            res.status(200).json({
                 error: true,
                 errmsg: 'User or role not found',
             });
+            return;
         }
 
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             teamMember: response[0],
         });
+        return;
     } catch (error: any) {
         logging.error('ADD_TEAM_MEMBER_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const removeTeamMember = async (req: CustomRequest, res: Response) => {
+const removeTeamMember = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('REMOVE_TEAM_MEMBER_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -146,35 +155,39 @@ const removeTeamMember = async (req: CustomRequest, res: Response) => {
         const memberPrivateToken = await utilFunctions.getUserPrivateTokenFromPublicToken(connection!, req.body.memberPublicToken);
 
         if (!memberPrivateToken) {
-            return res.status(200).json({
+            res.status(200).json({
                 error: true,
                 errmsg: 'User not found',
             });
+            return;
         }
         const queryString = `DELETE FROM projects_team_members WHERE ProjectToken = $1 AND UserPrivateToken = $2`;
         const response = await query(connection!, queryString, [req.body.projectToken, memberPrivateToken]);
         connection?.release();
 
         if (response.rowCount === 0) {
-            return res.status(200).json({
+            res.status(200).json({
                 error: true,
                 errmsg: 'User not found in team',
             });
+            return;
         }
 
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
         });
+        return;
     } catch (error: any) {
         logging.error('REMOVE_TEAM_MEMBER_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const changeMemberRole = async (req: CustomRequest, res: Response) => {
+const changeMemberRole = async (req: CustomRequest, res: Response): Promise<void> => {
     console.log(req.body);
 
     const errors = CustomRequestValidationResult(req);
@@ -182,41 +195,46 @@ const changeMemberRole = async (req: CustomRequest, res: Response) => {
         errors.array().map((error) => {
             logging.error('CHANGE_MEMBER_ROLE_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
         const connection = await connect(req.pool!);
         const memberPrivateToken = await utilFunctions.getUserPrivateTokenFromPublicToken(connection!, req.body.memberPublicToken);
         if (!memberPrivateToken) {
-            return res.status(200).json({
+            res.status(200).json({
                 error: true,
                 errmsg: 'User not found',
             });
+            return;
         }
         const queryString = `UPDATE projects_team_members SET RoleId = (SELECT id FROM roles WHERE name = $1) WHERE ProjectToken = $2 AND UserPrivateToken = $3`;
         await query(connection!, queryString, [req.body.newRoleName, req.body.projectToken, memberPrivateToken]);
         connection?.release();
 
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
         });
+        return;
     } catch (error: any) {
         logging.error('CHANGE_MEMBER_ROLE_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const createDivision = async (req: CustomRequest, res: Response) => {
+const createDivision = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('CREATE_DIVISION_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -226,25 +244,28 @@ const createDivision = async (req: CustomRequest, res: Response) => {
         const response = await query(connection!, queryString, [req.body.projectToken, req.body.divisionName]);
         connection?.release();
 
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
         });
+        return;
     } catch (error: any) {
         logging.error('CREATE_DIVISION_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const getAllDivisions = async (req: CustomRequest, res: Response) => {
+const getAllDivisions = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_ALL_DIVISIONS_FUNC', error.errorMsg);
         });
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -253,16 +274,18 @@ const getAllDivisions = async (req: CustomRequest, res: Response) => {
 
         const allDivisions = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             divisions: allDivisions,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_ALL_DIVISIONS_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 

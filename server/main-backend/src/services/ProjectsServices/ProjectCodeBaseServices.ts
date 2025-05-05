@@ -23,14 +23,15 @@ const CustomRequestValidationResult = validationResult.withDefaults({
     },
 });
 
-const getProjectCodebaseData = async (req: CustomRequest, res: Response) => {
+const getProjectCodebaseData = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
         });
 
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     try {
@@ -38,16 +39,18 @@ const getProjectCodebaseData = async (req: CustomRequest, res: Response) => {
         const queryString = `SELECT * FROM projects_codebase JOIN projects ON projects_codebase.ProjectToken = projects.ProjectToken WHERE projects_codebase.ProjectToken = $1`;
         const projectsResponse = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             project: projectsResponse[0],
         });
+        return;
     } catch (error: any) {
         logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.message);
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
@@ -142,14 +145,14 @@ const startSetup = async (socket: Socket, userSessionToken: string, projectToken
                         serviceID,
                         error: `Service directory not found: ${workingDir}`,
                     });
-                    continue; 
+                    continue;
                 }
             }
 
             try {
                 const serviceProcess = child_process.spawn(command, args, {
                     cwd: workingDir,
-                    shell: true, 
+                    shell: true,
                 });
 
                 serviceProcess.on('error', async (err) => {
@@ -180,7 +183,6 @@ const startSetup = async (socket: Socket, userSessionToken: string, projectToken
                         message: code === 0 ? 'Command completed successfully' : `Command exited with code ${code}`,
                     });
                 });
-
             } catch (error: any) {
                 socket.emit('setup-error', {
                     serviceID,

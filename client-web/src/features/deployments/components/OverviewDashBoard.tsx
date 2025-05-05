@@ -5,10 +5,14 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'rec
 import RecentRequests from './RecentRequests'
 import axios from 'axios'
 import { RecentRequestsProps } from '../types/Requests'
+import ServiceCard from './ServiceCard'
+import PopupCanvas from '@/components/PopupCanvas'
+import CreateDeploymentWizard from './DeploymentWizzard'
+import { DeploymentOptions, ServiceCardPropsRequest } from '../types/DeploymentOptions'
 
-const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: string }> = ({ projectToken, userSessionToken }) => {
+const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: string; deploymentOptions: DeploymentOptions }> = ({ projectToken, userSessionToken, deploymentOptions }) => {
     const [isRefreshing, setIsRefreshing] = useState<boolean>(false)
-    const [activeTab, setActiveTab] = useState<string>('overview')
+    const [activeTab, setActiveTab] = useState<string>('services')
     const [requests, setRequests] = useState<RecentRequestsProps[]>([])
     const [totalDeployments, setTotalDeployments] = useState<number>(0)
     const [totalActiveDeployments, setTotalActiveDeployments] = useState<number>(0)
@@ -16,6 +20,9 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
     const [avgResponseTime, setAvgResponseTime] = useState<number>(0)
     const [requestPerHour, setRequestPerHour] = useState<{ name: string; requests: number; responseTime: number }[]>([])
 
+    const [deployments, setDeployments] = useState<ServiceCardPropsRequest[]>([])
+
+    const [createDeploymentPopup, setCreateDeploymentPopup] = useState<boolean>(false)
     useEffect(() => {
         refreshData()
     }, [])
@@ -38,48 +45,17 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
         })()
     }
 
-    const data = [
-        {
-            name: '00:00',
-            requests: 2340,
-            responseTime: 89
-        },
-        {
-            name: '03:00',
-            requests: 1830,
-            responseTime: 78
-        },
-        {
-            name: '06:00',
-            requests: 1580,
-            responseTime: 65
-        },
-        {
-            name: '09:00',
-            requests: 3908,
-            responseTime: 92
-        },
-        {
-            name: '12:00',
-            requests: 4800,
-            responseTime: 105
-        },
-        {
-            name: '15:00',
-            requests: 4903,
-            responseTime: 110
-        },
-        {
-            name: '18:00',
-            requests: 5400,
-            responseTime: 98
-        },
-        {
-            name: '21:00',
-            requests: 4021,
-            responseTime: 87
-        }
-    ]
+    useEffect(() => {
+        ;(async () => {
+            const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-deployments/${projectToken}/${userSessionToken}`)
+            if (resp.data.error) {
+                console.error('Error fetching requests:', resp.data.error)
+                return
+            }
+            console.log('first')
+            setDeployments(resp.data.deployments)
+        })()
+    }, [projectToken, userSessionToken])
 
     const renderComponent = () => {
         switch (activeTab) {
@@ -111,7 +87,7 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
 
                             <div className="flex h-36 flex-col rounded-xl bg-zinc-900/40 p-6">
                                 <div className="flex flex-row items-center justify-between">
-                                    <h1 className="text-sm font-medium text-white">Requests (24h)</h1>
+                                    <h1 className="text-sm font-medium text-white">Requests </h1>
                                     <RadioTower className="h-4 w-4 text-white" />
                                 </div>
                                 <div className="mt-auto flex flex-col">
@@ -157,7 +133,15 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                     </div>
                 )
             case 'services':
-                return <div className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+                return (
+                    <div className="flex flex-col gap-3">
+                        {deployments.map(deployment => (
+                            <div key={deployment.id}>
+                                <ServiceCard deployment={deployment} />
+                            </div>
+                        ))}
+                    </div>
+                )
 
             default:
                 return <div>No matching component found</div>
@@ -171,11 +155,28 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                     <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">Deployment Monitoring</h2>
                     <p className="text-sm text-zinc-400 md:text-base">Monitor your deployments, container metrics, and request analytics</p>
                 </div>
-                <button onClick={refreshData} disabled={isRefreshing} className="flex cursor-pointer items-center gap-2 rounded-md bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700">
-                    <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                    <span className="hidden sm:inline">Refresh data</span>
-                </button>
+                <div className="flex items-center space-x-2">
+                    <button onClick={refreshData} disabled={isRefreshing} className="flex cursor-pointer items-center gap-2 rounded-md bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700">
+                        <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                        <span className="hidden sm:inline">Refresh data</span>
+                    </button>
+                    <button
+                        onClick={() => {
+                            setCreateDeploymentPopup(true)
+                        }}
+                        className="flex cursor-pointer items-center gap-2 rounded-md bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700"
+                    >
+                        <Plus className="h-4 w-4" />
+                        <span className="hidden sm:inline">New Deployment</span>
+                    </button>
+                </div>
             </div>
+
+            {createDeploymentPopup && (
+                <PopupCanvas closePopup={() => setCreateDeploymentPopup(false)}>
+                    <CreateDeploymentWizard onSuccess={() => setCreateDeploymentPopup(false)} projectToken={projectToken} userSessionToken={userSessionToken} deploymentOptions={deploymentOptions} />
+                </PopupCanvas>
+            )}
 
             <div className="mt-4 w-full overflow-x-auto">
                 <div className="flex space-x-1 rounded-xl bg-zinc-900 p-1">
@@ -183,7 +184,7 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                         <button
                             key={index}
                             onClick={() => setActiveTab(tab.toLowerCase())}
-                            className={`rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === tab.toLowerCase() ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-300'}`}
+                            className={`cursor-pointer rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${activeTab === tab.toLowerCase() ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-300'}`}
                         >
                             {tab}
                         </button>

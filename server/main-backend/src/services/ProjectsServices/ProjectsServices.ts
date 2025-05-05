@@ -18,14 +18,15 @@ const CustomRequestValidationResult = validationResult.withDefaults({
     },
 });
 
-const getAllProjects = async (req: CustomRequest, res: Response) => {
+const getAllProjects = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_PROJECTS_FUNC', error.errorMsg);
         });
 
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     const connection = await connect(req.pool!);
@@ -37,28 +38,31 @@ const getAllProjects = async (req: CustomRequest, res: Response) => {
         const projectsResponse: IProjectsDb[] = await query(connection!, queryString, [userPrivateToken]);
         connection?.release();
 
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             projects: projectsResponse,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_PROJECTS_FUNC', error.message);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 
-const getProjectData = async (req: CustomRequest, res: Response) => {
+const getProjectData = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().map((error) => {
             logging.error('GET_PROJECT_DATA_FUNC', error.errorMsg);
         });
 
-        return res.status(200).json({ error: true, errors: errors.array() });
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
     }
 
     const connection = await connect(req.pool!);
@@ -68,17 +72,19 @@ const getProjectData = async (req: CustomRequest, res: Response) => {
         const projectsResponse: IProjectsDb = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
 
-        return res.status(200).json({
+        res.status(200).json({
             error: false,
             project: projectsResponse,
         });
+        return;
     } catch (error: any) {
         logging.error('GET_PROJECT_DATA_FUNC', error.message);
         connection?.release();
-        return res.status(200).json({
+        res.status(200).json({
             error: true,
             errmsg: error.message,
         });
+        return;
     }
 };
 

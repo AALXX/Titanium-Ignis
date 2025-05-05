@@ -634,3 +634,45 @@
 [4/11/2025, 12:20:23 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
 [4/11/2025, 12:20:23 AM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
 [4/11/2025, 12:20:23 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[4/11/2025, 2:01:06 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/12/2025, 9:23:16 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/12/2025, 9:23:16 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[4/12/2025, 9:23:16 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[4/13/2025, 7:18:35 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/13/2025, 7:18:35 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[4/13/2025, 7:18:35 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[4/14/2025, 11:03:09 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/14/2025, 11:03:24 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[4/22/2025, 4:15:45 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/22/2025, 4:15:45 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[4/23/2025, 8:45:05 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/23/2025, 8:45:05 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[4/27/2025, 7:26:38 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/27/2025, 7:26:38 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[4/28/2025, 8:50:02 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/28/2025, 8:50:02 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[4/28/2025, 11:03:35 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[4/28/2025, 11:03:35 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/2/2025, 10:24:49 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/2/2025, 10:24:49 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/3/2025, 12:35:46 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/3/2025, 6:18:26 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/3/2025, 6:18:27 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/3/2025, 8:45:58 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/3/2025, 8:46:02 PM] [ERROR] [PG_CONNECT] connect EHOSTUNREACH 192.168.1.128:5432
+[5/3/2025, 8:46:02 PM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[5/3/2025, 8:46:02 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/3/2025, 10:06:25 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/3/2025, 10:06:28 PM] [ERROR] [PG_CONNECT] connect EHOSTUNREACH 192.168.1.128:5432
+[5/3/2025, 10:06:28 PM] [ERROR] [PG_QUERY_FUNC] Cannot read properties of null (reading 'query')
+[5/3/2025, 10:06:28 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/4/2025, 1:29:51 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/4/2025, 1:29:51 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/4/2025, 8:38:29 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/4/2025, 8:38:29 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/4/2025, 8:38:29 PM] [ERROR] [PG_QUERY_FUNC] column "additinaldata" does not exist
+[5/4/2025, 8:38:29 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/5/2025, 8:28:10 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/5/2025, 8:28:10 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/5/2025, 8:28:10 PM] [ERROR] [PG_QUERY_FUNC] column "additinaldata" does not exist
+[5/5/2025, 8:28:10 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
