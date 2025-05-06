@@ -1,6 +1,7 @@
 import { Pool, PoolClient } from 'pg'
 import logging from '../config/logging'
 import { connect, query } from '../config/postgresql'
+import { Container } from 'dockerode'
 
 const checkForPermissions = async (connection: PoolClient, projectToken: string, userSessionToken: string, resource: string, action: string): Promise<boolean> => {
     try {
@@ -51,7 +52,6 @@ const checkForPermissions = async (connection: PoolClient, projectToken: string,
 
         return true
     } catch (error: any) {
-        
         logging.error('CHECK_FOR_PERMISSIONS', error.message)
         return false
     }
@@ -117,7 +117,6 @@ const getUserPublicTokenFromPrivateToken = async (connection: PoolClient, userPr
     }
 }
 
-
 const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PUBLIC_TOKEN_FUNC'
     const QueryString = `SELECT UserPublicToken FROM users WHERE UserSessionToken='${sessionToken}';`
@@ -135,8 +134,7 @@ const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessio
         } else {
             return null
         }
-    }
-    catch (error: any) {
+    } catch (error: any) {
         connection?.release()
         logging.error(NAMESPACE, error.message, error)
         return null
@@ -144,4 +142,65 @@ const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessio
     return null
 }
 
-export { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken }
+const mapOsToImage = (osName: string): string => {
+    osName = osName.toLowerCase().replace(' lts', '').replace(' ', '-')
+
+    const distro = osName.split('-')[0]
+    const version = osName.split('-').slice(1).join('.')
+
+    switch (distro) {
+        case 'ubuntu':
+        case 'debian':
+        case 'fedora':
+            return `${distro}:${version}`
+        case 'centos':
+            return `centos:${version.split('.')[0]}`
+        case 'almalinux':
+            return `almalinux:${version}`
+        case 'rocky':
+            return `rockylinux:${version}`
+        case 'arch':
+            return `archlinux:latest`
+        case 'opensuse':
+            if (osName.includes('leap')) {
+                return `opensuse/leap:${version}`
+            } else {
+                return `opensuse/tumbleweed`
+            }
+        default:
+            logging.error('UNKNOWN_OS', osName)
+            return ''
+    }
+}
+
+const execInContainer = async (container: Container, cmd: string[]) => {
+    const exec = await container.exec({
+        Cmd: cmd,
+        AttachStdout: true,
+        AttachStderr: true
+    })
+
+    return new Promise<void>((resolve, reject) => {
+        exec.start({}, (err, stream) => {
+            if (err) return reject(err)
+
+            let output = ''
+
+            stream!.on('data', chunk => {
+                output += chunk.toString()
+                process.stdout.write(chunk)
+                // console.log((chunk.toString()));
+            })
+
+            stream!.on('end', () => {
+                resolve()
+            })
+
+            stream!.on('error', err => {
+                reject(err)
+            })
+        })
+    })
+}
+
+export { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken, mapOsToImage, execInContainer }

@@ -8,7 +8,8 @@ interface ServiceCardProps {
     deployment: {
         id: number
         projecttoken: string
-        deploymentid: number | null
+        deploymenttoken: string
+        serviceid: number | null
         name: string
         type: string
         domain: string | null
@@ -40,7 +41,6 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick }) => {
-    // Determine icon based on deployment type
     const getTypeIcon = () => {
         switch (deployment.type) {
             case 'app':
@@ -58,7 +58,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick })
         }
     }
 
-    // Determine status color
     const getStatusColor = () => {
         switch (deployment.status) {
             case 'deployed':
@@ -74,7 +73,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick })
         }
     }
 
-    // Format ports for display
     const formatPorts = () => {
         if (!deployment.ports || Object.keys(deployment.ports).length === 0) return 'No ports exposed'
 
@@ -104,12 +102,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick })
                 <Container className="h-4 w-4 self-center text-[#7c7c7c]" />
                 <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os}</h1>
                 <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation}</span>
-                {deployment.additionalinfo && deployment.additionalinfo.sshName && (
-                    <div className="ml-2 flex items-center">
-                        <span className="text-xs text-[#7c7c7c]">SSH: </span>
-                        <span className="ml-1 text-xs font-medium text-[#7c7c7c]">{deployment.additionalinfo.sshName}</span>
-                    </div>
-                )}
+                
             </div>
             <div className="mt-4 flex w-full items-center justify-between">
                 <div className="flex flex-col">

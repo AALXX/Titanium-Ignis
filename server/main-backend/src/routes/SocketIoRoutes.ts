@@ -44,9 +44,9 @@ const initSorketioRoutes = (io: Server, pool: Pool) => {
             },
         );
 
-        socket.on('get-deployments', (data: { userSessionToken: string; projectToken: string }) => {
-            ProjectCodeBaseDeployments.getDeployments(socket, pool, data.userSessionToken, data.projectToken);
-        });
+
+
+
 
         // Clean up processes when client disconnects
         socket.on('disconnect', () => {

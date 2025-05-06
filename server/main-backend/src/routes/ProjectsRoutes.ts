@@ -65,17 +65,7 @@ router.get('/get-deployments-overview-data/:projectToken/:userSessionToken', rba
 router.get('/get-deployment-options/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectCodeBaseDeployments.getDeploymentOptions);
 
 
-router.post(
-    '/create-deployment',
-    rbacMiddleware('project', 'manage'),
-    [body('projectToken').not().isEmpty(), body('userSessionToken').not().isEmpty(), body('formData').not().isEmpty()],
-    ProjectCodeBaseDeployments.createDeployment,
-);
 
-router.get(
-    '/get-all-deployments/:projectToken/:userSessionToken',
-    [body('projectToken').not().isEmpty(), body('userSessionToken').not().isEmpty()],
-    ProjectCodeBaseDeployments.getAllDeployments,
-);
+
 
 export = router;

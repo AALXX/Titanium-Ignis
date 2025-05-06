@@ -9,6 +9,9 @@ import ServiceCard from './ServiceCard'
 import PopupCanvas from '@/components/PopupCanvas'
 import CreateDeploymentWizard from './DeploymentWizzard'
 import { DeploymentOptions, ServiceCardPropsRequest } from '../types/DeploymentOptions'
+import { io, Socket } from 'socket.io-client'
+import { LoadingScreen } from '@/components/LoadingScreen'
+import { eDeploymentStatus } from '@/features/code-enviroment/rightPanel/types/RightPanelTypes'
 
 const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: string; deploymentOptions: DeploymentOptions }> = ({ projectToken, userSessionToken, deploymentOptions }) => {
     const [isRefreshing, setIsRefreshing] = useState<boolean>(false)
@@ -20,12 +23,58 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
     const [avgResponseTime, setAvgResponseTime] = useState<number>(0)
     const [requestPerHour, setRequestPerHour] = useState<{ name: string; requests: number; responseTime: number }[]>([])
 
+    const [deploymentsSocket, setDeploymentsSocket] = useState<Socket | null>(null)
+
     const [deployments, setDeployments] = useState<ServiceCardPropsRequest[]>([])
 
     const [createDeploymentPopup, setCreateDeploymentPopup] = useState<boolean>(false)
+
     useEffect(() => {
-        refreshData()
-    }, [])
+        const deploymentsSocket = io(`${process.env.NEXT_PUBLIC_DEPLOYMENTS_SERVER}`, {
+            transports: ['websocket'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        })
+
+        deploymentsSocket.on('connect', () => {
+            console.log('Connected to deployments server')
+        })
+        setDeploymentsSocket(deploymentsSocket)
+
+        deploymentsSocket.emit('get-deployments', { projectToken, userSessionToken })
+
+        deploymentsSocket.emit('join-project', { projectToken })
+
+        deploymentsSocket.on('all-deployments', (data: { deployments: ServiceCardPropsRequest[] }) => {
+            setDeployments(data.deployments)
+        })
+
+        deploymentsSocket.on('deployment-event', (data: { deploymentToken: string; currentState: eDeploymentStatus }) => {
+            console.log(data)
+            setDeployments(prev => prev.map(deployment => (deployment.deploymenttoken === data.deploymentToken ? { ...deployment, status: data.currentState } : deployment)))
+        })
+
+        return () => {
+            if (deploymentsSocket) {
+                deploymentsSocket.disconnect()
+            }
+        }
+    }, [projectToken, userSessionToken])
+
+
+
+    if (!deploymentsSocket) {
+        return (
+            <div className="flex h-full w-full">
+                <LoadingScreen />
+            </div>
+        )
+    }
+
+    // useEffect(() => {
+    //     refreshData()
+    // }, [])
 
     const refreshData = async () => {
         ;(async () => {
@@ -45,17 +94,20 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
         })()
     }
 
-    useEffect(() => {
-        ;(async () => {
-            const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-deployments/${projectToken}/${userSessionToken}`)
-            if (resp.data.error) {
-                console.error('Error fetching requests:', resp.data.error)
-                return
-            }
-            console.log('first')
-            setDeployments(resp.data.deployments)
-        })()
-    }, [projectToken, userSessionToken])
+    // useEffect(() => {
+    //     // ;(async () => {
+    //     //     const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-deployments/${projectToken}/${userSessionToken}`)
+    //     //     if (resp.data.error) {
+    //     //         console.error('Error fetching requests:', resp.data.error)
+    //     //         return
+    //     //     }
+    //     //     console.log('first')
+    //     //     setDeployments(resp.data.deployments)
+    //     // })()
+
+    // deploymentsSocket.emit('get-deployments', { projectToken, userSessionToken })
+
+    // }, [projectToken, userSessionToken])
 
     const renderComponent = () => {
         switch (activeTab) {
@@ -174,7 +226,14 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
 
             {createDeploymentPopup && (
                 <PopupCanvas closePopup={() => setCreateDeploymentPopup(false)}>
-                    <CreateDeploymentWizard onSuccess={() => setCreateDeploymentPopup(false)} projectToken={projectToken} userSessionToken={userSessionToken} deploymentOptions={deploymentOptions} />
+                    <CreateDeploymentWizard
+                        onSuccess={() => setCreateDeploymentPopup(false)}
+                        projectToken={projectToken}
+                        userSessionToken={userSessionToken}
+                        deploymentOptions={deploymentOptions}
+                        
+                        socket={deploymentsSocket}
+                    />
                 </PopupCanvas>
             )}
 

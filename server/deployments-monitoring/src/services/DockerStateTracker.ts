@@ -4,11 +4,11 @@ import Docker from 'dockerode'
 import { Readable } from 'stream'
 import { connect, query } from '../config/postgresql'
 import { eDeploymentStatus } from '../types/DeploymentTypes'
+import logging from '../config/logging'
 
 interface ContainerEvent {
     type: 'status-change' | 'error'
     containerId: string
-    deploymentId: number
     containerName: string
     previousState?: string
     currentState: string
@@ -21,24 +21,26 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
     const eventStreams: Map<string, Readable> = new Map()
     const containerStates: Map<string, string> = new Map()
 
-    const getProjectContainers = async (projectToken: string): Promise<Array<{ containerId: string; deploymentId: number }>> => {
+    const getProjectContainers = async (projectToken: string): Promise<Array<{ containerId: string; serviceid: number }>> => {
         try {
             const connection = await connect(pool)
 
             const getDeploymentsDataQuery = `
-            SELECT DeploymentID, AdditinalData FROM projects_deployments
-            WHERE ProjectToken = $1
+            SELECT containerID, DeploymentToken FROM projects_deployments
+            WHERE ProjectToken = $1 AND containerID IS NOT NULL
         `
             const deploymentsData = await query(connection!, getDeploymentsDataQuery, [projectToken])
 
-            const contaienrs = deploymentsData.map((deployment: { deploymentid: number; additinaldata: { containerId: string } }) => {
+            const containers = deploymentsData.map((deployment: { containerid: string; deploymenttoken: string }) => {
                 return {
-                    containerId: deployment.additinaldata.containerId,
-                    deploymentId: deployment.deploymentid
+                    containerId: deployment.containerid,
+                    serviceid: deployment.deploymenttoken
                 }
             })
             connection!.release()
-            return contaienrs
+
+            logging.info('DockerStateTracker', `Found ${containers.length} containers for project ${projectToken}`)
+            return containers
         } catch (error: any) {
             console.error('Error fetching project containers:', error)
             return []
@@ -49,17 +51,16 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
         const errorEvent: ContainerEvent = {
             type: 'error',
             containerId: 'unknown',
-            deploymentId: 0,
             containerName: 'unknown',
             currentState: 'error',
             timestamp: Date.now(),
             reason: `${context}: ${error.toString()}`
         }
-
+        logging.error('DockerStateTracker', `Error in ${context}: ${error.toString()}`)
         io.to(projectToken).emit('deployment-event', errorEvent)
     }
 
-    const handleContainerEvent = async (projectToken: string, event: any, containerStates: Map<string, string>, deploymentId: number): Promise<void> => {
+    const handleContainerEvent = async (projectToken: string, event: any, containerStates: Map<string, string>, containerID: string): Promise<void> => {
         try {
             const containerId = event.id
             const containerName = event.Actor?.Attributes?.name || containerId
@@ -73,7 +74,6 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
             const containerEvent: ContainerEvent = {
                 type: 'status-change',
                 containerId,
-                deploymentId,
                 containerName,
                 previousState,
                 currentState,
@@ -85,7 +85,8 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
             const updateDeploymentStatusQuery = `
                 UPDATE projects_deployments
                 SET status = $1
-                WHERE deploymentid = $2
+                WHERE containerid = $2
+                RETURNING DeploymentToken
             `
             let statusValue
             switch (currentState) {
@@ -98,25 +99,37 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
                     break
             }
 
-            await query(connection!, updateDeploymentStatusQuery, [statusValue, deploymentId])
+            const result = await query(connection!, updateDeploymentStatusQuery, [statusValue, containerId])
+
             connection!.release()
 
-            io.to(projectToken).emit('deployment-event', containerEvent)
+            logging.info('DockerStateTracker', `Container ${containerName} (${containerId}) state changed to ${currentState}`)
+            io.to(projectToken).emit('deployment-event', { deploymentToken: result[0].deploymenttoken, currentState: statusValue })
         } catch (error: any) {
             broadcastError(projectToken, 'Error handling container event', error)
         }
     }
 
     const startProjectEventsMonitoring = async (projectToken: string): Promise<void> => {
+        // Stop any existing monitoring for this project first
         stopProjectEventsMonitoring(projectToken)
 
         const containers = await getProjectContainers(projectToken)
+
+        // If no containers found, log and return early
+        if (containers.length === 0) {
+            logging.info('DockerStateTracker', `No containers found for project ${projectToken}, skipping events monitoring`)
+            return Promise.resolve()
+        }
+
+        const containerIds = containers.map(container => container.containerId)
+
         return new Promise((resolve, reject) => {
             try {
                 docker.getEvents(
                     {
                         filters: {
-                            container: containers.map(container => container.containerId),
+                            container: containerIds,
                             event: ['start', 'stop', 'restart', 'die', 'kill', 'destroy', 'pause', 'unpause']
                         }
                     },
@@ -140,8 +153,11 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
                         readableStream.on('data', async event => {
                             try {
                                 const parsedEvent = JSON.parse(event.toString())
-                                // slice the  because the id gets saved into db as a 12 char id for some reason
-                                await handleContainerEvent(projectToken, parsedEvent, containerStates, containers.filter(container => container.containerId === parsedEvent.id.slice(0, 12))[0].deploymentId)
+                                const container = containers.find(container => container.containerId === parsedEvent.id)
+
+                                if (container) {
+                                    await handleContainerEvent(projectToken, parsedEvent, containerStates, container.containerId)
+                                }
                             } catch (parseErr) {
                                 broadcastError(projectToken, 'Event parsing error', parseErr)
                             }
@@ -157,7 +173,7 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
                         })
 
                         eventStreams.set(projectToken, readableStream)
-
+                        logging.info('DockerStateTracker', `Event monitoring started for project ${projectToken} with ${containerIds.length} containers`)
                         resolve()
                     }
                 )
@@ -173,6 +189,7 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
         if (eventStream) {
             eventStream.destroy()
             eventStreams.delete(projectToken)
+            logging.info('DockerStateTracker', `Stopped event monitoring for project ${projectToken}`)
         }
     }
 

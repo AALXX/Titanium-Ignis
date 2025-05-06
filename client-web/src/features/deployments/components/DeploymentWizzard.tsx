@@ -4,14 +4,15 @@ import type React from 'react'
 
 import { useState } from 'react'
 import { X, Check, Loader2, Server, Database, Globe, HardDrive, Code } from 'lucide-react'
-import axios from 'axios'
 import DoubleValueOptionPicker from '@/components/DoubleValueOptionPicker'
 import type { DataCenters, DeploymentOptions, DeploymentOS } from '../types/DeploymentOptions'
+import { Socket } from 'socket.io-client'
 
 interface CreateDeploymentWizardProps {
     projectToken: string
     userSessionToken: string
     deploymentOptions: DeploymentOptions
+    socket: Socket
     onSuccess: () => void
 }
 
@@ -20,6 +21,8 @@ interface ResourceAllocation {
     ram: number
     storage: number
 }
+
+
 
 interface FormData {
     name: string
@@ -39,7 +42,7 @@ interface FormData {
     backupEnabled: boolean
 }
 
-export default function CreateDeploymentWizard({ projectToken, userSessionToken, deploymentOptions, onSuccess }: CreateDeploymentWizardProps) {
+export default function CreateDeploymentWizard({ projectToken, userSessionToken, deploymentOptions, socket, onSuccess }: CreateDeploymentWizardProps) {
     const [currentStep, setCurrentStep] = useState(1)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [selectedType, setSelectedType] = useState<string | null>(null)
@@ -247,18 +250,12 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
         try {
             const payload = {
                 projectToken,
+                userSessionToken,
                 formData: formData,
-                userSessionToken
             }
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/create-deployment`, payload)
+            socket.emit('create-deployment', payload)
 
-            if (response.data.error) {
-                setFormErrors({
-                    submit: response.data.error
-                })
-                return
-            }
 
             onSuccess()
         } catch (error) {

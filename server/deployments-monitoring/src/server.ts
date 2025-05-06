@@ -18,7 +18,14 @@ const io = new Server(httpServer, {
     }
 })
 
-const { startProjectEventsMonitoring, stopProjectEventsMonitoring } = DockerStateTracker.createDockerStateTracker(io, pool)
+let update = true
+
+// Export startProjectEventsMonitoring so we can access it in DeploymentsServices
+const dockerStateTracker = DockerStateTracker.createDockerStateTracker(io, pool)
+const { startProjectEventsMonitoring, stopProjectEventsMonitoring } = dockerStateTracker
+
+// Export the dockerStateTracker for use in other modules
+export { dockerStateTracker }
 
 const getAllProjectTokens = async (pool: Pool): Promise<string[]> => {
     try {
@@ -58,12 +65,15 @@ const initializeProjectEventsMonitoring = async () => {
 
 io.on('connection', socket => {
     socket.on('join-project', (data: { projectToken: string }) => {
-
         socket.join(data.projectToken)
     })
 
     socket.on('get-deployments', async ({ projectToken, userSessionToken }) => {
         return DeploymentsServices.getAllDeployments(pool, io, socket, projectToken, userSessionToken)
+    })
+
+    socket.on('create-deployment', async ({ projectToken, userSessionToken, formData }) => {
+        return DeploymentsServices.createDeployment(pool, io, socket, projectToken, userSessionToken, formData, dockerStateTracker)
     })
 
     socket.on('disconnect', () => {})

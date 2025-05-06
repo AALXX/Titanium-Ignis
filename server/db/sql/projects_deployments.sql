@@ -5,6 +5,7 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         ProjectToken TEXT NOT NULL,
         DeploymentToken uuid NOT NULL,
+        ContainerID VARCHAR(100) ,
         ServiceID INTEGER,
         Name VARCHAR(100) NOT NULL,
         Type VARCHAR(50) NOT NULL,         -- Type can be 'app', 'database', 'linux', etc.
