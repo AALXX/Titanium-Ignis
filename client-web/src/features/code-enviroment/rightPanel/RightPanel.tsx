@@ -72,7 +72,6 @@ const RightPanel: React.FC<IRightPanel> = ({ main_socket, deployments_socket, us
         })
 
         const handleGetAllDeployments = (data: { deployments: Deployment[] }) => {
-            console.log(data)
             if (data.deployments.length > 0) {
                 setDeployments(data.deployments)
             }

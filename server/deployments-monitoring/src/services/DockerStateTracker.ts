@@ -47,6 +47,52 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
         }
     }
 
+    const updateDbData = async (projectToken: string): Promise<void> => {
+        try {
+            const connection = await connect(pool)
+
+            const getDeploymentsDataQuery = `
+                SELECT containerID, DeploymentToken FROM projects_deployments
+                WHERE ProjectToken = $1 AND containerID IS NOT NULL
+            `
+            const deploymentsData = await query(connection!, getDeploymentsDataQuery, [projectToken])
+
+            const containers = deploymentsData.map((deployment: { containerid: string; deploymenttoken: string }) => {
+                return {
+                    containerId: deployment.containerid,
+                    serviceid: deployment.deploymenttoken
+                }
+            })
+
+            for (const container of containers) {
+                const containerInfo = await docker.getContainer(container.containerId).inspect()
+                let currentState = containerInfo.State.Status
+                console.log(container.containerId, currentState)
+
+                switch (currentState) {
+                    case 'running':
+                        currentState = eDeploymentStatus.DEPLOYED
+                        break
+                    case 'exited':
+                    default:
+                        currentState = eDeploymentStatus.STOPPED
+                        break
+                }
+
+                const updateQuery = `
+                    UPDATE projects_deployments
+                    SET status = $1
+                    WHERE containerid = $2
+                `
+                await query(connection!, updateQuery, [currentState, container.containerId])
+            }
+
+            connection!.release()
+        } catch (error: any) {
+            console.error('Error updating DB data:', error)
+        }
+    }
+
     const broadcastError = (projectToken: string, context: string, error: any): void => {
         const errorEvent: ContainerEvent = {
             type: 'error',
@@ -111,19 +157,17 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
     }
 
     const startProjectEventsMonitoring = async (projectToken: string): Promise<void> => {
-        // Stop any existing monitoring for this project first
         stopProjectEventsMonitoring(projectToken)
 
         const containers = await getProjectContainers(projectToken)
 
-        // If no containers found, log and return early
         if (containers.length === 0) {
             logging.info('DockerStateTracker', `No containers found for project ${projectToken}, skipping events monitoring`)
             return Promise.resolve()
         }
 
         const containerIds = containers.map(container => container.containerId)
-
+        updateDbData(projectToken)
         return new Promise((resolve, reject) => {
             try {
                 docker.getEvents(
@@ -174,6 +218,7 @@ const createDockerStateTracker = (io: Server, pool: Pool) => {
 
                         eventStreams.set(projectToken, readableStream)
                         logging.info('DockerStateTracker', `Event monitoring started for project ${projectToken} with ${containerIds.length} containers`)
+
                         resolve()
                     }
                 )

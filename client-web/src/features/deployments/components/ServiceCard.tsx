@@ -3,8 +3,13 @@
 import CopyTextDisplay from '@/components/CopyTextDisplay'
 import { Container, MoreVertical, Server, Database, Globe, HardDrive, Code } from 'lucide-react'
 import type React from 'react'
+import { useState, useRef, useEffect } from 'react'
+import DeploymentCardMenu from './DeploymentCardMenu'
+import { Socket } from 'socket.io-client'
 
 interface ServiceCardProps {
+    socket: Socket
+    userSessionToken: string
     deployment: {
         id: number
         projecttoken: string
@@ -37,10 +42,27 @@ interface ServiceCardProps {
             sshName?: string
         } | null
     }
-    onOptionsClick?: () => void
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken, socket }) => {
+    const [showMenu, setShowMenu] = useState(false)
+    const menuRef = useRef<HTMLDivElement>(null)
+    const buttonRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node) && buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
+                setShowMenu(false)
+            }
+        }
+        console.log(deployment.status)
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
+
     const getTypeIcon = () => {
         switch (deployment.type) {
             case 'app':
@@ -87,6 +109,61 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick })
             .join(', ')
     }
 
+    const handleStart = () => {
+        console.log(`Starting deployment ${deployment.id}`)
+
+        socket.emit('start-deployment', {
+            projectToken: deployment.projecttoken,
+            userSessionToken: userSessionToken,
+            deploymentToken: deployment.deploymenttoken
+        })
+
+        setShowMenu(false)
+    }
+
+    const handleRestart = () => {
+        console.log(`Restarting deployment ${deployment.id}`)
+        socket.emit('restart-deployment', {
+            projectToken: deployment.projecttoken,
+            deploymentToken: deployment.deploymenttoken
+        })
+        setShowMenu(false)
+    }
+
+    const handleStop = () => {
+        console.log(`Stopping deployment ${deployment.id}`)
+        socket.emit('stop-deployment', {
+            projectToken: deployment.projecttoken,
+            deploymentToken: deployment.deploymenttoken
+        })
+        setShowMenu(false)
+    }
+
+    const handleDelete = () => {
+        console.log(`Deleting deployment ${deployment.id}`)
+        socket.emit('delete-deployment', {
+            projectToken: deployment.projecttoken,
+            deploymentToken: deployment.deploymenttoken
+        })
+        setShowMenu(false)
+    }
+
+    const handleViewDetails = () => {
+        console.log(`Viewing details for deployment ${deployment.id}`)
+
+        setShowMenu(false)
+    }
+
+    const handleSSHConnect = () => {
+        console.log(`SSH connecting to deployment ${deployment.id}`)
+        setShowMenu(false)
+    }
+
+    const handleBackup = () => {
+        console.log(`Creating backup for deployment ${deployment.id}`)
+        setShowMenu(false)
+    }
+
     return (
         <div className="h-40 w-full rounded-xl bg-[#00000062] p-4">
             <div className="flex">
@@ -96,13 +173,34 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, onOptionsClick })
                     {getTypeIcon()}
                     <span className="ml-1 text-xs text-white">{deployment.type}</span>
                 </div>
-                <MoreVertical className="ml-auto cursor-pointer self-center text-white" onClick={onOptionsClick} />
+
+                <div className="relative ml-auto">
+                    <div ref={buttonRef} className="cursor-pointer" onClick={() => setShowMenu(!showMenu)}>
+                        <MoreVertical className="self-center text-white" />
+                    </div>
+
+                    {showMenu && (
+                        <div ref={menuRef}>
+                            <DeploymentCardMenu
+                                currentStatus={deployment.status}
+                                deploymentId={deployment.id}
+                                deploymentType={deployment.type}
+                                onStart={handleStart}
+                                onRestart={handleRestart}
+                                onStop={handleStop}
+                                onDelete={handleDelete}
+                                onViewDetails={handleViewDetails}
+                                onSSHConnect={handleSSHConnect}
+                                onBackup={handleBackup}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
             <div className="mt-1 flex w-full items-center">
                 <Container className="h-4 w-4 self-center text-[#7c7c7c]" />
                 <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os}</h1>
                 <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation}</span>
-                
             </div>
             <div className="mt-4 flex w-full items-center justify-between">
                 <div className="flex flex-col">

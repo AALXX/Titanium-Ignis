@@ -1,11 +1,16 @@
+import tar from 'tar-fs'
+import { Readable } from 'stream'
+
 import { Pool, PoolClient } from 'pg'
 import { Server, Socket } from 'socket.io'
 import { connect, query } from '../config/postgresql'
 import logging from '../config/logging'
-import { checkForPermissions, execInContainer, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken, mapOsToImage } from '../utils/utils'
-import { CreateDeploymentRequest, eDeploymentStatus } from '../types/DeploymentTypes'
+import { checkForPermissions, execInContainer, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken, mapOsToImage, mapServiceToImage } from '../utils/utils'
+import { CreateDeploymentRequest, eDeploymentStatus, IProjectConfig } from '../types/DeploymentTypes'
 import Docker from 'dockerode'
 import { v4 } from 'uuid'
+import fs from 'fs-extra'
+import path from 'path'
 
 const getAllDeployments = async (pool: Pool, io: Server, socket: Socket, projectToken: string, userSessionToken: string) => {
     try {
@@ -27,6 +32,64 @@ const getAllDeployments = async (pool: Pool, io: Server, socket: Socket, project
 
 const docker = new Docker()
 
+const startDeployment = async (pool: Pool, io: Server, socket: Socket, projectToken: string, userSessionToken: string, deploymentToken: string) => {
+    try {
+        const connection = await connect(pool)
+        const getDeploymentQuery = `SELECT ContainerID FROM projects_deployments WHERE projecttoken = $1 AND deploymenttoken = $2`
+
+        const deployment = await query(connection!, getDeploymentQuery, [projectToken, deploymentToken])
+        if (deployment.length === 0) {
+            return socket.emit('start-deployment-error', {
+                error: true,
+                errmsg: 'Deployment not found'
+            })
+        }
+
+        await docker.getContainer(deployment[0].containerid).start()
+
+        const startDeploymentQuery = `UPDATE projects_deployments SET status = $1 WHERE projecttoken = $2 AND deploymenttoken = $3`
+        await query(connection!, startDeploymentQuery, [eDeploymentStatus.DEPLOYED, projectToken, deploymentToken])
+        connection!.release()
+    } catch (error: any) {
+        logging.error('START_DEPLOYMENT', error.message)
+        return socket.emit('start-deployment-error', {
+            error: true,
+            errmsg: 'Failed to connect to database'
+        })
+    }
+}
+
+const stopDeployment = async (pool: Pool, io: Server, socket: Socket, projectToken: string, deploymentToken: string) => {
+    try {
+        const connection = await connect(pool)
+        const getDeploymentQuery = `SELECT ContainerID FROM projects_deployments WHERE projecttoken = $1 AND deploymenttoken = $2`
+
+        const deployment = await query(connection!, getDeploymentQuery, [projectToken, deploymentToken])
+        if (deployment.length === 0) {
+            return socket.emit('stop-deployment-error', {
+                error: true,
+                errmsg: 'Deployment not found'
+            })
+        }
+
+        // we use deploying status to change the to yellow
+        const pendingDeploymentQuery = `UPDATE projects_deployments SET status = $1 WHERE projecttoken = $2 AND deploymenttoken = $3`
+        await query(connection!, pendingDeploymentQuery, [eDeploymentStatus.STOPPED, projectToken, deploymentToken])
+
+        await docker.getContainer(deployment[0].containerid).stop()
+
+        const stopDeploymentQuery = `UPDATE projects_deployments SET status = $1 WHERE projecttoken = $2 AND deploymenttoken = $3`
+        await query(connection!, stopDeploymentQuery, [eDeploymentStatus.STOPPED, projectToken, deploymentToken])
+        connection!.release()
+    } catch (error: any) {
+        logging.error('STOP_DEPLOYMENT', error.message)
+        return socket.emit('stop-deployment-error', {
+            error: true,
+            errmsg: 'Failed to connect to database'
+        })
+    }
+}
+
 const createDeployment = async (
     pool: Pool,
     io: Server,
@@ -42,10 +105,7 @@ const createDeployment = async (
             case 'linux':
                 const vmToken = v4()
 
-                // Sanitize the VM name to meet Docker's naming requirements
-                let sanitizedName = formData.name
-                    .replace(/[^a-zA-Z0-9_.-]/g, '') // Remove invalid characters
-                    .replace(/^[^a-zA-Z0-9]/g, 'vm') // Ensure starts with alphanumeric
+                let sanitizedName = formData.name.replace(/[^a-zA-Z0-9_.-]/g, '').replace(/^[^a-zA-Z0-9]/g, 'vm')
 
                 if (sanitizedName.length === 0) {
                     sanitizedName = `vm-${vmToken.substring(0, 8)}` // Fallback name if all chars were stripped
@@ -55,7 +115,6 @@ const createDeployment = async (
                     sshName: `${sanitizedName}_machine`
                 }
 
-                // console.log(req.body.formData.dataCenterLocation.datacenterlocation);
                 const addNewLinuxVm = `INSERT INTO projects_deployments (DeploymentToken, projecttoken, name, IpV4, LocalIp, type, os, DataCenterLocation, status, AdditionalInfo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10); `
                 const addNewLinuxVmResult = await query(connection!, addNewLinuxVm, [
                     vmToken,
@@ -120,13 +179,85 @@ RETURNING id  -- Return values to confirm update`
                     return
                 }
 
-                // Restart the monitoring for this project to include the new container
                 try {
                     await dockerStateTracker.startProjectEventsMonitoring(projectToken)
                     logging.info('CREATE_DEPLOYMENT', `Updated container monitoring for project: ${projectToken}`)
                 } catch (monitorError) {
                     logging.error('CREATE_DEPLOYMENT', `Failed to update container monitoring: ${monitorError}`)
-                    // Don't fail the deployment if monitoring update fails
+                }
+
+                break
+            case 'service':
+                const ServiceVmToken = v4()
+
+                const additionaServicesData = {
+                    sshName: `${formData.name}_machine`
+                }
+
+                const addNewServiceVm = `INSERT INTO projects_deployments (DeploymentToken, projecttoken, name, IpV4, LocalIp, type, os, DataCenterLocation, status, AdditionalInfo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10); `
+                const addNewServiceVmResult = await query(connection!, addNewServiceVm, [
+                    ServiceVmToken,
+                    projectToken,
+                    formData.name,
+                    'Not Assigned Yet',
+                    'Not Assigned Yet',
+                    formData.type,
+                    formData.os.os,
+                    formData.dataCenterLocation.datacenterlocation,
+                    'pending',
+                    additionaServicesData
+                ])
+
+                if (addNewServiceVmResult.error) {
+                    logging.error('CREATE_DEPLOYMENT', addNewLinuxVmResult.error)
+                    socket.emit('create-deployment-error', {
+                        error: true,
+                        errmsg: 'Failed to connect to database'
+                    })
+                    return
+                }
+
+                const serviceInfo: { error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]>; containerID: string } = await createServiceDeployment(connection!, formData, projectToken)
+
+                if (serviceInfo.error) {
+                    logging.error('CREATE_DEPLOYMENT', 'Something went wrong')
+                    socket.emit('create-deployment-error', {
+                        error: true,
+                        errmsg: 'Something went wrong'
+                    })
+                    return
+                }
+
+                const changeDeploymentServiceStatus = `UPDATE projects_deployments
+SET 
+    status = $1, 
+    ipv4 = $2,
+    localip = $3,
+    Ports = $4,
+    ContainerID = $5,
+    deployedat = NOW()
+WHERE 
+    DeploymentToken = $6
+
+RETURNING id  -- Return values to confirm update`
+
+                const updateServiceResult = await query(connection!, changeDeploymentServiceStatus, ['deployed', serviceInfo.publicIp, serviceInfo.privateIp, serviceInfo.ports, serviceInfo.containerID, ServiceVmToken])
+                connection?.release()
+
+                if (updateServiceResult.length === 0 || updateServiceResult[0].id === undefined) {
+                    logging.error('CREATE_DEPLOYMENT', 'Update returned no results')
+                    socket.emit('create-deployment-error', {
+                        error: true,
+                        errmsg: 'Something went wrong'
+                    })
+                    return
+                }
+
+                try {
+                    await dockerStateTracker.startProjectEventsMonitoring(projectToken)
+                    logging.info('CREATE_DEPLOYMENT', `Updated container monitoring for project: ${projectToken}`)
+                } catch (monitorError) {
+                    logging.error('CREATE_DEPLOYMENT', `Failed to update container monitoring: ${monitorError}`)
                 }
 
                 break
@@ -163,14 +294,42 @@ const createLinuxVm = async (
     try {
         await docker.getImage(imageName).inspect()
         console.log(`Image ${imageName} already exists locally.`)
-    } catch (err) {
-        // console.log(`Pulling image ${imageName}...`);
-        await new Promise((resolve, reject) => {
-            docker.pull(imageName, (err: any, stream: any) => {
-                if (err) return reject(err)
-                docker.modem.followProgress(stream, resolve, reject)
+    } catch {
+        try {
+            await new Promise((resolve, reject) => {
+                docker.pull(imageName, (err: any, stream: any) => {
+                    if (err) {
+                        logging.error('PULL_IMAGE_ERROR', err.message)
+                        return reject(err)
+                    }
+
+                    docker.modem.followProgress(stream, onFinished(resolve, reject), onProgress)
+                })
+
+                function onFinished(resolve: any, reject: any) {
+                    return (err: any, output: any) => {
+                        if (err) {
+                            logging.error('PULL_IMAGE_ERROR', err.message || JSON.stringify(err))
+                            return reject(err)
+                        }
+
+                        console.log(`Image ${imageName} pulled successfully.`)
+                        resolve(output)
+                    }
+                }
+
+                function onProgress(event: any) {
+                    if (event.status && event.id) {
+                        console.log(`[PULL_PROGRESS] ${event.status} (${event.id})`)
+                    } else if (event.status) {
+                        console.log(`[PULL_PROGRESS] ${event.status}`)
+                    }
+                }
             })
-        })
+        } catch (pullErr) {
+            logging.error('CREATE_DEPLOYMENT', pullErr instanceof Error ? pullErr.message : JSON.stringify(pullErr))
+            throw pullErr
+        }
     }
 
     const container = await docker.createContainer({
@@ -178,8 +337,12 @@ const createLinuxVm = async (
         Cmd: ['/bin/bash'],
         name: formData.name,
         Tty: true,
-        ExposedPorts: { '22/tcp': {} },
-        HostConfig: { PublishAllPorts: true },
+        ExposedPorts: {
+            '22/tcp': {}
+        },
+        HostConfig: {
+            PortBindings: {}
+        },
         Labels: {
             'com.docker.compose.project': `${projectToken}`,
             'com.docker.compose.service': `${formData.name}`
@@ -241,4 +404,178 @@ const createLinuxVm = async (
     }
 }
 
-export default { getAllDeployments, createDeployment }
+const createServiceDeployment = async (
+    connection: PoolClient,
+    formData: CreateDeploymentRequest,
+    projectToken: string
+): Promise<{ error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]>; containerID: string }> => {
+    // get projectConfig file
+
+    let projectConfig: IProjectConfig = {
+        services: [],
+        deployments: []
+    }
+
+    try {
+        projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'))
+    } catch (error: any) {
+        logging.error('STARTS_DEPLOYMENT_READING_FILE_FUNC', error.message)
+    }
+
+    if (projectConfig.services.length < Number(formData.serviceID!)) {
+        return { error: true, publicIp: '', privateIp: '', ports: {}, containerID: '' }
+    }
+
+    const imageName = mapServiceToImage(projectConfig.services[Number(formData.serviceID!) - 1]['start-command'])
+    const newUsername = `${formData.name}_service`
+    // const userPassword = newUsername
+
+    try {
+        await docker.getImage(imageName).inspect()
+        console.log(`Image ${imageName} already exists locally.`)
+    } catch {
+        try {
+            await new Promise((resolve, reject) => {
+                docker.pull(imageName, (err: any, stream: any) => {
+                    if (err) {
+                        logging.error('PULL_IMAGE_ERROR', err.message)
+                        return reject(err)
+                    }
+
+                    docker.modem.followProgress(stream, onFinished(resolve, reject), onProgress)
+                })
+
+                function onFinished(resolve: any, reject: any) {
+                    return (err: any, output: any) => {
+                        if (err) {
+                            logging.error('PULL_IMAGE_ERROR', err.message || JSON.stringify(err))
+                            return reject(err)
+                        }
+
+                        console.log(`Image ${imageName} pulled successfully.`)
+                        resolve(output)
+                    }
+                }
+
+                function onProgress(event: any) {
+                    if (event.status && event.id) {
+                        console.log(`[PULL_PROGRESS] ${event.status} (${event.id})`)
+                    } else if (event.status) {
+                        console.log(`[PULL_PROGRESS] ${event.status}`)
+                    }
+                }
+            })
+        } catch (pullErr) {
+            logging.error('CREATE_DEPLOYMENT', pullErr instanceof Error ? pullErr.message : JSON.stringify(pullErr))
+            throw pullErr
+        }
+    }
+
+    const servicePorts = projectConfig.services[Number(formData.serviceID!) - 1].ports || {}
+
+    const ExposedPorts: Record<string, {}> = {
+        '22/tcp': {}
+    }
+    const PortBindings: Record<string, { HostPort: string }[]> = {}
+
+    for (const [containerPort, hostPort] of Object.entries(servicePorts)) {
+        const portKey = `${containerPort}/tcp`
+        ExposedPorts[portKey] = {}
+        PortBindings[portKey] = [{ HostPort: String(hostPort) }]
+    }
+
+    const container = await docker.createContainer({
+        Image: imageName,
+        name: formData.name,
+        Tty: true,
+        ExposedPorts,
+        HostConfig: {
+            PortBindings
+        },
+        Labels: {
+            'com.docker.compose.project': `${projectToken}`,
+            'com.docker.compose.service': `${formData.name}`
+        }
+    })
+
+    await container.start()
+    // add bash
+    await execInContainer(container, ['apk', 'add', '--no-cache', 'bash'])
+
+    const tempDir = path.join(`${process.env.TEMP_FOLDER_PATH}`, `project-deploy-${projectToken}`)
+
+    await fs.emptyDir(tempDir)
+
+    await fs.copy(path.join(process.env.PROJECTS_FOLDER_PATH!, projectToken), path.join(tempDir, `${projectToken}_copy`), {
+        filter: src => {
+            const relative = path.relative(process.env.PROJECTS_FOLDER_PATH!, src)
+            return !relative.startsWith('.git') && !relative.includes('node_modules')
+        }
+    })
+
+    await fs.copyFile(process.env.ANALITICS_PACKAGE_PATH!, path.join(tempDir, `${projectToken}_copy`, 'request-monitor-1.0.0.tgz'))
+
+    const archive = tar.pack(tempDir, {
+        ignore: (name: string) => {
+            const relativePath = path.relative(tempDir, name)
+            return relativePath.startsWith('.git') || relativePath.startsWith('node_modules') || relativePath.endsWith('.DS_Store')
+        }
+    }) as unknown as Readable
+
+    await execInContainer(container, ['mkdir', '-p', '/app'])
+
+    try {
+        await container.putArchive(archive, { path: '/app' })
+        logging.info('CREATE_DEPLOYMENT', 'Copied app files to /app in container')
+    } catch (copyErr) {
+        logging.error('CREATE_DEPLOYMENT_COPY', copyErr instanceof Error ? copyErr.message : JSON.stringify(copyErr))
+        throw copyErr
+    }
+
+
+    if (projectConfig.services[Number(formData.serviceID!) - 1].setup !== undefined && projectConfig.services[Number(formData.serviceID!) - 1].setup!.length > 0) {
+        try {
+            for (const setupCommand of projectConfig.services[Number(formData.serviceID!) - 1].setup!) {
+                await execInContainer(container, ['bash', '-c', `cd /app/${projectToken}_copy && ${setupCommand.run}`])
+                
+            }
+        } catch (setupErr) {
+            logging.error('CREATE_DEPLOYMENT_SETUP', setupErr instanceof Error ? setupErr.message : JSON.stringify(setupErr))
+            throw setupErr
+        }
+    }
+
+    if (projectConfig.services[Number(formData.serviceID!) - 1]['start-command'] !== undefined && projectConfig.services[Number(formData.serviceID!) - 1]['start-command']!.length > 0) {
+        try {
+            await execInContainer(container, ['bash', '-c', `cd /app/${projectToken}_copy && ${projectConfig.services[Number(formData.serviceID!) - 1]['start-command']}`], true)
+            
+        } catch (startErr) {
+            console.log('2_errs')
+            logging.error('CREATE_DEPLOYMENT_START', startErr instanceof Error ? startErr.message : JSON.stringify(startErr))
+            throw startErr
+        }
+    }
+
+    const data = await container.inspect()
+    const privateIp = data.NetworkSettings.IPAddress
+    const publicIp = 'localhost'
+    const portsObj: Record<string, string[]> = {}
+    const containerID = container.id
+
+    const portsData = data.NetworkSettings.Ports
+    for (const port in portsData) {
+        portsObj[port] = portsData[port]?.map((p: any) => p.HostPort) || []
+    }
+
+    await fs.remove(path.join(process.env.TEMP_FOLDER_PATH!, `project-deploy-${projectToken}`))
+
+    return {
+        error: false,
+        publicIp,
+        privateIp,
+        ports: portsObj,
+        containerID: containerID
+    }
+}
+
+export default { getAllDeployments, createDeployment, startDeployment, stopDeployment }

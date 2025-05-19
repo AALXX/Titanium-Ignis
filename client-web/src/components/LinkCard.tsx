@@ -1,19 +1,17 @@
+import type React from 'react'
 import Link from 'next/link'
-import React from 'react'
 
-interface ILinkCardsProps {
+interface LinkCardsProps {
     Title: string
-    className: string
     linkRef: string
+    className?: string
 }
 
-const LinkCards = (props: ILinkCardsProps) => {
-    const { Title, className } = props
-
+const LinkCards: React.FC<LinkCardsProps> = ({ Title, linkRef, className }) => {
     return (
-        <Link href={props.linkRef}>
-            <div className={`flex flex-col ${className}`}>
-                <h1 className="self-center text-xl text-white">{Title}</h1>
+        <Link href={linkRef}>
+            <div className={`flex items-center ${className}`}>
+                <h1 className="text-xs font-medium text-white">{Title}</h1>
             </div>
         </Link>
     )

@@ -348,4 +348,44 @@ const cleanupSocketProcesses = (socket: Socket) => {
     }
 };
 
-export default { getProjectCodebaseData, joinRepo, startSetup, startService, stopService, cleanupSocketProcesses };
+const getProjectServices = async (req: CustomRequest, res: Response): Promise<void> => {
+    try {
+        const projectToken = req.params.projectToken;
+        const configPath = `${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`;
+
+        if (!fs.existsSync(configPath)) {
+            logging.error('GET_PROJECT_SERVICES', `Config file not found at ${configPath}`);
+            res.status(200).json({
+                error: true,
+                errmsg: 'Project configuration file not found',
+            });
+            return;
+        }
+
+        const configFile = fs.readFileSync(configPath, 'utf8');
+        const projectConfig: IProjectConfig = JSON.parse(configFile);
+
+        if (!projectConfig.services || !Array.isArray(projectConfig.services)) {
+            logging.error('GET_PROJECT_SERVICES', 'Invalid or missing services in project config');
+            res.status(200).json({
+                error: true,
+                errmsg: 'Invalid or missing services in project configuration',
+            });
+            return;
+        }
+
+        res.status(200).json({
+            error: false,
+            services: projectConfig.services,
+        });
+    } catch (error: any) {
+        logging.error('GET_PROJECT_SERVICES', error.message);
+        res.status(200).json({
+            error: true,
+            errmsg: error.message,
+        });
+    }
+};
+
+
+export default { getProjectCodebaseData, joinRepo, startSetup, startService, stopService, cleanupSocketProcesses, getProjectServices };

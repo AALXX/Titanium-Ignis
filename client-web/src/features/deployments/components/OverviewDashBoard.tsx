@@ -12,6 +12,7 @@ import { DeploymentOptions, ServiceCardPropsRequest } from '../types/DeploymentO
 import { io, Socket } from 'socket.io-client'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { eDeploymentStatus } from '@/features/code-enviroment/rightPanel/types/RightPanelTypes'
+import { ProjectService } from '../types/servicedeployment'
 
 const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: string; deploymentOptions: DeploymentOptions }> = ({ projectToken, userSessionToken, deploymentOptions }) => {
     const [isRefreshing, setIsRefreshing] = useState<boolean>(false)
@@ -29,7 +30,47 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
 
     const [createDeploymentPopup, setCreateDeploymentPopup] = useState<boolean>(false)
 
+    const [services, setServices] = useState<ProjectService[]>([])
+
+    const refreshData = async () => {
+        ;(async () => {
+            setIsRefreshing(true)
+            const requests = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-deployments-overview-data/${projectToken}/${userSessionToken}`)
+            if (requests.data.error) {
+                console.error('Error fetching requests:', requests.data.error)
+                return
+            }
+            setRequests(requests.data.requests)
+            setTotalDeployments(requests.data.totalDeployments)
+            setTotalActiveDeployments(requests.data.activeDeployments)
+            setTotalRequests(requests.data.totalRequests)
+            setAvgResponseTime(requests.data.avgResponseTime)
+            setRequestPerHour(requests.data.requestPerHour)
+            setIsRefreshing(false)
+        })()
+    }
+
     useEffect(() => {
+        refreshData()
+    }, [])
+
+
+    
+    useEffect(() => {
+        ;(async () => {
+            const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-services/${projectToken}/${userSessionToken}`)
+            if (resp.data.error) {
+                console.error('Error fetching requests:', resp.data.error)
+                return
+            }
+            console.log(resp.data.services)
+            setServices(resp.data.services)
+        })()
+    }, [projectToken, userSessionToken])
+
+
+    useEffect(() => {
+
         const deploymentsSocket = io(`${process.env.NEXT_PUBLIC_DEPLOYMENTS_SERVER}`, {
             transports: ['websocket'],
             reconnection: true,
@@ -62,8 +103,6 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
         }
     }, [projectToken, userSessionToken])
 
-
-
     if (!deploymentsSocket) {
         return (
             <div className="flex h-full w-full">
@@ -72,42 +111,8 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
         )
     }
 
-    // useEffect(() => {
-    //     refreshData()
-    // }, [])
 
-    const refreshData = async () => {
-        ;(async () => {
-            setIsRefreshing(true)
-            const requests = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-deployments-overview-data/${projectToken}/${userSessionToken}`)
-            if (requests.data.error) {
-                console.error('Error fetching requests:', requests.data.error)
-                return
-            }
-            setRequests(requests.data.requests)
-            setTotalDeployments(requests.data.totalDeployments)
-            setTotalActiveDeployments(requests.data.activeDeployments)
-            setTotalRequests(requests.data.totalRequests)
-            setAvgResponseTime(requests.data.avgResponseTime)
-            setRequestPerHour(requests.data.requestPerHour)
-            setIsRefreshing(false)
-        })()
-    }
 
-    // useEffect(() => {
-    //     // ;(async () => {
-    //     //     const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-deployments/${projectToken}/${userSessionToken}`)
-    //     //     if (resp.data.error) {
-    //     //         console.error('Error fetching requests:', resp.data.error)
-    //     //         return
-    //     //     }
-    //     //     console.log('first')
-    //     //     setDeployments(resp.data.deployments)
-    //     // })()
-
-    // deploymentsSocket.emit('get-deployments', { projectToken, userSessionToken })
-
-    // }, [projectToken, userSessionToken])
 
     const renderComponent = () => {
         switch (activeTab) {
@@ -189,7 +194,7 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                     <div className="flex flex-col gap-3">
                         {deployments.map(deployment => (
                             <div key={deployment.id}>
-                                <ServiceCard deployment={deployment} />
+                                <ServiceCard deployment={deployment} socket={deploymentsSocket} userSessionToken={userSessionToken} />
                             </div>
                         ))}
                     </div>
@@ -230,8 +235,8 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                         onSuccess={() => setCreateDeploymentPopup(false)}
                         projectToken={projectToken}
                         userSessionToken={userSessionToken}
+                        services={services}
                         deploymentOptions={deploymentOptions}
-                        
                         socket={deploymentsSocket}
                     />
                 </PopupCanvas>

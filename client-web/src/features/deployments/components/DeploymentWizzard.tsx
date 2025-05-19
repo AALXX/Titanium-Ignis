@@ -7,11 +7,13 @@ import { X, Check, Loader2, Server, Database, Globe, HardDrive, Code } from 'luc
 import DoubleValueOptionPicker from '@/components/DoubleValueOptionPicker'
 import type { DataCenters, DeploymentOptions, DeploymentOS } from '../types/DeploymentOptions'
 import { Socket } from 'socket.io-client'
+import { ProjectService } from '../types/servicedeployment'
 
 interface CreateDeploymentWizardProps {
     projectToken: string
     userSessionToken: string
     deploymentOptions: DeploymentOptions
+    services: ProjectService[]
     socket: Socket
     onSuccess: () => void
 }
@@ -22,14 +24,13 @@ interface ResourceAllocation {
     storage: number
 }
 
-
-
 interface FormData {
     name: string
     type: string
     domain: string
     dataCenterLocation: DataCenters
     environment: string
+    serviceID: number
     isActive: boolean
     resourceAllocation: ResourceAllocation
     deploymentMethod: string
@@ -42,7 +43,7 @@ interface FormData {
     backupEnabled: boolean
 }
 
-export default function CreateDeploymentWizard({ projectToken, userSessionToken, deploymentOptions, socket, onSuccess }: CreateDeploymentWizardProps) {
+const CreateDeploymentWizard = ({ projectToken, userSessionToken, deploymentOptions, services, socket, onSuccess }: CreateDeploymentWizardProps) => {
     const [currentStep, setCurrentStep] = useState(1)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [selectedType, setSelectedType] = useState<string | null>(null)
@@ -57,6 +58,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
             id: 0,
             datacenterlocation: ''
         },
+        serviceID: 0,
         environment: 'production',
         isActive: true,
         resourceAllocation: {
@@ -98,6 +100,10 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
             case 'serverless':
                 icon = <Code className="h-10 w-10 text-white" />
                 break
+            case 'service':
+                icon = <Code className="h-10 w-10 text-white" />
+                break
+
             default:
                 icon = <Server className="h-10 w-10 text-white" />
         }
@@ -137,6 +143,16 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
             const newErrors = { ...formErrors }
             delete newErrors[field]
             setFormErrors(newErrors)
+        }
+    }
+
+    const handleServiceChange = (selectedServiceId: number) => {
+        const selectedService = services.find(service => service.id === Number(selectedServiceId))
+        if (selectedService) {
+            setFormData({
+                ...formData,
+                serviceID: selectedServiceId
+            })
         }
     }
 
@@ -251,11 +267,10 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
             const payload = {
                 projectToken,
                 userSessionToken,
-                formData: formData,
+                formData: formData
             }
 
             socket.emit('create-deployment', payload)
-
 
             onSuccess()
         } catch (error) {
@@ -331,9 +346,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                             value={formData.name}
                             onChange={handleInputChange}
                             placeholder={`e.g., ${selectedType === 'app' ? 'Web App' : selectedType === 'linux' ? 'API Server' : 'Database'} Production`}
-                            className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${
-                                formErrors.name ? 'border-red-500 focus:ring-red-500' : ''
-                            }`}
+                            className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${formErrors.name ? 'border-red-500 focus:ring-red-500' : ''}`}
                         />
                         {formErrors.name && <p className="text-sm text-red-500">{formErrors.name}</p>}
                     </div>
@@ -349,9 +362,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                                 value={formData.domain}
                                 onChange={handleInputChange}
                                 placeholder="e.g., app.example.com"
-                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${
-                                    formErrors.domain ? 'border-red-500 focus:ring-red-500' : ''
-                                }`}
+                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${formErrors.domain ? 'border-red-500 focus:ring-red-500' : ''}`}
                             />
                             {formErrors.domain && <p className="text-sm text-red-500">{formErrors.domain}</p>}
                         </div>
@@ -391,6 +402,21 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                         />
                         {formErrors.dataCenterLocation && <p className="text-sm text-red-500">{formErrors.dataCenterLocation}</p>}
                     </div>
+                    {selectedType === 'service' && (
+                        <div className="space-y-2">
+                            <label htmlFor="dataCenterLocation" className="block text-sm font-medium text-white">
+                                Data Center Location
+                            </label>
+                            <DoubleValueOptionPicker
+                                className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none"
+                                label="Slect Service"
+                                options={services.map(s => ({ label: s.name, value: s.id }))}
+                                value={formData.serviceID}
+                                onChange={handleServiceChange}
+                            />
+                            {formErrors.serviceID && <p className="text-sm text-red-500">{formErrors.serviceID}</p>}
+                        </div>
+                    )}
                 </div>
             </div>
         )
@@ -416,9 +442,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                                 step="1"
                                 value={formData.resourceAllocation.cpu}
                                 onChange={handleResourceChange}
-                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${
-                                    formErrors.cpu ? 'border-red-500 focus:ring-red-500' : ''
-                                }`}
+                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${formErrors.cpu ? 'border-red-500 focus:ring-red-500' : ''}`}
                             />
                             {formErrors.cpu && <p className="text-sm text-red-500">{formErrors.cpu}</p>}
                         </div>
@@ -435,9 +459,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                                 step="0.5"
                                 value={formData.resourceAllocation.ram}
                                 onChange={handleResourceChange}
-                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${
-                                    formErrors.ram ? 'border-red-500 focus:ring-red-500' : ''
-                                }`}
+                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${formErrors.ram ? 'border-red-500 focus:ring-red-500' : ''}`}
                             />
                             {formErrors.ram && <p className="text-sm text-red-500">{formErrors.ram}</p>}
                         </div>
@@ -454,9 +476,7 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
                                 step="1"
                                 value={formData.resourceAllocation.storage}
                                 onChange={handleResourceChange}
-                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${
-                                    formErrors.storage ? 'border-red-500 focus:ring-red-500' : ''
-                                }`}
+                                className={`w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none ${formErrors.storage ? 'border-red-500 focus:ring-red-500' : ''}`}
                             />
                             {formErrors.storage && <p className="text-sm text-red-500">{formErrors.storage}</p>}
                         </div>
@@ -819,3 +839,5 @@ export default function CreateDeploymentWizard({ projectToken, userSessionToken,
         </div>
     )
 }
+
+export default CreateDeploymentWizard

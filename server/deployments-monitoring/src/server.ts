@@ -20,7 +20,6 @@ const io = new Server(httpServer, {
 
 let update = true
 
-// Export startProjectEventsMonitoring so we can access it in DeploymentsServices
 const dockerStateTracker = DockerStateTracker.createDockerStateTracker(io, pool)
 const { startProjectEventsMonitoring, stopProjectEventsMonitoring } = dockerStateTracker
 
@@ -76,6 +75,14 @@ io.on('connection', socket => {
         return DeploymentsServices.createDeployment(pool, io, socket, projectToken, userSessionToken, formData, dockerStateTracker)
     })
 
+    socket.on('start-deployment', async ({ projectToken, userSessionToken, deploymentToken }) => {
+        return DeploymentsServices.startDeployment(pool, io, socket, projectToken, userSessionToken, deploymentToken)
+    })
+
+    socket.on('stop-deployment', async ({ projectToken, deploymentToken }) => {
+        return DeploymentsServices.stopDeployment(pool, io, socket, projectToken, deploymentToken)
+    })
+    
     socket.on('disconnect', () => {})
 })
 

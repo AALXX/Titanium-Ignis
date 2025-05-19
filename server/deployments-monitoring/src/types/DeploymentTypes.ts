@@ -37,13 +37,11 @@ export interface DeploymentData {
     tags: string[] | null
 }
 
-
 interface ResourceAllocation {
     cpu: number
     ram: number
     storage: number
 }
-
 
 export interface DeploymentOS {
     id: number
@@ -55,12 +53,11 @@ export interface DataCenters {
     datacenterlocation: string
 }
 
-
-
 export interface CreateDeploymentRequest {
     name: string
     type: string
     domain: string
+    serviceID: number | null
     dataCenterLocation: DataCenters
     environment: string
     isActive: boolean
@@ -74,3 +71,29 @@ export interface CreateDeploymentRequest {
     volumeType: string
     backupEnabled: boolean
 }
+
+export interface IProjectConfig {
+    services: Array<{
+        id: number
+        name: string
+        dir: string
+        setup?: Array<{ run: string }>
+        'start-command': string
+        ports?: Record<string, string[]>
+    }>
+    deployments: Array<{
+        id: number
+        name: string
+        type: eDeploymentType
+        server: string
+        'docker-compose-file'?: string
+    }>
+}
+
+export enum eDeploymentType {
+    DOCKER_COMPOSE = 'docker-compose',
+    DOCKER_SWARM = 'docker-swarm',
+    KUBERNETES = 'kubernetes'
+}
+
+

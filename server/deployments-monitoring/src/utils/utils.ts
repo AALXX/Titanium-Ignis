@@ -173,34 +173,46 @@ const mapOsToImage = (osName: string): string => {
     }
 }
 
-const execInContainer = async (container: Container, cmd: string[]) => {
+const mapServiceToImage = (serviceStartCommand: string): string => {
+    const imageMap: Record<string, string> = {
+        npm: 'node:23-alpine',
+        node: 'node:23-alpine',
+        deno: 'denoland/deno:alpine',
+        python: 'python:3.11-alpine',
+        go: 'golang:1.19-alpine'
+    }
+
+    const match = serviceStartCommand.match(/\b(npm|node|deno|python|go)/)
+    if (match) {
+        return imageMap[match[1]]
+    }
+
+    logging.error('UNKNOWN_SERVICE', serviceStartCommand)
+    return ''
+}
+const execInContainer = async (container: Container, cmd: string[], detach = false): Promise<void> => {
     const exec = await container.exec({
         Cmd: cmd,
-        AttachStdout: true,
-        AttachStderr: true
+        AttachStdout: !detach,
+        AttachStderr: !detach
     })
 
     return new Promise<void>((resolve, reject) => {
-        exec.start({}, (err, stream) => {
+        exec.start({ Detach: detach }, (err, stream) => {
             if (err) return reject(err)
 
-            let output = ''
+            if (detach) return resolve()
 
+            let output = ''
             stream!.on('data', chunk => {
                 output += chunk.toString()
                 process.stdout.write(chunk)
-                // console.log((chunk.toString()));
             })
 
-            stream!.on('end', () => {
-                resolve()
-            })
-
-            stream!.on('error', err => {
-                reject(err)
-            })
+            stream!.on('end', () => resolve())
+            stream!.on('error', err => reject(err))
         })
     })
 }
 
-export { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken, mapOsToImage, execInContainer }
+export { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken, mapOsToImage, mapServiceToImage, execInContainer }

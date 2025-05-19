@@ -289,4 +289,6 @@ const getAllDivisions = async (req: CustomRequest, res: Response): Promise<void>
     }
 };
 
+
+
 export default { getProjectTeamData, addTeamMember, removeTeamMember, changeMemberRole, createDivision, getAllDivisions };

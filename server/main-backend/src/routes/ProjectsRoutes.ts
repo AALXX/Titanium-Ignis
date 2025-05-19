@@ -18,6 +18,8 @@ router.get('/get-project-codebase-data/:projectToken/:userSessionToken', rbacMid
 
 router.get('/get-project-team-data/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectTeamManagementServices.getProjectTeamData);
 
+router.get('/get-project-services/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectCodeBaseServices.getProjectServices);
+
 router.post(
     '/add-team-member',
     rbacMiddleware('project', 'manage'),
@@ -63,7 +65,6 @@ router.post('/delete-banner', rbacMiddleware('task_banner', 'manage'), [body('ba
 router.get('/get-deployments-overview-data/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectCodeBaseDeployments.getDeploymentsOverviewData);
 
 router.get('/get-deployment-options/:projectToken/:userSessionToken', rbacMiddleware('project', 'manage'), [param('projectToken').not().isEmpty()], ProjectCodeBaseDeployments.getDeploymentOptions);
-
 
 
 
