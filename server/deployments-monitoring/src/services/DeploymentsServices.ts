@@ -578,4 +578,18 @@ const createServiceDeployment = async (
     }
 }
 
+const createDBDeployment = async (
+    connection: PoolClient,
+    formData: CreateDeploymentRequest,
+    projectToken: string
+): Promise<{ error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]>; containerID: string }> => {
+    return {
+        error: false,
+        publicIp: 'localhost',
+        privateIp: 'localhost',
+        ports: {},
+        containerID: ''
+    }
+}
+
 export default { getAllDeployments, createDeployment, startDeployment, stopDeployment }

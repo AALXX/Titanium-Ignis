@@ -1709,3 +1709,81 @@
 [5/19/2025, 1:33:37 AM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
 [5/19/2025, 1:33:37 AM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
 [5/19/2025, 1:33:43 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:09:49 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:09:49 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:09:49 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:09:49 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:09:49 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:10:13 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:10:13 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 0 projects
+[5/19/2025, 11:12:19 PM] [INFO] [CREATE_DEPLOYMENT] Container ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5 created
+[5/19/2025, 11:12:19 PM] [INFO] [CREATE_DEPLOYMENT] Installing SSH + user on ubuntu:24.04
+[5/19/2025, 11:12:40 PM] [INFO] [CREATE_DEPLOYMENT] SSH setup complete. User: test-linux_machine, Password: test-linux_machine
+[5/19/2025, 11:12:40 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:12:40 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:12:40 PM] [INFO] [CREATE_DEPLOYMENT] Updated container monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:13:34 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:13:34 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:13:34 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:13:34 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:13:34 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:20 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:14:20 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:14:20 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:20 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:14:20 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:30 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:14:30 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:14:30 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:30 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:14:30 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:34 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:14:34 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:14:34 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:14:34 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:14:34 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:30 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:17:30 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:17:30 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:30 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:17:30 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:34 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:17:34 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:17:34 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:34 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:17:34 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:36 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:17:36 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:17:36 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:36 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:17:36 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:37 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/19/2025, 11:17:37 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/19/2025, 11:17:37 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/19/2025, 11:17:37 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/19/2025, 11:17:37 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+                                                                                             [5/20/2025, 4:41:59 PM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090
+[5/20/2025, 4:41:59 PM] [INFO] [DeploymentsMonitoring_API] Starting events monitoring for 1 projects
+[5/20/2025, 4:41:59 PM] [INFO] [DockerStateTracker] Found 1 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/20/2025, 4:41:59 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 1 containers
+[5/20/2025, 4:41:59 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/20/2025, 4:43:46 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to running
+[5/20/2025, 4:43:53 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to running
+[5/20/2025, 4:44:03 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:03 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:03 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:08 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to running
+[5/20/2025, 4:44:13 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to running
+[5/20/2025, 4:44:23 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:23 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:23 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to exited
+[5/20/2025, 4:44:27 PM] [INFO] [DockerStateTracker] Container test-linux (ad6e4241f6c3aaf13c1f7cf59d9bdcd24cf5d9c52491ee19bd4e7ad6cacde9f5) state changed to running
+[5/20/2025, 4:46:07 PM] [INFO] [CREATE_DEPLOYMENT] Copied app files to /app in container
+[5/20/2025, 4:46:09 PM] [INFO] [DockerStateTracker] Stopped event monitoring for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/20/2025, 4:46:09 PM] [INFO] [DockerStateTracker] Found 2 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/20/2025, 4:46:09 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 2 containers
+[5/20/2025, 4:46:09 PM] [INFO] [CREATE_DEPLOYMENT] Updated container monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[5/20/2025, 4:47:30 PM] [INFO] [DockerStateTracker] Container SERVER (1f458000142438deac9dee69b61d954223aa0ee399217ef2a31f828b3d74957a) state changed to running
+[5/20/2025, 4:47:40 PM] [INFO] [DockerStateTracker] Container SERVER (1f458000142438deac9dee69b61d954223aa0ee399217ef2a31f828b3d74957a) state changed to running
+[5/20/2025, 4:47:40 PM] [INFO] [DockerStateTracker] Container SERVER (1f458000142438deac9dee69b61d954223aa0ee399217ef2a31f828b3d74957a) state changed to exited
+[5/20/2025, 4:47:41 PM] [INFO] [DockerStateTracker] Container SERVER (1f458000142438deac9dee69b61d954223aa0ee399217ef2a31f828b3d74957a) state changed to exited

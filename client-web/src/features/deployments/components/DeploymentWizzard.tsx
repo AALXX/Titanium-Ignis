@@ -563,7 +563,17 @@ const CreateDeploymentWizard = ({ projectToken, userSessionToken, deploymentOpti
                                 <label htmlFor="databaseType" className="block text-sm font-medium text-white">
                                     Database Type
                                 </label>
-                                <select
+                                <DoubleValueOptionPicker
+                                    label="Database Type"
+                                    options={deploymentOptions.os.map(os => ({
+                                        value: os.id,
+                                        label: os.os
+                                    }))}
+                                    value={formData.os.id}
+                                    onChange={value => handleOsChange(value)}
+                                    className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2 text-white focus:ring-2 focus:ring-zinc-600 focus:outline-none"
+                                />
+                                {/* <select
                                     id="databaseType"
                                     name="databaseType"
                                     value={formData.databaseType}
@@ -577,7 +587,7 @@ const CreateDeploymentWizard = ({ projectToken, userSessionToken, deploymentOpti
                                     <option value="mariadb">MariaDB</option>
                                     <option value="mongodb">MongoDB</option>
                                     <option value="redis">Redis</option>
-                                </select>
+                                </select> */}
                                 {formErrors.databaseType && <p className="text-sm text-red-500">{formErrors.databaseType}</p>}
                             </div>
 
