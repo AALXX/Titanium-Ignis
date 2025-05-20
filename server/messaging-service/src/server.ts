@@ -2,9 +2,11 @@ import { Server } from 'socket.io'
 import http from 'http'
 import config from './config/config'
 import logging from './config/logging'
-import TasksService from './services/ProjectTasks'
+import MessaggesService from './services/Messagges'
 
 import { createPool } from './config/postgresql'
+
+import { GetAllConversationsSchema, JoinMessageRoomSchema, CreateConversationSchema, SendMessageSchema } from './validators/socketSchemas'
 
 const httpServer = http.createServer()
 const NAMESPACE = 'ProjectTasks_API'
@@ -18,104 +20,34 @@ const io = new Server(httpServer, {
 })
 
 io.on('connection', socket => {
-    socket.on('join-message-room', ({ RoomToken }) => {
-        socket.join(RoomToken)
-        // get all messages
+    socket.on('get-all-conversations', data => {
+        const parsed = GetAllConversationsSchema.safeParse(data)
+        if (!parsed.success) return socket.emit('error', { error: 'Invalid input' })
+        return MessaggesService.GetAllConversations(pool, socket, parsed.data.userSessionToken)
     })
 
-    socket.on('send-message', async ({ BannerToken }) => {
-        return TasksService.getProjectBannerTasks(pool, io, socket, BannerToken)
+    socket.on('join-message-room', data => {
+        const parsed = JoinMessageRoomSchema.safeParse(data)
+        if (!parsed.success) return socket.emit('error', { error: 'Invalid input' })
+        socket.join(parsed.data.chatToken)
+        return MessaggesService.GetAllMessages(pool, socket, parsed.data.chatToken)
     })
 
-    socket.on('create-task-container', async ({ userSessionToken, projectToken, bannerToken, taskContainerName, containerUUID }) => {
-        return TasksService.createTaskContainer(pool, io, socket, userSessionToken, projectToken, containerUUID, bannerToken, taskContainerName)
+    socket.on('create-conversation', data => {
+        const parsed = CreateConversationSchema.safeParse(data)
+        if (!parsed.success) return socket.emit('error', { error: 'Invalid input' })
+        return MessaggesService.CreateConversation(pool, socket, parsed.data.userSessionToken, parsed.data.person2PublicToken)
     })
 
-    socket.on('reorder-task-containers', async ({ userSessionToken, projectToken, bannerToken, newOrder }) => {
-        if (!Array.isArray(newOrder) || newOrder.length === 0) {
-            return socket.emit('REORDERED_TASK_CONTAINERS', {
-                error: true,
-                message: 'Invalid order data. Expected array of container UUIDs and orders.'
-            })
+    socket.on('send-message', data => {
+        const parsed = SendMessageSchema.safeParse(data)
+        console.log(data)
+        if (!parsed.success) {
+            return socket.emit('error', { error: 'Invalid input' })
         }
 
-        return TasksService.reorderTaskContainers(pool, socket, io, userSessionToken, projectToken, bannerToken, newOrder)
-    })
-
-    socket.on('delete-task-container', async ({ userSessionToken, projectToken, bannerToken, containerUUID }) => {
-        return TasksService.deleteTaskContainer(pool, socket, io, projectToken, userSessionToken, bannerToken, containerUUID)
-    })
-
-    socket.on(
-        'create-task',
-        async ({
-            userSessionToken,
-            projectToken,
-            bannerToken,
-            taskContainerUUID,
-            taskName,
-            taskDescription = '',
-            taskStatus = 'Todo',
-            taskDueDate,
-            taskImportance = 'Medium',
-            taskEstimatedHours, // Optional
-            taskLabels = [], // Optional
-            taskRecurringPattern, // Optional
-            taskReminderDate, // Optional
-            taskDependencies = [] // Optional
-        }) => {
-            if (!taskName || !taskContainerUUID || !taskDueDate) {
-                logging.error(NAMESPACE, 'Missing required fields: taskName, taskContainerUUID, taskDueDate, and createdByUserPublicToken are required')
-                return socket.emit('CREATE_TASK', {
-                    error: true,
-                    message: 'Missing required fields: taskName, taskContainerUUID, taskDueDate, and createdByUserPublicToken are required'
-                })
-            }
-
-            if (isNaN(Date.parse(taskDueDate))) {
-                logging.error(NAMESPACE, 'Invalid taskDueDate format. Please provide a valid date string.')
-                return socket.emit('CREATE_TASK', {
-                    error: true,
-                    message: 'Invalid taskDueDate format. Please provide a valid date string.'
-                })
-            }
-
-            if (taskEstimatedHours !== undefined && (isNaN(taskEstimatedHours) || taskEstimatedHours < 0)) {
-                logging.error(NAMESPACE, 'Invalid taskEstimatedHours. Please provide a positive number.')
-                return socket.emit('CREATE_TASK', {
-                    error: true,
-                    message: 'Invalid taskEstimatedHours. Please provide a positive number.'
-                })
-            }
-
-            return TasksService.createTask(
-                pool,
-                socket,
-                io,
-                userSessionToken,
-                projectToken,
-                bannerToken,
-                taskContainerUUID,
-                taskName,
-                taskDescription,
-                taskStatus,
-                taskDueDate,
-                taskImportance,
-                taskEstimatedHours,
-                taskLabels,
-                taskRecurringPattern,
-                taskReminderDate,
-                taskDependencies
-            )
-        }
-    )
-
-    socket.on('reorder-task', async ({ userSessionToken, projectToken, bannerToken, taskContainerUUID, taskUUID }) => {
-        return TasksService.reorderTasks(pool, socket, io, userSessionToken, projectToken, bannerToken, taskContainerUUID, taskUUID)
-    })
-
-    socket.on('get-task-data', async ({ userSessionToken, projectToken,  taskUUID }) => {
-        return TasksService.getTaskData(pool, socket, io, userSessionToken, projectToken,  taskUUID)
+        const { chatToken, userSessionToken, message } = parsed.data
+        return MessaggesService.SendMessage(pool, socket, chatToken, message, userSessionToken)
     })
 
     socket.on('disconnect', () => {})

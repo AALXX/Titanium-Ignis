@@ -11,9 +11,10 @@ let client = new Client({
 /**
  * Connect to ScyllaDB
  */
-const SCYconnect = async () => {
+const SCYconnect = async (): Promise<boolean> => {
     try {
         await client.connect()
+        return true
     } catch (error) {
         console.error('Connection error', error)
         setTimeout(() => {
@@ -24,6 +25,7 @@ const SCYconnect = async () => {
                 authProvider: new auth.PlainTextAuthProvider(config.scylla.user, config.scylla.password)
             })
         }, 5000)
+        return false
     }
 }
 
@@ -32,9 +34,9 @@ const SCYconnect = async () => {
  * @param {string} query
  * @returns
  */
-async function SCYquery(query: string) {
+async function SCYquery(query: string, values?: any[]) {
     try {
-        const dbresult = await client.execute(query)
+        const dbresult = await client.execute(query, values)
         let result = JSON.parse(JSON.stringify(dbresult))
         return result.rows
     } catch (error) {

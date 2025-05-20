@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { Server, Socket } from 'socket.io'
 import { connect, query } from '../config/postgresql'
-import { ContainerState, ITasks } from '../types/TaskTypes'
+import { ContainerState, ITasks } from '../types/MessagesTypes'
 import logging from '../config/logging'
 import { v4 as uuidv4 } from 'uuid'
 import { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken } from '../utils/utils'
@@ -323,7 +323,6 @@ const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionT
                 message: 'You do not have permission to reorder tasks'
             })
         }
-
 
         const queryString = `
         UPDATE banner_tasks SET ContainerUUID = $1 WHERE TaskUUID = $2 RETURNING *`

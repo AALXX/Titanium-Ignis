@@ -1,15 +1,22 @@
-CREATE TABLE Chats (
+DROP TABLE IF EXISTS Conversations;
+
+CREATE TABLE Conversations (
     id UUID PRIMARY KEY,
     chatToken TEXT,
     person1_token TEXT,
     person2_token TEXT
 );
 
-CREATE INDEX ON Chats (chatToken);
-CREATE INDEX ON Chats ();
+CREATE INDEX IF NOT EXISTS ON Conversations (chatToken);
 
-CREATE MATERIALIZED VIEW Chats_by_chatToken AS
-        SELECT id, chatToken, athlete_public_token, trainer_public_token
-        FROM Chats
-        WHERE chatToken IS NOT NULL AND id IS NOT NULL
-        PRIMARY KEY (chatToken, id);
+CREATE MATERIALIZED VIEW IF NOT EXISTS Conversations_by_person1_token AS
+  SELECT id, chatToken, person1_token, person2_token
+  FROM Conversations
+  WHERE person1_token IS NOT NULL AND id IS NOT NULL
+  PRIMARY KEY (person1_token, id);
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS Conversations_by_person2_token AS
+  SELECT id, chatToken, person1_token, person2_token
+  FROM Conversations
+  WHERE person2_token IS NOT NULL AND id IS NOT NULL
+  PRIMARY KEY (person2_token, id);

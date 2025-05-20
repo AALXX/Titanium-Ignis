@@ -1,6 +1,18 @@
 import { Pool, PoolClient } from 'pg'
 import logging from '../config/logging'
 import { connect, query } from '../config/postgresql'
+import jwt from 'jsonwebtoken';
+
+
+const CreateToken = (): string => {
+    const secretExt = new Date().getTime().toString()
+
+    const jwtSecretKey = `${process.env.ACCOUNT_SECRET}` + secretExt
+
+    const userprivateToken = jwt.sign({}, jwtSecretKey)
+
+    return userprivateToken
+}
 
 const checkForPermissions = async (connection: PoolClient, projectToken: string, userSessionToken: string, resource: string, action: string): Promise<boolean> => {
     try {
@@ -51,7 +63,6 @@ const checkForPermissions = async (connection: PoolClient, projectToken: string,
 
         return true
     } catch (error: any) {
-        
         logging.error('CHECK_FOR_PERMISSIONS', error.message)
         return false
     }
@@ -117,7 +128,6 @@ const getUserPublicTokenFromPrivateToken = async (connection: PoolClient, userPr
     }
 }
 
-
 const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PUBLIC_TOKEN_FUNC'
     const QueryString = `SELECT UserPublicToken FROM users WHERE UserSessionToken='${sessionToken}';`
@@ -135,8 +145,7 @@ const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessio
         } else {
             return null
         }
-    }
-    catch (error: any) {
+    } catch (error: any) {
         connection?.release()
         logging.error(NAMESPACE, error.message, error)
         return null
@@ -144,4 +153,29 @@ const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessio
     return null
 }
 
-export { checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken }
+const getUserPrivateTokenFromPublicToken = async (connection: PoolClient, userToken: string): Promise<string | null> => {
+    const NAMESPACE = 'GET_USER_PRIVATE_TOKEN_FUNC'
+    const QueryString = `SELECT UserPrivateToken FROM users WHERE UserPublicToken='${userToken}';`
+    try {
+        if (userToken === 'undefined') {
+            return null
+        }
+
+        if (connection == null) {
+            return null
+        }
+        const resp = await query(connection, QueryString)
+        if (Object.keys(resp).length != 0) {
+            return resp[0].userprivatetoken
+        } else {
+            return null
+        }
+    } catch (error: any) {
+        connection?.release()
+        logging.error(NAMESPACE, error.message, error)
+        return null
+    }
+    return null
+}
+
+export { CreateToken, checkForPermissions, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromPrivateToken, getUserPublicTokenFromSessionToken, getUserPrivateTokenFromPublicToken }

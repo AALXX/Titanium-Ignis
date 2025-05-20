@@ -57,3 +57,4 @@ server/project-tasks/node_modules
 tools/table-replication/.env
 
 /server/messaging-service/node_modules
+server/messaging-service/.env
