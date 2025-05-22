@@ -14,6 +14,21 @@ services:
   #     - 3000:3000
   #   networks:
   #     - mda-network
+  # client-web:
+  #   container_name: client-web
+  #   build:
+  #     context: ./client-web
+  #     dockerfile: dev.Dockerfile
+  #   env_file:
+  #     - /client-web/.env
+  #   volumes:
+  #     - ./client-web/src:/app/src
+  #     - ./client-web/public:/app/public
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - mda-network
 
   # main-backend-api:
   #   container_name: main-backend-api

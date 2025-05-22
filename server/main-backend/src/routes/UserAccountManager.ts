@@ -18,6 +18,8 @@ router.post(
 
 router.get('/get-account-role/:userAcessToken', param('userAcessToken').not().isEmpty(), AccountServices.GetUserAccountRole);
 
+router.get('/search-users/:searchQuery', param('searchQuery').not().isEmpty(), AccountServices.SearchUser);
+
 // router.post('/login-account', body('userEmail').isEmail().not().isEmpty(), body('password').isLength({ min: 4 }).not().isEmpty().trim(), OwnerAccountServices.LoginUser);
 
 // router.get('/get-account-data/:accountPrivateToken', param('accountPrivateToken').not().isEmpty(), OwnerAccountServices.GetUserAccountData);

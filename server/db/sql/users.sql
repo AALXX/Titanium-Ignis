@@ -13,3 +13,9 @@ CREATE TABLE users (
     UNIQUE (UserPublicToken),
     UNIQUE (UserSessionToken)
 );
+
+CREATE INDEX idx_users_email_trgm ON users
+USING gin (UserEmail gin_trgm_ops);
+
+CREATE INDEX idx_users_user_private_token_trgm ON users
+USING gin (UserPrivateToken gin_trgm_ops);
