@@ -7,7 +7,12 @@ import ConversationCreatorPopUp from './ConversationCreatorPopUp'
 import type { Socket } from 'socket.io-client'
 import ConversationCard from './ConversationCard'
 
-const List: React.FC<{ socket: Socket; userSessionToken: string, setSelectedChatToken: React.Dispatch<React.SetStateAction<string | null>> }> = ({ socket, userSessionToken, setSelectedChatToken }) => {
+const List: React.FC<{ socket: Socket; userSessionToken: string; setSelectedChatToken: React.Dispatch<React.SetStateAction<string | null>>; onlineUsers: string[] }> = ({
+    socket,
+    userSessionToken,
+    setSelectedChatToken,
+    onlineUsers
+}) => {
     const [addConvPopup, setAddConvPopup] = useState<boolean>(false)
     const [selectedConversation, setSelectedConversation] = useState<string | null>(null)
     const [conversations, setConversations] = useState<
@@ -49,14 +54,13 @@ const List: React.FC<{ socket: Socket; userSessionToken: string, setSelectedChat
                     <h3 className="ml-2 text-sm text-white sm:text-base">Add</h3>
                 </button>
             </div>
-
             <div className="mt-4">
-                {conversations.length > 0 ? (
+                {Array.isArray(conversations) && conversations.length > 0 ? (
                     conversations.map(conversation => (
                         <ConversationCard
                             key={conversation.id}
                             otherPersonName={conversation.otherPersonName}
-                            isOnline={conversation.isOnline}
+                            isOnline={onlineUsers.includes(conversation.otherPersonPublicToken)}
                             avatarUrl={conversation.avatarUrl}
                             onClick={() => handleConversationClick(conversation.id, conversation.chatToken)}
                         />
@@ -65,7 +69,6 @@ const List: React.FC<{ socket: Socket; userSessionToken: string, setSelectedChat
                     <p className="py-4 text-center text-sm text-gray-400">No conversations yet</p>
                 )}
             </div>
-
             {addConvPopup && (
                 <PopupCanvas closePopup={() => setAddConvPopup(false)}>
                     <div className="flex h-full w-full">

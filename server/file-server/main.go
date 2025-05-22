@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
-	"file-server/config"
 	"log"
 	"os"
 	"path/filepath"
@@ -26,51 +24,42 @@ type cachedFile struct {
 	timestamp time.Time
 }
 
-func safeFileServer(dir string, db *sql.DB) fiber.Handler {
-	return func(c *fiber.Ctx) error {
-		if c.Method() != fiber.MethodGet {
-			return c.Status(fiber.StatusMethodNotAllowed).SendString("Method not allowed")
-		}
-
-		requestedPath := filepath.Join(dir, filepath.Clean(c.Path()))
-
-		if !strings.HasPrefix(requestedPath, dir) {
-			return c.Status(fiber.StatusForbidden).SendString("Access Denied")
-		}
-
-		cacheLock.RLock()
-		cachedContent, exists := fileCache[requestedPath]
-		cacheLock.RUnlock()
-
-		if exists {
-			fileInfo, err := os.Stat(requestedPath)
-			if err == nil && fileInfo.ModTime().Before(cachedContent.timestamp) {
-				c.Type(filepath.Ext(requestedPath))
-				return c.Send(cachedContent.content)
-			}
-		}
-
-		fileInfo, err := os.Stat(requestedPath)
-		if os.IsNotExist(err) {
-			return c.SendFile("./AccountIcon.svg")
-		}
-
-		if fileInfo.IsDir() {
-			return c.Status(fiber.StatusForbidden).SendString("Not a File")
-		}
-
-		content, err := os.ReadFile(requestedPath)
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
-		}
-
-		cacheLock.Lock()
-		fileCache[requestedPath] = cachedFile{content: content, timestamp: time.Now()}
-		cacheLock.Unlock()
-
-		c.Type(filepath.Ext(requestedPath))
-		return c.Send(content)
+func safeFileServer(requestedPath string, baseDir string) ([]byte, string, error) {
+	if !strings.HasPrefix(requestedPath, baseDir) {
+		return nil, "", fiber.ErrForbidden
 	}
+
+	cacheLock.RLock()
+	cachedContent, exists := fileCache[requestedPath]
+	cacheLock.RUnlock()
+
+	if exists {
+		fileInfo, err := os.Stat(requestedPath)
+		if err == nil && fileInfo.ModTime().Before(cachedContent.timestamp) {
+			return cachedContent.content, filepath.Ext(requestedPath), nil
+		}
+	}
+
+	fileInfo, err := os.Stat(requestedPath)
+	if os.IsNotExist(err) {
+		defaultFile, _ := os.ReadFile("./AccountIcon.svg")
+		return defaultFile, ".svg", nil
+	}
+
+	if fileInfo.IsDir() {
+		return nil, "", fiber.ErrForbidden
+	}
+
+	content, err := os.ReadFile(requestedPath)
+	if err != nil {
+		return nil, "", fiber.ErrInternalServerError
+	}
+
+	cacheLock.Lock()
+	fileCache[requestedPath] = cachedFile{content: content, timestamp: time.Now()}
+	cacheLock.Unlock()
+
+	return content, filepath.Ext(requestedPath), nil
 }
 
 func resetCache() {
@@ -90,7 +79,10 @@ func watchFiles(ctx context.Context, dir string) {
 		if err != nil {
 			return err
 		}
-		return watcher.Add(path)
+		if info.IsDir() {
+			return watcher.Add(path)
+		}
+		return nil
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -121,7 +113,7 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	serverHost := "0.0.0.0:5600" // Default to all interfaces on port 5600
+	serverHost := "0.0.0.0:5600"
 	log.Printf("Server will listen on %s\n", serverHost)
 
 	username := os.Getenv("AUTH_USERNAME")
@@ -131,37 +123,42 @@ func main() {
 		log.Fatalf("AUTH_USERNAME and AUTH_PASSWORD must be set")
 	}
 
-	db, err := config.InitDB()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	dir := "../accounts"
+	accountsDir := filepath.Clean("../accounts")
+	messagesDir := filepath.Clean("../messages")
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	go watchFiles(ctx, dir)
+	go watchFiles(ctx, accountsDir)
+	go watchFiles(ctx, messagesDir)
 
 	app := fiber.New()
 
-	// Basic auth middleware
-	// app.Use(basicauth.New(basicauth.Config{
-	// 	Users: map[string]string{
-	// 		username: password,
-	// 	},
-	// 	Realm: "Restricted",
-	// 	Authorizer: func(user, pass string) bool {
-	// 		if subtle.ConstantTimeCompare([]byte(user), []byte(username)) == 1 {
-	// 			// return bcrypt.CompareHashAndPassword([]byte(password), []byte(pass)) == nil
-	// 			return pass == password
-	// 		}
-	// 		return false
-	// 	},
-	// }))
+	app.Get("/*", func(c *fiber.Ctx) error {
+		path := c.Path()
+		var baseDir string
 
-	app.Get("/*", safeFileServer(dir, db))
+		if strings.HasPrefix(path, "/accounts/") {
+			baseDir = accountsDir
+		} else if strings.HasPrefix(path, "/messages/") {
+			baseDir = messagesDir
+		} else {
+			return c.Status(fiber.StatusNotFound).SendString("Not Found")
+		}
+
+		// Clean path
+		relativePath := strings.TrimPrefix(path, "/accounts")
+		relativePath = strings.TrimPrefix(relativePath, "/messages")
+		requestedPath := filepath.Join(baseDir, filepath.Clean(relativePath))
+
+		content, ext, err := safeFileServer(requestedPath, baseDir)
+		if err != nil {
+			return err
+		}
+
+		c.Type(ext)
+		return c.Send(content)
+	})
 
 	log.Printf("Server is attempting to listen on %s\n", serverHost)
 	if err := app.Listen(serverHost); err != nil {

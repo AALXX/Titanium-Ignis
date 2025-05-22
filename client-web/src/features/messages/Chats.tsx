@@ -1,7 +1,8 @@
 'use client'
 import { LoadingScreen } from '@/components/LoadingScreen'
-import { Socket } from 'socket.io-client'
-import React, { useEffect, useState } from 'react'
+import type { Socket } from 'socket.io-client'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
 import Conversation from './components/Conversation'
 import List from './components/List'
@@ -9,39 +10,60 @@ import List from './components/List'
 const Chats: React.FC<{ userSessionToken: string }> = ({ userSessionToken }) => {
     const [socket, setSocket] = useState<Socket | null>(null)
     const [selectedChatToken, setSelectedChatToken] = useState<string | null>(null)
+    const socketRef = useRef<Socket | null>(null)
 
+    const [onlineUsers, setOnlineUsers] = useState<string[]>([])
 
     useEffect(() => {
-        const newSocket = io(`${process.env.NEXT_PUBLIC_MESSAGE_SERVER}`, {
-            transports: ['websocket'],
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000
-        })
+        if (!socketRef.current) {
+            console.log('Initializing socket connection')
 
-        newSocket.on('connect', () => {
-            console.log('Connected to server')
-        })
+            const messagingSocket = io(`${process.env.NEXT_PUBLIC_MESSAGE_SERVER}`, {
+                transports: ['websocket'],
+                reconnection: true,
+                reconnectionAttempts: 5,
+                reconnectionDelay: 1000
+            })
+            messagingSocket.emit('user-connected', { userSessionToken: userSessionToken })
 
-        
+            messagingSocket.on('USER_ONLINE', data => {
+                setOnlineUsers(data.onlineUsers)
+            })
 
-        newSocket.on('connect_error', error => {
-            console.error('Connection error:', error)
-        })
+            messagingSocket.on('connect', () => {
+                console.log('Connected to server')
+            })
 
-        newSocket.on('disconnect', () => {
-            console.log('Disconnected from server')
-        })
+            messagingSocket.on('connect_error', error => {
+                console.error('Connection error:', error)
+            })
 
-        setSocket(newSocket)
+            messagingSocket.on('disconnect', () => {
+                console.log('Disconnected from server')
+            })
 
-        // Cleanup function
-        return () => {
-            if (newSocket) {
-                newSocket.disconnect()
+            socketRef.current = messagingSocket
+            setSocket(messagingSocket)
+        }
+
+        const handleBeforeUnload = () => {
+            if (socketRef.current?.connected) {
+                socketRef.current.emit('user-disconnected', { userSessionToken: userSessionToken })
             }
         }
-    }, [])
+
+        window.addEventListener('beforeunload', handleBeforeUnload)
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload)
+
+            if (socketRef.current?.connected) {
+                socketRef.current.emit('user-disconnected', { userSessionToken: userSessionToken })
+                socketRef.current.disconnect()
+                socketRef.current = null
+            }
+        }
+    }, [userSessionToken])
 
     if (!socket) {
         return (
@@ -53,8 +75,8 @@ const Chats: React.FC<{ userSessionToken: string }> = ({ userSessionToken }) => 
 
     return (
         <div className="flex h-full w-full">
-            <List socket={socket} userSessionToken={userSessionToken} setSelectedChatToken={setSelectedChatToken} />
-            <Conversation selectedChatToken={selectedChatToken || ''} socket={socket} userSessionToken={userSessionToken}/>
+            <List socket={socket} userSessionToken={userSessionToken} setSelectedChatToken={setSelectedChatToken} onlineUsers={onlineUsers} />
+            {selectedChatToken && socket && userSessionToken && <Conversation selectedChatToken={selectedChatToken || ''} socket={socket} userSessionToken={userSessionToken} />}
         </div>
     )
 }

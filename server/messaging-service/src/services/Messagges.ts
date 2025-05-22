@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
 import { Server, Socket } from 'socket.io'
 import { connect, query } from '../config/postgresql'
-import { Message } from '../types/MessagesTypes'
+import { Message, MessageReq } from '../types/MessagesTypes'
 import logging from '../config/logging'
 import { v4 as uuidv4 } from 'uuid'
 import { checkForPermissions, CreateToken, getUserPrivateTokenFromPublicToken, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken } from '../utils/utils'
@@ -108,14 +108,12 @@ const CreateConversation = async (pool: Pool, socket: Socket, userSessionToken: 
 
 const GetAllMessages = async (pool: Pool, socket: Socket, chatToken: string) => {
     try {
-        console.log('Getting messages for chatToken:', chatToken)
 
         const query = `SELECT * FROM messages WHERE chatToken = ?`
         await SCYconnect()
 
         const result = await SCYquery(query, [chatToken])
 
-        console.log(result)
         return socket.emit('ALL_MESSAGES', {
             error: false,
             messages: result
@@ -129,11 +127,10 @@ const GetAllMessages = async (pool: Pool, socket: Socket, chatToken: string) => 
     }
 }
 
-const SendMessage = async (pool: Pool, socket: Socket, chatToken: string, message: Omit<Message, 'senderPublicToken'>, userSessionToken: string) => {
-    let connection
+const SendMessage = async (pool: Pool, socket: Socket, chatToken: string, message: Omit<MessageReq, 'senderPublicToken'>, userSessionToken: string) => {
     try {
-        connection = await connect(pool!)
-        const userToken = await getUserPrivateTokenFromSessionToken(connection!, userSessionToken)
+        const connection = await connect(pool!)
+        const userToken = await getUserPublicTokenFromSessionToken(connection!, userSessionToken)
 
         if (!userToken) {
             return socket.emit('SEND_MESSAGE', {
@@ -142,45 +139,38 @@ const SendMessage = async (pool: Pool, socket: Socket, chatToken: string, messag
             })
         }
 
-        // Construct the full message
-        const fullMessage: Message = {
-            content: message.content,
-            senderPublicToken: userToken,
-            attachments: message.attachments
-        }
-
-
         const formattedAttachments =
             message.attachments?.map(att => ({
                 type: att.type,
                 url: att.url,
                 name: att.name,
-                ...(att.size !== undefined ? { size: att.size.toString() } : {})
+                size: att.size?.toString()
             })) || []
 
-        const cassandraAttachments = formattedAttachments.map(att => {
-            const map = new Map<string, string>()
-            Object.entries(att).forEach(([key, value]) => {
-                map.set(key, value)
-            })
-            return Object.fromEntries(map)
-        })
+        const cassandraAttachments = formattedAttachments.map(att => ({
+            type: att.type,
+            url: att.url,
+            name: att.name,
+            size: att.size?.toString()
+        }))
+
+        const fullMessage: Message = {
+            content: message.content,
+            senderpublictoken: userToken,
+            attachments: formattedAttachments,
+            timesent: new Date()
+        }
 
         const messageId = uuidv4()
 
         const query = `
-    INSERT INTO messages (id, chatToken, senderPublicToken, content, attachments, timeSent)
-    VALUES (?, ?, ?, ?, ?, toTimestamp(now()));
-`
+        INSERT INTO messages (id, chatToken, senderPublicToken, content, attachments, timeSent)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `
 
-        await SCYquery(query, [
-            messageId,
-            chatToken,
-            fullMessage.senderPublicToken,
-            fullMessage.content,
-            cassandraAttachments 
-        ])
-        return socket.emit('SEND_MESSAGE', {
+        await SCYquery(query, [messageId, chatToken, userToken, message.content, cassandraAttachments, fullMessage.timesent], true)
+
+        socket.to(chatToken).emit('NEW_MESSAGE', {
             error: false,
             message: fullMessage
         })
@@ -190,8 +180,7 @@ const SendMessage = async (pool: Pool, socket: Socket, chatToken: string, messag
             error: true,
             message: 'Failed to send message'
         })
-    } finally {
-        connection?.release()
     }
 }
+
 export default { CreateConversation, GetAllConversations, GetAllMessages, SendMessage }

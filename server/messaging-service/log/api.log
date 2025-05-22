@@ -214,3 +214,11 @@
 [5/20/2025, 9:23:46 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
 [5/20/2025, 9:24:32 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
 [5/20/2025, 9:24:45 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
+[5/22/2025, 7:37:42 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
+[5/22/2025, 7:38:27 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
+[5/22/2025, 7:38:30 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
+[5/22/2025, 7:39:06 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:4070
+[5/22/2025, 7:39:09 PM] [INFO] [MESSAGEING_API] Connected to REDIS
+[5/22/2025, 7:39:09 PM] [INFO] [MESSAGEING_API] API is running at http://localhost:4070
+[5/22/2025, 7:39:24 PM] [INFO] [MESSAGEING_API] Connected to REDIS
+[5/22/2025, 7:39:24 PM] [INFO] [MESSAGEING_API] API is running at http://localhost:4070
