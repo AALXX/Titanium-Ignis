@@ -7,12 +7,13 @@ import ConversationCreatorPopUp from './ConversationCreatorPopUp'
 import type { Socket } from 'socket.io-client'
 import ConversationCard from './ConversationCard'
 
-const List: React.FC<{ socket: Socket; userSessionToken: string; setSelectedChatToken: React.Dispatch<React.SetStateAction<string | null>>; onlineUsers: string[] }> = ({
-    socket,
-    userSessionToken,
-    setSelectedChatToken,
-    onlineUsers
-}) => {
+const List: React.FC<{
+    socket: Socket
+    userSessionToken: string
+    setSelectedChatToken: React.Dispatch<React.SetStateAction<string | null>>
+    setOtherPersonName: React.Dispatch<React.SetStateAction<string | null>>
+    setIsOnline: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ socket, userSessionToken, setOtherPersonName, setSelectedChatToken, setIsOnline }) => {
     const [addConvPopup, setAddConvPopup] = useState<boolean>(false)
     const [selectedConversation, setSelectedConversation] = useState<string | null>(null)
     const [conversations, setConversations] = useState<
@@ -25,7 +26,6 @@ const List: React.FC<{ socket: Socket; userSessionToken: string; setSelectedChat
             avatarUrl?: string
         }>
     >([])
-
 
     useEffect(() => {
         socket.on('ALL_CONVERSATIONS', ({ conversations }) => {
@@ -44,6 +44,8 @@ const List: React.FC<{ socket: Socket; userSessionToken: string; setSelectedChat
     const handleConversationClick = (id: string, chatToken: string) => {
         setSelectedConversation(id)
         setSelectedChatToken(chatToken)
+        setOtherPersonName(conversations.find(conversation => conversation.id === id)?.otherPersonName || '')
+        setIsOnline(conversations.find(conversation => conversation.id === id)?.isOnline || false)
     }
 
     return (
@@ -60,7 +62,7 @@ const List: React.FC<{ socket: Socket; userSessionToken: string; setSelectedChat
                         <ConversationCard
                             key={conversation.id}
                             otherPersonName={conversation.otherPersonName}
-                            isOnline={onlineUsers.includes(conversation.otherPersonPublicToken)}
+                            isOnline={conversation.isOnline}
                             avatarUrl={conversation.avatarUrl}
                             onClick={() => handleConversationClick(conversation.id, conversation.chatToken)}
                         />

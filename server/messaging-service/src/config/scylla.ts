@@ -34,11 +34,10 @@ const SCYconnect = async (): Promise<boolean> => {
  * @param {string} query
  * @returns
  */
-async function SCYquery(query: string, values?: any[], prepare?: boolean): Promise<any> {
+async function SCYquery(query: string, values?: any[]): Promise<any> {
     try {
-        const dbresult = await client.execute(query, values, { prepare: prepare })
-        let result = JSON.parse(JSON.stringify(dbresult))
-        return result.rows
+        const dbresult = await client.execute(query, values, { prepare: true })
+        return dbresult.rows
     } catch (error) {
         console.error('Query error', error)
     }

@@ -10,9 +10,9 @@ import List from './components/List'
 const Chats: React.FC<{ userSessionToken: string }> = ({ userSessionToken }) => {
     const [socket, setSocket] = useState<Socket | null>(null)
     const [selectedChatToken, setSelectedChatToken] = useState<string | null>(null)
+    const [otherPersonName, setOtherPersonName] = useState<string | null>(null)
+    const [isOnline, setIsOnline] = useState<boolean>(false)
     const socketRef = useRef<Socket | null>(null)
-
-    const [onlineUsers, setOnlineUsers] = useState<string[]>([])
 
     useEffect(() => {
         if (!socketRef.current) {
@@ -25,10 +25,6 @@ const Chats: React.FC<{ userSessionToken: string }> = ({ userSessionToken }) => 
                 reconnectionDelay: 1000
             })
             messagingSocket.emit('user-connected', { userSessionToken: userSessionToken })
-
-            messagingSocket.on('USER_ONLINE', data => {
-                setOnlineUsers(data.onlineUsers)
-            })
 
             messagingSocket.on('connect', () => {
                 console.log('Connected to server')
@@ -75,8 +71,10 @@ const Chats: React.FC<{ userSessionToken: string }> = ({ userSessionToken }) => 
 
     return (
         <div className="flex h-full w-full">
-            <List socket={socket} userSessionToken={userSessionToken} setSelectedChatToken={setSelectedChatToken} onlineUsers={onlineUsers} />
-            {selectedChatToken && socket && userSessionToken && <Conversation selectedChatToken={selectedChatToken || ''} socket={socket} userSessionToken={userSessionToken} />}
+            <List socket={socket} userSessionToken={userSessionToken} setSelectedChatToken={setSelectedChatToken} setOtherPersonName={setOtherPersonName} setIsOnline={setIsOnline}/>
+            {selectedChatToken && socket && userSessionToken && (
+                <Conversation selectedChatToken={selectedChatToken || ''} socket={socket} userSessionToken={userSessionToken} otherPersonName={otherPersonName || ''} isOnline={isOnline} />
+            )}
         </div>
     )
 }

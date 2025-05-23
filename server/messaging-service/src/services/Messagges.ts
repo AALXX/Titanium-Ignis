@@ -6,48 +6,87 @@ import logging from '../config/logging'
 import { v4 as uuidv4 } from 'uuid'
 import { checkForPermissions, CreateToken, getUserPrivateTokenFromPublicToken, getUserPrivateTokenFromSessionToken, getUserPublicTokenFromSessionToken } from '../utils/utils'
 import { SCYconnect, SCYquery } from '../config/scylla'
+import { redisClient } from '../config/redis'
 
 const GetAllConversations = async (pool: Pool, socket: Socket, userSessionToken: string) => {
-    const connection = await connect(pool!)
+    const connection = await connect(pool)
     try {
-        const userToken = await getUserPrivateTokenFromSessionToken(connection!, userSessionToken)
+        if (!connection) {
+            return socket.emit('GET_ALL_CONVERSATIONS', {
+                error: true,
+                message: 'Error connecting to PostgreSQL'
+            })
+        }
 
-        if (!userToken) {
-            connection?.release()
+        const [userToken, userPublicToken] = await Promise.all([getUserPrivateTokenFromSessionToken(connection, userSessionToken), getUserPublicTokenFromSessionToken(connection, userSessionToken)])
+
+        if (!userToken || !userPublicToken) {
+            connection.release()
             return socket.emit('GET_ALL_CONVERSATIONS', {
                 error: true,
                 message: 'User not found'
             })
         }
 
-        const query1 = `SELECT id, chatToken, person1_token, person2_token FROM Conversations_by_person1_token WHERE person1_token = ?`
-        const query2 = `SELECT id, chatToken, person1_token, person2_token FROM Conversations_by_person2_token WHERE person2_token = ?`
 
-        const conversationsAsP1 = await SCYquery(query1, [userToken])
-        const conversationsAsP2 = await SCYquery(query2, [userToken])
+        const [conversationsAsP1, conversationsAsP2, onlineUsers] = await Promise.all([
+            SCYquery(`SELECT id, chatToken, person1_token, person2_token FROM Conversations_by_person1_token WHERE person1_token = ?`, [userToken]),
+            SCYquery(`SELECT id, chatToken, person1_token, person2_token FROM Conversations_by_person2_token WHERE person2_token = ?`, [userToken]),
+            redisClient.sMembers('online_users')
+        ])
 
-        const allConversations = [...conversationsAsP1, ...conversationsAsP2]
+        
+        const allConversationsRaw = [...conversationsAsP1, ...conversationsAsP2]
 
-        const getUserNameQuery = `SELECT UserName, UserPublicToken FROM users WHERE UserPrivateToken = $1`
+        // Remove duplicate conversations by chatToken
+        const uniqueMap = new Map<string, any>()
+        for (const conv of allConversationsRaw) {
+            if (!uniqueMap.has(conv.chattoken)) {
+                uniqueMap.set(conv.chattoken, conv)
+            }
+        }
+        const allConversations = Array.from(uniqueMap.values())
 
-        const enrichedConversations = await Promise.all(
-            allConversations.map(async conv => {
+        const otherTokensSet = new Set<string>()
+        for (const conv of allConversations) {
+            const otherToken: string = conv.person1_token === userToken ? conv.person2_token : conv.person1_token
+            if (otherToken !== userToken) otherTokensSet.add(otherToken) // skip self-conversations
+        }
+        const otherTokens = [...otherTokensSet]
+
+        // Fetch usernames and public tokens
+        let usersMap = new Map<string, { username: string; userpublictoken: string }>()
+        if (otherTokens.length > 0) {
+            const placeholders = otherTokens.map((_, i) => `$${i + 1}`).join(',')
+            const userResults = await query(connection, `SELECT UserName, UserPublicToken, UserPrivateToken FROM users WHERE UserPrivateToken IN (${placeholders})`, otherTokens)
+            for (const row of userResults) {
+                usersMap.set(row.userprivatetoken, {
+                    username: row.username,
+                    userpublictoken: row.userpublictoken
+                })
+            }
+        }
+
+        const onlineUsersSet = new Set(onlineUsers)
+
+        // Filter and enrich conversations
+        const enrichedConversations = allConversations
+            .map(conv => {
                 const otherToken = conv.person1_token === userToken ? conv.person2_token : conv.person1_token
-
-                const result = await query(connection!, getUserNameQuery, [otherToken])
-
-                const chatTitle = result.length > 0 ? result[0].username : 'Unknown'
+                const userInfo = usersMap.get(otherToken)
+                if (!userInfo || userInfo.userpublictoken === userPublicToken) return null
 
                 return {
                     id: conv.id,
                     chatToken: conv.chattoken,
-                    otherPersonName: chatTitle,
-                    otherPersonPublicToken: result[0].userpublictoken
+                    otherPersonName: userInfo.username,
+                    otherPersonPublicToken: userInfo.userpublictoken,
+                    isOnline: onlineUsersSet.has(userInfo.userpublictoken)
                 }
             })
-        )
+            .filter(Boolean) // Remove nulls
 
-        connection?.release()
+        connection.release()
 
         return socket.emit('ALL_CONVERSATIONS', {
             error: false,
@@ -55,7 +94,6 @@ const GetAllConversations = async (pool: Pool, socket: Socket, userSessionToken:
         })
     } catch (error) {
         connection?.release()
-
         console.error('GET_ALL_CONVERSATIONS error:', error)
         return socket.emit('ALL_CONVERSATIONS', {
             error: true,
@@ -108,7 +146,6 @@ const CreateConversation = async (pool: Pool, socket: Socket, userSessionToken: 
 
 const GetAllMessages = async (pool: Pool, socket: Socket, chatToken: string) => {
     try {
-
         const query = `SELECT * FROM messages WHERE chatToken = ?`
         await SCYconnect()
 
@@ -168,7 +205,7 @@ const SendMessage = async (pool: Pool, socket: Socket, chatToken: string, messag
         VALUES (?, ?, ?, ?, ?, ?)
       `
 
-        await SCYquery(query, [messageId, chatToken, userToken, message.content, cassandraAttachments, fullMessage.timesent], true)
+        await SCYquery(query, [messageId, chatToken, userToken, message.content, cassandraAttachments, fullMessage.timesent])
 
         socket.to(chatToken).emit('NEW_MESSAGE', {
             error: false,

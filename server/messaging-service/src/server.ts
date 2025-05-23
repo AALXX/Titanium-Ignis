@@ -108,13 +108,10 @@ io.on('connection', socket => {
 
                 await redisClient.sAdd('online_users', userPublicToken)
 
-                const onlineUsers = await redisClient.sMembers('online_users')
 
-                console.log(onlineUsers)
                 socket.emit('USER_ONLINE', {
                     error: false,
                     userPublicToken,
-                    onlineUsers
                 })
 
                 connection?.release()

@@ -24,11 +24,12 @@ const Conversation: React.FC<{
     socket: Socket
     userSessionToken: string
     otherPersonName?: string
-}> = ({ selectedChatToken, otherPersonName = 'User', socket, userSessionToken }) => {
+    isOnline?: boolean
+}> = ({ selectedChatToken, otherPersonName, socket, userSessionToken, isOnline }) => {
     const [messages, setMessages] = useState<Message[]>([])
     const [inputMessage, setInputMessage] = useState('')
     const [attachments, setAttachments] = useState<File[]>([])
-    const [isTyping, setIsTyping] = useState(false)
+
     const fileInputRef = useRef<HTMLInputElement>(null)
     const imageInputRef = useRef<HTMLInputElement>(null)
     const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -57,7 +58,8 @@ const Conversation: React.FC<{
 
         if (listenersSetupRef.current) return
 
-        console.log('Setting up socket listeners')
+        setMessages([])
+
         listenersSetupRef.current = true
 
         socket.on('ALL_MESSAGES', (data: { messages: Message[]; error: boolean }) => {
@@ -67,7 +69,6 @@ const Conversation: React.FC<{
                 timesent: new Date(msg.timesent)
             }))
 
-            console.log(parsedMessages)
             setMessages(prev => {
                 // Avoid duplicate messages by checking IDs
                 const existingIds = new Set(prev.map(msg => (msg as any).id))
@@ -92,7 +93,6 @@ const Conversation: React.FC<{
         })
 
         return () => {
-            console.log('Cleaning up socket listeners')
             socket.off('ALL_MESSAGES')
             socket.off('JOINED_ROOM')
             socket.off('NEW_MESSAGE')
@@ -236,7 +236,7 @@ const Conversation: React.FC<{
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffffff1a]">{otherPersonName.charAt(0).toUpperCase()}</div>
                 <div className="ml-3">
                     <h3 className="font-medium text-white">{otherPersonName}</h3>
-                    <p className="text-xs text-gray-400">{isTyping ? 'Typing...' : 'Online'}</p>
+                    <p className="text-xs text-gray-400">{isOnline ? 'Online' : 'Offline'}</p>
                 </div>
             </div>
 
