@@ -1,8 +1,10 @@
+'use client'
+
+import type React from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import React, { useState, useRef, useEffect } from 'react'
-import { ITeamMemberTemplate } from '../IProjectTeamManagement'
+import type { ITeamMemberTemplate } from '../IProjectTeamManagement'
 import { MoreVertical } from 'lucide-react'
-import ManagementOptionsMenu from './ManagementOptionsMenu'
 import axios from 'axios'
 
 const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
@@ -24,6 +26,8 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
 
     const handleRemoveMember = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        e.stopPropagation()
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/remove-member`, {
                 projectToken: props.ProjectToken,
@@ -38,11 +42,11 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                window.alert(error.response?.data?.message || 'An error occurred while adding the team member')
+                window.alert(error.response?.data?.message || 'An error occurred while removing the team member')
             } else {
                 window.alert('An unexpected error occurred')
             }
-            console.error('Error adding team member:', error)
+            console.error('Error removing team member:', error)
         } finally {
             setShowMenu(false)
         }
@@ -50,32 +54,38 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
 
     const handleChangeRole = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-
+        e.stopPropagation()
         props.onChangeRole(props.memberpublictoken)
-
         setShowMenu(false)
     }
 
-    const handleChangeDivision = () => {
-        console.log('Change division')
+    const handleChangeDivision = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
+        props.onChangeDivision(props.memberpublictoken)
         setShowMenu(false)
+    }
+
+    // Get initials for avatar fallback
+    const getInitials = (name: string) => {
+        return name
+            .split(' ')
+            .map(part => part[0])
+            .join('')
+            .toUpperCase()
+            .substring(0, 2)
     }
 
     return (
         <div className="relative">
             <Link href={`/user/${props.memberpublictoken}`}>
                 <div className="flex w-full flex-row rounded-lg bg-[#00000056] p-4 shadow-xs transition-all hover:bg-[#0000008a]">
-                    <img
-                        className="h-12 w-12 self-center rounded-full"
-                        // src={props.AvatarUrl || `/placeholder.svg?height=48&width=48`}
-                        // src={`${process.env.NEXT_PUBLIC_FILE_SERVER}/${getCookie('userPublicToken')}/Main_icon.png?cache=none`}
-                        alt={props.membername}
-                    />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#ffffff1a] font-medium text-white">{getInitials(props.membername)}</div>
                     <div className="ml-4 flex flex-col self-center">
                         <p className="truncate text-sm font-medium text-white">{props.membername}</p>
-                        <p className="truncate text-sm text-white">{props.memberemail}</p>
+                        <p className="truncate text-sm text-gray-400">{props.memberemail}</p>
                     </div>
-                    <p className="ml-auto mr-4 self-center truncate text-sm text-white">{props.role}</p>
+                    <p className="mr-4 ml-auto self-center truncate text-sm text-white">{props.role}</p>
                     <div className="relative flex" ref={menuRef}>
                         <MoreVertical
                             className="z-10 cursor-pointer self-center text-white"
@@ -85,7 +95,20 @@ const TeamMemberTemplate = (props: ITeamMemberTemplate) => {
                                 setShowMenu(!showMenu)
                             }}
                         />
-                        {showMenu && <ManagementOptionsMenu onRemove={handleRemoveMember} onChangeRole={handleChangeRole} onChangeDivision={handleChangeDivision} />}
+                        {showMenu && (
+                            <div className="ring-opacity-5 absolute top-full right-0 z-10 mt-2 w-48 rounded-md bg-[#1a1a1a] py-1 shadow-lg ring-1 ring-black">
+                                <button className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-[#ffffff1a]" onClick={handleChangeRole}>
+                                    Change Role
+                                </button>
+                                <button className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-[#ffffff1a]" onClick={handleChangeDivision}>
+                                    Change Division
+                                </button>
+                                <div className="border-t border-[#333333]"></div>
+                                <button className="block w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-[#ffffff1a]" onClick={handleRemoveMember}>
+                                    Remove Member
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </Link>

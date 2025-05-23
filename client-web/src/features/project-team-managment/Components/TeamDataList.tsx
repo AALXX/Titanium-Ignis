@@ -1,14 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
-import { ITeamDivisions, ITeamManagementData, ITeamMember } from '../IProjectTeamManagement'
+import type React from 'react'
+import { useState } from 'react'
+import type { ITeamDivisions, ITeamManagementData, ITeamMember } from '../IProjectTeamManagement'
 import TeamDivisionCardTemplate from './TeamDivisionCardTemplate'
-import PopupCanvas from '@/components/PopupCanvas'
 import TeamMemberTemplate from './TeamMemberTemplate'
-import OptionPicker from '@/components/OptionPicker'
-import { Roles } from '@/features/projects/utils/Roels'
 import axios from 'axios'
-import SelectableCards from '@/components/SelectableCards'
+import { UserPlus, FolderPlus, Loader2 } from 'lucide-react'
+import { Roles } from '@/features/projects/utils/Roels'
+import PopupCanvas from '@/components/PopupCanvas'
 
 interface ITeamDataList {
     TeamData: ITeamManagementData
@@ -18,28 +18,27 @@ interface ITeamDataList {
 
 const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSessionToken }) => {
     const [divisions, setDivisions] = useState<ITeamDivisions[]>(TeamData.TeamDivisions)
+    const [teamMembers, setTeamMembers] = useState<ITeamMember[]>(TeamData.TeamMembers)
+
     const [togglePopupCreateDivision, setTogglePopupCreateDivision] = useState(false)
     const [togglePopupAddMember, setTogglePopupAddMember] = useState(false)
+    const [togglePopupEditRole, setTogglePopupEditRole] = useState(false)
 
     const [divisionName, setDivisionName] = useState<string>('')
-
     const [newMemberEmail, setNewMemberEmail] = useState<string>('')
     const [newMemberRole, setNewMemberRole] = useState<string>('')
-
-    const [teamMembers, setTeamMembers] = useState<ITeamMember[]>(TeamData.TeamMembers)
-    const [error, setError] = useState<string | null>(null)
-    const [isLoading, setIsLoading] = useState(false)
-
-    const [componentToShow, setComponentToShow] = useState<string>('TEAM_MEMBERS_PAGE')
-
-    const [togglePopupEditRole, setTogglePopupEditRole] = useState(false)
     const [editedRole, setEditedRole] = useState<string>('')
     const [editedMemberToken, setEditedMemberToken] = useState<string>('')
+
+    const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [componentToShow, setComponentToShow] = useState<string>('TEAM_MEMBERS_PAGE')
 
     const addTeamMember = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
         setError(null)
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/add-team-member`, {
                 projectToken: ProjectToken,
@@ -49,7 +48,6 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             })
 
             if (response.status === 200 && response.data) {
-                console.log(response.data.teamMember)
                 const newTeamMember: ITeamMember = response.data
                 setTeamMembers(prevMembers => [...prevMembers, newTeamMember])
                 setNewMemberEmail('')
@@ -74,6 +72,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
         e.preventDefault()
         setIsLoading(true)
         setError(null)
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/create-division`, {
                 projectToken: ProjectToken,
@@ -91,11 +90,11 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                setError(error.response?.data?.message || 'An error occurred while adding the team member')
+                setError(error.response?.data?.message || 'An error occurred while adding the division')
             } else {
                 setError('An unexpected error occurred')
             }
-            console.error('Error adding team member:', error)
+            console.error('Error adding division:', error)
         } finally {
             setIsLoading(false)
         }
@@ -105,28 +104,31 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
         setTeamMembers(prevMembers => prevMembers.filter(member => member.memberpublictoken !== memberPublicToken))
     }
 
-    const changeRole = async (memberPublicToken: string) => {
+    const changeRole = async () => {
+        setIsLoading(true)
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/change-member-role`, {
                 projectToken: ProjectToken,
-                memberPublicToken: memberPublicToken,
+                memberPublicToken: editedMemberToken,
                 newRoleName: editedRole,
                 userSessionToken: userSessionToken
             })
 
             if (response.status === 200 && response.data) {
-                setTeamMembers(prevMembers => prevMembers.map(member => (member.memberpublictoken === memberPublicToken ? { ...member, role: editedRole } : member)))
+                setTeamMembers(prevMembers => prevMembers.map(member => (member.memberpublictoken === editedMemberToken ? { ...member, role: editedRole } : member)))
                 setTogglePopupEditRole(false)
             } else {
                 window.alert('Failed to change role')
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                setError(error.response?.data?.message || 'An error occurred while adding the team member')
+                setError(error.response?.data?.message || 'An error occurred while changing the role')
             } else {
                 setError('An unexpected error occurred')
             }
-            console.error('Error adding team member:', error)
+            console.error('Error changing role:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -135,36 +137,46 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             case 'TEAM_MEMBERS_PAGE':
                 return (
                     <div className="flex w-full flex-col space-y-4 p-4">
-                        {teamMembers.map((member: ITeamMember, index: number) => (
-                            <TeamMemberTemplate
-                                key={index}
-                                divisionid={member.divisionid}
-                                memberemail={member.memberemail}
-                                memberpublictoken={member.memberpublictoken}
-                                membername={member.membername}
-                                role={member.role}
-                                divisionisinname={member.divisionisinname}
-                                ProjectToken={ProjectToken}
-                                userSessionToken={userSessionToken}
-                                onRemove={removeMember}
-                                onChangeRole={(memberPublicToken: string) => {
-                                    setTogglePopupEditRole(true)
-                                    setEditedMemberToken(memberPublicToken)
-                                }}
-                                onChangeDivision={() => {}}
-                            />
-                        ))}
+                        {teamMembers.length === 0 ? (
+                            <div className="py-8 text-center text-gray-400">No team members found. Add your first team member to get started.</div>
+                        ) : (
+                            teamMembers.map((member: ITeamMember, index: number) => (
+                                <TeamMemberTemplate
+                                    key={index}
+                                    divisionid={member.divisionid}
+                                    memberemail={member.memberemail}
+                                    memberpublictoken={member.memberpublictoken}
+                                    membername={member.membername}
+                                    role={member.role}
+                                    divisionisinname={member.divisionisinname}
+                                    ProjectToken={ProjectToken}
+                                    userSessionToken={userSessionToken}
+                                    onRemove={removeMember}
+                                    onChangeRole={(memberPublicToken: string) => {
+                                        setTogglePopupEditRole(true)
+                                        setEditedMemberToken(memberPublicToken)
+                                        // Find current role to set as default
+                                        const member = teamMembers.find(m => m.memberpublictoken === memberPublicToken)
+                                        if (member) setEditedRole(member.role)
+                                    }}
+                                    onChangeDivision={() => {}}
+                                />
+                            ))
+                        )}
                     </div>
                 )
             case 'TEAM_DIVISIONS_PAGE':
                 return (
                     <div className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {divisions.map((division: ITeamDivisions, index: number) => (
-                            <TeamDivisionCardTemplate key={index} DivisionName={division.divisionname} NumberOfMembers={division.numberofmembers} ProjectToken={ProjectToken} />
-                        ))}
+                        {divisions.length === 0 ? (
+                            <div className="col-span-full py-8 text-center text-gray-400">No divisions found. Create your first division to get started.</div>
+                        ) : (
+                            divisions.map((division: ITeamDivisions, index: number) => (
+                                <TeamDivisionCardTemplate key={index} DivisionName={division.divisionname} NumberOfMembers={division.numberofmembers} ProjectToken={ProjectToken} />
+                            ))
+                        )}
                     </div>
                 )
-
             default:
                 return <div>No matching component found</div>
         }
@@ -174,39 +186,39 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
         <div className="flex h-full flex-col overflow-y-auto">
             <div className="flex flex-col gap-4 p-4 sm:flex-row">
                 <button
-                    className="border-primary text-primary hover:bg-primary/10 w-full rounded-xl border px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-white/10 sm:w-auto"
+                    className="w-full rounded-xl border border-white px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-[#ffffff1a] sm:w-auto"
                     onClick={() => setTogglePopupCreateDivision(true)}
                 >
-                    Create Division
+                    <div className="flex items-center justify-center gap-2">
+                        <FolderPlus className="h-4 w-4" />
+                        Create Division
+                    </div>
+                </button>
+                <button className="w-full rounded-xl border border-white px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-[#ffffff1a] sm:w-auto" onClick={() => setTogglePopupAddMember(true)}>
+                    <div className="flex items-center justify-center gap-2">
+                        <UserPlus className="h-4 w-4" />
+                        Add Team Member
+                    </div>
+                </button>
+            </div>
+
+            <div className="mt-16 flex">
+                <button
+                    className={`flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_MEMBERS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'}`}
+                    onClick={() => setComponentToShow('TEAM_MEMBERS_PAGE')}
+                >
+                    <span className="text-white">Team Members</span>
                 </button>
                 <button
-                    className="border-primary text-primary hover:bg-primary/10 w-full rounded-xl border px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-white/10 sm:w-auto"
-                    onClick={() => setTogglePopupAddMember(true)}
+                    className={`ml-4 flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_DIVISIONS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'}`}
+                    onClick={() => setComponentToShow('TEAM_DIVISIONS_PAGE')}
                 >
-                    Add Team Member
+                    <span className="text-white">Team Divisions</span>
                 </button>
             </div>
-            <div className="mt-16 flex">
-                <SelectableCards
-                    TabName="TEAM_MEMBERS_PAGE"
-                    Title="Team Members"
-                    activeTab={componentToShow}
-                    setComponentToShow={() => {
-                        setComponentToShow('TEAM_MEMBERS_PAGE')
-                    }}
-                    className="flex h-[3rem] w-[12rem] items-center rounded-t-3xl"
-                />
-                <SelectableCards
-                    TabName="TEAM_DIVISIONS_PAGE"
-                    Title="Team Divisions"
-                    activeTab={componentToShow}
-                    setComponentToShow={() => {
-                        setComponentToShow('TEAM_DIVISIONS_PAGE')
-                    }}
-                    className="ml-4 flex h-[3rem] w-[12rem] items-center rounded-t-3xl"
-                />
-            </div>
-            <hr className="" />
+            <hr className="border-white" />
+
+            {renderComponent()}
 
             {togglePopupCreateDivision && (
                 <PopupCanvas
@@ -218,12 +230,25 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                         <h1 className="self-center text-2xl font-bold text-white">Create Division</h1>
 
                         <input className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" placeholder="Division Name" onChange={e => setDivisionName(e.target.value)} value={divisionName} />
-                        <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10" onClick={addDivision}>
-                            Create Division
+                        <button
+                            className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50"
+                            onClick={addDivision}
+                            disabled={isLoading || !divisionName.trim()}
+                        >
+                            {isLoading ? (
+                                <div className="flex items-center justify-center">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Creating...
+                                </div>
+                            ) : (
+                                'Create Division'
+                            )}
                         </button>
+                        {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
                     </div>
                 </PopupCanvas>
             )}
+
             {togglePopupEditRole && (
                 <PopupCanvas
                     closePopup={() => {
@@ -233,19 +258,31 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     <div className="flex h-full w-full flex-col">
                         <h1 className="self-center text-2xl font-bold text-white">Change Role</h1>
 
-                        <OptionPicker label="Role" options={Roles} className="mt-2 h-[3rem] w-full rounded-xl bg-[#00000048] text-white" onChange={setEditedRole} value={editedRole} />
-                        <button
-                            className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10"
-                            onClick={async () => {
-                                await changeRole(editedMemberToken)
-                            }}
-                        >
-                            Change Role
+                        <select className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" value={editedRole} onChange={e => setEditedRole(e.target.value)} required>
+                            <option value="" disabled>
+                                Select a role
+                            </option>
+                            {Roles.map(role => (
+                                <option key={role} value={role}>
+                                    {role}
+                                </option>
+                            ))}
+                        </select>
+                        <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50" onClick={changeRole} disabled={isLoading || !editedRole}>
+                            {isLoading ? (
+                                <div className="flex items-center justify-center">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Updating...
+                                </div>
+                            ) : (
+                                'Change Role'
+                            )}
                         </button>
+                        {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
                     </div>
                 </PopupCanvas>
             )}
-            {renderComponent()}
+
             {togglePopupAddMember && (
                 <PopupCanvas
                     closePopup={() => {
@@ -255,12 +292,40 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     <div className="flex h-full w-full flex-col">
                         <h1 className="self-center text-2xl font-bold text-white">Add Team Member</h1>
 
-                        <input className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" placeholder="User Email" onChange={e => setNewMemberEmail(e.target.value)} value={newMemberEmail} aria-label="User Email" />
-                        <OptionPicker label="Role" options={Roles} className="mt-2 h-[3rem] w-full rounded-xl bg-[#00000048] text-white" onChange={setNewMemberRole} value={newMemberRole} />
-                        <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50" onClick={addTeamMember} disabled={isLoading}>
-                            {isLoading ? 'Adding...' : 'Add Team Member'}
+                        <input
+                            className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white"
+                            placeholder="User Email"
+                            onChange={e => setNewMemberEmail(e.target.value)}
+                            value={newMemberEmail}
+                            aria-label="User Email"
+                            type="email"
+                            required
+                        />
+                        <select className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" value={newMemberRole} onChange={e => setNewMemberRole(e.target.value)} required>
+                            <option value="" disabled>
+                                Select a role
+                            </option>
+                            {Roles.map(role => (
+                                <option key={role} value={role}>
+                                    {role}
+                                </option>
+                            ))}
+                        </select>
+                        <button
+                            className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50"
+                            onClick={addTeamMember}
+                            disabled={isLoading || !newMemberEmail.trim() || !newMemberRole}
+                        >
+                            {isLoading ? (
+                                <div className="flex items-center justify-center">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Adding...
+                                </div>
+                            ) : (
+                                'Add Team Member'
+                            )}
                         </button>
-                        {error && <p className="mt-2 text-red-500">{error}</p>}
+                        {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
                     </div>
                 </PopupCanvas>
             )}
