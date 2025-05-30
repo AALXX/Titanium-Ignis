@@ -21,3 +21,27 @@
 [5/20/2025, 4:48:14 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
 [5/22/2025, 10:06:35 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
 [5/23/2025, 1:04:22 AM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/28/2025, 11:16:46 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/28/2025, 11:22:06 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/28/2025, 11:23:41 PM] [ERROR] [PG_QUERY_FUNC] column ptm.roleid does not exist
+[5/28/2025, 11:23:41 PM] [ERROR] [CHECK_FOR_PERMISSIONS] column ptm.roleid does not exist
+[5/28/2025, 11:23:41 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/28/2025, 11:24:32 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/28/2025, 11:24:35 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/28/2025, 11:24:42 PM] [ERROR] [PG_QUERY_FUNC] column rp.permissionid does not exist
+[5/28/2025, 11:24:42 PM] [ERROR] [CHECK_FOR_PERMISSIONS] column rp.permissionid does not exist
+[5/28/2025, 11:24:42 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 3:58:42 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 3:59:16 PM] [ERROR] [PG_QUERY_FUNC] column rp.permissionid does not exist
+[5/29/2025, 3:59:16 PM] [ERROR] [CHECK_FOR_PERMISSIONS] column rp.permissionid does not exist
+[5/29/2025, 3:59:16 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 4:01:33 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 4:01:38 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 4:01:49 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 4:06:38 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 4:06:49 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 4:14:06 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 4:14:13 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 4:14:22 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080
+[5/29/2025, 4:14:30 PM] [ERROR] [CREATED_TASK] User does not have permission to create a task
+[5/29/2025, 4:14:56 PM] [INFO] [ProjectTasks_API] Api is runing on: localhost:7080

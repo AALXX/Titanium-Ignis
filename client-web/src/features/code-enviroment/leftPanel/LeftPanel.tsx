@@ -8,7 +8,7 @@ import { stripReposPath } from '../utils'
 import { useSession } from 'next-auth/react'
 import { generateUniqueFileName } from './util/utils'
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'
-import { setFileTree, setIsLoading, createFile, deleteFile, addFile, createFolder, addFolder } from '@/features/code-enviroment/lib/fileTreeSlice'
+import { setFileTree, setIsLoading, createFile, deleteFile, addFile, createFolder, addFolder } from '@/features/code-enviroment/lib/redux/slices/fileTreeSlice'
 import AddFileOrFolder from './components/AddFileOrFolder'
 import Image from 'next/image'
 
@@ -91,7 +91,7 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
                     <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={fetchFileTree} className="ml-auto cursor-pointer" width={22} height={22} />
                 </div>
             </div>
-            <div className="h-[38rem] grow-0 overflow-auto p-4 3xl:h-[52rem]">
+            <div className="3xl:h-[52rem] h-[38rem] grow-0 overflow-auto p-4">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="text-white">Loading...</div>

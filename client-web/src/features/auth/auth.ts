@@ -1,29 +1,72 @@
-import NextAuth, { NextAuthConfig, User, Account, Profile, Session } from 'next-auth'
-import GitHub from 'next-auth/providers/github'
+import NextAuth, { type NextAuthConfig, type Session } from 'next-auth'
 import Google from 'next-auth/providers/google'
-import { JWT } from 'next-auth/jwt'
+import Credentials from 'next-auth/providers/credentials'
+
+import type { JWT } from 'next-auth/jwt'
 import axios from 'axios'
 
+//Don't Touch this code it works somehow; I honestly don't know why 
 const config: NextAuthConfig = {
     session: {
         strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60
     },
     providers: [
-        GitHub({
-            clientId: process.env.GITHUB_ID as string,
-            clientSecret: process.env.GITHUB_SECRET as string
-        }),
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+        }),
+        Credentials({
+            name: 'Credentials',
+            credentials: {
+                email: { label: 'Email', type: 'text' },
+                password: { label: 'Password', type: 'password' }
+            },
+            async authorize(credentials, req) {
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error('Missing email or password')
+                }
+
+                try {
+                    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/login-account`, {
+                        userEmail: credentials.email,
+                        password: credentials.password
+                    })
+
+
+                    if (response.data.error) {
+                        return null
+                    }
+
+                    // Return user object with the custom accessToken
+                    return {
+                        id: response.data.userId || 'credentials-user',
+                        name: response.data.userName,
+                        email: credentials.email,
+                        image: `${process.env.NEXT_PUBLIC_FILE_SERVER}/accounts/${response.data.userSessionToken}?cache=none`,
+                        accessToken: response.data.userSessionToken // Pass the token here
+                    }
+                } catch (error) {
+                    console.error('Login error:', error)
+                    return null
+                }
+            }
         })
     ],
+
     secret: process.env.ACCOUNT_SECRET,
     callbacks: {
         async jwt({ token, user, account }): Promise<JWT> {
-            if (account && user) {
-                token.accessToken = account.access_token
+            if (user) {
+                // For Credentials provider, user.accessToken contains our custom token
+                if (user.accessToken) {
+                    token.accessToken = user.accessToken
+                }
+                // For OAuth providers, use account.access_token
+                else if (account?.access_token) {
+                    token.accessToken = account.access_token
+                }
+
                 token.userId = user.id
             }
             return token
@@ -41,18 +84,16 @@ const config: NextAuthConfig = {
                     throw new Error('Account is null')
                 }
 
-                const token = await config.callbacks?.jwt?.({ token: {}, user, account, profile })
+                if (account.provider === 'google') {
+                    const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/register-account-google`, {
+                        userName: user.name,
+                        userEmail: user.email,
+                        registrationType: account.provider,
+                        userSessionToken: account.access_token
+                    })
 
-                if (!token || !token.accessToken) {
-                    throw new Error('Failed to generate token')
+                    console.log('Google registration response:', resp.data)
                 }
-
-                const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/register-account`, {
-                    userName: user.name,
-                    userEmail: user.email,
-                    registrationType: account.provider,
-                    userSessionToken: token.accessToken
-                })
 
                 return true
             } catch (error) {

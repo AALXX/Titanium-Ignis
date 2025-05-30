@@ -3,7 +3,7 @@
 import PopupCanvas from '@/components/PopupCanvas'
 import Image from 'next/image'
 import { useState } from 'react'
-import React from 'react'
+import type React from 'react'
 import AccoutSettingsPopup from '../util/AccoutSettingsPopup'
 
 interface UserProfileProps {
@@ -17,51 +17,28 @@ const UserProfile: React.FC<UserProfileProps> = props => {
 
     return (
         <>
-            <div className="flex h-32 w-80 flex-col self-center md:flex-row">
-                <div className="relative z-10 h-24 w-40 self-center">
-                    {/* <Image
-                                className="m-auto flex self-center rounded-full"
-                                src={`${process.env.NEXT_PUBLIC_FILE_SERVER}/${props.userpublictoken}/Main_icon.png?cache=none`}
-                                width={100}
-                                height={100}
-                                alt="Picture of the author"
-                            /> */}
-
-                    <Image className="m-auto flex self-center rounded-full" src={props.image} width={150} height={150} alt="Picture of the author" />
-
-                    {/* {isAccIconHovered ? (
-                                <div
-                                    className="absolute inset-0 m-auto flex h-24 w-24 cursor-pointer rounded-full border bg-black bg-opacity-80"
-                                    onMouseEnter={() => {
-                                        setIsAccIconHovered(true)
-                                    }}
-                                    onMouseLeave={() => {
-                                        setIsAccIconHovered(false)
-                                    }}
-                                    onClick={() => {
-                                        setToggledIconChangePopUp(!ToggledIconChangePopUp)
-                                    }}
-                                >
-                                    <img className="m-auto h-[90%] w-[90%] rounded-full" src="/assets/AccountIcons/EditProfileIcon_Icon.svg" alt="Overlay image" />
-                                </div>
-                            ) : null} */}
-                </div>
-                <div className="ml-2 w-full self-center">
-                    <div className="flex">
-                        <h1 className="mb-1 text-xl font-bold text-white">{props.name}</h1>
+            <div className="flex h-auto w-full max-w-4xl flex-col rounded-xl border border-gray-600 bg-[#3a3a3a] p-6 md:flex-row">
+                <div className="flex flex-col items-center md:flex-1 md:flex-row md:items-start">
+                    <div className="relative z-10 mb-4 h-24 w-24 md:mr-6 md:mb-0 md:h-32 md:w-32">
+                        <Image className="rounded-full object-cover" src={props.image || '/placeholder.svg'} width={128} height={128} alt="Profile picture" />
                     </div>
-                    <div className="flex">
-                        <h1 className="text-sm text-white">{props.email}</h1>
-                        <Image
-                            className="z-10 ml-auto h-5 w-5 cursor-pointer self-center text-white"
-                            src={`/AccountIcons/Settings_icon.svg`}
-                            alt="Picture of the author"
-                            width={50}
-                            height={50}
-                            onClick={() => {
-                                setToggledSettingsPopUp(!ToggledSettingsPopUp)
-                            }}
-                        />
+
+                    <div className="flex-1 text-center md:text-left">
+                        <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
+                            <h1 className="mb-1 text-2xl font-bold text-white md:mb-0">{props.name}</h1>
+                            <Image
+                                className="mx-auto mt-2 h-6 w-6 cursor-pointer text-white transition-opacity hover:opacity-80 md:mx-0 md:mt-0"
+                                src={`/AccountIcons/Settings_icon.svg`}
+                                alt="Settings"
+                                width={24}
+                                height={24}
+                                onClick={() => {
+                                    setToggledSettingsPopUp(!ToggledSettingsPopUp)
+                                }}
+                            />
+                        </div>
+                        <p className="mb-4 text-gray-300">{props.email}</p>
+
                     </div>
                 </div>
             </div>
@@ -72,13 +49,9 @@ const UserProfile: React.FC<UserProfileProps> = props => {
                         setToggledSettingsPopUp(!ToggledSettingsPopUp)
                     }}
                 >
-                    <AccoutSettingsPopup />
+                    <AccoutSettingsPopup email={props.email} name={props.name} image={props.image} />
                 </PopupCanvas>
             ) : null}
-
-            <div className="flex h-32 w-72 flex-col self-center rounded-xl bg-[#0000005e] sm:ml-auto">
-                <div className="m-auto flex w-full flex-col"></div>
-            </div>
         </>
     )
 }

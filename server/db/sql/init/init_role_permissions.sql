@@ -19,10 +19,8 @@ WHERE
             'PROJECT_CREATE',
             'BUDGET_MANAGE',
             'USER_MANAGE',
-            'DOCUMENTATION_WRITE',
+            'DOCUMENTATION_CREATE',
             'DOCUMENTATION_READ',
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE'
         )
@@ -35,10 +33,8 @@ WHERE
             'PROJECT_VIEW',
             'PROJECT_CREATE',
             'UI_MANAGE',
-            'DOCUMENTATION_WRITE',
+            'DOCUMENTATION_CREATE',
             'DOCUMENTATION_READ',
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE'
         )
@@ -55,8 +51,6 @@ WHERE
             'DATABASE_MANAGE',
             'API_MANAGE',
             'CLOUD_MANAGE',
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE'
         )
@@ -71,8 +65,6 @@ WHERE
             'DATABASE_MANAGE',
             'API_MANAGE',
             'INFRASTRUCTURE_MANAGE',
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE'
         )
@@ -82,8 +74,6 @@ WHERE
     (
         r.name = 'SECURITY_ARCHITECT'
         AND p.name IN (
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE',
             'SECURITY_MANAGE',
@@ -96,11 +86,11 @@ WHERE
     (
         r.name = 'SENIOR_DEVELOPER'
         AND p.name IN (
-            'CODE_WRITE',
+            'CODE_CREATE',
             'CODE_REVIEW',
             'DATABASE_READ',
             'API_READ',
-            'DOCUMENTATION_WRITE'
+            'DOCUMENTATION_CREATE'
         )
     )
     OR
@@ -108,7 +98,7 @@ WHERE
     (
         r.name = 'DEVELOPER'
         AND p.name IN (
-            'CODE_WRITE',
+            'CODE_CREATE',
             'DATABASE_READ',
             'API_READ',
             'DOCUMENTATION_READ'
@@ -121,9 +111,7 @@ WHERE
         AND p.name IN (
             'TEST_MANAGE',
             'TEST_EXECUTE',
-            'DOCUMENTATION_WRITE',
-            'TASK_BANNER_MANAGE',
-            'TASK_BANNER_CREATE',
+            'DOCUMENTATION_CREATE',
             'TASK_CREATE',
             'TASK_MANAGE'
         )
@@ -148,7 +136,7 @@ WHERE
     -- UI_DESIGNER permissions
     (
         r.name = 'UI_DESIGNER'
-        AND p.name IN ('UI_DESIGN', 'UI_MANAGE', 'DOCUMENTATION_READ')
+        AND p.name IN ('UI_CREATE', 'UI_MANAGE', 'DOCUMENTATION_READ')
     )
     OR
     -- DATABASE_ADMIN permissions

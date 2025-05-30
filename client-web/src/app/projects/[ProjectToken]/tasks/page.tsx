@@ -1,3 +1,4 @@
+import React from 'react'
 import BannerTaskList from '@/features/team-tasks/banners/components/BannerTaskList'
 import { ITaskBanners, ITeamDivisions } from '@/features/team-tasks/ITeamTasks'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
@@ -8,6 +9,7 @@ import { notFound } from 'next/navigation'
 const getTaskBannerData = async (ProjectToken: string, accessToken: string | undefined): Promise<{ error: boolean; allBanners: ITaskBanners[] }> => {
     try {
         const response = await axios.get<{ error: boolean; allBanners: ITaskBanners[] }>(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-task-banners/${ProjectToken}/${accessToken}`)
+        console.log(response.data)
         return response.data
     } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 403) {
@@ -19,7 +21,8 @@ const getTaskBannerData = async (ProjectToken: string, accessToken: string | und
 
 const getAllDivisions = async (ProjectToken: string, accessToken: string | undefined) => {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-divisions/${ProjectToken}`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-all-divisions/${ProjectToken}/${accessToken}`)
+        console.log(response.data)
         return response.data.divisions
     } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 403) {
@@ -59,6 +62,7 @@ const TaskBanners: React.FC<{ params: Promise<{ ProjectToken: string }> }> = asy
             </div>
         )
     } catch (error) {
+        console.log(error)
         if (error instanceof Error && error.message === 'Access Denied') {
             return (
                 <div className="flex h-screen items-center justify-center">

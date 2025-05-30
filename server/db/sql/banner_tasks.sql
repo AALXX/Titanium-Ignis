@@ -22,7 +22,8 @@ CREATE TABLE
         TaskReminderDate TIMESTAMP WITH TIME ZONE,
         TaskIsArchived BOOLEAN DEFAULT FALSE,
         TaskLastUpdated TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        IsComplete BOOLEAN,
         TaskLastUpdatedBy VARCHAR(250),
         TaskDependencies TEXT[],
-        TaskCustomFields JSONB
+        TaskCustomFields JSONB,
     );

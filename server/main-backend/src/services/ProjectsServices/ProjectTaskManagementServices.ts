@@ -79,7 +79,7 @@ const getAllTaskBanners = async (req: CustomRequest, res: Response): Promise<voi
     
     JOIN projects_team_members ON projects_team_members.UserPrivateToken = projects_task_banners.AssigneePrivateToken
 
-    JOIN roles ON roles.Id = projects_team_members.RoleId
+    JOIN roles ON roles.Id = projects_team_members.role_id
 
     JOIN project_divisions ON projects_task_banners.DepartamentAssignedTo = project_divisions.Id
 

@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 interface CustomRequest extends express.Request {
     pool?: Pool;
     ioServer?: Server;
+    userRole?: any;
 }
 
 /**

@@ -6,9 +6,10 @@ import type { ITeamDivisions, ITeamManagementData, ITeamMember } from '../IProje
 import TeamDivisionCardTemplate from './TeamDivisionCardTemplate'
 import TeamMemberTemplate from './TeamMemberTemplate'
 import axios from 'axios'
-import { UserPlus, FolderPlus, Loader2 } from 'lucide-react'
-import { Roles } from '@/features/projects/utils/Roels'
+import { UserPlus, FolderPlus, Loader2, Search } from 'lucide-react'
 import PopupCanvas from '@/components/PopupCanvas'
+import { useEffect, useRef } from 'react'
+import DoubleValueOptionPicker from '@/components/DoubleValueOptionPicker'
 
 interface ITeamDataList {
     TeamData: ITeamManagementData
@@ -24,15 +25,23 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
     const [togglePopupAddMember, setTogglePopupAddMember] = useState(false)
     const [togglePopupEditRole, setTogglePopupEditRole] = useState(false)
 
+    const [roles, setRoles] = useState<{ id: number; display_name: string }[]>([])
+
     const [divisionName, setDivisionName] = useState<string>('')
     const [newMemberEmail, setNewMemberEmail] = useState<string>('')
-    const [newMemberRole, setNewMemberRole] = useState<string>('')
+    const [newMemberRole, setNewMemberRole] = useState<number | null>(null)
     const [editedRole, setEditedRole] = useState<string>('')
     const [editedMemberToken, setEditedMemberToken] = useState<string>('')
 
     const [error, setError] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [componentToShow, setComponentToShow] = useState<string>('TEAM_MEMBERS_PAGE')
+
+    const [searchResults, setSearchResults] = useState<any[]>([])
+    const [isSearchLoading, setIsSearchLoading] = useState(false)
+    const [showDropdown, setShowDropdown] = useState(false)
+    const [selectedUser, setSelectedUser] = useState<any>(null)
+    const dropdownRef = useRef<HTMLDivElement>(null)
 
     const addTeamMember = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -48,10 +57,18 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             })
 
             if (response.status === 200 && response.data) {
-                const newTeamMember: ITeamMember = response.data
-                setTeamMembers(prevMembers => [...prevMembers, newTeamMember])
+                const newTeamMember: { error: boolean; teamMember: ITeamMember } = response.data
+
+                if (newTeamMember.error) {
+                    setError("Failed to add team member")
+                    return
+                }
+         
+                console.log(newTeamMember)
+
+                setTeamMembers(prevMembers => [...prevMembers, newTeamMember.teamMember])
                 setNewMemberEmail('')
-                setNewMemberRole('')
+                setNewMemberRole(null)
                 setTogglePopupAddMember(false)
             } else {
                 throw new Error('Failed to add team member')
@@ -115,7 +132,10 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
             })
 
             if (response.status === 200 && response.data) {
+                // // setTeamMembers(prevMembers => prevMembers.map(member => (member.memberpublictoken === editedMemberToken ? { ...member, role: editedRole } : member)))
+
                 setTeamMembers(prevMembers => prevMembers.map(member => (member.memberpublictoken === editedMemberToken ? { ...member, role: editedRole } : member)))
+
                 setTogglePopupEditRole(false)
             } else {
                 window.alert('Failed to change role')
@@ -130,6 +150,59 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
         } finally {
             setIsLoading(false)
         }
+    }
+
+    useEffect(() => {
+        const handleSearch = async () => {
+            if (newMemberEmail.length > 0 && newMemberEmail != null) {
+                setIsSearchLoading(true)
+                setError(null)
+
+                try {
+                    const results = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/search-users/${newMemberEmail}`)
+                    setSearchResults(results.data.usersData || [])
+                    setShowDropdown(true)
+                } catch (err) {
+                    setError('Failed to search for users')
+                    setSearchResults([])
+                } finally {
+                    setIsSearchLoading(false)
+                }
+            } else {
+                setSearchResults([])
+                setShowDropdown(false)
+            }
+        }
+
+        ;(async () => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-team-roles`)
+            console.log(response.data.roles)
+            if (response.status === 200 && response.data) {
+                setRoles(response.data.roles)
+            }
+        })()
+
+        const timeoutId = setTimeout(handleSearch, 300)
+        return () => clearTimeout(timeoutId)
+    }, [newMemberEmail])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setShowDropdown(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
+
+    const handleSelectUser = (user: any) => {
+        setSelectedUser(user)
+        setNewMemberEmail(user.useremail)
+        setShowDropdown(false)
     }
 
     const renderComponent = () => {
@@ -185,10 +258,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
     return (
         <div className="flex h-full flex-col overflow-y-auto">
             <div className="flex flex-col gap-4 p-4 sm:flex-row">
-                <button
-                    className="w-full rounded-xl border border-white px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-[#ffffff1a] sm:w-auto"
-                    onClick={() => setTogglePopupCreateDivision(true)}
-                >
+                <button className="w-full rounded-xl border border-white px-6 py-3 font-bold text-white transition-colors duration-200 hover:bg-[#ffffff1a] sm:w-auto" onClick={() => setTogglePopupCreateDivision(true)}>
                     <div className="flex items-center justify-center gap-2">
                         <FolderPlus className="h-4 w-4" />
                         Create Division
@@ -204,13 +274,13 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
 
             <div className="mt-16 flex">
                 <button
-                    className={`flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_MEMBERS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'}`}
+                    className={`flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_MEMBERS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'} cursor-pointer transition-colors duration-300 hover:bg-[#2424244d]`}
                     onClick={() => setComponentToShow('TEAM_MEMBERS_PAGE')}
                 >
                     <span className="text-white">Team Members</span>
                 </button>
                 <button
-                    className={`ml-4 flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_DIVISIONS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'}`}
+                    className={`ml-4 flex h-[3rem] w-[12rem] items-center justify-center rounded-t-3xl ${componentToShow === 'TEAM_DIVISIONS_PAGE' ? 'bg-[#0000004d]' : 'bg-transparent'} cursor-pointer transition-colors duration-300 hover:bg-[#2424244d]`}
                     onClick={() => setComponentToShow('TEAM_DIVISIONS_PAGE')}
                 >
                     <span className="text-white">Team Divisions</span>
@@ -258,7 +328,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                     <div className="flex h-full w-full flex-col">
                         <h1 className="self-center text-2xl font-bold text-white">Change Role</h1>
 
-                        <select className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" value={editedRole} onChange={e => setEditedRole(e.target.value)} required>
+                        {/* <select className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" value={editedRole} onChange={e => setEditedRole(e.target.value)} required>
                             <option value="" disabled>
                                 Select a role
                             </option>
@@ -267,7 +337,15 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                                     {role}
                                 </option>
                             ))}
-                        </select>
+                        </select> */}
+
+                        <DoubleValueOptionPicker
+                            label="Role"
+                            options={roles.map(role => ({ value: role.id, label: role.display_name }))}
+                            onChange={value => setNewMemberRole(roles.find(role => role.display_name === value)?.id || null)}
+                            value={roles.find(role => role.id === newMemberRole)?.display_name || ''}
+                            className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
+                        />
                         <button className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50" onClick={changeRole} disabled={isLoading || !editedRole}>
                             {isLoading ? (
                                 <div className="flex items-center justify-center">
@@ -287,30 +365,74 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                 <PopupCanvas
                     closePopup={() => {
                         setTogglePopupAddMember(false)
+                        setSelectedUser(null)
+                        setSearchResults([])
+                        setShowDropdown(false)
+                        setNewMemberEmail('')
+                        setNewMemberRole(null)
                     }}
                 >
                     <div className="flex h-full w-full flex-col">
                         <h1 className="self-center text-2xl font-bold text-white">Add Team Member</h1>
 
-                        <input
-                            className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white"
-                            placeholder="User Email"
-                            onChange={e => setNewMemberEmail(e.target.value)}
-                            value={newMemberEmail}
-                            aria-label="User Email"
-                            type="email"
-                            required
+                        <div className="relative mt-4">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <Search className="h-4 w-4 text-gray-400" />
+                            </div>
+                            <input
+                                className="w-full rounded-xl bg-[#00000048] p-3 pl-10 text-white"
+                                placeholder="Search by email"
+                                onChange={e => setNewMemberEmail(e.target.value)}
+                                value={newMemberEmail}
+                                aria-label="User Email"
+                                type="email"
+                                required
+                            />
+                            {isSearchLoading && (
+                                <div className="absolute top-1/2 right-3 -translate-y-1/2 transform">
+                                    <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                                </div>
+                            )}
+
+                            {showDropdown && searchResults.length > 0 && (
+                                <div ref={dropdownRef} className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-600 bg-[#2a2a2a] shadow-lg">
+                                    {searchResults.map(user => (
+                                        <div key={user.id} className="flex cursor-pointer items-center gap-3 border-b border-gray-600 p-3 last:border-b-0 hover:bg-[#3a3a3a]" onClick={() => handleSelectUser(user)}>
+                                            <img src={user.avatar || '/placeholder.svg'} alt={user.username} className="h-8 w-8 rounded-full object-cover" />
+                                            <div>
+                                                <p className="text-sm font-medium text-white">{user.username}</p>
+                                                <p className="text-xs text-gray-400">{user.useremail}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {showDropdown && newMemberEmail && searchResults.length === 0 && !isSearchLoading && (
+                                <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-600 bg-[#2a2a2a] p-3 text-center shadow-lg">
+                                    <p className="text-sm text-gray-400">No users found</p>
+                                </div>
+                            )}
+                        </div>
+
+                        {selectedUser && (
+                            <div className="mt-2 rounded-md bg-[#3a3a3a] p-2">
+                                <div className="flex items-center gap-2">
+                                    <img src={selectedUser.avatar || '/placeholder.svg'} alt={selectedUser.username} className="h-6 w-6 rounded-full object-cover" />
+                                    <span className="text-sm text-white">{selectedUser.username}</span>
+                                </div>
+                            </div>
+                        )}
+
+                        <DoubleValueOptionPicker
+                            label="Role"
+                            options={roles.map(role => ({ value: role.id, label: role.display_name }))}
+                            onChange={value => {
+                                setNewMemberRole(roles.find(role => role.id === Number(value))?.id || null)
+                            }}
+                            value={newMemberRole || ''}
+                            className="mt-4 h-[4rem] w-full rounded-xl bg-[#00000048] indent-3 text-white"
                         />
-                        <select className="mt-4 w-full rounded-xl bg-[#00000048] p-3 text-white" value={newMemberRole} onChange={e => setNewMemberRole(e.target.value)} required>
-                            <option value="" disabled>
-                                Select a role
-                            </option>
-                            {Roles.map(role => (
-                                <option key={role} value={role}>
-                                    {role}
-                                </option>
-                            ))}
-                        </select>
                         <button
                             className="mt-4 w-full rounded-xl border p-4 font-bold text-white transition-colors hover:bg-white/10 disabled:opacity-50"
                             onClick={addTeamMember}
@@ -322,7 +444,7 @@ const TeamDataList: React.FC<ITeamDataList> = ({ TeamData, ProjectToken, userSes
                                     Adding...
                                 </div>
                             ) : (
-                                'Add Team Member'
+                                <h1 className="text-lg font-bold text-white">Add Team Member</h1>
                             )}
                         </button>
                         {error && <p className="mt-2 text-sm text-red-400">{error}</p>}

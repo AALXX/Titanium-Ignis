@@ -10,7 +10,7 @@ interface ProjectData {
     TeamMembers: ITeamMember[]
 }
 
-async function getProjectData(ProjectToken: string, accessToken: string | undefined): Promise<ProjectData> {
+async function getTeamData(ProjectToken: string, accessToken: string | undefined): Promise<ProjectData> {
     try {
         const response = await axios.get<ProjectData>(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-team-data/${ProjectToken}/${accessToken}`)
         return response.data
@@ -27,11 +27,10 @@ const TeamManagementPage = async function ({ params }: { params: Promise<{ Proje
     const accountStatus = await checkAccountStatus()
 
     try {
-        const projectData = await getProjectData(ProjectToken, accountStatus.accessToken)
-
+        const teamData = await getTeamData(ProjectToken, accountStatus.accessToken)
         return (
             <div className="flex h-screen flex-col">
-                <TeamDataList TeamData={projectData} ProjectToken={ProjectToken} userSessionToken={accountStatus.accessToken} />
+                <TeamDataList TeamData={teamData} ProjectToken={ProjectToken} userSessionToken={accountStatus.accessToken} />
             </div>
         )
     } catch (error) {

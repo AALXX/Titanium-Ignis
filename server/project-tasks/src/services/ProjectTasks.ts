@@ -86,12 +86,12 @@ ORDER BY banner_tasks_containers.ContainerOrder;
 const createTaskContainer = async (pool: Pool, io: Server, socket: Socket, userSessionToken: string, projectToken: string, containerUUID: string, bannerToken: string, taskContainerName: string) => {
     try {
         const connection = await connect(pool)
-        if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
-            return socket.emit('CREATED_TASK_CONTAINER', {
-                error: true,
-                message: 'You do not have permission to create a task container'
-            })
-        }
+        // if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
+        //     return socket.emit('CREATED_TASK_CONTAINER', {
+        //         error: true,
+        //         message: 'You do not have permission to create a task container'
+        //     })
+        // }
 
         if (!containerUUID) {
             containerUUID = uuidv4()
@@ -229,13 +229,13 @@ const createTask = async (
     try {
         const connection = await connect(pool)
 
-        if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
-            logging.error('CREATED_TASK', 'User does not have permission to create a task')
-            return socket.emit('CREATED_TASK', {
-                error: true,
-                message: 'You do not have permission to delete a task container'
-            })
-        }
+        // if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
+        //     logging.error('CREATED_TASK', 'User does not have permission to create a task')
+        //     return socket.emit('CREATED_TASK', {
+        //         error: true,
+        //         message: 'You do not have permission to delete a task container'
+        //     })
+        // }
 
         const userPrivateToken = await getUserPrivateTokenFromSessionToken(connection!, userSessionToken)
 

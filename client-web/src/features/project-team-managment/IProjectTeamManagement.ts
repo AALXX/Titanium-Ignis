@@ -8,6 +8,7 @@ export interface ITeamDivisions {
     numberofmembers: number
 }
 
+
 export interface ITeamMember {
     memberpublictoken: string
     membername: string
@@ -15,7 +16,6 @@ export interface ITeamMember {
     divisionisinname: string
     divisionid: number
     role: string
-    userSessionToken: string | undefined
 }
 
 export interface ITeamMemberTemplate {

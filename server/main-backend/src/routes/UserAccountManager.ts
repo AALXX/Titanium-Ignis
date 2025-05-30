@@ -7,22 +7,30 @@ const router = express.Router();
 
 //* Owner Account data
 router.post(
-    '/register-account',
+    '/register-account-google',
     body('userName').not().isEmpty(),
     body('userEmail').isEmail().not().isEmpty(),
     // body('password').isLength({ min: 4 }).not().isEmpty().trim(),
     body('registrationType').not().isEmpty(),
     body('userSessionToken').not().isEmpty(),
+    AccountServices.RegisterUserWithGoogle,
+);
+
+router.post(
+    '/register-account',
+    body('userName').not().isEmpty(),
+    body('userEmail').isEmail().not().isEmpty(),
+    body('password').isLength({ min: 4 }).not().isEmpty().trim(),
     AccountServices.RegisterUser,
 );
 
-router.get('/get-account-role/:userAcessToken', param('userAcessToken').not().isEmpty(), AccountServices.GetUserAccountRole);
-
 router.get('/search-users/:searchQuery', param('searchQuery').not().isEmpty(), AccountServices.SearchUser);
 
-// router.post('/login-account', body('userEmail').isEmail().not().isEmpty(), body('password').isLength({ min: 4 }).not().isEmpty().trim(), OwnerAccountServices.LoginUser);
+router.post('/login-account', body('userEmail').isEmail().not().isEmpty(), body('password').isLength({ min: 6 }).not().isEmpty().trim(), AccountServices.LoginUser);
 
-// router.get('/get-account-data/:accountPrivateToken', param('accountPrivateToken').not().isEmpty(), OwnerAccountServices.GetUserAccountData);
+router.get('/get-account-data/:accountSessionToken', param('accountSessionToken').not().isEmpty(), AccountServices.GetUserAccountData);
+
+router.get('/get-all-user-projects/:accountSessionToken', param('accountSessionToken').not().isEmpty(), AccountServices.GetAllUserProjects);
 
 // router.post(
 //     '/change-user-data',

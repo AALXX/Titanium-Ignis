@@ -1,4 +1,6 @@
 CREATE TABLE actions (
     id SERIAL PRIMARY KEY,
-    Name VARCHAR(20) NOT NULL UNIQUE
+    name VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
