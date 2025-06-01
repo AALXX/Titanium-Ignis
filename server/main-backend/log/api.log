@@ -6541,3 +6541,408 @@
 [5/30/2025, 2:17:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [5/30/2025, 3:31:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [5/30/2025, 3:31:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 8:07:00 PM] [ERROR] [LOGIN_USER_FUNCTION] Invalid value
+[5/30/2025, 8:07:00 PM] [ERROR] [LOGIN_USER_FUNCTION] Invalid value
+[5/30/2025, 8:07:12 PM] [ERROR] [LOGIN_USER_FUNCTION] Invalid value
+[5/30/2025, 8:07:12 PM] [ERROR] [LOGIN_USER_FUNCTION] Invalid value
+[5/30/2025, 10:32:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:37:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:37:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:38:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:38:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:42:42 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:42:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:42:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:43:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:43:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:43:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:43:27 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 10:43:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:21:53 PM] [ERROR] [CHANGE_USER_DATA] Invalid value
+[5/30/2025, 11:21:53 PM] [ERROR] [CHANGE_USER_DATA] Invalid value
+[5/30/2025, 11:21:53 PM] [ERROR] [CHANGE_USER_DATA] Invalid value
+[5/30/2025, 11:37:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:38:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:38:40 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:38:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:38:58 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/30/2025, 11:39:03 PM] [ERROR] [PG_QUERY_FUNC] null value in column "username" of relation "users" violates not-null constraint
+[5/30/2025, 11:39:03 PM] [ERROR] [CHANGE_USER_DATA] null value in column "username" of relation "users" violates not-null constraint
+[5/30/2025, 11:53:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 12:01:39 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 12:37:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:00:02 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:06:19 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:07:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:08:22 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:08:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:08:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:10:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:12:50 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:12:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 1:13:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:10:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:22:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:29:09 PM] [ERROR] [CHANGE_USER_DATA] Missing credentials for "PLAIN"
+[5/31/2025, 8:29:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:29:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:30:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 8:30:05 PM] [ERROR] [CHANGE_USER_DATA] Missing credentials for "PLAIN"
+[5/31/2025, 9:54:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 9:55:46 PM] [ERROR] [CHANGE_USER_DATA] undefined
+[5/31/2025, 9:56:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 9:56:23 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 9:56:25 PM] [ERROR] [CHANGE_USER_DATA] undefined
+[5/31/2025, 9:56:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 9:56:43 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:00:12 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:00:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:00:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:00:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:00:27 PM] [ERROR] [CHANGE_USER_DATA] Request failed with status code 400
+[5/31/2025, 10:01:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:01:45 PM] [ERROR] [CHANGE_USER_DATA] Request failed with status code 403
+[5/31/2025, 10:02:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:02:12 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:02:18 PM] [ERROR] [CHANGE_USER_DATA] Request failed with status code 403
+[5/31/2025, 10:03:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:04:09 PM] [ERROR] [CHANGE_USER_DATA] Request failed with status code 403
+[5/31/2025, 10:04:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:04:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:04:37 PM] [ERROR] [CHANGE_USER_DATA] AxiosError: Request failed with status code 403
+[5/31/2025, 10:05:14 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:05:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:05:35 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:05:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:05:51 PM] [ERROR] [CHANGE_USER_DATA] AxiosError: Request failed with status code 403
+[5/31/2025, 10:06:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:08:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:08:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:35:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:38:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:38:49 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:38:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:37 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:44 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:47 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:39:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:40:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:41:48 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:43:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:43:26 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:43:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:43:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 10:44:12 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 11:14:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[5/31/2025, 11:47:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:00:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:00:44 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:04:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:36:36 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:22 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:39:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:45:56 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:46:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:46:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:47:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:47:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:47:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:50:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:50:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:50:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:52:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:57:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:58:46 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:58:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:58:59 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:17 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:20 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:24 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 1:59:32 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:00:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:00:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:00:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:00:26 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:00:26 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:01:45 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:01:45 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:02:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:02:18 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:02:18 AM] [ERROR] [CHANGE_USER_EMAIL] Invalid value
+[6/1/2025, 2:04:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:04:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:05:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:05:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:05:22 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:05:48 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:05:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:20 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:31 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:50 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:06:58 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:07:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:07:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:07:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:07:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:19 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:08:52 AM] [ERROR] [PG_QUERY_FUNC] null value in column "useremail" of relation "users" violates not-null constraint
+[6/1/2025, 2:08:52 AM] [ERROR] [CHANGE_USER_EMAIL] null value in column "useremail" of relation "users" violates not-null constraint
+[6/1/2025, 2:09:50 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:10:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:10:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:10:27 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:11:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:12:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:12:05 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:12:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:12:10 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 2:13:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:37:20 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:56:44 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:57:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:57:08 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:57:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:57:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:57:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:58:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:58:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:58:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:03 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:10 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:18 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:20 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:00:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:26 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:37 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:43 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:02:56 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:05 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:52 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:03:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:04:46 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:04:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:04:59 AM] [ERROR] [PG_QUERY_FUNC] column s.user_id does not exist
+[6/1/2025, 5:04:59 AM] [ERROR] [GET_USER_ACCOUNT_DATA] column s.user_id does not exist
+[6/1/2025, 5:05:01 AM] [ERROR] [PG_QUERY_FUNC] column s.user_id does not exist
+[6/1/2025, 5:05:01 AM] [ERROR] [GET_USER_ACCOUNT_DATA] column s.user_id does not exist
+[6/1/2025, 5:05:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:05:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:27 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:36 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:39 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:06:58 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:07:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:07:48 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:11:02 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:12:08 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:14 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:24 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:26 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:39 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:13:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 5:40:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[6/1/2025, 5:40:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 5:40:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:44 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:44 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:45 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:46 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:46 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:47 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:47 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:51:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:05 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:06 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:07 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:08 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:09 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:10 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:10 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:11 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:12 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:16 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:17 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:18 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:18 PM] [ERROR] [PG_CONNECT] the database system is starting up
+[6/1/2025, 4:52:18 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:19 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:19 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:20 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:20 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:52:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[6/1/2025, 4:53:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:37:36 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:38:09 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:38:17 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:41:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:42:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/1/2025, 11:43:55 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 12:01:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 12:09:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 12:11:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 12:54:21 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:10:20 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:11:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:11:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:14:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:14:38 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:14:42 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:14:52 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:01 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:16 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:44 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:15:50 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:16:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:17 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:22 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:32 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:17:43 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[6/2/2025, 1:19:13 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

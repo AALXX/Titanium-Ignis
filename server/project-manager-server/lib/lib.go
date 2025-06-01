@@ -57,22 +57,23 @@ func GetPublicTokenByPrivateToken(PrivateToken string, db *sql.DB) string {
 	return userPublicToken
 }
 
-func GetPrivateTokenBySessionToken(SessionToken string, db *sql.DB) string {
-	rows, err := db.Query("SELECT UserPrivateToken FROM users WHERE UserSessionToken=$1;", SessionToken)
-	if err != nil {
+func GetPrivateTokenBySessionToken(sessionToken string, db *sql.DB) string {
+	const query = `
+		SELECT u.UserPrivateToken
+		FROM account_sessions s
+		INNER JOIN users u ON s.userID = u.id
+		WHERE s.userSessionToken = $1
+		LIMIT 1;
+	`
+
+	row := db.QueryRow(query, sessionToken)
+
+	var userPrivateToken string
+	if err := row.Scan(&userPrivateToken); err != nil {
 		return "error"
 	}
-	defer rows.Close()
-	var UserPrivateToken string
-	for rows.Next() {
-		if err := rows.Scan(&UserPrivateToken); err != nil {
-			return "error"
-		}
-	}
-	if err := rows.Err(); err != nil {
-		return "error"
-	}
-	return UserPrivateToken
+
+	return userPrivateToken
 }
 
 ///////////////////////////////////

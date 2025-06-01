@@ -8,7 +8,6 @@ CREATE TABLE users (
     UserPrivateToken VARCHAR(250) NOT NULL,
     UserPublicToken VARCHAR(250) NOT NULL,
     UserSessionToken VARCHAR(250) NOT NULL,
-    RegistrationType TEXT NOT NULL CHECK(RegistrationType IN ('google', 'credentials')),
     UNIQUE (UserPrivateToken),
     UNIQUE (UserPublicToken),
     UNIQUE (UserSessionToken)

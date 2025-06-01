@@ -22,7 +22,7 @@ const config: NextAuthConfig = {
                 email: { label: 'Email', type: 'text' },
                 password: { label: 'Password', type: 'password' }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error('Missing email or password')
                 }
@@ -42,7 +42,7 @@ const config: NextAuthConfig = {
                     return {
                         id: response.data.userId || 'credentials-user',
                         name: response.data.userName,
-                        email: credentials.email,
+                        email: response.data.userEmail,
                         image: `${process.env.NEXT_PUBLIC_FILE_SERVER}/accounts/${response.data.userSessionToken}?cache=none`,
                         accessToken: response.data.userSessionToken // Pass the token here
                     }
@@ -78,7 +78,7 @@ const config: NextAuthConfig = {
                 userId: token.userId
             }
         },
-        async signIn({ user, account, profile }): Promise<boolean> {
+        async signIn({ user, account }): Promise<boolean> {
             try {
                 if (!account) {
                     throw new Error('Account is null')

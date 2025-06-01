@@ -77,19 +77,27 @@ const checkForPermissions = async (connection: PoolClient, projectToken: string,
  */
 const getUserPrivateTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PRIVATE_TOKEN_FUNC'
-    const QueryString = `SELECT UserPrivateToken FROM users WHERE UserSessionToken='${sessionToken}';`
+
+    if (!sessionToken || sessionToken === 'undefined') {
+        return null
+    }
+
+    if (!connection) {
+        return null
+    }
+
+    const queryString = `
+        SELECT u.UserPrivateToken
+        FROM account_sessions s
+        INNER JOIN users u ON s.userID = u.id
+        WHERE s.userSessionToken = $1
+        LIMIT 1;
+    `
 
     try {
-        if (sessionToken === 'undefined') {
-            return null
-        }
-
-        if (connection == null) {
-            return null
-        }
-        const userData = await query(connection, QueryString)
-        if (Object.keys(userData).length != 0) {
-            return userData[0].userprivatetoken
+        const result = await query(connection, queryString, [sessionToken])
+        if (result.length > 0) {
+            return result[0].userprivatetoken
         } else {
             return null
         }
@@ -130,28 +138,34 @@ const getUserPublicTokenFromPrivateToken = async (connection: PoolClient, userPr
 
 const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PUBLIC_TOKEN_FUNC'
-    const QueryString = `SELECT UserPublicToken FROM users WHERE UserSessionToken='${sessionToken}';`
+
     try {
-        if (sessionToken === 'undefined') {
+        if (!sessionToken || sessionToken === 'undefined' || !connection) {
             return null
         }
 
-        if (connection == null) {
-            return null
-        }
-        const resp = await query(connection, QueryString)
-        if (Object.keys(resp).length != 0) {
+        const queryString = `
+            SELECT u.UserPublicToken
+            FROM account_sessions s
+            INNER JOIN users u ON s.userID = u.id
+            WHERE s.userSessionToken = $1
+            LIMIT 1;
+        `
+
+        const resp = await query(connection, queryString, [sessionToken])
+
+        if (resp.length > 0) {
             return resp[0].userpublictoken
-        } else {
-            return null
         }
+
+        return null
     } catch (error: any) {
         connection?.release()
         logging.error(NAMESPACE, error.message, error)
         return null
     }
-    return null
 }
+
 
 const getUserPrivateTokenFromPublicToken = async (connection: PoolClient, userToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PRIVATE_TOKEN_FUNC'

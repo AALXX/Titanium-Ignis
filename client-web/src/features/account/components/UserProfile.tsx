@@ -10,6 +10,7 @@ interface UserProfileProps {
     name: string
     email: string
     image: string
+    userSessionToken: string
 }
 
 const UserProfile: React.FC<UserProfileProps> = props => {
@@ -49,7 +50,7 @@ const UserProfile: React.FC<UserProfileProps> = props => {
                         setToggledSettingsPopUp(!ToggledSettingsPopUp)
                     }}
                 >
-                    <AccoutSettingsPopup email={props.email} name={props.name} image={props.image} />
+                    <AccoutSettingsPopup email={props.email} name={props.name} image={props.image} userSessionToken={props.userSessionToken} />
                 </PopupCanvas>
             ) : null}
         </>

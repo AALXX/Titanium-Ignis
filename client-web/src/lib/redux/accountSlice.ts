@@ -39,7 +39,11 @@ export const fetchAccount = createAsyncThunk('account/fetchAccount', async (_, {
         }
 
         const data = await response.json()
-        // console.log('API Response:', data)
+
+        if (data.error) {
+            
+            throw new Error(data.error)
+        }
 
         return data
     } catch (error) {

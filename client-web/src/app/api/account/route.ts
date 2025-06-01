@@ -12,10 +12,13 @@ export async function GET(request: NextRequest) {
         const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/get-account-data/${session.accessToken}`)
 
         if (resp.data.error) {
+
+            // erase token
+            session.accessToken = ''
+
             return NextResponse.json({ name: '', authenticated: false }, { status: 200 })
         }
 
-        console.log(resp.data.accountType)
         let image = `${process.env.NEXT_PUBLIC_FILE_SERVER}/accounts/no_auth?cache=none`
         // if (resp.data.accountType === 'github') {
 

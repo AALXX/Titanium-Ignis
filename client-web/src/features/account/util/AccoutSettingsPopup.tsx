@@ -5,22 +5,22 @@ import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { Eye, EyeOff, User, Lock, Bell, Shield, Trash2, Upload } from 'lucide-react'
+import axios from 'axios'
 
 interface AccountSettingsPopupProps {
     name: string
     email: string
     image: string
+    userSessionToken: string
 }
 
-const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email, image }) => {
+const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email, image, userSessionToken }) => {
     const [activeTab, setActiveTab] = useState('profile')
     const [formData, setFormData] = useState({
-        name: name || '',
-        email: email || '',
-        bio: '',
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+        userName: name || '',
+        userEmail: email || '',
+        userDescription: '',
+        userSessionToken: userSessionToken
     })
 
     const [notifications, setNotifications] = useState({
@@ -30,11 +30,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
         securityAlerts: true
     })
 
-    const [showPasswords, setShowPasswords] = useState({
-        current: false,
-        new: false,
-        confirm: false
-    })
+
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -56,8 +52,8 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
         setIsLoading(true)
         try {
             console.log('Saving profile:', formData)
-
-            alert('Profile updated successfully!')
+            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/change-user-data`, formData)
+            console.log(resp.data)
         } catch (error) {
             console.error('Error updating profile:', error)
             alert('Failed to update profile. Please try again.')
@@ -66,41 +62,76 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
         }
     }
 
-    const handleChangePassword = async () => {
-        if (formData.newPassword !== formData.confirmPassword) {
-            alert('New passwords do not match!')
-            return
-        }
-
-        if (formData.newPassword.length < 8) {
-            alert('Password must be at least 8 characters long!')
-            return
-        }
-
-        setIsLoading(true)
+    const handleGetEmailChangeLink = async () => {
         try {
-            // Implement your API call here
-            console.log('Changing password')
-            // await changePassword(formData.currentPassword, formData.newPassword)
+            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/get-change-email-link`, {
+                userSessionToken: userSessionToken
+            })
 
-            setFormData(prev => ({
-                ...prev,
-                currentPassword: '',
-                newPassword: '',
-                confirmPassword: ''
-            }))
+            if (resp.data.error) {
+                return
+            }
 
-            alert('Password changed successfully!')
         } catch (error) {
-            console.error('Error changing password:', error)
-            alert('Failed to change password. Please try again.')
-        } finally {
-            setIsLoading(false)
+            console.error('Error getting email change link:', error)
         }
     }
 
+    const handleGetPasswordChangeLink = async () => {
+        try {
+            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/get-change-password-link`, {
+                userSessionToken: userSessionToken
+            })
+            console.log(resp.data)
+        } catch (error) {
+            console.error('Error getting password change link:', error)
+        }
+    }
+
+    // const handleChangePassword = async () => {
+    //     if (formData.newPassword !== formData.confirmPassword) {
+    //         alert('New passwords do not match!')
+    //         return
+    //     }
+
+    //     if (formData.newPassword.length < 8) {
+    //         alert('Password must be at least 8 characters long!')
+    //         return
+    //     }
+
+    //     setIsLoading(true)
+    //     try {
+    //         // Implement your API call here
+    //         console.log('Changing password')
+    //         // await changePassword(formData.currentPassword, formData.newPassword)
+
+    //         setFormData(prev => ({
+    //             ...prev,
+    //             currentPassword: '',
+    //             newPassword: '',
+    //             confirmPassword: ''
+    //         }))
+
+    //         alert('Password changed successfully!')
+    //     } catch (error) {
+    //         console.error('Error changing password:', error)
+    //         alert('Failed to change password. Please try again.')
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }
+
     const handleSignOut = async () => {
         try {
+            const resp = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/logout`, {
+                userSessionToken
+            })
+
+            if (resp.data.error) {
+                console.error('Error during sign out:', resp.data.error)
+                return
+            }
+
             await signOut({ callbackUrl: '/account/login-register' })
         } catch (error) {
             console.error('Error during sign out:', error)
@@ -171,8 +202,8 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                     </label>
                                     <input
                                         id="name"
-                                        value={formData.name}
-                                        onChange={e => handleInputChange('name', e.target.value)}
+                                        value={formData.userName}
+                                        onChange={e => handleInputChange('userName', e.target.value)}
                                         className="w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                         placeholder="Enter your full name"
                                     />
@@ -182,14 +213,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                     <label htmlFor="email" className="block text-white">
                                         Email Address
                                     </label>
-                                    <input
-                                        id="email"
-                                        type="email"
-                                        value={formData.email}
-                                        onChange={e => handleInputChange('email', e.target.value)}
-                                        className="w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                                        placeholder="Enter your email"
-                                    />
+                                    <h1 className="w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none">{formData.userEmail}</h1>
                                 </div>
                             </div>
 
@@ -199,8 +223,8 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                 </label>
                                 <textarea
                                     id="bio"
-                                    value={formData.bio}
-                                    onChange={e => handleInputChange('bio', e.target.value)}
+                                    value={formData.userDescription}
+                                    onChange={e => handleInputChange('userDescription', e.target.value)}
                                     className="min-h-[100px] w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                     placeholder="Tell us about yourself..."
                                 />
@@ -218,7 +242,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
 
                     {activeTab === 'security' && (
                         <div className="space-y-6">
-                            <div className="space-y-4">
+                            <div className="mt-4 space-y-4">
                                 <div className="mb-4 flex items-center gap-2">
                                     <Lock className="h-5 w-5 text-white" />
                                     <h3 className="text-lg font-semibold text-white">Change Password</h3>
@@ -226,84 +250,37 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
 
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <label htmlFor="currentPassword" className="block text-white">
-                                            Current Password
-                                        </label>
                                         <div className="relative">
-                                            <input
-                                                id="currentPassword"
-                                                type={showPasswords.current ? 'text' : 'password'}
-                                                value={formData.currentPassword}
-                                                onChange={e => handleInputChange('currentPassword', e.target.value)}
-                                                className="w-full rounded-md bg-[#353535] px-3 py-2 pr-10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                                                placeholder="Enter current password"
-                                            />
                                             <button
                                                 type="button"
-                                                className="absolute top-0 right-0 h-full px-3 py-2 text-gray-400 hover:text-white"
-                                                onClick={() => setShowPasswords(prev => ({ ...prev, current: !prev.current }))}
+                                                className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]"
+                                                onClick={handleGetPasswordChangeLink}
                                             >
-                                                {showPasswords.current ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label htmlFor="newPassword" className="block text-white">
-                                            New Password
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                id="newPassword"
-                                                type={showPasswords.new ? 'text' : 'password'}
-                                                value={formData.newPassword}
-                                                onChange={e => handleInputChange('newPassword', e.target.value)}
-                                                className="w-full rounded-md bg-[#353535] px-3 py-2 pr-10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                                                placeholder="Enter new password"
-                                            />
-                                            <button
-                                                type="button"
-                                                className="absolute top-0 right-0 h-full px-3 py-2 text-gray-400 hover:text-white"
-                                                onClick={() => setShowPasswords(prev => ({ ...prev, new: !prev.new }))}
-                                            >
-                                                {showPasswords.new ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label htmlFor="confirmPassword" className="block text-white">
-                                            Confirm New Password
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                id="confirmPassword"
-                                                type={showPasswords.confirm ? 'text' : 'password'}
-                                                value={formData.confirmPassword}
-                                                onChange={e => handleInputChange('confirmPassword', e.target.value)}
-                                                className="w-full rounded-md bg-[#353535] px-3 py-2 pr-10 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                                                placeholder="Confirm new password"
-                                            />
-                                            <button
-                                                type="button"
-                                                className="absolute top-0 right-0 h-full px-3 py-2 text-gray-400 hover:text-white"
-                                                onClick={() => setShowPasswords(prev => ({ ...prev, confirm: !prev.confirm }))}
-                                            >
-                                                {showPasswords.confirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                                Change Password
                                             </button>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button
-                                    onClick={handleChangePassword}
-                                    disabled={isLoading || !formData.currentPassword || !formData.newPassword || !formData.confirmPassword}
-                                    className={`rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 ${
-                                        isLoading || !formData.currentPassword || !formData.newPassword || !formData.confirmPassword ? 'cursor-not-allowed opacity-70' : ''
-                                    }`}
-                                >
-                                    {isLoading ? 'Changing...' : 'Change Password'}
-                                </button>
+                                <div className="my-4 h-px w-full bg-white" />
+
+                                <div className="mb-4 flex items-center gap-2">
+                                    <Lock className="h-5 w-5 text-white" />
+                                    <h3 className="text-lg font-semibold text-white">Change Email</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <div className="relative">
+                                            <button
+                                                type="button"
+                                                className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]"
+                                                onClick={handleGetEmailChangeLink}
+                                            >
+                                                Change Email
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div className="my-4 h-px w-full bg-white" />
 

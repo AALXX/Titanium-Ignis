@@ -149,19 +149,27 @@ const checkEmailExists = async (connection: PoolClient, userEmail: string): Prom
  */
 const getUserPrivateTokenFromSessionToken = async (connection: PoolClient, sessionToken: string): Promise<string | null> => {
     const NAMESPACE = 'GET_USER_PRIVATE_TOKEN_FUNC';
-    const QueryString = `SELECT UserPrivateToken FROM users WHERE UserSessionToken='${sessionToken}';`;
+
+    if (!sessionToken || sessionToken === 'undefined') {
+        return null;
+    }
+
+    if (!connection) {
+        return null;
+    }
+
+    const queryString = `
+        SELECT u.UserPrivateToken
+        FROM account_sessions s
+        INNER JOIN users u ON s.userID = u.id
+        WHERE s.userSessionToken = $1
+        LIMIT 1;
+    `;
 
     try {
-        if (sessionToken === 'undefined') {
-            return null;
-        }
-
-        if (connection == null) {
-            return null;
-        }
-        const userData = await query(connection, QueryString);
-        if (Object.keys(userData).length != 0) {
-            return userData[0].userprivatetoken;
+        const result = await query(connection, queryString, [sessionToken]);
+        if (result.length > 0) {
+            return result[0].userprivatetoken;
         } else {
             return null;
         }

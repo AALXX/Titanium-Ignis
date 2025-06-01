@@ -45,7 +45,6 @@ const UserProjects: React.FC<UserProjectsProps> = ({ projects }) => {
     }
 
     const formatDate = (dateString: string) => {
-        console.log(dateString)
         return new Date(dateString).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',

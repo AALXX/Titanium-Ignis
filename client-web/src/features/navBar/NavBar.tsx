@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getCookie } from 'cookies-next'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAccount } from '@/lib/redux/accountSlice'
