@@ -8,7 +8,6 @@ import axios from 'axios'
 const Account = async () => {
     const session = await auth()
 
-    console.log(session)
     if (!session || !session.user) {
         redirect('/account/login-register')
     }

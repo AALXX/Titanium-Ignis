@@ -1825,3 +1825,4 @@
 [6/1/2025, 11:46:39 PM] [INFO] [DockerStateTracker] Found 2 containers for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
 [6/1/2025, 11:46:39 PM] [INFO] [DockerStateTracker] Event monitoring started for project eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc with 2 containers
 [6/1/2025, 11:46:39 PM] [INFO] [DeploymentsMonitoring_API] Started events monitoring for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.umgKzVibDSJ6EsTbMPz-KHSfoiDwwj8W3JnOeV-ljsc
+[6/2/2025, 1:24:16 AM] [INFO] [DeploymentsMonitoring_API] Api is running on: localhost:5090

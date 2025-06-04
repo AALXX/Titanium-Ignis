@@ -5,8 +5,8 @@ go 1.23.0
 toolchain go1.23.4
 
 require (
-	github.com/fsnotify/fsnotify v1.8.0
-	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/fsnotify/fsnotify v1.9.0
+	github.com/gofiber/fiber/v2 v2.52.8
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 )
@@ -20,6 +20,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.59.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	github.com/valyala/fasthttp v1.62.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
 )
