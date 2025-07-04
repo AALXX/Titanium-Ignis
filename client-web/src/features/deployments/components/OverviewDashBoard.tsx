@@ -54,8 +54,6 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
         refreshData()
     }, [])
 
-
-    
     useEffect(() => {
         ;(async () => {
             const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-services/${projectToken}/${userSessionToken}`)
@@ -63,14 +61,11 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
                 console.error('Error fetching requests:', resp.data.error)
                 return
             }
-            console.log(resp.data.services)
             setServices(resp.data.services)
         })()
     }, [projectToken, userSessionToken])
 
-
     useEffect(() => {
-
         const deploymentsSocket = io(`${process.env.NEXT_PUBLIC_DEPLOYMENTS_SERVER}`, {
             transports: ['websocket'],
             reconnection: true,
@@ -91,9 +86,27 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
             setDeployments(data.deployments)
         })
 
+        deploymentsSocket.on('DELETED_DEPLOYMENT', (data: { projectToken: string; deploymentToken: string }) => {
+            setDeployments(prev => prev.filter(deployment => deployment.deploymenttoken !== data.deploymentToken))
+        })
+
         deploymentsSocket.on('deployment-event', (data: { deploymentToken: string; currentState: eDeploymentStatus }) => {
-            console.log(data)
             setDeployments(prev => prev.map(deployment => (deployment.deploymenttoken === data.deploymentToken ? { ...deployment, status: data.currentState } : deployment)))
+        })
+        deploymentsSocket.on('CREATE_DEPLOYMENT', (data: { vmToken: string; formData: ServiceCardPropsRequest }) => {
+            const { formData, vmToken } = data
+
+            const normalizedDeployment: ServiceCardPropsRequest = {
+                ...formData,
+                deploymenttoken: vmToken,
+                id: formData.id, // might be undefined if not set from backend
+                os: formData.os.os, // convert object to string
+                dataCenterLocation: formData.dataCenterLocation.datacenterlocation // same here
+                
+                // repeat for other nested objects if needed
+            }
+
+            setDeployments(prev => [...prev, normalizedDeployment])
         })
 
         return () => {
@@ -110,9 +123,6 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
             </div>
         )
     }
-
-
-
 
     const renderComponent = () => {
         switch (activeTab) {
@@ -192,8 +202,8 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
             case 'services':
                 return (
                     <div className="flex flex-col gap-3">
-                        {deployments.map(deployment => (
-                            <div key={deployment.id}>
+                        {deployments.map((deployment, index) => (
+                            <div key={index}>
                                 <ServiceCard deployment={deployment} socket={deploymentsSocket} userSessionToken={userSessionToken} />
                             </div>
                         ))}

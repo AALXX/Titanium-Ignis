@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messaging-deployment
+  namespace: mda-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: messaging
+  template:
+    metadata:
+      labels:
+        app: messaging
+    spec:
+      containers:
+      - name: messaging
+        image: mda-platform/messaging:latest
+        ports:
+        - containerPort: 4070
+        env:
+        - name: SERVER_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: SERVER_HOSTNAME
+        - name: PORT
+          value: "4070"
+        - name: POSTGRESQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_HOST
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_DATABASE
+        - name: POSTGRESQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_USER
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: SCYLLA_KEY_SPACE
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: SCYLLA_KEY_SPACE
+        - name: SCYLLA_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: SCYLLA_USER
+        - name: SCYLLA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: scylla-secret
+              key: password
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: REDIS_URL
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+        - name: ACCOUNTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: ACCOUNTS_FOLDER_PATH
+        - name: MESSAGES_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: MESSAGES_FOLDER_PATH
+        - name: FILES_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: FILES_SERVER
+        - name: FILES_SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: FILES_SERVER_PORT
+        volumeMounts:
+        - name: accounts-volume
+          mountPath: /app/accounts
+        - name: messages-volume
+          mountPath: /app/messages
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4070
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 4070
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: accounts-volume
+        persistentVolumeClaim:
+          claimName: accounts-pvc
+      - name: messages-volume
+        persistentVolumeClaim:
+          claimName: messages-pvc
+apiVersion: v1
+kind: Service
+metadata:
+  name: messaging-service
+  namespace: mda-platform
+spec:
+  selector:
+    app: messaging
+  ports:
+  - protocol: TCP
+    port: 4070
+    targetPort: 4070
+  type: ClusterIP

@@ -1,0 +1,169 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-monitoring-deployment
+  namespace: mda-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: deployment-monitoring
+  template:
+    metadata:
+      labels:
+        app: deployment-monitoring
+    spec:
+      containers:
+      - name: deployment-monitoring
+        image: mda-platform/deployment-monitoring:latest
+        ports:
+        - containerPort: 5090
+        env:
+        - name: SERVER_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: SERVER_HOSTNAME
+        - name: PORT
+          value: "5090"
+        - name: POSTGRESQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_HOST
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_DATABASE
+        - name: POSTGRESQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_USER
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: REDIS_URL
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+        - name: TEMP_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: TEMP_FOLDER_PATH
+        - name: ACCOUNT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: deployment-monitoring-secret
+              key: account-secret
+        - name: ACCOUNTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: ACCOUNTS_FOLDER_PATH
+        - name: CHANGE_PWD_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: deployment-monitoring-secret
+              key: change-pwd-secret
+        - name: platform_gmail
+          valueFrom:
+            secretKeyRef:
+              name: deployment-monitoring-secret
+              key: platform-gmail
+        - name: platform_gmail_password
+          valueFrom:
+            secretKeyRef:
+              name: deployment-monitoring-secret
+              key: platform-gmail-password
+        - name: PROJECTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: PROJECTS_FOLDER_PATH
+        - name: REPOSITORIES_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: REPOSITORIES_FOLDER_PATH
+        - name: PROJECT_DEPLOYMENT_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: PROJECT_DEPLOYMENT_FOLDER_PATH
+        - name: GIT_REPOSITORY
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: GIT_REPOSITORY
+        volumeMounts:
+        - name: accounts-volume
+          mountPath: /app/accounts
+        - name: projects-volume
+          mountPath: /app/projects
+        - name: repos-volume
+          mountPath: /app/repos
+        - name: deployments-volume
+          mountPath: /app/local-deployments
+        - name: temp-volume
+          mountPath: /app/tmp
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5090
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5090
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: accounts-volume
+        persistentVolumeClaim:
+          claimName: accounts-pvc
+      - name: projects-volume
+        persistentVolumeClaim:
+          claimName: projects-pvc
+      - name: repos-volume
+        persistentVolumeClaim:
+          claimName: repos-pvc
+      - name: deployments-volume
+        persistentVolumeClaim:
+          claimName: deployments-pvc
+      - name: temp-volume
+        persistentVolumeClaim:
+          claimName: temp-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployments-service
+  namespace: mda-platform
+spec:
+  selector:
+    app: deployment-monitoring
+  ports:
+  - protocol: TCP
+    port: 5090
+    targetPort: 5090
+  type: ClusterIP

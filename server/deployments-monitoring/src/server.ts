@@ -83,6 +83,10 @@ io.on('connection', socket => {
         return DeploymentsServices.stopDeployment(pool, io, socket, projectToken, deploymentToken)
     })
     
+    socket.on('delete-deployment', async ({ projectToken, deploymentToken }) => {
+        return DeploymentsServices.deleteDeployment(pool, io, socket, projectToken, deploymentToken)
+    })
+    
     socket.on('disconnect', () => {})
 })
 

@@ -4,13 +4,15 @@ import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import ProjectList from '@/features/projects/components/ProjectList'
 import Link from 'next/link'
 import { Lock } from 'lucide-react'
+import UserProjects from '@/features/account/components/UserProjects'
 
 const ProjectsPage = async () => {
     const accountStatus = await checkAccountStatus()
     let projects = []
     if (accountStatus.accessToken) {
-        const resp = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-projects/${accountStatus.accessToken}`)
-        projects = resp.data.projects
+        const projectsResponse = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/user-account-manager/get-all-user-projects/${accountStatus.accessToken}`)
+
+        projects = projectsResponse.data.projects
     }
 
     if (!accountStatus.isLoggedIn) {
@@ -47,7 +49,22 @@ const ProjectsPage = async () => {
         )
     }
 
-    return <ProjectList OwnerProjects={projects} />
+    return (
+        <div className="flex h-full flex-col overflow-y-auto">
+            <div className="flex flex-row">
+                <Link href="/projects/create-project">
+                    <button className="mt-10 mr-auto ml-4 rounded-xl border p-4 font-bold text-white hover:bg-white/10">Create projects</button>
+                </Link>
+                <Link href="/projects/add-project">
+                    <button className="mt-10 mr-auto ml-4 rounded-xl border p-4 font-bold text-white hover:bg-white/10">Add projects</button>
+                </Link>
+            </div>
+
+            <div className=" p-4">
+                <UserProjects projects={projects} />
+            </div>
+        </div>
+    )
 }
 
 export default ProjectsPage

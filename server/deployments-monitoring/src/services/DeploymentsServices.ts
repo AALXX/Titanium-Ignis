@@ -11,6 +11,7 @@ import Docker from 'dockerode'
 import { v4 } from 'uuid'
 import fs from 'fs-extra'
 import path from 'path'
+import getPort from 'get-port'
 
 const getAllDeployments = async (pool: Pool, io: Server, socket: Socket, projectToken: string, userSessionToken: string) => {
     try {
@@ -143,6 +144,8 @@ const createDeployment = async (
                     name: sanitizedName
                 }
 
+                socket.emit('CREATE_DEPLOYMENT', { vmToken: vmToken, formData: modifiedFormData })
+
                 const info: { error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]>; containerID: string } = await createLinuxVm(connection!, modifiedFormData, projectToken)
 
                 if (info.error) {
@@ -218,7 +221,7 @@ RETURNING id  -- Return values to confirm update`
                 }
 
                 const serviceInfo: { error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]>; containerID: string } = await createServiceDeployment(connection!, formData, projectToken)
-
+                console.log(serviceInfo)
                 if (serviceInfo.error) {
                     logging.error('CREATE_DEPLOYMENT', 'Something went wrong')
                     socket.emit('create-deployment-error', {
@@ -332,6 +335,8 @@ const createLinuxVm = async (
         }
     }
 
+    const sshPort = await getPort() // dynamically gets an available port
+
     const container = await docker.createContainer({
         Image: imageName,
         Cmd: ['/bin/bash'],
@@ -341,7 +346,13 @@ const createLinuxVm = async (
             '22/tcp': {}
         },
         HostConfig: {
-            PortBindings: {}
+            PortBindings: {
+                '22/tcp': [
+                    {
+                        HostPort: sshPort.toString()
+                    }
+                ]
+            }
         },
         Labels: {
             'com.docker.compose.project': `${projectToken}`,
@@ -388,6 +399,8 @@ const createLinuxVm = async (
     const portsObj: Record<string, string[]> = {}
     const containerID = container.id
 
+    console.log(portsObj)
+
     const portsData = data.NetworkSettings.Ports
     for (const port in portsData) {
         portsObj[port] = portsData[port]?.map((p: any) => p.HostPort) || []
@@ -428,7 +441,7 @@ const createServiceDeployment = async (
 
     const imageName = mapServiceToImage(projectConfig.services[Number(formData.serviceID!) - 1]['start-command'])
     const newUsername = `${formData.name}_service`
-    // const userPassword = newUsername
+    const userPassword = newUsername
 
     try {
         await docker.getImage(imageName).inspect()
@@ -466,7 +479,7 @@ const createServiceDeployment = async (
                 }
             })
         } catch (pullErr) {
-            logging.error('CREATE_DEPLOYMENT', pullErr instanceof Error ? pullErr.message : JSON.stringify(pullErr))
+            logging.error('CREATE_DEPLOYMENT_PULL_ERROR', pullErr instanceof Error ? pullErr.message : JSON.stringify(pullErr))
             throw pullErr
         }
     }
@@ -499,11 +512,11 @@ const createServiceDeployment = async (
     })
 
     await container.start()
+
     // add bash
     await execInContainer(container, ['apk', 'add', '--no-cache', 'bash'])
 
     const tempDir = path.join(`${process.env.TEMP_FOLDER_PATH}`, `project-deploy-${projectToken}`)
-
     await fs.emptyDir(tempDir)
 
     await fs.copy(path.join(process.env.PROJECTS_FOLDER_PATH!, projectToken), path.join(tempDir, `${projectToken}_copy`), {
@@ -532,12 +545,10 @@ const createServiceDeployment = async (
         throw copyErr
     }
 
-
     if (projectConfig.services[Number(formData.serviceID!) - 1].setup !== undefined && projectConfig.services[Number(formData.serviceID!) - 1].setup!.length > 0) {
         try {
             for (const setupCommand of projectConfig.services[Number(formData.serviceID!) - 1].setup!) {
                 await execInContainer(container, ['bash', '-c', `cd /app/${projectToken}_copy && ${setupCommand.run}`])
-                
             }
         } catch (setupErr) {
             logging.error('CREATE_DEPLOYMENT_SETUP', setupErr instanceof Error ? setupErr.message : JSON.stringify(setupErr))
@@ -548,9 +559,7 @@ const createServiceDeployment = async (
     if (projectConfig.services[Number(formData.serviceID!) - 1]['start-command'] !== undefined && projectConfig.services[Number(formData.serviceID!) - 1]['start-command']!.length > 0) {
         try {
             await execInContainer(container, ['bash', '-c', `cd /app/${projectToken}_copy && ${projectConfig.services[Number(formData.serviceID!) - 1]['start-command']}`], true)
-            
         } catch (startErr) {
-            console.log('2_errs')
             logging.error('CREATE_DEPLOYMENT_START', startErr instanceof Error ? startErr.message : JSON.stringify(startErr))
             throw startErr
         }
@@ -592,4 +601,47 @@ const createDBDeployment = async (
     }
 }
 
-export default { getAllDeployments, createDeployment, startDeployment, stopDeployment }
+const deleteDeployment = async (pool: Pool, io: Server, socket: Socket, projectToken: string, deploymentToken: string) => {
+    try {
+        const connection = await connect(pool)
+        await stopDeployment(pool, io, socket, projectToken, deploymentToken)
+        const deleteDeploymentQuery = `
+            DELETE FROM projects_deployments
+            WHERE ProjectToken = $1 AND DeploymentToken = $2
+        `
+        const getDeploymentQuery = `SELECT ContainerID FROM projects_deployments WHERE projecttoken = $1 AND deploymenttoken = $2`
+
+        const deployment = await query(connection!, getDeploymentQuery, [projectToken, deploymentToken])
+        if (deployment.length === 0) {
+            return socket.emit('stop-deployment-error', {
+                error: true,
+                errmsg: 'Deployment not found'
+            })
+        }
+
+        try {
+            await docker.getContainer(deployment[0].containerid).remove()
+        } catch (error: any) {
+            logging.error('DELETE_DEPLOYMENT', error.message)
+            return socket.emit('delete-deployment-error', {
+                error: true,
+                errmsg: 'Failed to connect to database'
+            })
+        }
+            await query(connection!, deleteDeploymentQuery, [projectToken, deploymentToken])
+
+        connection!.release()
+        return socket.emit('DELETED_DEPLOYMENT', {
+            projectToken: projectToken,
+            deploymentToken: deploymentToken
+        })
+    } catch (error: any) {
+        logging.error('DELETE_DEPLOYMENT', error.message)
+        return socket.emit('delete-deployment-error', {
+            error: true,
+            errmsg: 'Failed to connect to database'
+        })
+    }
+}
+
+export default { getAllDeployments, createDeployment, startDeployment, stopDeployment, deleteDeployment }

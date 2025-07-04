@@ -56,10 +56,7 @@ router.get(
     ProjectTeamManagementServices.getProjectTeamData,
 );
 
-router.get(
-    '/get-team-roles',
-    ProjectTeamManagementServices.getTeamRoles,
-);
+router.get('/get-team-roles', ProjectTeamManagementServices.getTeamRoles);
 
 // Add team member - requires team management permissions
 router.post(
@@ -151,6 +148,14 @@ router.get(
     param('projectToken').not().isEmpty(),
     param('userSessionToken').not().isEmpty(),
     ProjectCodeBaseDeployments.getDeploymentOptions,
+);
+
+router.get(
+    '/get-deployment-details/:projectToken/:deploymentToken/:userSessionToken',
+    param('projectToken').not().isEmpty(),
+    param('deploymentToken').not().isEmpty(),
+    param('userSessionToken').not().isEmpty(),
+    ProjectCodeBaseDeployments.getDeploymentDetails,
 );
 
 // Execute deployment - requires deployment execute permissions

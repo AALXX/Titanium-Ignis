@@ -35,7 +35,7 @@ export default function NotFound() {
                 </div>
             </main>
 
-            <footer className="w-full border-t border-white ">
+            <footer className="w-full  ">
                 <div className="w-full self-center px-4 py-8 text-center">
                     <p className="text-sm text-zinc-400">© 2025 Titanium Ignis. All rights reserved.</p>
                 </div>

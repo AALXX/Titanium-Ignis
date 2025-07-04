@@ -44,7 +44,6 @@ const ProjectOverview: React.FC<{ params: Promise<{ ProjectToken: string }> }> =
 
                 <div className="flex h-[60vh] flex-col overflow-hidden md:h-3/5">
                     <div className="h-full overflow-y-auto p-4">
-                        {/* Content for top section */}
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
                             <div className="h-64 rounded-lg bg-[#0000003d] p-4">
                                 <h3 className="mb-2 flex items-center gap-2 text-lg font-medium text-white">
@@ -63,6 +62,8 @@ const ProjectOverview: React.FC<{ params: Promise<{ ProjectToken: string }> }> =
                                 </h3>
                                 <div className="h-[calc(100%-3rem)] rounded-md bg-black/20 p-3">
                                     <div className="grid h-full grid-cols-2 gap-2">
+
+                                        
                                         <div className="flex flex-col items-center justify-center rounded-md bg-black/30 p-2">
                                             <span className="text-xs text-gray-400">Tasks</span>
                                             <span className="text-xl font-bold text-white">12</span>

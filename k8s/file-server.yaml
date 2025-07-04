@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-server-deployment
+  namespace: mda-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: file-server
+  template:
+    metadata:
+      labels:
+        app: file-server
+    spec:
+      containers:
+      - name: file-server
+        image: mda-platform/file-server:latest
+        ports:
+        - containerPort: 5600
+        volumeMounts:
+        - name: accounts-volume
+          mountPath: /accounts
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5600
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5600
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: accounts-volume
+        persistentVolumeClaim:
+          claimName: accounts-pvc
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-server-service
+  namespace: mda-platform
+spec:
+  selector:
+    app: file-server
+  ports:
+  - protocol: TCP
+    port: 5600
+    targetPort: 5600
+  type: ClusterIP

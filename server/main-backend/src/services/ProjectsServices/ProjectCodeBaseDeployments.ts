@@ -15,6 +15,14 @@ import { DeploymentFormData, eDeploymentStatus } from '../../types/DeploymentTyp
 import Docker, { Container } from 'dockerode';
 import { v4 } from 'uuid';
 
+const CustomRequestValidationResult = validationResult.withDefaults({
+    formatter: (error) => {
+        return {
+            errorMsg: error.msg,
+        };
+    },
+});
+
 const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
 const startDeploymentProcedure = async (
     socket: Socket,
@@ -270,6 +278,15 @@ const DeployWithDockerCompose = async (
 };
 
 const getDeploymentsOverviewData = async (req: CustomRequest, res: Response): Promise<void> => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
+        });
+
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
+    }
     try {
         const connection = await connect(req.pool!);
 
@@ -342,6 +359,16 @@ const getDeploymentsOverviewData = async (req: CustomRequest, res: Response): Pr
 };
 
 const getDeploymentOptions = async (req: CustomRequest, res: Response): Promise<void> => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
+        });
+
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
+    }
+
     try {
         const connection = await connect(req.pool!);
 
@@ -371,199 +398,45 @@ const getDeploymentOptions = async (req: CustomRequest, res: Response): Promise<
     }
 };
 
+const getDeploymentDetails = async (req: CustomRequest, res: Response): Promise<void> => {
+    const errors = CustomRequestValidationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().map((error) => {
+            logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
+        });
 
+        res.status(200).json({ error: true, errors: errors.array() });
+        return;
+    }
 
-// const docker = new Docker();
+    try {
+        const connection = await connect(req.pool!);
 
-// const createDeployment = async (req: CustomRequest, res: Response): Promise<void> => {
-//     try {
-//         const connection = await connect(req.pool!);
-//         switch (req.body.formData.type) {
-//             case 'linux':
-//                 const vmToken = v4();
+        const [project, deployment] = await Promise.all([
+            query(connection!, 'SELECT projectname, projecttoken, created_at FROM projects WHERE projecttoken = $1', [req.params.projectToken]),
+            query(
+                connection!,
+                'SELECT deploymenttoken, serviceid, name, type, domain, ipv4, ipv6, localip, ports, datacenterlocation, os, createdat, deployedat, updatedat, status, environment, isactive, additionalinfo, resourceallocation, deploymentmethod, deploymentduration, deployedby, lasthealthcheckat, rollbackreference, tags FROM projects_deployments WHERE deploymenttoken = $1',
+                [req.params.deploymentToken],
+            ),
+        ]);
+        console.log(project, deployment);
 
-//                 // Sanitize the VM name to meet Docker's naming requirements
-//                 let sanitizedName = req.body.formData.name
-//                     .replace(/[^a-zA-Z0-9_.-]/g, '') // Remove invalid characters
-//                     .replace(/^[^a-zA-Z0-9]/g, 'vm'); // Ensure starts with alphanumeric
+        connection?.release();
 
-//                 if (sanitizedName.length === 0) {
-//                     sanitizedName = `vm-${vmToken.substring(0, 8)}`; // Fallback name if all chars were stripped
-//                 }
+        res.status(200).json({
+            error: false,
+            project: project,
+            deployment: deployment,
+        });
+        return;
+    } catch (error: any) {
+        logging.error('GET_DEPLOYMENT_DETAILS', error);
+        res.status(200).json({
+            error: true,
+            message: 'Something went wrong',
+        });
+    }
+};
 
-//                 const additionalData = {
-//                     sshName: `${sanitizedName}_machine`,
-//                 };
-
-//                 // console.log(req.body.formData.dataCenterLocation.datacenterlocation);
-//                 const addNewLinuxVm = `INSERT INTO projects_deployments (DeploymentToken, projecttoken, name, IpV4, LocalIp, type, os, DataCenterLocation, status, AdditionalInfo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10); `;
-//                 const addNewLinuxVmResult = await query(connection!, addNewLinuxVm, [
-//                     vmToken,
-//                     req.body.projectToken,
-//                     sanitizedName, // Use sanitized name
-//                     'Not Assigned Yet',
-//                     'Not Assigned Yet',
-//                     req.body.formData.type,
-//                     req.body.formData.os.os,
-//                     req.body.formData.dataCenterLocation.datacenterlocation,
-//                     'pending',
-//                     additionalData,
-//                 ]);
-
-//                 if (addNewLinuxVmResult.error) {
-//                     logging.error('CREATE_DEPLOYMENT', addNewLinuxVmResult.error);
-//                     res.status(200).json({
-//                         error: true,
-//                         message: 'Something went wrong',
-//                     });
-//                     return;
-//                 }
-
-//                 // Pass sanitized name to the VM creation function
-//                 const modifiedFormData = {
-//                     ...req.body.formData,
-//                     name: sanitizedName,
-//                 };
-
-//                 const info: { error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]> } = await createLinuxVm(connection!, modifiedFormData, req.body.projectToken);
-
-//                 if (info.error) {
-//                     logging.error('CREATE_DEPLOYMENT', 'Something went wrong');
-//                     res.status(200).json({
-//                         error: true,
-//                         message: 'Something went wrong',
-//                     });
-//                     return;
-//                 }
-
-//                 const changeDeploymentStatus = `UPDATE projects_deployments
-// SET 
-//     status = $1, 
-//     ipv4 = $2,
-//     localip = $3,
-//     Ports = $4,
-//     deployedat = NOW()
-// WHERE 
-//     DeploymentToken = $5
-
-// RETURNING id  -- Return values to confirm update`;
-
-//                 const updateResult = await query(connection!, changeDeploymentStatus, ['deployed', info.publicIp, info.privateIp, info.ports, vmToken]);
-//                 connection?.release();
-
-//                 if (updateResult.length === 0 || updateResult[0].id === undefined) {
-//                     logging.error('CREATE_DEPLOYMENT', 'Update returned no results');
-//                     res.status(200).json({
-//                         error: true,
-//                         message: 'Something went wrong',
-//                     });
-//                     return;
-//                 }
-
-//                 break;
-
-//             default:
-//                 break;
-//         }
-
-//         res.status(200).json({
-//             error: false,
-//             message: 'Deployment created',
-//         });
-//         return;
-//     } catch (error: any) {
-//         logging.error('CREATE_DEPLOYMENT', error.message || error);
-//         res.status(200).json({
-//             error: true,
-//             message: 'Something went wrong',
-//         });
-//     }
-// };
-
-// const createLinuxVm = async (connection: PoolClient, formData: DeploymentFormData, projectToken: string): Promise<{ error: boolean; publicIp: string; privateIp: string; ports: Record<string, string[]> }> => {
-//     const getOsQuery = `SELECT os FROM deployment_os WHERE id = $1`;
-//     const os = await query(connection!, getOsQuery, [formData.os.id]);
-//     const imageName = utilFunctions.mapOsToImage(os[0].os);
-//     const newUsername = `${formData.name}_machine`;
-//     const userPassword = newUsername;
-
-//     try {
-//         await docker.getImage(imageName).inspect();
-//         console.log(`Image ${imageName} already exists locally.`);
-//     } catch (err) {
-//         // console.log(`Pulling image ${imageName}...`);
-//         await new Promise((resolve, reject) => {
-//             docker.pull(imageName, (err: any, stream: any) => {
-//                 if (err) return reject(err);
-//                 docker.modem.followProgress(stream, resolve, reject);
-//             });
-//         });
-//     }
-
-//     const container = await docker.createContainer({
-//         Image: imageName,
-//         Cmd: ['/bin/bash'],
-//         name: formData.name,
-//         Tty: true,
-//         ExposedPorts: { '22/tcp': {} },
-//         HostConfig: { PublishAllPorts: true },
-//         Labels: {
-//             'com.docker.compose.project': `${projectToken}`,
-//             'com.docker.compose.service': `${formData.name}`,
-//         },
-//     });
-
-//     await container.start();
-//     logging.info('CREATE_DEPLOYMENT', `Container ${container.id} created`);
-
-//     const pkgInstall = async (cmds: string[][]) => {
-//         for (const cmd of cmds) {
-//             await utilFunctions.execInContainer(container, cmd);
-//         }
-//     };
-
-//     const distro = imageName.toLowerCase();
-//     logging.info('CREATE_DEPLOYMENT', `Installing SSH + user on ${distro}`);
-
-//     if (distro.includes('ubuntu') || distro.includes('debian')) {
-//         await pkgInstall([
-//             ['apt', 'update'],
-//             ['apt', 'install', '-y', 'sudo', 'openssh-server'],
-//         ]);
-//     } else if (distro.includes('centos') || distro.includes('rocky') || distro.includes('almalinux')) {
-//         await pkgInstall([['yum', 'install', '-y', 'sudo', 'openssh-server']]);
-//     } else if (distro.includes('fedora')) {
-//         await pkgInstall([['dnf', 'install', '-y', 'sudo', 'openssh-server']]);
-//     } else if (distro.includes('arch')) {
-//         await pkgInstall([['pacman', '-Sy', '--noconfirm', 'sudo', 'openssh']]);
-//     }
-
-//     await utilFunctions.execInContainer(container, ['useradd', '-m', '-s', '/bin/bash', newUsername]);
-//     await utilFunctions.execInContainer(container, ['bash', '-c', `echo "${newUsername}:${userPassword}" | chpasswd`]);
-//     await utilFunctions.execInContainer(container, ['usermod', '-aG', 'sudo', newUsername]);
-
-//     await utilFunctions.execInContainer(container, ['bash', '-c', `sed -i 's/^#\\?PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config`]);
-//     await utilFunctions.execInContainer(container, ['bash', '-c', `sed -i 's/^#\\?PermitRootLogin .*/PermitRootLogin no/' /etc/ssh/sshd_config`]);
-//     await utilFunctions.execInContainer(container, ['service', 'ssh', 'start']);
-
-//     const data = await container.inspect();
-//     const privateIp = data.NetworkSettings.IPAddress;
-//     const publicIp = 'localhost'; // Update in prod
-//     const portsObj: Record<string, string[]> = {};
-
-//     const portsData = data.NetworkSettings.Ports;
-//     for (const port in portsData) {
-//         portsObj[port] = portsData[port]?.map((p: any) => p.HostPort) || [];
-//     }
-
-//     logging.info('CREATE_DEPLOYMENT', `SSH setup complete. User: ${newUsername}, Password: ${userPassword}`);
-
-//     return {
-//         error: false,
-//         publicIp,
-//         privateIp,
-//         ports: portsObj,
-//     };
-// };
-
-export default { startDeploymentProcedure, stopService, cleanupSocketProcesses, getDeploymentsOverviewData, getDeploymentOptions};
+export default { startDeploymentProcedure, stopService, cleanupSocketProcesses, getDeploymentsOverviewData, getDeploymentOptions, getDeploymentDetails };

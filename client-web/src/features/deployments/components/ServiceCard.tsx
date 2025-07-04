@@ -5,7 +5,7 @@ import { Container, MoreVertical, Server, Database, Globe, HardDrive, Code } fro
 import type React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import DeploymentCardMenu from './DeploymentCardMenu'
-import { Socket } from 'socket.io-client'
+import type { Socket } from 'socket.io-client'
 import Link from 'next/link'
 
 interface ServiceCardProps {
@@ -166,7 +166,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
     }
 
     return (
-        <Link href={`/projects/${deployment.projecttoken}/deployments/${deployment.deploymenttoken}`} >
+        <Link href={`/projects/${deployment.projecttoken}/deployments/${deployment.deploymenttoken}`}>
             <div className="h-40 w-full rounded-xl bg-[#00000062] p-4">
                 <div className="flex">
                     <div className={`flex h-3 w-3 self-center rounded-full ${getStatusColor()}`} />
@@ -177,12 +177,28 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
                     </div>
 
                     <div className="relative ml-auto">
-                        <div ref={buttonRef} className="cursor-pointer" onClick={() => setShowMenu(!showMenu)}>
+                        <div
+                            ref={buttonRef}
+                            className="z-20 cursor-pointer"
+                            onClick={event => {
+                                event.preventDefault()
+                                event.stopPropagation()
+                                event.nativeEvent.stopImmediatePropagation()
+                                setShowMenu(!showMenu)
+                            }}
+                        >
                             <MoreVertical className="self-center text-white" />
                         </div>
 
                         {showMenu && (
-                            <div ref={menuRef}>
+                            <div
+                                ref={menuRef}
+                                onClick={event => {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                    event.nativeEvent.stopImmediatePropagation()
+                                }}
+                            >
                                 <DeploymentCardMenu
                                     currentStatus={deployment.status}
                                     deploymentId={deployment.id}

@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Users, ListTodo, Code, Rocket } from 'lucide-react'
+import { Users, ListTodo, Code, Rocket,  Landmark } from 'lucide-react'
 
 interface ProjectNavProps {
     projectToken: string
@@ -13,6 +13,12 @@ export function ProjectNav({ projectToken }: ProjectNavProps) {
     const pathname = usePathname()
 
     const navItems = [
+        {
+            title: 'FINANCIAL MANAGEMENT',
+            icon: <Landmark className="h-4 w-4" />,
+            href: `/projects/${projectToken}/financial-management`,
+            width: 'w-[14rem]'
+        },
         {
             title: 'TEAM MANAGEMENT',
             icon: <Users className="h-4 w-4" />,

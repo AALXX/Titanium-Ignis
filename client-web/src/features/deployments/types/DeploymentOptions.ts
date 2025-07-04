@@ -20,6 +20,25 @@ export interface DeploymentOptions {
     datacenters: DataCenters[]
 }
 
+export interface Serivce {
+    name: string
+    type: string
+    domain: string
+    serviceID: number | null
+    dataCenterLocation: DataCenters
+    environment: string
+    isActive: boolean
+    resourceAllocation: ResourceAllocation
+    deploymentMethod: string
+    tags: string[]
+    framework: string
+    version: string
+    os: DeploymentOS
+    databaseType: string
+    volumeType: string
+    backupEnabled: boolean
+}
+
 export interface ServiceCardPropsRequest {
     id: number
     projecttoken: string

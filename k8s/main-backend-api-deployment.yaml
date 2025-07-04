@@ -1,0 +1,176 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-backend-deployment
+  namespace: mda-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: main-backend
+  template:
+    metadata:
+      labels:
+        app: main-backend
+    spec:
+      containers:
+      - name: main-backend
+        image: mda-platform/main-backend:latest
+        ports:
+        - containerPort: 7070
+        env:
+        - name: SERVER_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: SERVER_HOSTNAME
+        - name: POSTGRESQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_HOST
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_DATABASE
+        - name: POSTGRESQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: POSTGRESQL_USER
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: REDIS_URL
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
+        - name: ACCOUNT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: account-secret
+        - name: CHANGE_PWD_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: change-pwd-secret
+        - name: CHANGE_GMAIL_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: change-gmail-secret
+        - name: platform_gmail
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: platform-gmail
+        - name: platform_gmail_password
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: platform-gmail-password
+        - name: EMAIL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: email-username
+        - name: EMAIL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: main-backend-secret
+              key: email-pass
+        - name: ACCOUNTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: ACCOUNTS_FOLDER_PATH
+        - name: PROJECTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: PROJECTS_FOLDER_PATH
+        - name: REPOSITORIES_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: REPOSITORIES_FOLDER_PATH
+        - name: PROJECT_DEPLOYMENT_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: PROJECT_DEPLOYMENT_FOLDER_PATH
+        - name: GIT_REPOSITORY
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: GIT_REPOSITORY
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mda-config
+              key: FRONTEND_URL
+        volumeMounts:
+        - name: accounts-volume
+          mountPath: /app/accounts
+        - name: projects-volume
+          mountPath: /app/projects
+        - name: repos-volume
+          mountPath: /app/repos
+        - name: deployments-volume
+          mountPath: /app/local-deployments
+        resources:
+          requests:
+            memory: "3Gi"
+            cpu: "500m"
+          limits:
+            memory: "3Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 7070
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 7070
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: accounts-volume
+        persistentVolumeClaim:
+          claimName: accounts-pvc
+      - name: projects-volume
+        persistentVolumeClaim:
+          claimName: projects-pvc
+      - name: repos-volume
+        persistentVolumeClaim:
+          claimName: repos-pvc
+      - name: deployments-volume
+        persistentVolumeClaim:
+          claimName: deployments-pvc
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-backend-service
+  namespace: mda-platform
+spec:
+  selector:
+    app: main-backend
+  ports:
+  - protocol: TCP
+    port: 7070
+    targetPort: 7070
+  type: ClusterIP

@@ -60,7 +60,7 @@ services:
   #   volumes:
   #     - ./accounts:/accounts
   #   networks:
-  #     - mda-network
+  #     - mda-network 
 
   postgres-db:
     image: postgres:latest
