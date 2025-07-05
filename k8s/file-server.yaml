@@ -3,8 +3,10 @@ kind: Deployment
 metadata:
   name: file-server-deployment
   namespace: ti-platform
+  labels:
+    app: file-server
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: file-server
@@ -15,56 +17,102 @@ spec:
     spec:
       containers:
       - name: file-server
-        image: s3rbvn/ti-platform/file-server:latest
+        image: s3rbvn/file-server:latest
         ports:
         - containerPort: 5600
-        envFrom:
-        # Load non-sensitive config from ConfigMap
-        - configMapRef:
-            name: file-server-config
-        # Load sensitive data from Secret
-        - secretRef:
-            name: file-server-secrets
-        # Load shared config (optional)
-        - configMapRef:
-            name: ti-config
+        env:
+        - name: SERVER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: SERVER_HOST
+        - name: POSTGRESQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: POSTGRESQL_HOST
+        - name: POSTGRESQL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: POSTGRESQL_PORT
+        - name: POSTGRESQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: POSTGRESQL_USER
+        - name: POSTGRESQL_DB
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: POSTGRESQL_DB
+        - name: AUTH_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: file-server-config
+              key: AUTH_USERNAME
+        - name: POSTGRESQL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: file-server-secrets
+              key: POSTGRESQL_PASS
+        - name: AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: file-server-secrets
+              key: AUTH_PASSWORD
+        # Add volume mounts for persistent storage if needed
         volumeMounts:
-        - name: accounts-volume
-          mountPath: /accounts
+        - name: app-storage
+          mountPath: /app
         resources:
           requests:
             memory: "128Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "512Mi"
+            cpu: "500m"
         livenessProbe:
           httpGet:
-            path: /health
+            path: /health  # Adjust this path based on your application
             port: 5600
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /health
+            path: /ready  
             port: 5600
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
-      - name: accounts-volume
+      - name: app-storage
         persistentVolumeClaim:
-          claimName: accounts-pvc
-
+          claimName: file-server-pvc
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: file-server-service
   namespace: ti-platform
+  labels:
+    app: file-server
 spec:
   selector:
     app: file-server
   ports:
-  - protocol: TCP
-    port: 5600
+  - port: 5600
     targetPort: 5600
+    protocol: TCP
   type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: file-server-pvc
+  namespace: ti-platform
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi  
