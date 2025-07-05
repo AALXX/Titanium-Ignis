@@ -1,3 +1,4 @@
+# File Server Deployment - Updated to match your ConfigMaps
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,6 +22,7 @@ spec:
         ports:
         - containerPort: 5600
         env:
+        # Using your file-server-config ConfigMap
         - name: SERVER_HOST
           valueFrom:
             configMapKeyRef:
@@ -51,6 +53,7 @@ spec:
             configMapKeyRef:
               name: file-server-config
               key: AUTH_USERNAME
+        # Using your secrets
         - name: POSTGRESQL_PASS
           valueFrom:
             secretKeyRef:
@@ -61,7 +64,37 @@ spec:
             secretKeyRef:
               name: file-server-secrets
               key: AUTH_PASSWORD
-        # Add volume mounts for persistent storage if needed
+        # Additional env vars from ti-config that might be needed
+        - name: ACCOUNTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: ACCOUNTS_FOLDER_PATH
+        - name: PROJECTS_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: PROJECTS_FOLDER_PATH
+        - name: REPOSITORIES_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: REPOSITORIES_FOLDER_PATH
+        - name: PROJECT_DEPLOYMENT_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: PROJECT_DEPLOYMENT_FOLDER_PATH
+        - name: MESSAGES_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: MESSAGES_FOLDER_PATH
+        - name: TEMP_FOLDER_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: TEMP_FOLDER_PATH
         volumeMounts:
         - name: app-storage
           mountPath: /app
@@ -72,15 +105,14 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
+        # Using TCP socket checks instead of HTTP paths
         livenessProbe:
-          httpGet:
-            path: /health  # Adjust this path based on your application
+          tcpSocket:
             port: 5600
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
-          httpGet:
-            path: /ready  
+          tcpSocket:
             port: 5600
           initialDelaySeconds: 5
           periodSeconds: 5
@@ -115,4 +147,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi  
+      storage: 10Gi
