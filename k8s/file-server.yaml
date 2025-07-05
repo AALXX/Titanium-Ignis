@@ -1,4 +1,3 @@
-# File Server Deployment - Updated to match your ConfigMaps
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +21,6 @@ spec:
         ports:
         - containerPort: 5600
         env:
-        # Using your file-server-config ConfigMap
         - name: SERVER_HOST
           valueFrom:
             configMapKeyRef:
@@ -53,7 +51,6 @@ spec:
             configMapKeyRef:
               name: file-server-config
               key: AUTH_USERNAME
-        # Using your secrets
         - name: POSTGRESQL_PASS
           valueFrom:
             secretKeyRef:
@@ -64,7 +61,6 @@ spec:
             secretKeyRef:
               name: file-server-secrets
               key: AUTH_PASSWORD
-        # Additional env vars from ti-config that might be needed
         - name: ACCOUNTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
@@ -98,6 +94,9 @@ spec:
         volumeMounts:
         - name: app-storage
           mountPath: /app
+        - name: env-file
+          mountPath: /.env
+          subPath: .env
         resources:
           requests:
             memory: "128Mi"
@@ -105,21 +104,29 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-        # Using TCP socket checks instead of HTTP paths
         livenessProbe:
+          tcpSocket:
+            port: 5600
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
           tcpSocket:
             port: 5600
           initialDelaySeconds: 30
           periodSeconds: 10
-        readinessProbe:
+        startupProbe:
           tcpSocket:
             port: 5600
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 30
       volumes:
       - name: app-storage
         persistentVolumeClaim:
           claimName: file-server-pvc
+      - name: env-file
+        configMap:
+          name: file-server-env-file
 ---
 apiVersion: v1
 kind: Service
