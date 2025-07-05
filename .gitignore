@@ -37,6 +37,8 @@ client-web/.vercel
 #env
 client-web/.env
 
+k8s/configmap.yaml
+
 # typescript
 cklient-web/*.tsbuildinfo
 cklient-web/next-env.d.ts
@@ -46,6 +48,7 @@ server/main-backend/.env
 server/main-backend/next-env.d.ts
 
 server/file-server/.env
+server/file-server/.env.prod
 server/project-manager-server/.env
 server/repos
 server/projects
@@ -62,8 +65,8 @@ tools/request-monitoring/node_modules
 
 server/db/backup.sql
 
-/server/messaging-service/node_modules
-/server/messaging-service/.env
-/tools
-/server/deployments-monitoring/node_modules/
-/server/messages/
+server/messaging-service/node_modules
+server/messaging-service/.env
+tools
+server/deployments-monitoring/node_modules/
+server/messages/

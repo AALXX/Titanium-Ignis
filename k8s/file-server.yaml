@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: file-server-deployment
-  namespace: mda-platform
+  namespace: ti-platform
 spec:
   replicas: 2
   selector:
@@ -15,9 +15,19 @@ spec:
     spec:
       containers:
       - name: file-server
-        image: mda-platform/file-server:latest
+        image: s3rbvn/ti-platform/file-server:latest
         ports:
         - containerPort: 5600
+        envFrom:
+        # Load non-sensitive config from ConfigMap
+        - configMapRef:
+            name: file-server-config
+        # Load sensitive data from Secret
+        - secretRef:
+            name: file-server-secrets
+        # Load shared config (optional)
+        - configMapRef:
+            name: ti-config
         volumeMounts:
         - name: accounts-volume
           mountPath: /accounts
@@ -49,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: file-server-service
-  namespace: mda-platform
+  namespace: ti-platform
 spec:
   selector:
     app: file-server
