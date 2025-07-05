@@ -109,8 +109,9 @@ func watchFiles(ctx context.Context, dir string) {
 }
 
 func main() {
+	// Try to load .env file, but don't fail if it doesn't exist
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Printf("Warning: Could not load .env file: %v (continuing with environment variables)", err)
 	}
 
 	serverHost := "0.0.0.0:5600"

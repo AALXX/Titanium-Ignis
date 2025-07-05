@@ -24,32 +24,32 @@ spec:
         - name: SERVER_HOST
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: SERVER_HOST
         - name: POSTGRESQL_HOST
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: POSTGRESQL_HOST
         - name: POSTGRESQL_PORT
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: POSTGRESQL_PORT
         - name: POSTGRESQL_USER
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: POSTGRESQL_USER
         - name: POSTGRESQL_DB
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: POSTGRESQL_DB
         - name: AUTH_USERNAME
           valueFrom:
             configMapKeyRef:
-              name: file-server-config
+              name: file-server-env-file
               key: AUTH_USERNAME
         - name: POSTGRESQL_PASS
           valueFrom:
@@ -64,39 +64,36 @@ spec:
         - name: ACCOUNTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: ACCOUNTS_FOLDER_PATH
         - name: PROJECTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: PROJECTS_FOLDER_PATH
         - name: REPOSITORIES_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: REPOSITORIES_FOLDER_PATH
         - name: PROJECT_DEPLOYMENT_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: PROJECT_DEPLOYMENT_FOLDER_PATH
         - name: MESSAGES_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: MESSAGES_FOLDER_PATH
         - name: TEMP_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: ti-config
+              name: file-server-env-file
               key: TEMP_FOLDER_PATH
         volumeMounts:
         - name: app-storage
           mountPath: /app
-        - name: env-file
-          mountPath: /.env
-          subPath: .env
         resources:
           requests:
             memory: "128Mi"
@@ -124,9 +121,6 @@ spec:
       - name: app-storage
         persistentVolumeClaim:
           claimName: file-server-pvc
-      - name: env-file
-        configMap:
-          name: file-server-env-file
 ---
 apiVersion: v1
 kind: Service
@@ -154,4 +148,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 10Gi 
