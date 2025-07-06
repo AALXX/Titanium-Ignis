@@ -15,6 +15,24 @@ spec:
       labels:
         app: file-server
     spec:
+      initContainers:
+      - name: init-directories
+        image: busybox:1.35
+        command: ['sh', '-c']
+        args:
+        - |
+          mkdir -p /shared/accounts
+          mkdir -p /shared/projects
+          mkdir -p /shared/repos
+          mkdir -p /shared/local-deployments
+          mkdir -p /shared/messages
+          mkdir -p /shared/tmp
+          chmod -R 755 /shared
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /shared
+        securityContext:
+          runAsUser: 0
       containers:
       - name: file-server
         image: s3rbvn/file-server:latest
@@ -22,78 +40,52 @@ spec:
         - containerPort: 5600
         env:
         - name: SERVER_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: file-server-env-file
-              key: SERVER_HOST
-        - name: POSTGRESQL_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: file-server-env-file
-              key: POSTGRESQL_HOST
-        - name: POSTGRESQL_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: file-server-env-file
-              key: POSTGRESQL_PORT
-        - name: POSTGRESQL_USER
-          valueFrom:
-            configMapKeyRef:
-              name: file-server-env-file
-              key: POSTGRESQL_USER
-        - name: POSTGRESQL_DB
-          valueFrom:
-            configMapKeyRef:
-              name: file-server-env-file
-              key: POSTGRESQL_DB
+          value: "0.0.0.0:5600"
         - name: AUTH_USERNAME
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: AUTH_USERNAME
+              optional: true
         - name: AUTH_PASSWORD
           valueFrom:
             secretKeyRef:
               name: file-server-secrets
               key: AUTH_PASSWORD
-        - name: POSTGRESQL_PASS
-          valueFrom:
-            secretKeyRef:
-              name: file-server-secrets
-              key: POSTGRESQL_PASS
+              optional: true
         - name: ACCOUNTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: ACCOUNTS_FOLDER_PATH
         - name: PROJECTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: PROJECTS_FOLDER_PATH
         - name: REPOSITORIES_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: REPOSITORIES_FOLDER_PATH
         - name: PROJECT_DEPLOYMENT_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: PROJECT_DEPLOYMENT_FOLDER_PATH
         - name: MESSAGES_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: MESSAGES_FOLDER_PATH
         - name: TEMP_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
-              name: file-server-env-file
+              name: ti-config
               key: TEMP_FOLDER_PATH
         volumeMounts:
-        - name: app-storage
-          mountPath: /app
+        - name: shared-storage
+          mountPath: /shared
         resources:
           requests:
             memory: "128Mi"
@@ -101,51 +93,11 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-        livenessProbe:
-          tcpSocket:
-            port: 5600
-          initialDelaySeconds: 60
-          periodSeconds: 30
-        readinessProbe:
-          tcpSocket:
-            port: 5600
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        startupProbe:
-          tcpSocket:
-            port: 5600
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          failureThreshold: 30
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
       volumes:
-      - name: app-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: file-server-pvc
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: file-server-service
-  namespace: ti-platform
-  labels:
-    app: file-server
-spec:
-  selector:
-    app: file-server
-  ports:
-  - port: 5600
-    targetPort: 5600
-    protocol: TCP
-  type: ClusterIP
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: file-server-pvc
-  namespace: ti-platform
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+          claimName: shared-files-pvc
