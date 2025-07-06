@@ -137,5 +137,6 @@ spec:
   - name: http
     port: 5600
     targetPort: 5600
+    nodePort: 30560  # Fixed port in valid range
     protocol: TCP
-  type: ClusterIP
+  type: NodePort
