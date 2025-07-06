@@ -51,16 +51,16 @@ spec:
             configMapKeyRef:
               name: file-server-env-file
               key: AUTH_USERNAME
-        - name: POSTGRESQL_PASS
-          valueFrom:
-            secretKeyRef:
-              name: file-server-secrets
-              key: POSTGRESQL_PASS
         - name: AUTH_PASSWORD
           valueFrom:
             secretKeyRef:
               name: file-server-secrets
               key: AUTH_PASSWORD
+        - name: POSTGRESQL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: file-server-secrets
+              key: POSTGRESQL_PASS
         - name: ACCOUNTS_FOLDER_PATH
           valueFrom:
             configMapKeyRef:
@@ -148,4 +148,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi 
+      storage: 10Gi
