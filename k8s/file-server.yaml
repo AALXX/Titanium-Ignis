@@ -21,6 +21,7 @@ spec:
         command: ['sh', '-c']
         args:
         - |
+          echo "Creating directories in /shared..."
           mkdir -p /shared/accounts
           mkdir -p /shared/projects
           mkdir -p /shared/repos
@@ -28,8 +29,11 @@ spec:
           mkdir -p /shared/messages
           mkdir -p /shared/tmp
           chmod -R 755 /shared
-          echo "Directories created successfully"
+          echo "Directories created successfully:"
           ls -la /shared/
+          echo "Checking mounted volume:"
+          df -h /shared
+          echo "Init container completed successfully"
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
@@ -67,6 +71,8 @@ spec:
           value: "/shared/messages"
         - name: TEMP_FOLDER_PATH
           value: "/shared/tmp"
+        - name: SHARED_ROOT_PATH
+          value: "/shared"
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
