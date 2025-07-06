@@ -28,6 +28,8 @@ spec:
           mkdir -p /shared/local-deployments
           mkdir -p /shared/messages
           mkdir -p /shared/tmp
+          # Set permissions for user 1000 (the app user)
+          chown -R 1000:1000 /shared
           chmod -R 755 /shared
           echo "Directories created successfully:"
           ls -la /shared/
@@ -48,17 +50,12 @@ spec:
         - name: SERVER_HOST
           value: "0.0.0.0:5600"
         - name: AUTH_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: AUTH_USERNAME
-              optional: true
+          value: "Titan"
         - name: AUTH_PASSWORD
           valueFrom:
             secretKeyRef:
               name: file-server-secrets
               key: AUTH_PASSWORD
-              optional: true
         - name: ACCOUNTS_FOLDER_PATH
           value: "/shared/accounts"
         - name: PROJECTS_FOLDER_PATH
@@ -87,6 +84,7 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
         readinessProbe:
           httpGet:
             path: /health
