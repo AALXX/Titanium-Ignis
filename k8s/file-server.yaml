@@ -15,7 +15,7 @@ spec:
       labels:
         app: file-server
     spec:
-      initContainers:
+      initContainers: 
       - name: init-directories
         image: busybox:1.35
         command: ['sh', '-c']
@@ -57,19 +57,40 @@ spec:
               name: file-server-secrets
               key: AUTH_PASSWORD
         - name: ACCOUNTS_FOLDER_PATH
-          value: "/shared/accounts"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: ACCOUNTS_FOLDER_PATH
         - name: PROJECTS_FOLDER_PATH
-          value: "/shared/projects"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: PROJECTS_FOLDER_PATH
         - name: REPOSITORIES_FOLDER_PATH
-          value: "/shared/repos"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: REPOSITORIES_FOLDER_PATH
         - name: PROJECT_DEPLOYMENT_FOLDER_PATH
-          value: "/shared/local-deployments"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: PROJECT_DEPLOYMENT_FOLDER_PATH
         - name: MESSAGES_FOLDER_PATH
-          value: "/shared/messages"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: MESSAGES_FOLDER_PATH
         - name: TEMP_FOLDER_PATH
-          value: "/shared/tmp"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: TEMP_FOLDER_PATH
         - name: SHARED_ROOT_PATH
-          value: "/shared"
+          valueFrom:
+            configMapKeyRef:
+              name: ti-config
+              key: SHARED_ROOT_PATH
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
