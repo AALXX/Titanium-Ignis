@@ -132,11 +132,11 @@ metadata:
     app: file-server
 spec:
   selector:
-    app: file-server
+    app: file-server  # This now matches the deployment labels
   ports:
   - name: http
     port: 5600
     targetPort: 5600
-    nodePort: 30560  # Fixed port in valid range
+    nodePort: 30560
     protocol: TCP
   type: NodePort
