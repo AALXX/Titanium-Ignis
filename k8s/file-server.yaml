@@ -122,7 +122,9 @@ spec:
       - name: shared-storage
         persistentVolumeClaim:
           claimName: shared-files-pvc
+
 ---
+# Step 4: LoadBalancer Service (Updated)
 apiVersion: v1
 kind: Service
 metadata:
@@ -138,4 +140,4 @@ spec:
     port: 5600
     targetPort: 5600
     protocol: TCP
-  type: ClusterIP  # Changed from NodePort to ClusterIP for Ingress
+  type: LoadBalancer  # Changed from ClusterIP to LoadBalancer

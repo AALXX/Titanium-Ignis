@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: mda-platform
+  name: ti-platform
   labels:
-    name: mda-platform
+    name: ti-platform
