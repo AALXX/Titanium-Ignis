@@ -28,6 +28,8 @@ spec:
           mkdir -p /shared/messages
           mkdir -p /shared/tmp
           chmod -R 755 /shared
+          echo "Directories created successfully"
+          ls -la /shared/
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
@@ -54,35 +56,17 @@ spec:
               key: AUTH_PASSWORD
               optional: true
         - name: ACCOUNTS_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: ACCOUNTS_FOLDER_PATH
+          value: "/shared/accounts"
         - name: PROJECTS_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: PROJECTS_FOLDER_PATH
+          value: "/shared/projects"
         - name: REPOSITORIES_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: REPOSITORIES_FOLDER_PATH
+          value: "/shared/repos"
         - name: PROJECT_DEPLOYMENT_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: PROJECT_DEPLOYMENT_FOLDER_PATH
+          value: "/shared/local-deployments"
         - name: MESSAGES_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: MESSAGES_FOLDER_PATH
+          value: "/shared/messages"
         - name: TEMP_FOLDER_PATH
-          valueFrom:
-            configMapKeyRef:
-              name: ti-config
-              key: TEMP_FOLDER_PATH
+          value: "/shared/tmp"
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
@@ -97,7 +81,36 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
           allowPrivilegeEscalation: false
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5600
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5600
+          initialDelaySeconds: 30
+          periodSeconds: 10
       volumes:
       - name: shared-storage
         persistentVolumeClaim:
           claimName: shared-files-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-server-service
+  namespace: ti-platform
+  labels:
+    app: file-server
+spec:
+  selector:
+    app: file-server
+  ports:
+  - name: http
+    port: 5600
+    targetPort: 5600
+    protocol: TCP
+  type: ClusterIP
