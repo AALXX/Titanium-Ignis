@@ -123,9 +123,10 @@ metadata:
   namespace: ti-platform
 spec:
   selector:
-    app: file-server  # ✅ Fixed: Now matches the Deployment labels
+    app: file-server
   ports:
     - protocol: TCP
       port: 5600
       targetPort: 5600
-  type: ClusterIP  # Internal service for Ingress
+      nodePort: 30560  # 🔒 Optional: fixed port for predictability
+  type: NodePort
