@@ -50,17 +50,17 @@ services:
   #   extra_hosts:
   #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
 
-  # file-server:
-  #   build:
-  #     context: ./server/file-server
-  #     dockerfile: dev.Dockerfile
-  #   container_name: file-server
-  #   ports:
-  #     - '5500:5500'
-  #   volumes:
-  #     - ./accounts:/accounts
-  #   networks:
-  #     - mda-network 
+  file-server:
+    build:
+      context: ./server/file-server
+      dockerfile: Dockerfile
+    container_name: file-server
+    ports:
+      - '5500:5500'
+    volumes:
+      - ./accounts:/accounts
+    networks:
+      - ti-network 
 
   postgres-db:
     image: postgres:latest
@@ -68,7 +68,7 @@ services:
     environment:
       POSTGRES_USER: alx
       POSTGRES_PASSWORD: serbvn
-      POSTGRES_DB: mda_db
+      POSTGRES_DB: ti_db
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
