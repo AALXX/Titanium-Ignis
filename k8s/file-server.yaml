@@ -121,14 +121,11 @@ kind: Service
 metadata:
   name: file-server-service
   namespace: ti-platform
-  labels:
-    app: file-server
 spec:
   selector:
-    app: file-server
+    app: file-server  # ✅ Fixed: Now matches the Deployment labels
   ports:
-  - name: http
-    port: 5600
-    targetPort: 5600
-    protocol: TCP
-  type: LoadBalancer
+    - protocol: TCP
+      port: 5600
+      targetPort: 5600
+  type: ClusterIP  # Internal service for Ingress
