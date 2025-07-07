@@ -60,7 +60,7 @@ services:
     volumes:
       - ./accounts:/accounts
     networks:
-      - ti-network 
+      - ti-platform 
 
   # postgres-db:
   #   image: postgres:latest
