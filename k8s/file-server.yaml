@@ -15,35 +15,28 @@ spec:
       labels:
         app: file-server
     spec:
-      initContainers: 
+      initContainers:
       - name: init-directories
         image: busybox:1.35
         command: ['sh', '-c']
         args:
         - |
           echo "Creating directories in /shared..."
-          mkdir -p /shared/accounts
-          mkdir -p /shared/projects
-          mkdir -p /shared/repos
-          mkdir -p /shared/local-deployments
-          mkdir -p /shared/messages
-          mkdir -p /shared/tmp
-          # Set permissions for user 1000 (the app user)
+          mkdir -p /shared/accounts /shared/projects /shared/repos /shared/local-deployments /shared/messages /shared/tmp
           chown -R 1000:1000 /shared
           chmod -R 755 /shared
           echo "Directories created successfully:"
           ls -la /shared/
-          echo "Checking mounted volume:"
           df -h /shared
-          echo "Init container completed successfully"
         volumeMounts:
         - name: shared-storage
           mountPath: /shared
         securityContext:
           runAsUser: 0
+
       containers:
       - name: file-server
-        image: s3rbvn/file-server:latest
+        image: s3rbvn/file-server:48-22330c8  # 🔒 Use a specific tag in production
         ports:
         - containerPort: 5600
         env:
@@ -122,9 +115,7 @@ spec:
       - name: shared-storage
         persistentVolumeClaim:
           claimName: shared-files-pvc
-
 ---
-# Step 4: LoadBalancer Service (Updated)
 apiVersion: v1
 kind: Service
 metadata:
@@ -140,4 +131,4 @@ spec:
     port: 5600
     targetPort: 5600
     protocol: TCP
-  type: LoadBalancer  # Changed from ClusterIP to LoadBalancer
+  type: LoadBalancer
