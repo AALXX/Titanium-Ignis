@@ -50,18 +50,15 @@ services:
   #   extra_hosts:
   #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
 
-  file-server:
-    build:
-      context: ./server/file-server
-      dockerfile: Dockerfile
-    container_name: file-server
-    ports:
-      - '5500:5500'
-    volumes:
-      - ./accounts:/accounts
-    networks:
-      - ti-platform 
-
+  services:
+    file-server:
+      image: s3rbvn/file-server:latest  # Or use your tag dynamically
+      ports:
+        - "5600:5600"
+      env_file:
+        - ./server/file-server/.env
+      volumes:
+        - ./server/file-server/.env:/root/.env  # optional, if your app loads from current dir
   # postgres-db:
   #   image: postgres:latest
   #   container_name: postgres-container-mda
