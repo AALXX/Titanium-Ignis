@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: file-server-deployment
+  name: file-server
   namespace: ti-platform
   labels:
     app: file-server
