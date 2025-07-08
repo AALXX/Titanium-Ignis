@@ -20,7 +20,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 # Use a smaller base image for the final stage
 FROM alpine:latest  
 
-WORKDIR /root/
+WORKDIR /app/
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
