@@ -1,33 +1,37 @@
-# Stage 1: Build the Go application
+# ---------- Stage 1: Build ----------
 FROM golang:1.23-alpine AS builder
 
-# Set the working directory
+# Enable Go modules and set working directory
 WORKDIR /app
 
-# Copy dependency files and download them
+# Copy go mod files and download dependencies first (leverages Docker cache)
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy the entire source code
+# Copy the full source code
 COPY . .
 
-# Build the Go application
+# Build the Go binary
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-# Stage 2: Create a lightweight image for running the app
+# ---------- Stage 2: Final Image ----------
 FROM alpine:latest
 
-# Set working directory
+# Create a minimal working directory
 WORKDIR /app
 
-# Copy the built binary from the builder stage
+# Copy the compiled binary from builder stage
 COPY --from=builder /app/main .
 
-# (Optional) Create needed directories
+# Create a writable directory for runtime needs (if needed)
 RUN mkdir -p /accounts
 
-# Expose the application's port
+# Set a non-root user for better security (optional but recommended)
+# RUN adduser -D appuser
+# USER appuser
+
+# Expose the port your service listens on
 EXPOSE 5600
 
-# Run the compiled Go binary
+# Set entrypoint
 CMD ["./main"]

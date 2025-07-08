@@ -54,6 +54,8 @@ services:
     image: s3rbvn/file-server:latest
     ports:
       - "5600:5600"
+    env_file:
+      - ./server/file-server/.env
     volumes:
       - ./server/file-server/.env:/app/.env:ro
   # postgres-db:
