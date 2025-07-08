@@ -23,8 +23,8 @@ WORKDIR /app
 # Copy the compiled binary from builder stage
 COPY --from=builder /app/main .
 
-# Create a writable directory for runtime needs (if needed)
-RUN mkdir -p /accounts
+# Create directories for runtime needs
+RUN mkdir -p /accounts /messages
 
 # Set a non-root user for better security (optional but recommended)
 # RUN adduser -D appuser

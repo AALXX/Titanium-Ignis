@@ -51,13 +51,29 @@ services:
   #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
 
   file-server:
-    image: s3rbvn/file-server:latest
-    ports:
-      - "5600:5600"
-    env_file:
-      - ./server/file-server/.env
-    volumes:
-      - ./server/file-server/.env:/app/.env:ro
+     image: s3rbvn/file-server:${IMAGE_TAG:-latest}
+     ports:
+       - "5600:5600"
+     environment:
+       # Server configuration
+       - SERVER_HOST=${SERVER_HOST:-0.0.0.0:5600}
+
+       # Database configuration
+       - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+       - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+       - POSTGRESQL_USER=${POSTGRESQL_USER}
+       - POSTGRESQL_PASS=${POSTGRESQL_PASS}
+       - POSTGRESQL_DB=${POSTGRESQL_DB}
+
+       # Authentication
+       - AUTH_USERNAME=${AUTH_USERNAME}
+       - AUTH_PASSWORD=${AUTH_PASSWORD}
+
+     volumes:
+       - ./accounts:/accounts:ro
+       - ./messages:/messages:ro
+     restart: unless-stopped
+
   # postgres-db:
   #   image: postgres:latest
   #   container_name: postgres-container-mda

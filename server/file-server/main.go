@@ -108,14 +108,37 @@ func watchFiles(ctx context.Context, dir string) {
 	}
 }
 
-func main() {
+func loadEnvFile() {
+	// Try to load .env file if it exists, but don't fail if it doesn't
+	// This allows for both .env file and environment variable usage
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Println("No .env file found, using environment variables")
+	} else {
+		log.Println("Loaded environment from .env file")
 	}
+}
 
-	serverHost := "0.0.0.0:5600"
+func main() {
+	loadEnvFile()
+
+	serverHost := os.Getenv("SERVER_HOST")
+	if serverHost == "" {
+		serverHost = "0.0.0.0:5600"
+	}
 	log.Printf("Server will listen on %s\n", serverHost)
 
+	// Database configuration (if needed for future use)
+	dbHost := os.Getenv("POSTGRESQL_HOST")
+	dbPort := os.Getenv("POSTGRESQL_PORT")
+	dbUser := os.Getenv("POSTGRESQL_USER")
+	// dbPass := os.Getenv("POSTGRESQL_PASS")
+	dbName := os.Getenv("POSTGRESQL_DB")
+	
+	if dbHost != "" {
+		log.Printf("Database config - Host: %s, Port: %s, User: %s, DB: %s", dbHost, dbPort, dbUser, dbName)
+	}
+
+	// Authentication
 	username := os.Getenv("AUTH_USERNAME")
 	password := os.Getenv("AUTH_PASSWORD")
 
@@ -123,8 +146,22 @@ func main() {
 		log.Fatalf("AUTH_USERNAME and AUTH_PASSWORD must be set")
 	}
 
-	accountsDir := filepath.Clean("../accounts")
-	messagesDir := filepath.Clean("../messages")
+	log.Printf("Environment loaded - AUTH_USERNAME: %s", username)
+
+	// Use absolute paths for containers
+	accountsDir := "/accounts"
+	messagesDir := "/messages"
+
+	// Check if directories exist, create them if they don't
+	if _, err := os.Stat(accountsDir); os.IsNotExist(err) {
+		log.Printf("Creating accounts directory: %s", accountsDir)
+		os.MkdirAll(accountsDir, 0755)
+	}
+	
+	if _, err := os.Stat(messagesDir); os.IsNotExist(err) {
+		log.Printf("Creating messages directory: %s", messagesDir)
+		os.MkdirAll(messagesDir, 0755)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
