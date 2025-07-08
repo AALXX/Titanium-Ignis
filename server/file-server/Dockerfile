@@ -1,36 +1,33 @@
+# Stage 1: Build the Go application
+FROM golang:1.23-alpine AS builder
 
-# Start from the official Golang image
-FROM golang:1.23-alpine as builder
-
-# Set the Current Working Directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy go.mod and go.sum files to the workspace
+# Copy dependency files and download them
 COPY go.mod go.sum ./
-
-# Download dependencies
 RUN go mod download
 
-# Copy the source code from the current directory to the Working Directory inside the container
+# Copy the entire source code
 COPY . .
 
-# Build the Go app
+# Build the Go application
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-# Use a smaller base image for the final stage
-FROM alpine:latest  
+# Stage 2: Create a lightweight image for running the app
+FROM alpine:latest
 
-# Set working directory to /app
-WORKDIR /app/
+# Set working directory
+WORKDIR /app
 
-# Copy the compiled binary from builder stage
+# Copy the built binary from the builder stage
 COPY --from=builder /app/main .
 
-# Create any needed dirs (like for logs or volumes)
+# (Optional) Create needed directories
 RUN mkdir -p /accounts
 
-# Expose port
+# Expose the application's port
 EXPOSE 5600
 
-# Run the binary
+# Run the compiled Go binary
 CMD ["./main"]
