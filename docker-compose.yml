@@ -57,7 +57,7 @@ services:
     env_file:
       - ./server/file-server/.env
     volumes:
-      - ./server/file-server/.env:/root/.env  # optional, if your app loads from current dir
+      - ./server/file-server/.env:/app/.env
   # postgres-db:
   #   image: postgres:latest
   #   container_name: postgres-container-mda
