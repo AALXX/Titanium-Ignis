@@ -50,12 +50,12 @@ services:
   #   extra_hosts:
   #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
 
-  file-server:
-    image: s3rbvn/file-server:latest
-    ports:
-      - "5600:5600"
-    volumes:
-      - ./server/file-server/.env:/app/.env:ro
+file-server:
+  image: s3rbvn/file-server:latest
+  ports:
+    - "5600:5600"
+  volumes:
+    - ./server/file-server/.env:/app/.env:ro
   # postgres-db:
   #   image: postgres:latest
   #   container_name: postgres-container-mda

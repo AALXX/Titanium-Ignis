@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -109,13 +110,15 @@ func watchFiles(ctx context.Context, dir string) {
 }
 
 func main() {
-	if err := godotenv.Load(); err != nil {
+
+	wd, _ := os.Getwd()
+	fmt.Println("PWD:", wd)
+
+	err := godotenv.Load("/app/.env") // explicitly load from where you mount
+	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	wd, _ := os.Getwd()
-	log.Println("Current Working Directory:", wd)
-	
 	serverHost := "0.0.0.0:5600"
 	log.Printf("Server will listen on %s\n", serverHost)
 
