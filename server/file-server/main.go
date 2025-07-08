@@ -113,6 +113,9 @@ func main() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
+	wd, _ := os.Getwd()
+	log.Println("Current Working Directory:", wd)
+	
 	serverHost := "0.0.0.0:5600"
 	log.Printf("Server will listen on %s\n", serverHost)
 
