@@ -30,27 +30,51 @@ services:
   #   networks:
   #     - mda-network
 
-  # main-backend-api:
-  #   container_name: main-backend-api
-  #   build:
-  #     context: ./server/main-backend
-  #     dockerfile: dev.Dockerfile
-  #   volumes:
-  #     - ./server/main-backend:/usr/src/app
-  #   ports:
-  #     - 7070:7070
-  #   env_file:
-  #     - ./server/main-backend/.env
-  #   restart: always
-  #   depends_on:
-  #     - postgres-db
-  #     - redis-db
-  #   networks:
-  #     - mda-network
-  #   extra_hosts:
-  #     - "172.30.48.1:host-gateway" # Makes "172.30.48.1" resolve in Linux too
+main-backend-api:
+  container_name: main-backend-api
+  build:
+    context: ./server/main-backend
+    dockerfile: Dockerfile
+  ports:
+    - "7070:7070"
+  env_file:
+    - ./server/main-backend/.env
+  environment:
+    - NODE_ENV=production
+    - SERVER_HOSTNAME=${SERVER_HOSTNAME}
+    - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+    - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
+    - POSTGRESQL_USER=${POSTGRESQL_USER}
+    - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+    - REDIS_URL=${REDIS_URL}
+    - REDIS_PASSWORD=${REDIS_PASSWORD}
+    - ACCOUNT_SECRET=${ACCOUNT_SECRET}
+    - CHANGE_PWD_SECRET=${CHANGE_PWD_SECRET}
+    - CHANGE_GMAIL_SECRET=${CHANGE_GMAIL_SECRET}
+    - ACCOUNTS_FOLDER_PATH=${ACCOUNTS_FOLDER_PATH}
+    - MESSAGES_FOLDER_PATH=${MESSAGES_FOLDER_PATH}
+    - PROJECTS_FOLDER_PATH=${PROJECTS_FOLDER_PATH}
+    - REPOSITORIES_FOLDER_PATH=${REPOSITORIES_FOLDER_PATH}
+    - PROJECT_DEPLOYMENT_FOLDER_PATH=${PROJECT_DEPLOYMENT_FOLDER_PATH}
+    - GIT_REPOSITORY=${GIT_REPOSITORY}
+    - FRONTEND_URL=${FRONTEND_URL}
+    - FILE_SERVER_URL=${FILE_SERVER_URL}
+    - FILE_SERVER_USERNAME=${FILE_SERVER_USERNAME}
+    - FILE_SERVER_PASSWORD=${FILE_SERVER_PASSWORD}
+    - platform_gmail=${platform_gmail}
+    - platform_gmail_password=${platform_gmail_password}
+    - EMAIL_USERNAME=${EMAIL_USERNAME}
+    - EMAIL_PASS=${EMAIL_PASS}
+  volumes:
+    - ./accounts:/accounts:rw
+    - ./messages:/messages:rw
+    - ./log:/app/log
+  depends_on:
+    - file-server
+  restart: unless-stopped
 
   file-server:
+     container_name: file-server
      image: s3rbvn/file-server:${IMAGE_TAG:-latest}
      ports:
        - "5600:5600"
@@ -70,9 +94,11 @@ services:
        - AUTH_PASSWORD=${AUTH_PASSWORD}
 
      volumes:
-       - ./accounts:/accounts:ro
-       - ./messages:/messages:ro
+       - ./accounts:/accounts:ro     
+       - ./messages:/messages:ro      
      restart: unless-stopped
+     networks:
+       - ti-platform
 
   # postgres-db:
   #   image: postgres:latest

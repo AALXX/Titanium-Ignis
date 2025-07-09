@@ -49,6 +49,7 @@ server/main-backend/next-env.d.ts
 
 server/file-server/.env
 server/file-server/.env.prod
+server/main-backend/.env.prod
 server/project-manager-server/.env
 server/repos
 server/projects
