@@ -76,32 +76,32 @@ services:
       - file-server
     restart: unless-stopped
   
-    file-server:
-       container_name: file-server
-       image: s3rbvn/file-server:${IMAGE_TAG:-latest}
-       ports:
-         - "5600:5600"
-       environment:
-         # Server configuration
-         - SERVER_HOST=${SERVER_HOST:-0.0.0.0:5600}
-  
-         # Database configuration
-         - POSTGRESQL_HOST=${POSTGRESQL_HOST}
-         - POSTGRESQL_PORT=${POSTGRESQL_PORT}
-         - POSTGRESQL_USER=${POSTGRESQL_USER}
-         - POSTGRESQL_PASS=${POSTGRESQL_PASS}
-         - POSTGRESQL_DB=${POSTGRESQL_DB}
-  
-         # Authentication
-         - AUTH_USERNAME=${AUTH_USERNAME}
-         - AUTH_PASSWORD=${AUTH_PASSWORD}
-  
-       volumes:
-         - ./accounts:/accounts:ro     
-         - ./messages:/messages:ro      
-       restart: unless-stopped
-       networks:
-         - ti-platform
+  file-server:
+     container_name: file-server
+     image: s3rbvn/file-server:${IMAGE_TAG:-latest}
+     ports:
+       - "5600:5600"
+     environment:
+       # Server configuration
+       - SERVER_HOST=${SERVER_HOST:-0.0.0.0:5600}
+
+       # Database configuration
+       - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+       - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+       - POSTGRESQL_USER=${POSTGRESQL_USER}
+       - POSTGRESQL_PASS=${POSTGRESQL_PASS}
+       - POSTGRESQL_DB=${POSTGRESQL_DB}
+
+       # Authentication
+       - AUTH_USERNAME=${AUTH_USERNAME}
+       - AUTH_PASSWORD=${AUTH_PASSWORD}
+
+     volumes:
+       - ./accounts:/accounts:ro     
+       - ./messages:/messages:ro      
+     restart: unless-stopped
+     networks:
+       - ti-platform
 
   # postgres-db:
   #   image: postgres:latest
