@@ -12,32 +12,33 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+
 # ---------- Stage 2: Prune Dev Dependencies ----------
 FROM node:24-alpine AS prod
 
 WORKDIR /app
 
-# Copy only what is needed from builder
+# Copy only what's needed from the builder
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/main-backend-build ./  
-
+COPY --from=builder /app/main-backend-build ./main-backend-build
 RUN npm install --omit=dev
+
 
 # ---------- Final Runtime Image ----------
 FROM node:24-alpine
 
 WORKDIR /app
 
-# Copy built code and modules
+# Copy production app and dependencies
 COPY --from=prod /app ./
 
 # Create log directory
 RUN mkdir -p /app/log
 
-# Optional: If you're confident `.env` is injected via Docker Compose or pipeline, skip this
+# Inject environment manually if not done by Docker Compose
 # COPY .env .env
 
 EXPOSE 7070
 
 # Start the server
-CMD ["node", "api/BackendApp_Api.js"]
+CMD ["npm", "start"]

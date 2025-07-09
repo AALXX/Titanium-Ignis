@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "server": "nodemon --exec ts-node  src/api/ProjectsPortal_Api.ts",
-        "start": "node backend-build/api/BackendApp_Api.js",
+        "start": "node main-backend-build/src/api/ProjectsPortal_Api.js",
         "build": "tsc ",
         "test": "jest",
         "test:watch": "jest --watch",
