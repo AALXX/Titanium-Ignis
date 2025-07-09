@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=builder /app/main .
 
 # Create directories for runtime needs
-RUN mkdir -p /accounts /messages /log
+RUN mkdir -p /accounts /messages /log /projects /repos /local-deployments
 
 # Set a non-root user for better security (optional but recommended)
 # RUN adduser -D appuser

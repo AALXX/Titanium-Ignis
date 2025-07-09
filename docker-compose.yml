@@ -68,6 +68,9 @@ main-backend-api:
   volumes:
     - ./accounts:/accounts:rw
     - ./messages:/messages:rw
+    - ./projects:/projects:rw
+    - ./repos:/repos:rw
+    - ./local-deployments:/local-deployments:rw
     - ./log:/app/log
   depends_on:
     - file-server
