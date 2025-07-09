@@ -75,7 +75,8 @@ services:
     depends_on:
       - file-server
     restart: unless-stopped
-  
+    networks:
+      - ti-platform
   file-server:
      container_name: file-server
      image: s3rbvn/file-server:${IMAGE_TAG:-latest}
