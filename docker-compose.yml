@@ -66,6 +66,7 @@ services:
       - platform_gmail_password=${platform_gmail_password}
       - EMAIL_USERNAME=${EMAIL_USERNAME}
       - EMAIL_PASS=${EMAIL_PASS}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
     volumes:
       - ./accounts:/accounts:rw
       - ./messages:/messages:rw

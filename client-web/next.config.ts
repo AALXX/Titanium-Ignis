@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'http',
-                hostname: fileServerHost,
+                hostname: 'localhost',
                 port: '5600'
             },
             {
