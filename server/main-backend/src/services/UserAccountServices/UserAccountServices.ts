@@ -185,6 +185,7 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
 };
 
 const LoginUser = async (req: CustomRequest, res: Response) => {
+    console.log(req.body);
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().forEach((error) => {
