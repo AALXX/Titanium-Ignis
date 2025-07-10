@@ -363,7 +363,7 @@ const DeploymentInfoClient: React.FC<DeploymentInfoClientProps> = ({ deployment:
                         </div>
 
                         <div className="flex gap-2">
-                            {deployment.status === 'running' && deployment.type !== 'volume' && (
+                            {deployment.status === eDeploymentStatus.DEPLOYED && deployment.type !== 'volume' && (
                                 <button
                                     onClick={() => handleAction('stop')}
                                     disabled={isLoading}

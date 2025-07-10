@@ -4,7 +4,7 @@ import type React from 'react'
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
-import { Eye, EyeOff, User, Lock, Bell, Shield, Trash2, Upload } from 'lucide-react'
+import { User, Lock, Bell, Shield, Trash2, Upload } from 'lucide-react'
 import axios from 'axios'
 
 interface AccountSettingsPopupProps {
@@ -29,8 +29,6 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
         projectUpdates: true,
         securityAlerts: true
     })
-
-
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -71,7 +69,6 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
             if (resp.data.error) {
                 return
             }
-
         } catch (error) {
             console.error('Error getting email change link:', error)
         }
@@ -166,13 +163,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                 <div className="mt-6">
                     <div className="mb-6 grid w-full grid-cols-4 rounded-md bg-[#353535]">
                         {['profile', 'security', 'notifications', 'account'].map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-4 py-2 text-center transition-colors ${
-                                    activeTab === tab ? 'bg-[#1A1A1A] text-white' : 'text-gray-300 hover:bg-[#1A1A1A]/50'
-                                } ${tab === 'profile' ? 'rounded-l-md' : ''} ${tab === 'account' ? 'rounded-r-md' : ''}`}
-                            >
+                            <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-2 text-center transition-colors ${activeTab === tab ? 'bg-[#1A1A1A] text-white' : 'text-gray-300 hover:bg-[#1A1A1A]/50'} ${tab === 'profile' ? 'rounded-l-md' : ''} ${tab === 'account' ? 'rounded-r-md' : ''}`}>
                                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
                             </button>
                         ))}
@@ -200,13 +191,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                     <label htmlFor="name" className="block text-white">
                                         Full Name
                                     </label>
-                                    <input
-                                        id="name"
-                                        value={formData.userName}
-                                        onChange={e => handleInputChange('userName', e.target.value)}
-                                        className="w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                                        placeholder="Enter your full name"
-                                    />
+                                    <input id="name" value={formData.userName} onChange={e => handleInputChange('userName', e.target.value)} className="w-full rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-gray-500 focus:outline-none" placeholder="Enter your full name" />
                                 </div>
 
                                 <div className="space-y-2">
@@ -230,11 +215,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                 />
                             </div>
 
-                            <button
-                                onClick={handleSaveProfile}
-                                disabled={isLoading}
-                                className={`mt-auto rounded-md border p-2 text-white transition-colors hover:bg-blue-700 ${isLoading ? 'cursor-not-allowed opacity-70' : ''}`}
-                            >
+                            <button onClick={handleSaveProfile} disabled={isLoading} className={`mt-auto rounded-md border p-2 text-white transition-colors hover:bg-blue-700 ${isLoading ? 'cursor-not-allowed opacity-70' : ''}`}>
                                 {isLoading ? 'Saving...' : 'Save Changes'}
                             </button>
                         </div>
@@ -251,11 +232,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <div className="relative">
-                                            <button
-                                                type="button"
-                                                className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]"
-                                                onClick={handleGetPasswordChangeLink}
-                                            >
+                                            <button type="button" className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]" onClick={handleGetPasswordChangeLink}>
                                                 Change Password
                                             </button>
                                         </div>
@@ -271,11 +248,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                 <div className="space-y-4">
                                     <div className="space-y-2">
                                         <div className="relative">
-                                            <button
-                                                type="button"
-                                                className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]"
-                                                onClick={handleGetEmailChangeLink}
-                                            >
+                                            <button type="button" className="w-full cursor-pointer rounded-md bg-[#353535] px-3 py-2 text-white placeholder:text-gray-400 hover:bg-[#272727]" onClick={handleGetEmailChangeLink}>
                                                 Change Email
                                             </button>
                                         </div>
@@ -323,10 +296,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                             <label className="block text-white">Email Notifications</label>
                                             <p className="text-sm text-gray-400">Receive notifications via email</p>
                                         </div>
-                                        <div
-                                            className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.emailNotifications ? 'bg-blue-600' : 'bg-gray-700'}`}
-                                            onClick={() => handleNotificationChange('emailNotifications')}
-                                        >
+                                        <div className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.emailNotifications ? 'bg-blue-600' : 'bg-gray-700'}`} onClick={() => handleNotificationChange('emailNotifications')}>
                                             <div className={`h-4 w-4 transform rounded-full bg-white transition-transform ${notifications.emailNotifications ? 'translate-x-6' : ''}`} />
                                         </div>
                                     </div>
@@ -336,10 +306,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                             <label className="block text-white">Push Notifications</label>
                                             <p className="text-sm text-gray-400">Receive push notifications in browser</p>
                                         </div>
-                                        <div
-                                            className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.pushNotifications ? 'bg-blue-600' : 'bg-gray-700'}`}
-                                            onClick={() => handleNotificationChange('pushNotifications')}
-                                        >
+                                        <div className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.pushNotifications ? 'bg-blue-600' : 'bg-gray-700'}`} onClick={() => handleNotificationChange('pushNotifications')}>
                                             <div className={`h-4 w-4 transform rounded-full bg-white transition-transform ${notifications.pushNotifications ? 'translate-x-6' : ''}`} />
                                         </div>
                                     </div>
@@ -349,10 +316,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                             <label className="block text-white">Project Updates</label>
                                             <p className="text-sm text-gray-400">Get notified about project changes</p>
                                         </div>
-                                        <div
-                                            className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.projectUpdates ? 'bg-blue-600' : 'bg-gray-700'}`}
-                                            onClick={() => handleNotificationChange('projectUpdates')}
-                                        >
+                                        <div className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.projectUpdates ? 'bg-blue-600' : 'bg-gray-700'}`} onClick={() => handleNotificationChange('projectUpdates')}>
                                             <div className={`h-4 w-4 transform rounded-full bg-white transition-transform ${notifications.projectUpdates ? 'translate-x-6' : ''}`} />
                                         </div>
                                     </div>
@@ -362,10 +326,7 @@ const AccountSettingsPopup: React.FC<AccountSettingsPopupProps> = ({ name, email
                                             <label className="block text-white">Security Alerts</label>
                                             <p className="text-sm text-gray-400">Important security notifications</p>
                                         </div>
-                                        <div
-                                            className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.securityAlerts ? 'bg-blue-600' : 'bg-gray-700'}`}
-                                            onClick={() => handleNotificationChange('securityAlerts')}
-                                        >
+                                        <div className={`h-6 w-12 cursor-pointer rounded-full p-1 transition-colors ${notifications.securityAlerts ? 'bg-blue-600' : 'bg-gray-700'}`} onClick={() => handleNotificationChange('securityAlerts')}>
                                             <div className={`h-4 w-4 transform rounded-full bg-white transition-transform ${notifications.securityAlerts ? 'translate-x-6' : ''}`} />
                                         </div>
                                     </div>

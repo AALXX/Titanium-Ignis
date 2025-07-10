@@ -233,7 +233,7 @@ const Conversation: React.FC<{
     return (
         <div className="flex h-full w-full flex-col bg-[#00000085]">
             <div className="flex items-center border-b border-[#ffffff1a] bg-[#0000004d] p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffffff1a]">{otherPersonName.charAt(0).toUpperCase()}</div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffffff1a]">{otherPersonName!.charAt(0).toUpperCase()}</div>
                 <div className="ml-3">
                     <h3 className="font-medium text-white">{otherPersonName}</h3>
                     <p className="text-xs text-gray-400">{isOnline ? 'Online' : 'Offline'}</p>

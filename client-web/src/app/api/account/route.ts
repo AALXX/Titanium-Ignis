@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { auth } from '@/features/auth/auth'
 import axios from 'axios'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const session = await auth()
         if (!session) {

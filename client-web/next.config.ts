@@ -1,4 +1,8 @@
-import type { NextConfig } from 'next'
+import { NextConfig } from "next"
+
+const isDocker = process.env.DOCKER_ENV === 'true'
+
+const fileServerHost = isDocker ? 'file-server' : 'localhost'
 
 const nextConfig: NextConfig = {
     output: 'standalone',
@@ -6,7 +10,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'http',
-                hostname: 'localhost',
+                hostname: fileServerHost,
                 port: '5600'
             },
             {
@@ -14,7 +18,6 @@ const nextConfig: NextConfig = {
                 hostname: 'lh3.googleusercontent.com'
             }
         ],
-
         dangerouslyAllowSVG: true
     }
 }

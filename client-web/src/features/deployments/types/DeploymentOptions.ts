@@ -20,6 +20,12 @@ export interface DeploymentOptions {
     datacenters: DataCenters[]
 }
 
+export interface ResourceAllocation {
+    cpu: number
+    ram: number
+    storage: number
+}
+
 export interface Serivce {
     name: string
     type: string
@@ -51,8 +57,8 @@ export interface ServiceCardPropsRequest {
     ipv6: string | null
     localip: string
     ports: Record<string, string[]>
-    datacenterlocation: string
-    os: string
+    datacenterlocation: DataCenters
+    os: DeploymentOS
     createdat: string
     deployedat: string | null
     updatedat: string

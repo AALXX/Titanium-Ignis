@@ -59,7 +59,7 @@ const config: NextAuthConfig = {
         async jwt({ token, user, account }): Promise<JWT> {
             if (user) {
                 // For Credentials provider, user.accessToken contains our custom token
-                if (user.accessToken) {
+                if (user.accessToken ) {
                     token.accessToken = user.accessToken
                 }
                 // For OAuth providers, use account.access_token

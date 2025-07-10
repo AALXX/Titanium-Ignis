@@ -1,34 +1,35 @@
 services:
-  # client-web:
-  #   container_name: client-web
-  #   build:
-  #     context: ./client-web
-  #     dockerfile: dev.Dockerfile
-  #   env_file:
-  #     - /client-web/.env
-  #   volumes:
-  #     - ./client-web/src:/app/src
-  #     - ./client-web/public:/app/public
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - mda-network
-  # client-web:
-  #   container_name: client-web
-  #   build:
-  #     context: ./client-web
-  #     dockerfile: dev.Dockerfile
-  #   env_file:
-  #     - /client-web/.env
-  #   volumes:
-  #     - ./client-web/src:/app/src
-  #     - ./client-web/public:/app/public
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - mda-network
+  client-web:
+    container_name: client-web
+    build:
+      context: ./client-web
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - /client-web/.env
+    environment:
+      - NODE_ENV=production
+      - DOCKER_ENV=production
+      - GITHUB_ID=${GITHUB_ID}
+      - GITHUB_SECRET=${GITHUB_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - ACCOUNT_SECRET=${ACCOUNT_SECRET}
+      - CHANGE_GMAIL_SECRET=${CHANGE_GMAIL_SECRET}
+      - CHANGE_PWD_SECRET=${CHANGE_PWD_SECRET}
+      - NEXT_PUBLIC_BACKEND_SERVER=${NEXT_PUBLIC_BACKEND_SERVER}
+      - NEXT_PUBLIC_FILE_SERVER=${NEXT_PUBLIC_FILE_SERVER}
+      - NEXT_PUBLIC_PROJECTS_SERVER=${NEXT_PUBLIC_PROJECTS_SERVER}
+      - NEXT_PUBLIC_TASKS_SERVER=${NEXT_PUBLIC_TASKS_SERVER}
+      - NEXT_PUBLIC_DEPLOYMENTS_SERVER=${NEXT_PUBLIC_DEPLOYMENTS_SERVER}
+      - NEXT_PUBLIC_MESSAGE_SERVER=${NEXT_PUBLIC_MESSAGE_SERVER}
+    depends_on:
+      - file-server
+      - main-backend-api
+    restart: unless-stopped
+    networks:
+      - ti-platform
 
   main-backend-api:
     container_name: main-backend-api

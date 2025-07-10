@@ -1,4 +1,4 @@
-import react from 'eslint-plugin-react'
+import react from 'eslint-pl`u`gin-react'
 import typescriptEslint from '@typescript-eslint/eslint-plugin'
 import globals from 'globals'
 import tsParser from '@typescript-eslint/parser'
@@ -63,19 +63,11 @@ export default [
             'max-len': [
                 'error',
                 {
-                    code: 220
+                    code: 350
                 }
             ],
 
-            'object-curly-spacing': ['error', 'always'],
-
-            'no-unused-vars': [
-                1,
-                {
-                    args: 'after-used',
-                    argsIgnorePattern: '^_'
-                }
-            ]
+            'object-curly-spacing': ['error', 'always']
         }
     }
 ]

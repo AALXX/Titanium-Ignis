@@ -7,42 +7,12 @@ import { useState, useRef, useEffect } from 'react'
 import DeploymentCardMenu from './DeploymentCardMenu'
 import type { Socket } from 'socket.io-client'
 import Link from 'next/link'
+import { ServiceCardPropsRequest, DataCenters } from '../types/DeploymentOptions';
 
 interface ServiceCardProps {
     socket: Socket
     userSessionToken: string
-    deployment: {
-        id: number
-        projecttoken: string
-        deploymenttoken: string
-        serviceid: number | null
-        name: string
-        type: string
-        domain: string | null
-        ipv4: string
-        ipv6: string | null
-        localip: string
-        ports: Record<string, string[]>
-        datacenterlocation: string
-        os: string
-        createdat: string
-        deployedat: string | null
-        updatedat: string
-        status: string
-        environment: string
-        isactive: boolean
-        resourceallocation: any | null
-        deploymentmethod: string | null
-        deploymentduration: number | null
-        deployedby: string | null
-        lasthealthcheckat: string | null
-        healthstatus: string | null
-        rollbackreference: number | null
-        tags: string[] | null
-        additionalinfo: {
-            sshName?: string
-        } | null
-    }
+    deployment: ServiceCardPropsRequest
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken, socket }) => {
@@ -199,26 +169,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
                                     event.nativeEvent.stopImmediatePropagation()
                                 }}
                             >
-                                <DeploymentCardMenu
-                                    currentStatus={deployment.status}
-                                    deploymentId={deployment.id}
-                                    deploymentType={deployment.type}
-                                    onStart={handleStart}
-                                    onRestart={handleRestart}
-                                    onStop={handleStop}
-                                    onDelete={handleDelete}
-                                    onViewDetails={handleViewDetails}
-                                    onSSHConnect={handleSSHConnect}
-                                    onBackup={handleBackup}
-                                />
+                                <DeploymentCardMenu currentStatus={deployment.status} deploymentId={deployment.id} deploymentType={deployment.type} onStart={handleStart} onRestart={handleRestart} onStop={handleStop} onDelete={handleDelete} onViewDetails={handleViewDetails} onSSHConnect={handleSSHConnect} onBackup={handleBackup} />
                             </div>
                         )}
                     </div>
                 </div>
                 <div className="mt-1 flex w-full items-center">
                     <Container className="h-4 w-4 self-center text-[#7c7c7c]" />
-                    <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os}</h1>
-                    <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation}</span>
+                    <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os.os}</h1>
+                    <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation.datacenterlocation}</span>
                 </div>
                 <div className="mt-4 flex w-full items-center justify-between">
                     <div className="flex flex-col">

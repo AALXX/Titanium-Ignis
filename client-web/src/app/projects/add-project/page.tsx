@@ -1,3 +1,4 @@
+import React from 'react'
 import AddProjectForm from '@/features/projects/components/AddProjectForm'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 

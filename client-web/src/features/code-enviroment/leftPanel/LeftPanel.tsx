@@ -68,7 +68,7 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
     }
 
     const handleAddFile = async (fileId: string, filename: string) => {
-        if (dispatch(addFile({ fileId, filename, userSessionToken: session.data?.accessToken!, projectToken: props.ProjectToken }))) {
+        if (dispatch(addFile({ fileId, filename, userSessionToken: session.data?.accessToken!, projectToken: props.ProjectToken }))!) {
             // window.alert('File added successfully')
         } else {
             window.alert('Error adding file')

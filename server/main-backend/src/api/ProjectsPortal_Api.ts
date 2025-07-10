@@ -17,10 +17,9 @@ const NAMESPACE = 'ProjectsPortal_Api';
 const app = express();
 const server = http.createServer(app);
 
-// Setup Socket.IO with CORS
 const io = new Server(server, {
     cors: {
-        origin: '*', // Be more specific in production
+        origin: '*',
         methods: ['GET', 'POST'],
         allowedHeaders: ['Authorization'],
         credentials: true,

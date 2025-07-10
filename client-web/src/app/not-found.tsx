@@ -19,7 +19,7 @@ export default function NotFound() {
                         <span className="text-red-500">404</span> | Page Not Found
                     </h1>
 
-                    <p className="mx-auto mb-8 max-w-2xl text-xl text-zinc-400 md:text-2xl">The page you're looking for doesn't exist or has been moved to another location.</p>
+                    <p className="mx-auto mb-8 max-w-2xl text-xl text-zinc-400 md:text-2xl">The page you&apos;re looking for doesn&apos;t exist or has been moved to another location.</p>
 
                     <div className="grid gap-4 sm:flex sm:justify-center sm:gap-6">
                         <Link

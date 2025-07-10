@@ -22,7 +22,7 @@ const DeploymentInfoPage: React.FC<DeploymentPageProps> = async ({ params }) => 
                 <div className="flex h-screen items-center justify-center">
                     <div className="text-center">
                         <h1 className="mb-2 text-2xl font-bold text-white">Deployment Not Found</h1>
-                        <p className="text-zinc-400">The deployment you're looking for doesn't exist or you don't have access to it.</p>
+                        <p className="text-zinc-400">The deployment you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.</p>
                     </div>
                 </div>
             )

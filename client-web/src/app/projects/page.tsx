@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
-import ProjectList from '@/features/projects/components/ProjectList'
 import Link from 'next/link'
 import { Lock } from 'lucide-react'
 import UserProjects from '@/features/account/components/UserProjects'

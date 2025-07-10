@@ -99,11 +99,10 @@ const DeploymentsOverView: React.FC<{ projectToken: string; userSessionToken: st
             const normalizedDeployment: ServiceCardPropsRequest = {
                 ...formData,
                 deploymenttoken: vmToken,
-                id: formData.id, // might be undefined if not set from backend
-                os: formData.os.os, // convert object to string
-                dataCenterLocation: formData.dataCenterLocation.datacenterlocation // same here
+                id: formData.id, 
+                os: formData.os,
+                datacenterlocation: formData.datacenterlocation
                 
-                // repeat for other nested objects if needed
             }
 
             setDeployments(prev => [...prev, normalizedDeployment])

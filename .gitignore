@@ -17,6 +17,7 @@ client-web/out/
 
 # production
 client-web/build
+client-web/.env.prod
 
 # misc
 .DS_Store
