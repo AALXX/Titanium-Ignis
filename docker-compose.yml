@@ -7,7 +7,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - /client-web/.env
+      - ./client-web/.env
     environment:
       - NODE_ENV=production
       - DOCKER_ENV=production
