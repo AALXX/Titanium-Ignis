@@ -24,6 +24,7 @@ services:
       - NEXT_PUBLIC_TASKS_SERVER=${NEXT_PUBLIC_TASKS_SERVER}
       - NEXT_PUBLIC_DEPLOYMENTS_SERVER=${NEXT_PUBLIC_DEPLOYMENTS_SERVER}
       - NEXT_PUBLIC_MESSAGE_SERVER=${NEXT_PUBLIC_MESSAGE_SERVER}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
     depends_on:
       - file-server
       - main-backend-api
@@ -66,7 +67,6 @@ services:
       - platform_gmail_password=${platform_gmail_password}
       - EMAIL_USERNAME=${EMAIL_USERNAME}
       - EMAIL_PASS=${EMAIL_PASS}
-      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
     volumes:
       - ./accounts:/accounts:rw
       - ./messages:/messages:rw
