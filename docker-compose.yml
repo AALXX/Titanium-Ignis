@@ -152,14 +152,14 @@ services:
 #       retries: 5
    
 
-# volumes:
-#   postgres-data:
-#     driver: local
-#   accounts-driver:
-#     driver: local
-#   redis_data:
-#     driver: local
+volumes:
+  postgres-data:
+    driver: local
+  accounts-driver:
+    driver: local
+  redis_data:
+    driver: local
 
-# networks:
-#   ti-platform:
-#     driver: bridge
+networks:
+  ti-platform:
+    driver: bridge
