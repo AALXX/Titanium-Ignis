@@ -120,6 +120,7 @@ WHERE UserEmail ILIKE '%' || $1 || '%'
 };
 
 const RegisterUser = async (req: CustomRequest, res: Response) => {
+    console.log(req.body);
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
         errors.array().forEach((error) => {

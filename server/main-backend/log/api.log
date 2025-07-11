@@ -87,3 +87,7 @@
 [7/11/2025, 3:39:21 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
 [7/11/2025, 3:39:21 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
 [7/11/2025, 3:41:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 8:12:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 8:14:37 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/11/2025, 8:14:37 PM] [ERROR] [REGISTER_USER_FUNCTION] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/11/2025, 8:15:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
