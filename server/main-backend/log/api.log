@@ -1,0 +1,89 @@
+[7/11/2025, 3:29:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:14 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:14 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:15 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:29:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:30:19 AM] [ERROR] [PG_QUERY_FUNC] new row for relation "users" violates check constraint "users_registrationtype_check"
+[7/11/2025, 3:30:19 AM] [ERROR] [REGISTER_USER_FUNCTION] new row for relation "users" violates check constraint "users_registrationtype_check"
+[7/11/2025, 3:31:40 AM] [ERROR] [PG_QUERY_FUNC] new row for relation "users" violates check constraint "users_registrationtype_check"
+[7/11/2025, 3:31:40 AM] [ERROR] [REGISTER_USER_FUNCTION] new row for relation "users" violates check constraint "users_registrationtype_check"
+[7/11/2025, 3:56:29 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:56:48 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:56:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:57:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:57:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:57:55 AM] [ERROR] [PG_QUERY_FUNC] syntax error at or near ")"
+[7/11/2025, 3:57:55 AM] [ERROR] [REGISTER_USER_FUNCTION] syntax error at or near ")"
+[7/11/2025, 3:58:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:58:09 AM] [ERROR] [PG_QUERY_FUNC] INSERT has more expressions than target columns
+[7/11/2025, 3:58:09 AM] [ERROR] [REGISTER_USER_FUNCTION] INSERT has more expressions than target columns
+[7/11/2025, 3:58:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:58:31 AM] [ERROR] [PG_QUERY_FUNC] null value in column "registrationtype" of relation "users" violates not-null constraint
+[7/11/2025, 3:58:31 AM] [ERROR] [REGISTER_USER_FUNCTION] null value in column "registrationtype" of relation "users" violates not-null constraint
+[7/11/2025, 3:59:33 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:59:35 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:33:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 3:33:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:35 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:40 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:41 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:33:44 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[7/11/2025, 3:39:14 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
+[7/11/2025, 3:39:14 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
+[7/11/2025, 3:39:15 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
+[7/11/2025, 3:39:15 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
+[7/11/2025, 3:39:15 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
+[7/11/2025, 3:39:15 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
+[7/11/2025, 3:39:21 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
+[7/11/2025, 3:39:21 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
+[7/11/2025, 3:39:21 PM] [ERROR] [PG_QUERY_FUNC] column u.registrationtype does not exist
+[7/11/2025, 3:39:21 PM] [ERROR] [GET_USER_ACCOUNT_DATA] column u.registrationtype does not exist
+[7/11/2025, 3:41:15 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

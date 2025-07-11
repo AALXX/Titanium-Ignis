@@ -95,17 +95,16 @@ export default function LoginRegisterScreen() {
                     userEmail: formData.email,
                     password: formData.password
                 })
+                console.log(result.data)
 
                 if (result.data.userSessionToken) {
-                    setCookie('authjs.session-token', result.data.userSessionToken, {
-                        maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
-                        httpOnly: false,
-                        secure: process.env.NODE_ENV === 'production',
-                        sameSite: 'strict',
-                        path: '/'
+                    await signIn('credentials', {
+                        email: formData.email,
+                        password: formData.password,
+                        redirect: false
                     })
                 }
-                router.push('/account')
+                // router.push('/account')
             } else {
                 console.log('Login:', formData)
                 const result = await signIn('credentials', {

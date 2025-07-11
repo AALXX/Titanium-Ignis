@@ -144,14 +144,13 @@ const RegisterUser = async (req: CustomRequest, res: Response) => {
                 UserPwd, 
                 UserPrivateToken, 
                 UserSessionToken, 
-                UserPublicToken, 
-                RegistrationType
+                UserPublicToken
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING id
         `;
 
-        const userInsertResult = await query(connection!, insertUserSQL, [req.body.userName, req.body.userEmail, HashedPassword, UserPrivateToken, AccessToken, UserPublicToken, 'credentials']);
+        const userInsertResult = await query(connection!, insertUserSQL, [req.body.userName, req.body.userEmail, HashedPassword, UserPrivateToken, AccessToken, UserPublicToken]);
 
         const userId = userInsertResult[0].id;
 
@@ -306,7 +305,7 @@ const GetUserAccountData = async (req: CustomRequest, res: Response) => {
         const connection = await connect(req.pool!);
 
         const queryString = `
-            SELECT u.UserName, u.RegistrationType, u.UserEmail
+            SELECT u.UserName, u.UserEmail, s.RegistrationType
             FROM account_sessions s
             INNER JOIN users u ON s.userID = u.id
             WHERE s.userSessionToken = $1

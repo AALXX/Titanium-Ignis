@@ -106,50 +106,51 @@ services:
      networks:
        - ti-platform
 
-  # postgres-db:
-  #   image: postgres:latest
-  #   container_name: postgres-container-mda
-  #   environment:
-  #     POSTGRES_USER: alx
-  #     POSTGRES_PASSWORD: serbvn
-  #     POSTGRES_DB: ti_db
-  #     PGDATA: /var/lib/postgresql/data/pgdata
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #     - ./server/db/sql/postgresql.conf:/etc/postgresql/postgresql.conf
-  #     - ./server/db/sql/pg_hba.conf:/etc/postgresql/pg_hba.conf
-  #   command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
-  #   restart: always
-  #   networks:
-  #     - mda-network
-  #   hostname: postgres
-  #   # healthcheck:
-  #   #   test: ["CMD-SHELL", "pg_isready -U alx -d mda_db"]
-  #   #   interval: 10s
-  #   #   timeout: 5s
-  #   #   retries: 5
-  #   #   start_period: 10s
+#   postgres-db:
+#     image: postgres:latest
+#     container_name: postgres-ti
+#     environment:
+#       POSTGRES_USER: alx
+#       POSTGRES_PASSWORD: serbvn
+#       POSTGRES_DB: ti_db
+#       PGDATA: /var/lib/postgresql/data/pgdata
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
+#       - ./server/db/sql/postgresql.conf:/etc/postgresql/postgresql.conf
+#       - ./server/db/sql/pg_hba.conf:/etc/postgresql/pg_hba.conf
+#     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+#     restart: always
+#     networks:
+#       - ti-platform
+#     hostname: postgres
+#     # healthcheck:
+#     #   test: ["CMD-SHELL", "pg_isready -U alx -d mda_db"]
+#     #   interval: 10s
+#     #   timeout: 5s
+#     #   retries: 5
+#     #   start_period: 10s
       
-  # redis-db:
-  #   image: redis:latest
-  #   container_name: redis-db
-  #   environment:
-  #     - REDIS_PASSWORD=serbvn
-  #   volumes:
-  #     - redis_data:/data
-  #   ports:
-  #     - "6379:6379"
-  #   command: ["redis-server", "--requirepass", "serbvn", "--bind", "0.0.0.0"]
-  #   networks:
-  #     - ti-network
-  #   hostname: redis
-  #   healthcheck:
-  #     test: ["CMD", "redis-cli", "-a", "serbvn", "ping"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+#   redis-db:
+#     image: redis:latest
+#     container_name: redis-db
+#     environment:
+#       - REDIS_PASSWORD=serbvn
+#     volumes:
+#       - redis_data:/data
+#     ports:
+#       - "6379:6379"
+#     command: ["redis-server", "--requirepass", "serbvn", "--bind", "0.0.0.0"]
+#     networks:
+#       - ti-platform
+#     hostname: redis
+#     healthcheck:
+#       test: ["CMD", "redis-cli", "-a", "serbvn", "ping"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+   
 
 # volumes:
 #   postgres-data:
@@ -159,6 +160,6 @@ services:
 #   redis_data:
 #     driver: local
 
-networks:
-  ti-platform:
-    driver: bridge
+# networks:
+#   ti-platform:
+#     driver: bridge
