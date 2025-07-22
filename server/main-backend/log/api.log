@@ -91,3 +91,8 @@
 [7/11/2025, 8:14:37 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "users_userpublictoken_key"
 [7/11/2025, 8:14:37 PM] [ERROR] [REGISTER_USER_FUNCTION] duplicate key value violates unique constraint "users_userpublictoken_key"
 [7/11/2025, 8:15:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[7/11/2025, 8:19:48 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/11/2025, 8:19:48 PM] [ERROR] [REGISTER_USER_FUNCTION] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/11/2025, 8:19:59 PM] [ERROR] [PG_QUERY_FUNC] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/11/2025, 8:19:59 PM] [ERROR] [REGISTER_USER_FUNCTION] duplicate key value violates unique constraint "users_userpublictoken_key"
+[7/22/2025, 6:48:38 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
