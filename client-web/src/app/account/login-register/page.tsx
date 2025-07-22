@@ -96,6 +96,7 @@ export default function LoginRegisterScreen() {
                     password: formData.password
                 })
                 console.log(result.data)
+                console.log(process.env.NEXT_PUBLIC_BACKEND_SERVER)
 
                 if (result.data.userSessionToken) {
                     await signIn('credentials', {
@@ -116,12 +117,11 @@ export default function LoginRegisterScreen() {
                 if (result?.error) {
                     setErrors(prev => ({
                         ...prev,
-                        password: "Incorrect email or password"
+                        password: 'Incorrect email or password'
                     }))
                     return
                 }
                 router.push('/account')
-
             }
         } catch (error) {
             console.error('Authentication error:', error)
@@ -242,11 +242,7 @@ export default function LoginRegisterScreen() {
                             </div>
                         )}
 
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 font-semibold text-white transition-all duration-200 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                        >
+                        <button type="submit" disabled={isLoading} className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 font-semibold text-white transition-all duration-200 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
                             {isLoading ? (
                                 <div className="flex items-center justify-center">
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -267,10 +263,7 @@ export default function LoginRegisterScreen() {
                     </div>
 
                     <div className="space-y-3">
-                        <button
-                            onClick={handleGoogleAuth}
-                            className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-white px-4 py-3 font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-100 focus:ring-2 focus:ring-white/20 focus:outline-none"
-                        >
+                        <button onClick={handleGoogleAuth} className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-white px-4 py-3 font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-100 focus:ring-2 focus:ring-white/20 focus:outline-none">
                             <Image src="/AccountIcons/google.png" alt="Google Logo" width={20} height={20} />
                             <span className="ml-3">Continue with Google</span>
                         </button>
