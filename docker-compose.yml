@@ -1,16 +1,15 @@
+version: '3.8'
+
 services:
   client-web:
+    image: ${DOCKER_REGISTRY:-s3rbvn}/client-web:${IMAGE_TAG:-latest}
     container_name: client-web
-    build:
-      context: ./client-web
-      dockerfile: Dockerfile
     ports:
-      - 3000:3000
-    env_file:
-      - ./client-web/.env
+      - "3000:3000"
     environment:
       - NODE_ENV=production
       - DOCKER_ENV=production
+      # Runtime secrets for Next.js (server-side only)
       - GITHUB_ID=${GITHUB_ID}
       - GITHUB_SECRET=${GITHUB_SECRET}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
@@ -18,13 +17,8 @@ services:
       - ACCOUNT_SECRET=${ACCOUNT_SECRET}
       - CHANGE_GMAIL_SECRET=${CHANGE_GMAIL_SECRET}
       - CHANGE_PWD_SECRET=${CHANGE_PWD_SECRET}
-      - NEXT_PUBLIC_BACKEND_SERVER=${NEXT_PUBLIC_BACKEND_SERVER}
-      - NEXT_PUBLIC_FILE_SERVER=${NEXT_PUBLIC_FILE_SERVER}
-      - NEXT_PUBLIC_PROJECTS_SERVER=${NEXT_PUBLIC_PROJECTS_SERVER}
-      - NEXT_PUBLIC_TASKS_SERVER=${NEXT_PUBLIC_TASKS_SERVER}
-      - NEXT_PUBLIC_DEPLOYMENTS_SERVER=${NEXT_PUBLIC_DEPLOYMENTS_SERVER}
-      - NEXT_PUBLIC_MESSAGE_SERVER=${NEXT_PUBLIC_MESSAGE_SERVER}
       - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
+      # Note: NEXT_PUBLIC_* vars are baked into the build, not runtime
     depends_on:
       - file-server
       - main-backend-api
@@ -33,36 +27,38 @@ services:
       - ti-platform
 
   main-backend-api:
+    image: ${DOCKER_REGISTRY:-s3rbvn}/main-backend-api:${IMAGE_TAG:-latest}
     container_name: main-backend-api
-    build:
-      context: ./server/main-backend
-      dockerfile: Dockerfile
     ports:
       - "7070:7070"
-    env_file:
-      - ./server/main-backend/.env
     environment:
       - NODE_ENV=production
       - SERVER_HOSTNAME=${SERVER_HOSTNAME}
+      # Database configuration
       - POSTGRESQL_HOST=${POSTGRESQL_HOST}
       - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
       - POSTGRESQL_USER=${POSTGRESQL_USER}
       - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      # Redis configuration
       - REDIS_URL=${REDIS_URL}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
+      # Application secrets
       - ACCOUNT_SECRET=${ACCOUNT_SECRET}
       - CHANGE_PWD_SECRET=${CHANGE_PWD_SECRET}
       - CHANGE_GMAIL_SECRET=${CHANGE_GMAIL_SECRET}
+      # File paths
       - ACCOUNTS_FOLDER_PATH=${ACCOUNTS_FOLDER_PATH}
       - MESSAGES_FOLDER_PATH=${MESSAGES_FOLDER_PATH}
       - PROJECTS_FOLDER_PATH=${PROJECTS_FOLDER_PATH}
       - REPOSITORIES_FOLDER_PATH=${REPOSITORIES_FOLDER_PATH}
       - PROJECT_DEPLOYMENT_FOLDER_PATH=${PROJECT_DEPLOYMENT_FOLDER_PATH}
+      # External services
       - GIT_REPOSITORY=${GIT_REPOSITORY}
       - FRONTEND_URL=${FRONTEND_URL}
       - FILE_SERVER_URL=${FILE_SERVER_URL}
       - FILE_SERVER_USERNAME=${FILE_SERVER_USERNAME}
       - FILE_SERVER_PASSWORD=${FILE_SERVER_PASSWORD}
+      # Email configuration
       - platform_gmail=${platform_gmail}
       - platform_gmail_password=${platform_gmail_password}
       - EMAIL_USERNAME=${EMAIL_USERNAME}
@@ -79,83 +75,70 @@ services:
     restart: unless-stopped
     networks:
       - ti-platform
+
   file-server:
-     container_name: file-server
-     image: s3rbvn/file-server:${IMAGE_TAG:-latest}
-     ports:
-       - "5600:5600"
-     environment:
-       # Server configuration
-       - SERVER_HOST=${SERVER_HOST:-0.0.0.0:5600}
+    image: ${DOCKER_REGISTRY:-s3rbvn}/file-server:${IMAGE_TAG:-latest}
+    container_name: file-server
+    ports:
+      - "5600:5600"
+    environment:
+      # Server configuration
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0:5600}
+      # Database configuration
+      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - POSTGRESQL_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_PASS=${POSTGRESQL_PASS}
+      - POSTGRESQL_DB=${POSTGRESQL_DB}
+      # Authentication
+      - AUTH_USERNAME=${AUTH_USERNAME}
+      - AUTH_PASSWORD=${AUTH_PASSWORD}
+    volumes:
+      - ./accounts:/accounts:ro     
+      - ./messages:/messages:ro      
+    restart: unless-stopped
+    networks:
+      - ti-platform
 
-       # Database configuration
-       - POSTGRESQL_HOST=${POSTGRESQL_HOST}
-       - POSTGRESQL_PORT=${POSTGRESQL_PORT}
-       - POSTGRESQL_USER=${POSTGRESQL_USER}
-       - POSTGRESQL_PASS=${POSTGRESQL_PASS}
-       - POSTGRESQL_DB=${POSTGRESQL_DB}
-
-       # Authentication
-       - AUTH_USERNAME=${AUTH_USERNAME}
-       - AUTH_PASSWORD=${AUTH_PASSWORD}
-
-     volumes:
-       - ./accounts:/accounts:ro     
-       - ./messages:/messages:ro      
-     restart: unless-stopped
-     networks:
-       - ti-platform
-
-#   postgres-db:
-#     image: postgres:latest
-#     container_name: postgres-ti
-#     environment:
-#       POSTGRES_USER: alx
-#       POSTGRES_PASSWORD: serbvn
-#       POSTGRES_DB: ti_db
-#       PGDATA: /var/lib/postgresql/data/pgdata
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - postgres-data:/var/lib/postgresql/data
-#       - ./server/db/sql/postgresql.conf:/etc/postgresql/postgresql.conf
-#       - ./server/db/sql/pg_hba.conf:/etc/postgresql/pg_hba.conf
-#     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
-#     restart: always
-#     networks:
-#       - ti-platform
-#     hostname: postgres
-#     # healthcheck:
-#     #   test: ["CMD-SHELL", "pg_isready -U alx -d mda_db"]
-#     #   interval: 10s
-#     #   timeout: 5s
-#     #   retries: 5
-#     #   start_period: 10s
+  # Uncomment if you want to run databases in containers
+  # postgres-db:
+  #   image: postgres:15-alpine
+  #   container_name: postgres-ti
+  #   environment:
+  #     - POSTGRES_USER=${POSTGRESQL_USER:-alx}
+  #     - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD:-serbvn}
+  #     - POSTGRES_DB=${POSTGRESQL_DATABASE:-ti_db}
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #     - ./server/db/sql/postgresql.conf:/etc/postgresql/postgresql.conf
+  #     - ./server/db/sql/pg_hba.conf:/etc/postgresql/pg_hba.conf
+  #   command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+  #   restart: unless-stopped
+  #   networks:
+  #     - ti-platform
+  #   hostname: postgres
       
-#   redis-db:
-#     image: redis:latest
-#     container_name: redis-db
-#     environment:
-#       - REDIS_PASSWORD=serbvn
-#     volumes:
-#       - redis_data:/data
-#     ports:
-#       - "6379:6379"
-#     command: ["redis-server", "--requirepass", "serbvn", "--bind", "0.0.0.0"]
-#     networks:
-#       - ti-platform
-#     hostname: redis
-#     healthcheck:
-#       test: ["CMD", "redis-cli", "-a", "serbvn", "ping"]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-   
+  # redis-db:
+  #   image: redis:7-alpine
+  #   container_name: redis-db
+  #   environment:
+  #     - REDIS_PASSWORD=${REDIS_PASSWORD:-serbvn}
+  #   volumes:
+  #     - redis_data:/data
+  #   ports:
+  #     - "6379:6379"
+  #   command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-serbvn}", "--bind", "0.0.0.0"]
+  #   networks:
+  #     - ti-platform
+  #   hostname: redis
 
 volumes:
-  postgres-data:
+  postgres_data:
     driver: local
-  accounts-driver:
+  accounts_driver:
     driver: local
   redis_data:
     driver: local
