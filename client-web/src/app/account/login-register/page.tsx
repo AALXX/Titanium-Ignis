@@ -84,6 +84,7 @@ export default function LoginRegisterScreen() {
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
+        console.log(process.env.NEXT_PUBLIC_BACKEND_SERVER)
         e.preventDefault()
         if (!validateForm()) return
 
@@ -96,7 +97,6 @@ export default function LoginRegisterScreen() {
                     password: formData.password
                 })
                 console.log(result.data)
-                console.log(process.env.NEXT_PUBLIC_BACKEND_SERVER)
 
                 if (result.data.userSessionToken) {
                     await signIn('credentials', {
