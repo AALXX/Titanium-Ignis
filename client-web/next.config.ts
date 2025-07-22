@@ -1,4 +1,4 @@
-import { NextConfig } from 'next'
+import { NextConfig } from "next"
 
 const isDocker = process.env.DOCKER_ENV === 'true'
 
@@ -19,14 +19,6 @@ const nextConfig: NextConfig = {
             }
         ],
         dangerouslyAllowSVG: true
-    },
-    env: {
-        NEXT_PUBLIC_BACKEND_SERVER: process.env.NEXT_PUBLIC_BACKEND_SERVER,
-        NEXT_PUBLIC_FILE_SERVER: process.env.NEXT_PUBLIC_FILE_SERVER,
-        NEXT_PUBLIC_PROJECTS_SERVER: process.env.NEXT_PUBLIC_PROJECTS_SERVER,
-        NEXT_PUBLIC_TASKS_SERVER: process.env.NEXT_PUBLIC_TASKS_SERVER,
-        NEXT_PUBLIC_DEPLOYMENTS_SERVER: process.env.NEXT_PUBLIC_DEPLOYMENTS_SERVER,
-        NEXT_PUBLIC_MESSAGE_SERVER: process.env.NEXT_PUBLIC_MESSAGE_SERVER
     }
 }
 

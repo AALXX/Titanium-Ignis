@@ -2,6 +2,16 @@ version: '3.8'
 
 services:
   client-web:
+    build:
+      context: ./client-web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BACKEND_SERVER: ${NEXT_PUBLIC_BACKEND_SERVER}
+        NEXT_PUBLIC_FILE_SERVER: ${NEXT_PUBLIC_FILE_SERVER}
+        NEXT_PUBLIC_PROJECTS_SERVER: ${NEXT_PUBLIC_PROJECTS_SERVER}
+        NEXT_PUBLIC_TASKS_SERVER: ${NEXT_PUBLIC_TASKS_SERVER}
+        NEXT_PUBLIC_DEPLOYMENTS_SERVER: ${NEXT_PUBLIC_DEPLOYMENTS_SERVER}
+        NEXT_PUBLIC_MESSAGE_SERVER: ${NEXT_PUBLIC_MESSAGE_SERVER}
     image: ${DOCKER_REGISTRY:-s3rbvn}/client-web:${IMAGE_TAG:-latest}
     container_name: client-web
     ports:
@@ -9,7 +19,6 @@ services:
     environment:
       - NODE_ENV=production
       - DOCKER_ENV=production
-      # Runtime secrets for Next.js (server-side only)
       - GITHUB_ID=${GITHUB_ID}
       - GITHUB_SECRET=${GITHUB_SECRET}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
@@ -18,7 +27,6 @@ services:
       - CHANGE_GMAIL_SECRET=${CHANGE_GMAIL_SECRET}
       - CHANGE_PWD_SECRET=${CHANGE_PWD_SECRET}
       - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
-      # Note: NEXT_PUBLIC_* vars are baked into the build, not runtime
     depends_on:
       - file-server
       - main-backend-api
