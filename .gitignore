@@ -72,3 +72,5 @@ server/messaging-service/.env
 tools
 server/deployments-monitoring/node_modules/
 server/messages/
+
+jenkinsfile
