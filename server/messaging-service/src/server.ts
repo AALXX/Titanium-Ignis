@@ -37,6 +37,11 @@ app.use(
     })
 )
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', service: 'messaging-service' })
+})
+
 if (!fs.existsSync(process.env.MESSAGES_FOLDER_PATH!)) {
     fs.mkdirSync(process.env.MESSAGES_FOLDER_PATH!)
 }

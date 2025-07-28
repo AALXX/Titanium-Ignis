@@ -26,6 +26,11 @@ func main() {
 		log.Fatalf("SERVER_HOST environment variable not set")
 	}
 
+	serverPORT := os.Getenv("PORT")
+	if serverPORT == "" {
+		log.Fatalf("SERVER_PORT environment variable not set")
+	}
+
 	// Initialize the database connection
 	db, err := config.InitDB()
 	if err != nil {
@@ -52,6 +57,6 @@ func main() {
 	routes.InitRoutes(app, db)
 
 	// Start the server
-	log.Fatal(app.Listen("0.0.0.0:5200"))
+	log.Fatal(app.Listen("0.0.0.0:" + serverPORT))
 
 }

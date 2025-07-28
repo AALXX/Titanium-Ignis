@@ -52,14 +52,19 @@ server/file-server/.env
 server/file-server/.env.prod
 server/main-backend/.env.prod
 server/project-manager-server/.env
+server/project-manager-server/.env.prod
 server/repos
 server/projects
 server/local-deployments
 
 server/project-tasks/.env
+server/project-tasks/.env.prod
 server/project-tasks/node_modules
 
+
+
 server/deployments-monitoring/.env
+server/deployments-monitoring/.env.prod
 server/deployments-monitoring/node_modules
 
 tools/table-replication/.env
@@ -69,6 +74,7 @@ server/db/backup.sql
 
 server/messaging-service/node_modules
 server/messaging-service/.env
+server/messaging-service/.env.prod
 tools
 server/deployments-monitoring/node_modules/
 server/messages/
