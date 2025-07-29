@@ -20,3 +20,19 @@ export interface Message {
     }[]
     timesent: Date
 }
+
+export interface ITasks {
+    TaskUUID: string
+    TaskName: string
+    TaskDescription: string
+    TaskStatus: string
+    TaskImportance: string
+    ContainerUUID: string
+    TaskDueDate: Date
+}
+
+export enum ContainerState {
+    Creating,
+    Created,
+    Editing,
+}
