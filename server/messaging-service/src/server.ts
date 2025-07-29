@@ -18,6 +18,14 @@ import { connectRedis, redisClient } from './config/redis'
 const NAMESPACE = 'MESSAGEING_API'
 const pool = createPool()
 
+// Ensure messages folder exists (created by Dockerfile)
+const messagesFolderPath = process.env.MESSAGES_FOLDER_PATH || '/shared_data/messages'
+if (!fs.existsSync(messagesFolderPath)) {
+    logging.error(NAMESPACE, `Messages folder does not exist: ${messagesFolderPath}`)
+    throw new Error(`Messages folder not found: ${messagesFolderPath}`)
+}
+logging.info(NAMESPACE, `Using messages folder: ${messagesFolderPath}`)
+
 try {
     ;(async () => {
         await connectRedis()
@@ -42,16 +50,12 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', service: 'messaging-service' })
 })
 
-if (!fs.existsSync(process.env.MESSAGES_FOLDER_PATH!)) {
-    fs.mkdirSync(process.env.MESSAGES_FOLDER_PATH!)
-}
-
 interface ExtendedRequest extends Request {
     filenameMap?: Record<string, string>
 }
 
 const storage = multer.diskStorage({
-    destination: process.env.MESSAGES_FOLDER_PATH!,
+    destination: messagesFolderPath,
 
     filename: (req, file, cb) => {
         const extension = path.extname(file.originalname)
