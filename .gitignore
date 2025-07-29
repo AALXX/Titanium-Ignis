@@ -62,6 +62,7 @@ server/project-tasks/.env.prod
 server/project-tasks/node_modules
 
 
+server/project-tasks/log/api.log
 
 server/deployments-monitoring/.env
 server/deployments-monitoring/.env.prod
