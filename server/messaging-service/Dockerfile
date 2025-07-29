@@ -16,15 +16,12 @@ COPY . .
 # Build TypeScript code
 RUN npm run build
 
-# Create necessary directories for the application
-RUN mkdir -p /shared_data/messages /tmp/messages
-
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
 
-# Change ownership of the app directory and created directories
-RUN chown -R nodejs:nodejs /app /shared_data/messages /tmp/messages
+# Change ownership of the app directory
+RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 # Expose port

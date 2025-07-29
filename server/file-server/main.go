@@ -148,19 +148,21 @@ func main() {
 
 	log.Printf("Environment loaded - AUTH_USERNAME: %s", username)
 
-	// Use absolute paths for containers
-	accountsDir := "/accounts"
-	messagesDir := "/messages"
+	// Use shared volume paths for containers
+	sharedDataDir := "/shared_data"
+	accountsDir := filepath.Join(sharedDataDir, "accounts")
+	messagesDir := filepath.Join(sharedDataDir, "messages")
+	projectsDir := filepath.Join(sharedDataDir, "projects")
 
-	// Check if directories exist, create them if they don't
-	if _, err := os.Stat(accountsDir); os.IsNotExist(err) {
-		log.Printf("Creating accounts directory: %s", accountsDir)
-		os.MkdirAll(accountsDir, 0755)
-	}
-	
-	if _, err := os.Stat(messagesDir); os.IsNotExist(err) {
-		log.Printf("Creating messages directory: %s", messagesDir)
-		os.MkdirAll(messagesDir, 0755)
+	// Create all necessary directories in shared volume
+	directories := []string{accountsDir, messagesDir, projectsDir}
+	for _, dir := range directories {
+		if _, err := os.Stat(dir); os.IsNotExist(err) {
+			log.Printf("Creating directory: %s", dir)
+			if err := os.MkdirAll(dir, 0755); err != nil {
+				log.Printf("Warning: Failed to create directory %s: %v", dir, err)
+			}
+		}
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -182,13 +184,22 @@ func main() {
 			baseDir = accountsDir
 		} else if strings.HasPrefix(path, "/messages/") {
 			baseDir = messagesDir
+		} else if strings.HasPrefix(path, "/projects/") {
+			baseDir = projectsDir
 		} else {
 			return c.Status(fiber.StatusNotFound).SendString("Not Found")
 		}
 
-		// Clean path
-		relativePath := strings.TrimPrefix(path, "/accounts")
-		relativePath = strings.TrimPrefix(relativePath, "/messages")
+		// Clean path - remove the prefix to get relative path
+		var relativePath string
+		if strings.HasPrefix(path, "/accounts/") {
+			relativePath = strings.TrimPrefix(path, "/accounts")
+		} else if strings.HasPrefix(path, "/messages/") {
+			relativePath = strings.TrimPrefix(path, "/messages")
+		} else if strings.HasPrefix(path, "/projects/") {
+			relativePath = strings.TrimPrefix(path, "/projects")
+		}
+		
 		requestedPath := filepath.Join(baseDir, filepath.Clean(relativePath))
 
 		content, ext, err := safeFileServer(requestedPath, baseDir)

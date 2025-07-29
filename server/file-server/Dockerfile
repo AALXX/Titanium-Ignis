@@ -18,7 +18,8 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/AccountIcon.svg .
 COPY --from=builder /app/AccountIcon.png .
 
-RUN mkdir -p /accounts /messages /log /projects /repos /local-deployments /tmp 
+# Create shared volume directories and other necessary directories
+RUN mkdir -p /shared_data/accounts /shared_data/messages /shared_data/projects /log /tmp 
 
 EXPOSE 5600
 

@@ -18,7 +18,7 @@ import { connectRedis, redisClient } from './config/redis'
 const NAMESPACE = 'MESSAGEING_API'
 const pool = createPool()
 
-// Ensure messages folder exists (created by Dockerfile)
+// Ensure messages folder exists (created by file-server in shared volume)
 const messagesFolderPath = process.env.MESSAGES_FOLDER_PATH || '/shared_data/messages'
 if (!fs.existsSync(messagesFolderPath)) {
     logging.error(NAMESPACE, `Messages folder does not exist: ${messagesFolderPath}`)
