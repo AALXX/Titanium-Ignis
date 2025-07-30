@@ -12,7 +12,7 @@ const pool = createPool()
 
 const io = new Server(httpServer, {
     cors: {
-        origin: ['http://localhost:3000']
+        origin: ['http://localhost:3000', process.env.FRONTEND_URL as string]
     }
 })
 
