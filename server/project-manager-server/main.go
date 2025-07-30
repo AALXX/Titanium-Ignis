@@ -28,7 +28,7 @@ func main() {
 
 	serverHost := os.Getenv("SERVER_HOST")
 	if serverHost == "" {
-		serverHost = "0.0.0.0:5600"
+		serverHost = "0.0.0.0:5200"
 	}
 	log.Printf("Server will listen on %s\n", serverHost)
 
