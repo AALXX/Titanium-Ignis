@@ -13,18 +13,24 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
-	// Load the environment variables from the .env file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+func loadEnvFile() {
+	// Try to load .env file if it exists, but don't fail if it doesn't
+	// This allows for both .env file and environment variable usage
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using environment variables")
+	} else {
+		log.Println("Loaded environment from .env file")
 	}
+}
 
-	// Get the server host from the environment variable
+func main() {
+	loadEnvFile()
+
 	serverHost := os.Getenv("SERVER_HOST")
 	if serverHost == "" {
-		log.Fatalf("SERVER_HOST environment variable not set")
+		serverHost = "0.0.0.0:5600"
 	}
+	log.Printf("Server will listen on %s\n", serverHost)
 
 	serverPORT := os.Getenv("PORT")
 	if serverPORT == "" {
@@ -53,10 +59,12 @@ func main() {
 		AllowHeaders: []string{"*"},
 	}))
 
-	// Initialize routes
 	routes.InitRoutes(app, db)
 
 	// Start the server
-	log.Fatal(app.Listen("0.0.0.0:" + serverPORT))
+	log.Printf("Server is attempting to listen on %s\n", serverHost)
+	if err := app.Listen(serverHost + ":" + serverPORT); err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
 
 }
