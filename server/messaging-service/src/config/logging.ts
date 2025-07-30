@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const LOG_FILE_PATH = path.join(process.cwd(), '/log/api.log');
+const LOG_FILE_PATH = '/log/api.log';
 
 const getTimeStamp = (): string => {
     return new Date().toLocaleString();
