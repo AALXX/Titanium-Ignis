@@ -78,6 +78,7 @@ server/messaging-service/.env
 server/messaging-service/.env.prod
 tools
 server/deployments-monitoring/node_modules/
+server/deployments-monitoring/log/api.log
 
 server/messages/
 server/messaging-service/log/api.log
