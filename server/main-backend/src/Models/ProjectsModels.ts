@@ -24,8 +24,19 @@ export enum eDeploymentType {
 }
 
 export interface IProjectsDb {
-    ProjectName: string;
-    ProjectToken: string;
-    ProjectOwnerToken: string;
-    Status: string;
+    projectname: string;
+    projectdescription: string;
+    projecttoken: string;
+    projectownerToken: string;
+    status: string;
+    created_at: Date;
+    team_members: number | null;
+    task_count: number;
+    tasks:
+        | {
+              taskname: string;
+              taskstatus: string;
+          }[]
+        | null;
 }
+

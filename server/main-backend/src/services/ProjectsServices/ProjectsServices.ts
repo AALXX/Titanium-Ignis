@@ -68,10 +68,55 @@ const getProjectData = async (req: CustomRequest, res: Response): Promise<void> 
     const connection = await connect(req.pool!);
 
     try {
-        const queryString = `SELECT * FROM projects WHERE ProjectToken = $1`;
-        const projectsResponse: IProjectsDb = await query(connection!, queryString, [req.params.projectToken]);
-        connection?.release();
+        const queryString = `WITH team_member_count AS (
+    SELECT
+        projecttoken,
+        COUNT(*) AS team_members
+    FROM projects_team_members
+    WHERE is_active = true
+    GROUP BY projecttoken
+),
+project_tasks AS (
+    SELECT
+        ptb.projecttoken,
+        bt.taskname,
+        bt.taskstatus
+    FROM projects_task_banners ptb
+    JOIN banner_tasks_containers btc ON ptb.bannertoken = btc.bannertoken
+    JOIN banner_tasks bt ON btc.containeruuid = bt.containeruuid
+)
+SELECT 
+    p.projectname,
+    p.projectdescription,
+    p.projecttoken,
+    p.projectownertoken,
+    p.status,
+    p.created_at,
+    tm.team_members,
+    COUNT(t.taskname) AS task_count,
+    json_agg(
+        json_build_object(
+            'taskname', t.taskname,
+            'taskstatus', t.taskstatus
+        )
+    ) FILTER (WHERE t.taskname IS NOT NULL) AS tasks
+FROM projects p
+LEFT JOIN team_member_count tm ON p.projecttoken = tm.projecttoken
+LEFT JOIN project_tasks t ON p.projecttoken = t.projecttoken
+WHERE p.projecttoken = $1
+GROUP BY 
+    p.projectname,
+    p.projectdescription,
+    p.projecttoken,
+    p.projectownertoken,
+    p.status,
+    p.created_at,
+    tm.team_members;
+`;
+        const result = await query(connection!, queryString, [req.params.projectToken]);
+        const projectsResponse: IProjectsDb = result[0];
 
+        connection?.release();
         res.status(200).json({
             error: false,
             project: projectsResponse,

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MoreVertical } from 'lucide-react'
 import BannerTasksOptionsMenu from './BannerTasksOptionsMenu'
 import axios from 'axios'
-import { ITaskBanners } from '../../ITeamTasks'
+import { ITaskBanners } from '../../types/ITeamTasks'
 
 const BannerTaskTemplate = (props: ITaskBanners & { refreshTaskBanners: () => void; userSessionToken: string | undefined }) => {
     const [showMenu, setShowMenu] = useState(false)

@@ -2,7 +2,7 @@
 import type React from 'react'
 import { useEffect, useState } from 'react'
 import type { Socket } from 'socket.io-client'
-import type { ITaskData } from '../../ITeamTasks'
+import type { ITaskData } from '../../types/ITeamTasks'
 import { Calendar, Clock, Flag, FileText, MessageSquare, User, CheckCircle, Archive, Tag, AlertCircle } from 'lucide-react'
 
 interface ViewTaskPopupProps {
@@ -98,7 +98,7 @@ const ViewTaskPopup: React.FC<ViewTaskPopupProps> = ({ taskUUID, socketRef, clas
 
     if (error) {
         return (
-            <div className={`flex w-full flex-col  justify-center ${className}`}>
+            <div className={`flex w-full flex-col justify-center ${className}`}>
                 <div className="mb-4 flex items-center justify-center">
                     <h2 className="text-xl font-bold text-white">Error</h2>
                 </div>

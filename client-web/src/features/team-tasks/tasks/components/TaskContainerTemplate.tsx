@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { EContainerState } from '../../ITeamTasks'
+import { EContainerState } from '../../types/ITeamTasks'
 import TruncatedText from '@/components/TruncateText'
 import { MoreVertical } from 'lucide-react'
 import TaskContainerOptionsMenu from './TaskContainerOptionsMenu'

@@ -86,12 +86,12 @@ ORDER BY banner_tasks_containers.ContainerOrder;
 const createTaskContainer = async (pool: Pool, io: Server, socket: Socket, userSessionToken: string, projectToken: string, containerUUID: string, bannerToken: string, taskContainerName: string) => {
     try {
         const connection = await connect(pool)
-        // if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
-        //     return socket.emit('CREATED_TASK_CONTAINER', {
-        //         error: true,
-        //         message: 'You do not have permission to create a task container'
-        //     })
-        // }
+        if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
+            return socket.emit('CREATED_TASK_CONTAINER', {
+                error: true,
+                message: 'You do not have permission to create a task container'
+            })
+        }
 
         if (!containerUUID) {
             containerUUID = uuidv4()
@@ -138,8 +138,8 @@ const reorderTaskContainers = async (pool: Pool, socket: Socket, io: Server, use
 
         if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'manage')) === false) {
             connection?.release()
-            return socket.emit('REORDERED_TASK_CONTAINERS', {
-                error: true,
+            return socket.emit('REORDERED_TASK_CONTAINERS_NOT_ALLOWED', {
+                error: false,
                 message: 'You do not have permission to reorder task containers'
             })
         }
@@ -182,7 +182,7 @@ const deleteTaskContainer = async (pool: Pool, socket: Socket, io: Server, proje
 
         if ((await checkForPermissions(connection!, projectToken, userSessionToken, 'task', 'create')) === false) {
             return socket.emit('DELETED_TASK_CONTAINER', {
-                error: true,
+                error: false,
                 message: 'You do not have permission to delete a task container'
             })
         }

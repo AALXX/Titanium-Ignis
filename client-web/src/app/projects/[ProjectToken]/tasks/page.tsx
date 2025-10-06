@@ -1,6 +1,6 @@
 import React from 'react'
 import BannerTaskList from '@/features/team-tasks/banners/components/BannerTaskList'
-import { ITaskBanners, ITeamDivisions } from '@/features/team-tasks/ITeamTasks'
+import { ITaskBanners, ITeamDivisions } from '@/features/team-tasks/types/ITeamTasks'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
 import { revalidatePath } from 'next/cache'
