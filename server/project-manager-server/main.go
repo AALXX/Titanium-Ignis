@@ -63,7 +63,7 @@ func main() {
 
 	// Start the server
 	log.Printf("Server is attempting to listen on %s\n", serverHost)
-	if err := app.Listen(serverHost); err != nil {
+	if err := app.Listen(serverHost+":"+serverPORT); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
 

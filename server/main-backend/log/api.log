@@ -525,3 +525,7 @@
 [10/6/2025, 9:49:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
 [10/6/2025, 9:49:04 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
 [10/6/2025, 9:49:10 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/6/2025, 10:15:42 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/6/2025, 10:17:13 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/6/2025, 10:18:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/6/2025, 10:18:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
