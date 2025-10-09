@@ -1,11 +1,10 @@
 import ProjectCodebaseWrapper from '@/features/code-enviroment/ProjectCodebaseWrapper'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'
-import { notFound } from 'next/navigation'
 import React from 'react'
 
 interface ProjectCodebaseData {
-    project: {
+    project: {  
         projecttoken: string
         repositoryurl: string
         status: string
@@ -16,6 +15,8 @@ interface ProjectCodebaseData {
 async function getProjectCodebaseData(ProjectToken: string, accessToken: string | undefined): Promise<ProjectCodebaseData> {
     try {
         const response = await axios.get<ProjectCodebaseData>(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}/api/projects-manager/get-project-codebase-data/${ProjectToken}/${accessToken}`)
+        console.log(response)
+        
         return response.data
     } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 403) {
@@ -60,7 +61,7 @@ const ProjectsView = async ({ params }: { params: Promise<{ ProjectToken: string
             )
         }
 
-        notFound()
+        // notFound()
     }
 }
 

@@ -15,6 +15,13 @@ const router = express.Router();
 // PROJECTS - Core project management routes
 // ============================================================================
 
+// Create project - requires project management permissions
+router.post(
+    '/create-project',
+    [body('ProjectName').not().isEmpty(), body('ProjectDescription').not().isEmpty(), body('UserSessionToken').not().isEmpty(), body('TeamMembers').not().isEmpty(), body('EnabledModules').not().isEmpty()],
+    ProjectServices.createNewProject,
+);
+
 // Get all projects - doesn't need project-specific RBAC since it's user-based
 router.get('/get-projects/:userSessionToken', param('userSessionToken').not().isEmpty(), ProjectServices.getAllProjects);
 

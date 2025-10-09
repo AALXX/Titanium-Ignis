@@ -529,3 +529,115 @@
 [10/6/2025, 10:17:13 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [10/6/2025, 10:18:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
 [10/6/2025, 10:18:53 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 12:29:30 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[10/7/2025, 12:29:30 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:30 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:30 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:30 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:31 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 12:29:32 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/7/2025, 10:52:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 10:57:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 10:57:54 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 10:58:01 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 11:10:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 11:10:50 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 11:10:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/7/2025, 11:11:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:03:24 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:23:41 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:23:47 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:23:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:24:02 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:25:16 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:25:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:25:57 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:06 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:08 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:37 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:26:56 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Invalid value
+[10/8/2025, 12:26:56 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Invalid value
+[10/8/2025, 12:27:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:27:15 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Invalid value
+[10/8/2025, 12:27:15 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Invalid value
+[10/8/2025, 12:29:00 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:04 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:19 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:23 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:25 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:27 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:31 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:37 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:46 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:29:59 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:30:05 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:30:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:30:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:31:49 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:32:53 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:35:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:52:57 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Cannot read properties of undefined (reading 'length')
+[10/8/2025, 12:53:51 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:54:54 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:55:11 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:55:30 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:57:21 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:57:29 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Cannot read properties of undefined (reading '0')
+[10/8/2025, 12:58:12 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:58:18 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Cannot read properties of undefined (reading '0')
+[10/8/2025, 12:59:15 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 12:59:17 AM] [ERROR] [CREATE_NEW_PROJECT_FUNC] Cannot read properties of undefined (reading '0')
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:33 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:34 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:34 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:34 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:35 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:35 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:36 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:36 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 12:59:37 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/8/2025, 10:32:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 1:52:51 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:21:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:21:25 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:21:28 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:21:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:22:04 PM] [WARN] [CREATE_NEW_PROJECT_FUNC] Role "BACKEND_DEVELOPER" not found. Skipping user mihai@gmail.com.
+[10/8/2025, 2:26:00 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:27:41 PM] [ERROR] [PG_QUERY_FUNC] null value in column "userprivatetoken" of relation "projects_team_members" violates not-null constraint
+[10/8/2025, 2:27:41 PM] [ERROR] [CREATE_NEW_PROJECT_FUNC] null value in column "userprivatetoken" of relation "projects_team_members" violates not-null constraint
+[10/8/2025, 2:36:33 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 2:42:04 PM] [WARN] [CREATE_NEW_PROJECT_FUNC] Role "CHIEF_TECHNICAL_OFFICER" not found. Skipping user s3rbmedia@gmail.com.
+[10/8/2025, 3:46:34 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:46:34 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:15 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:15 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:39 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:42 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:49 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:49 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:50:54 PM] [ERROR] [GET_PROJECT_SERVICES] Config file not found at ../projects/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTk5Mjc1MDR9.vz4Dqjgi1w1VZD7dEa_MYOmCci8x3MVjsMKi5v67N_Q/project-config.json
+[10/8/2025, 3:54:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 3:54:08 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/8/2025, 3:54:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:35:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:35:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:36:59 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:37:05 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:38:39 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/9/2025, 6:38:46 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
