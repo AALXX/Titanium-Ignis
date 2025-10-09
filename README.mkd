@@ -9,6 +9,7 @@
 - Team management and organization (Not implemented yet)
 - Deadline management and reminders (Not implemented yet)
 
-Stay organized and streamline your project workflow with **Project Manager**!
+Stay organized and streamline your project workflow with **Titanium Ignis**!
+
 
 
