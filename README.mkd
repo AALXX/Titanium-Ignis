@@ -1,6 +1,6 @@
-# Project Manager
+#  Project Manager
 
-**Project Manager** is a  tool designed to help you efficiently manage and launch projects. With an intuitive interface, it allows you to organize tasks, track milestones, collaborate with your team, and ensure deadlines are met. Whether you're working solo or with a group, this tool keeps your projects on track from start to finish.
+**Titanium Ignis** is a comprehensive project management solution designed for small to medium-sized businesses. It helps streamline the management of finances, employees, deployments, and more — with features specifically tailored for technology-focused companies.
 
 ## Features:
 - Easy project launching and tracking (In development)
@@ -10,3 +10,4 @@
 - Deadline management and reminders (Not implemented yet)
 
 Stay organized and streamline your project workflow with **Project Manager**!
+
