@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -167,4 +168,102 @@ func CopyDir(src string, dst string) error {
 			return os.Chmod(dstPath, info.Mode())
 		}
 	})
+}
+
+func CheckPermissions(db *sql.DB, userSessionToken string, projectToken string, resource string, action string) bool {
+	userPrivateToken := GetPrivateTokenBySessionToken(userSessionToken, db)
+
+	if userPrivateToken == "" {
+		return false
+	}
+
+	permissionQuery := `WITH user_roles AS (
+                    SELECT DISTINCT r.id, r.level, r.name, r.display_name
+                    FROM projects_team_members ptm
+                    JOIN roles r ON r.id = ptm.role_id
+                    WHERE ptm.userprivatetoken = $1
+                    AND ptm.projecttoken = $2
+                    AND ptm.is_active = true
+                    ORDER BY r.level DESC
+                    LIMIT 1
+                ),
+                required_permission AS (
+                    SELECT p.id as permission_id, p.name as permission_name
+                    FROM permissions p
+                    JOIN resources res ON res.id = p.resource_id
+                    JOIN actions a ON a.id = p.action_id
+                    WHERE res.name = $3
+                    AND a.name = $4
+                ),
+                user_permissions AS (
+                    SELECT DISTINCT p.id as permission_id, p.name as permission_name
+                    FROM user_roles ur
+                    JOIN role_permissions rp ON rp.role_id = ur.id
+                    JOIN permissions p ON p.id = rp.permission_id
+                    JOIN resources res ON res.id = p.resource_id
+                    JOIN actions a ON a.id = p.action_id
+                    WHERE res.name = $3
+                    AND a.name = $4
+                ),
+                role_hierarchy_permissions AS (
+                    SELECT DISTINCT p.id as permission_id, p.name as permission_name
+                    FROM user_roles ur
+                    JOIN role_inheritance ri ON ri.child_role_id = ur.id
+                    JOIN role_permissions rp ON rp.role_id = ri.parent_role_id
+                    JOIN permissions p ON p.id = rp.permission_id
+                    JOIN resources res ON res.id = p.resource_id
+                    JOIN actions a ON a.id = p.action_id
+                    WHERE res.name = $3
+                    AND a.name = $4
+                )
+                SELECT 
+                    CASE 
+                        WHEN ur.name = 'PROJECT_OWNER' THEN true
+                        WHEN ur.name = 'GUEST' AND $4 != 'read' THEN false
+                        WHEN rp.permission_id IS NOT NULL THEN true
+                        WHEN up.permission_id IS NOT NULL THEN true
+                        WHEN rhp.permission_id IS NOT NULL THEN true
+                        ELSE false
+                    END as has_permission,
+                    ur.level as user_level,
+                    ur.name as role_name,
+                    ur.display_name as role_display_name,
+                    rp.permission_name as direct_permission,
+                    up.permission_name as user_permission,
+                    rhp.permission_name as inherited_permission
+                FROM user_roles ur
+                LEFT JOIN required_permission rp ON true
+                LEFT JOIN user_permissions up ON up.permission_id = rp.permission_id
+                LEFT JOIN role_hierarchy_permissions rhp ON rhp.permission_id = rp.permission_id;
+            `
+
+	rows, err := db.Query(permissionQuery, userPrivateToken, projectToken, resource, action)
+	log.Println("Permission Result: ", rows, err)
+
+	if err != nil {
+		return false
+	}
+
+	defer rows.Close()
+
+	var hasPermission bool
+	var userLevel int
+	var roleName string
+	var roleDisplayName string
+	var directPermission string
+	var userPermission string
+	var inheritedPermission string
+
+	for rows.Next() {
+		err := rows.Scan(&hasPermission, &userLevel, &roleName, &roleDisplayName, &directPermission, &userPermission, &inheritedPermission)
+		if err != nil {
+			return false
+		}
+
+		if hasPermission {
+			return true
+		}
+	}
+
+	return false
 }

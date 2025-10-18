@@ -38,6 +38,12 @@ const getProjectCodebaseData = async (req: CustomRequest, res: Response): Promis
         const connection = await connect(req.pool!);
         const queryString = `SELECT * FROM projects_codebase JOIN projects ON projects_codebase.ProjectToken = projects.ProjectToken WHERE projects_codebase.ProjectToken = $1`;
         const projectsResponse = await query(connection!, queryString, [req.params.projectToken]);
+        console.log(projectsResponse);
+        if (projectsResponse.length === 0) {
+            projectsResponse.push({});
+        }
+        
+
         connection?.release();
         res.status(200).json({
             error: false,

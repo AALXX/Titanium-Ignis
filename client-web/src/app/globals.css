@@ -73,8 +73,8 @@
     flex-direction: column;
     background: linear-gradient(
       45deg,
-      #212121,
-      #757575
+      #222222,
+      #646464
     ); /* Diagonal gradient */
 
     /* overflow: hidden; */

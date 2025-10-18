@@ -62,8 +62,8 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 
 	})
 
-	app.Post("/api/repositories/create/:repo", func(c fiber.Ctx) error {
-		return services.CreateRepo(c)
+	app.Post("/api/repositories/create", func(c fiber.Ctx) error {
+		return services.CreateRepo(c, db)
 	})
 
 	app.Get("/api/repositories/:repo/info/refs", func(c fiber.Ctx) error {

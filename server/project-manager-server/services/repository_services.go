@@ -154,7 +154,6 @@ func GenerateRepository(c fiber.Ctx, db *sql.DB) error {
 		}
 	}
 
-
 	//update project repoUrl
 	rows, err := db.Query("UPDATE projects_codebase SET RepositoryUrl = $1 WHERE ProjectToken = $2;", fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken), body.ProjectToken)
 	if err != nil {
@@ -299,45 +298,192 @@ func HandleRPC(c fiber.Ctx) error {
 	// 	if err != nil {
 	// 		log.Fatal(err)
 	// 	}
-		
+
 	return nil
 }
 
-func CreateRepo(c fiber.Ctx) error {
-	repoName := c.Params("repo")
+func CreateRepo(c fiber.Ctx, db *sql.DB) error {
+	body := new(models.CodebaseFormData)
 
-	log.Printf("Creating new repository: %s", repoName)
-
-	if !strings.HasSuffix(repoName, ".git") {
-		repoName += ".git"
+	if err := c.Bind().Body(&body); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
 	}
 
-	repoPath := filepath.Join(os.Getenv("REPOSITORIES_FOLDER_PATH"), repoName)
+	// Example permission check (uncomment when implemented)
+	// userSessionToken := c.Params("UserSessionToken")
+	// permission := lib.CheckPermissions(db, userSessionToken, body.ProjectToken, "code", "create")
+	// if !permission {
+	//     return c.Status(fiber.StatusForbidden).SendString("You don't have permission to create a repository")
+	// }
 
-	if _, err := os.Stat(repoPath); err == nil {
-		log.Printf("Repository already exists: %s", repoPath)
-		return c.Status(fiber.StatusConflict).SendString("Repository already exists")
-	}
+	if body.Mode == "create" {
+		if body.RepositoryName == nil {
+			return c.Status(fiber.StatusBadRequest).SendString("repositoryName is required in create mode")
+		}
 
-	if err := os.MkdirAll(repoPath, 0755); err != nil {
-		log.Printf("Error creating repository directory: %v", err)
-		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
-	}
+		repoName := *body.RepositoryName
 
-	cmd := exec.Command("git", "init", "--bare", repoPath)
-	var stderr bytes.Buffer
-	cmd.Stderr = &stderr
+		repoPath := filepath.Join(os.Getenv("REPOSITORIES_FOLDER_PATH"), body.ProjectToken+".git")
 
-	if err := cmd.Run(); err != nil {
-		os.RemoveAll(repoPath)
-		log.Printf("Error initializing repository: %v\nStderr: %s", err, stderr.String())
-		return c.Status(fiber.StatusInternalServerError).SendString(
-			fmt.Sprintf("Error initializing repository: %s", stderr.String()),
+		if _, err := os.Stat(repoPath); err == nil {
+			log.Printf("Repository already exists: %s", repoPath)
+			return c.Status(fiber.StatusConflict).SendString("Repository already exists")
+		}
+
+		if err := os.MkdirAll(repoPath, 0755); err != nil {
+			log.Printf("Error creating repository directory: %v", err)
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+
+		cmd := exec.Command("git", "init", "--bare", repoPath)
+		var stderr bytes.Buffer
+		cmd.Stderr = &stderr
+
+		if err := cmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error initializing repository: %v\nStderr: %s", err, stderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString(
+				fmt.Sprintf("Error initializing repository: %s", stderr.String()),
+			)
+		}
+
+		rows, err := db.Query(`
+    INSERT INTO projects_codebase (
+        ProjectToken, Mode, RepositoryName, Description, InitializeWithReadme,
+        GitignoreTemplate, License, RepositoryUrl, ProjectType, Branch,
+        AuthMethod, AccessToken, SshKey, Username, AutoSync, SyncInterval,
+        LastUserCommitUserToken
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+    RETURNING *
+`,
+			body.ProjectToken,
+			"create",
+			body.RepositoryName,
+			body.Description,
+			body.InitializeWithReadme,
+			body.GitignoreTemplate,
+			body.License,
+			fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), body.ProjectToken),
+			body.ProjectType,
+			body.Branch,
+			body.AuthMethod,
+			body.AccessToken,
+			body.SshKey,
+			body.Username,
+			body.AutoSync,
+			body.SyncInterval,
+			body.LastUserCommitUserToken,
 		)
+		if err != nil {
+			log.Println("Error updating project repoUrl in database:", err)
+			return c.Status(500).SendString("Failed to update project repoUrl in database")
+		}
+		defer rows.Close()
+
+		log.Printf("Successfully created repository: %s", repoPath)
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+			"message":      "Repository created successfully",
+			"repoName":     repoName,
+			"repoPath":     repoPath,
+			"projectToken": body.ProjectToken,
+		})
 	}
 
-	log.Printf("Successfully created repository: %s", repoPath)
-	return c.Status(fiber.StatusCreated).SendString(
-		fmt.Sprintf("Repository %s created successfully", repoName),
-	)
+	if body.Mode == "add" {
+		if body.RepositoryUrl == nil || body.ProjectType == nil {
+			return c.Status(fiber.StatusBadRequest).SendString("repositoryUrl and projectType are required in add mode")
+		}
+
+		sourceUrl := *body.RepositoryUrl
+		projectToken := body.ProjectToken
+
+		log.Printf("Adding existing repository: %s (%s)", sourceUrl, *body.ProjectType)
+
+		// Extract repo name from URL
+		repoName := strings.Split(sourceUrl, "/")[len(strings.Split(sourceUrl, "/"))-1]
+		repoName = strings.Split(repoName, ".")[0]
+
+		repoPath := filepath.Join(os.Getenv("REPOSITORIES_FOLDER_PATH"), projectToken+".git")
+
+		if _, err := os.Stat(repoPath); err == nil {
+			log.Printf("Repository already exists: %s", repoPath)
+			return c.Status(fiber.StatusConflict).SendString("Repository already exists on this server")
+		}
+
+		parentDir := filepath.Dir(repoPath)
+		if err := os.MkdirAll(parentDir, 0755); err != nil {
+			log.Printf("Error creating repository directory: %v", err)
+			return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Error creating directory: %v", err))
+		}
+
+		cloneCmd := exec.Command("git", "clone", "--mirror", sourceUrl, repoPath)
+
+		env := os.Environ()
+		if body.AccessToken != nil && *body.AccessToken != "" {
+			sourceUrl = strings.Replace(sourceUrl, "https://", fmt.Sprintf("https://oauth2:%s@", *body.AccessToken), 1)
+			cloneCmd.Args[3] = sourceUrl
+		}
+		if body.SshKey != nil && *body.SshKey != "" {
+			env = append(env, fmt.Sprintf("GIT_SSH_COMMAND=ssh -i %s -o StrictHostKeyChecking=no", *body.SshKey))
+		}
+		cloneCmd.Env = env
+
+		var cloneStderr bytes.Buffer
+		cloneCmd.Stderr = &cloneStderr
+
+		log.Printf("Cloning repository from: %s to: %s", sourceUrl, repoPath)
+
+		if err := cloneCmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error cloning repository: %v\nStderr: %s", err, cloneStderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString(
+				fmt.Sprintf("Error cloning repository: %s", cloneStderr.String()),
+			)
+		}
+
+		ourRepoUrl := fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), projectToken)
+
+		_, err := db.Exec(`
+    INSERT INTO projects_codebase (
+        ProjectToken, Mode, RepositoryName, Description,
+        RepositoryUrl, ProjectType, Branch,
+        AuthMethod, AccessToken, SshKey, Username,
+        AutoSync, SyncInterval, LastUserCommitUserToken
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+`,
+			projectToken,
+			"add",
+			repoName,
+			body.Description,
+			ourRepoUrl,
+			body.ProjectType,
+			body.Branch,
+			body.AuthMethod,
+			body.AccessToken,
+			body.SshKey,
+			body.Username,
+			body.AutoSync,
+			body.SyncInterval,
+			body.LastUserCommitUserToken,
+		)
+
+		if err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error inserting repository into database: %v", err)
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to save repository to database")
+		}
+
+		log.Printf("Successfully added repository: %s", repoPath)
+		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+			"message":          "Repository added successfully",
+			"projectToken":     projectToken,
+			"sourceUrl":        sourceUrl,
+			"ourRepositoryUrl": ourRepoUrl,
+			"repoPath":         repoPath,
+		})
+	}
+
+	return c.Status(fiber.StatusBadRequest).SendString("Invalid mode")
 }
