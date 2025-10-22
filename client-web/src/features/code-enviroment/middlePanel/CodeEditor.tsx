@@ -18,7 +18,7 @@ const FileEditor = ({ filePath, projectToken, userSessionToken, repoUrl }: { fil
         const getFileData = async () => {
             if (filePath === null) {
                 setFileContent('')
-                return
+                return  
             }
 
             setIsLoading(true)

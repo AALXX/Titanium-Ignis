@@ -21,13 +21,6 @@ func InitRoutes(app *fiber.App, db *sql.DB) {
 	// 						PROJECTS							 //
 	///////////////////////////////////////////////////////////////
 
-	app.Post("/api/projects/add-project", func(c fiber.Ctx) error {
-		return services.AddProjectEntry(c, db)
-	})
-
-	app.Post("/api/projects/create-project", func(c fiber.Ctx) error {
-		return services.CreateProject(c, db)
-	})
 
 	app.Get("/api/projects/repo-tree", func(c fiber.Ctx) error {
 		return services.GetRepositoryTree(c, db)

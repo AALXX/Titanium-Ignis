@@ -3,6 +3,7 @@ package services
 import (
 	"bytes"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -391,6 +392,7 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 	}
 
 	if body.Mode == "add" {
+
 		if body.RepositoryUrl == nil || body.ProjectType == nil {
 			return c.Status(fiber.StatusBadRequest).SendString("repositoryUrl and projectType are required in add mode")
 		}
@@ -400,7 +402,6 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 
 		log.Printf("Adding existing repository: %s (%s)", sourceUrl, *body.ProjectType)
 
-		// Extract repo name from URL
 		repoName := strings.Split(sourceUrl, "/")[len(strings.Split(sourceUrl, "/"))-1]
 		repoName = strings.Split(repoName, ".")[0]
 
@@ -442,9 +443,90 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 			)
 		}
 
+		configData := models.ProjectConfig{
+			Services:    []models.ProjectService{},
+			Deployments: []models.ProjectDeployment{},
+		}
+
+		configJSON, err := json.MarshalIndent(configData, "", "  ")
+		if err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error creating config JSON: %v", err)
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to create configuration file")
+		}
+
+		tempWorkDir := filepath.Join(os.TempDir(), fmt.Sprintf("temp-repo-%s", projectToken))
+		defer os.RemoveAll(tempWorkDir)
+
+		cloneWorkCmd := exec.Command("git", "clone", repoPath, tempWorkDir)
+		cloneWorkCmd.Env = env
+		var cloneWorkStderr bytes.Buffer
+		cloneWorkCmd.Stderr = &cloneWorkStderr
+
+		if err := cloneWorkCmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error creating temporary working directory: %v\nStderr: %s", err, cloneWorkStderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to create working directory")
+		}
+
+		tempConfigPath := filepath.Join(tempWorkDir, "project-config.json")
+		if err := os.WriteFile(tempConfigPath, configJSON, 0644); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error writing config file: %v", err)
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to write configuration file")
+		}
+
+		// get git userame from env var
+		gitUsername := os.Getenv("GIT_USER")
+		gitUserEmail := os.Getenv("GIT_USER_EMAIL")
+
+		configUserCmd := exec.Command("git", "config", "user.email", gitUserEmail)
+		configUserCmd.Dir = tempWorkDir
+		configUserCmd.Run()
+
+		configNameCmd := exec.Command("git", "config", "user.name", gitUsername)
+		configNameCmd.Dir = tempWorkDir
+		configNameCmd.Run()
+
+		addCmd := exec.Command("git", "add", "project-config.json")
+		addCmd.Dir = tempWorkDir
+		var addStderr bytes.Buffer
+		addCmd.Stderr = &addStderr
+
+		if err := addCmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error adding config file to git: %v\nStderr: %s", err, addStderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to add config file to git")
+		}
+
+		commitCmd := exec.Command("git", "commit", "-m", "Add project-config.json")
+		commitCmd.Dir = tempWorkDir
+		var commitStderr bytes.Buffer
+		commitCmd.Stderr = &commitStderr
+
+		if err := commitCmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error committing config file: %v\nStderr: %s", err, commitStderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to commit config file")
+		}
+
+		pushCmd := exec.Command("git", "push", "origin")
+		pushCmd.Dir = tempWorkDir
+		pushCmd.Env = env
+		var pushStderr bytes.Buffer
+		pushCmd.Stderr = &pushStderr
+
+		if err := pushCmd.Run(); err != nil {
+			os.RemoveAll(repoPath)
+			log.Printf("Error pushing config file: %v\nStderr: %s", err, pushStderr.String())
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to push config file")
+		}
+
+		log.Printf("Created and committed config file to repository")
+
 		ourRepoUrl := fmt.Sprintf("http://%s:5200/api/repositories/%s.git", os.Getenv("SERVER_HOST"), projectToken)
 
-		_, err := db.Exec(`
+		_, err = db.Exec(`
     INSERT INTO projects_codebase (
         ProjectToken, Mode, RepositoryName, Description,
         RepositoryUrl, ProjectType, Branch,
@@ -484,6 +566,5 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 			"repoPath":         repoPath,
 		})
 	}
-
 	return c.Status(fiber.StatusBadRequest).SendString("Invalid mode")
 }

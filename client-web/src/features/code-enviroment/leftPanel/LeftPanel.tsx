@@ -23,6 +23,7 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-tree`, {
                 params: { projectToken: props.ProjectToken }
             })
+            console.log(response)
             dispatch(setFileTree(response.data))
         } catch (error) {
             console.error('Error fetching file tree:', error)
@@ -91,7 +92,7 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
                     <Image src="/Editor/Refresh_Icon.svg" alt="refresh" onClick={fetchFileTree} className="ml-auto cursor-pointer" width={22} height={22} />
                 </div>
             </div>
-            <div className="3xl:h-[52rem] h-[38rem] grow-0 overflow-auto p-4">
+            <div className="h-full grow-0 overflow-auto p-4 ">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
                         <div className="text-white">Loading...</div>

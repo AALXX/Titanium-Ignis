@@ -46,17 +46,31 @@ type ProjectResponse struct {
 	Type           string `json:"Type"`
 }
 
+type SetupCommand struct {
+	Run string `json:"run"`
+}
+
 type ProjectService struct {
-	ID           int    `json:"id"`
-	Name         string `json:"name"`
-	Dir          string `json:"dir"`
-	StartCommand string `json:"start-command"`
+	ID           int                       `json:"id"`
+	Name         string                    `json:"name"`
+	Dir          string                    `json:"dir"`
+	Setup        *[]SetupCommand           `json:"setup,omitempty"`
+	StartCommand string                    `json:"start-command"`
+	Ports        *map[string][]string      `json:"ports,omitempty"`
+}
+
+type ProjectDeployment struct {
+	ID                int    `json:"id"`
+	Name              string `json:"name"`
+	Type              string `json:"type"`
+	Server            string `json:"server"`
+	DockerComposeFile *string `json:"docker-compose-file,omitempty"`
 }
 
 type ProjectConfig struct {
-	Services []ProjectService `json:"services"`
+	Services    []ProjectService    `json:"services"`
+	Deployments []ProjectDeployment `json:"deployments"`
 }
-
 type FileNode struct {
 	UUID     string     `json:"uuid"`
 	Name     string     `json:"name"`

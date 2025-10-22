@@ -6,7 +6,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/google/uuid"
 
@@ -111,8 +113,87 @@ func GetDirectoryStructure(basePath string) ([]models.FileNode, error) {
 
 	return nodes, nil
 }
+func GetDirectoryStructureFromGit(gitDir, ref, dirPath string) ([]models.FileNode, error) {
+	var nodes []models.FileNode
+	
+	var treeRef string
+	if dirPath == "" || dirPath == "." {
+		treeRef = ref
+	} else {
+		treeRef = ref + ":" + dirPath
+	}
+	
+	cmd := exec.Command("git", "--git-dir="+gitDir, "ls-tree", treeRef)
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("git ls-tree failed for %s: %w", treeRef, err)
+	}
+	
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
 
-// Get file contents based on file path
+	for _, line := range lines {
+		if line == "" {
+			continue
+		}
+
+		node, err := parseGitLsTreeLine(line)
+		if err != nil {
+			fmt.Printf("DEBUG: Failed to parse line: %s\n", line)
+			continue 
+		}
+		
+
+		if node.IsDir {
+			var childPath string
+			if dirPath == "" || dirPath == "." {
+				childPath = node.Name
+			} else {
+				childPath = dirPath + "/" + node.Name
+			}
+			
+			children, err := GetDirectoryStructureFromGit(gitDir, ref, childPath)
+			if err == nil {
+				node.Children = children
+			} else {
+				fmt.Printf("DEBUG: Failed to get children for %s: %v\n", childPath, err)
+			}
+		}
+
+		nodes = append(nodes, node)
+	}
+
+	return nodes, nil
+}
+
+func parseGitLsTreeLine(line string) (models.FileNode, error) {
+	// Format: <mode> SP <type> SP <object> TAB <file>
+	parts := strings.Split(line, "\t")
+	if len(parts) != 2 {
+		return models.FileNode{}, fmt.Errorf("invalid format")
+	}
+
+	metadata := strings.Fields(parts[0])
+	if len(metadata) < 3 {
+		return models.FileNode{}, fmt.Errorf("invalid metadata")
+	}
+
+	objType := metadata[1]
+	fileName := parts[1]
+
+	isDir := objType == "tree"
+
+	node := models.FileNode{
+		UUID:     uuid.New().String(),
+		Name:     fileName,
+		Path:     fileName,
+		IsDir:    isDir,
+		IsNew:    false,
+		Children: []models.FileNode{},
+	}
+
+	return node, nil
+}
+
 func GetFileContents(filePath string) (string, error) {
 	content, err := os.ReadFile(filePath)
 	if err != nil {

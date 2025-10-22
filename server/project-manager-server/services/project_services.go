@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"database/sql"
@@ -158,34 +159,95 @@ VALUES ($1, (SELECT userPrivateToken FROM users WHERE UserEmail = $2), (SELECT i
 }
 
 func GetRepositoryTree(c fiber.Ctx, db *sql.DB) error {
-	repoToken := c.Query("projectToken")
+	projectToken := c.Query("projectToken")
+	branch := c.Query("branch")
 
-	RepoPath := os.Getenv("PROJECTS_FOLDER_PATH")
+	fmt.Println("projectToken:", projectToken)
+	fmt.Println("branch:", branch)
 
-	tree, err := lib.GetDirectoryStructure(fmt.Sprintf("%s/%s", RepoPath, repoToken))
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Failed to get directory structure")
+	if branch == "" {
+		branch = "HEAD"
 	}
 
+	basePath, err := filepath.Abs(os.Getenv("REPOSITORIES_FOLDER_PATH"))
+	if err != nil {
+		log.Fatalf("Failed to resolve base path: %v", err)
+	}
+
+	gitDir := filepath.Join(basePath, projectToken+".git")
+
+	if _, err := os.Stat(gitDir); os.IsNotExist(err) {
+		log.Printf("Repository not found at: %s", gitDir)
+		return c.Status(fiber.StatusNotFound).SendString("Repository not found")
+	}
+
+	tree, err := lib.GetDirectoryStructureFromGit(gitDir, branch, "")
+	if err != nil {
+		log.Printf("Failed to get tree: %v", err)
+		return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Failed to get tree: %v", err))
+	}
+	log.Println(tree)
 	return c.JSON(tree)
 }
 
 func GetRepositoryFile(c fiber.Ctx, db *sql.DB) error {
 	filePath := c.Query("path")
 	projectToken := c.Query("projectToken")
+	branch := c.Query("branch")
 
-	if !strings.HasPrefix(filePath, filePath) {
-		return c.Status(403).SendString("Access to this file is not allowed")
+	log.Println("filePath:", filePath)
+	log.Println("projectToken:", projectToken)
+	log.Println("branch:", branch)
+
+	if branch == "" {
+		branch = "HEAD"
 	}
 
-	content, err := lib.GetFileContents(fmt.Sprintf("%s/%s/%s", os.Getenv("PROJECTS_FOLDER_PATH"), projectToken, filePath))
+	if strings.Contains(filePath, "..") || strings.HasPrefix(filePath, "/") {
+		return c.Status(fiber.StatusForbidden).SendString("Access to this file is not allowed")
+	}
+
+
+	basePath, err := filepath.Abs(os.Getenv("REPOSITORIES_FOLDER_PATH"))
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Failed to read file")
+		log.Fatalf("Failed to resolve base path: %v", err)
+	}
+
+	gitDir := filepath.Join(basePath, projectToken+".git")
+
+	if _, err := os.Stat(gitDir); os.IsNotExist(err) {
+		return c.Status(fiber.StatusNotFound).SendString("Repository not found")
+	}
+
+	content, err := getFileFromGitCatFile(gitDir, branch, filePath)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString(fmt.Sprintf("Failed to read file: %v", err))
 	}
 
 	return c.SendString(content)
 }
 
+func getFileFromGitCatFile(gitDir, ref, filePath string) (string, error) {
+	lsTreeCmd := exec.Command("git", "--git-dir="+gitDir, "ls-tree", "-r", ref, "--", filePath)
+	output, err := lsTreeCmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("file not found in repository")
+	}
+
+	parts := strings.Fields(string(output))
+	if len(parts) < 3 {
+		return "", fmt.Errorf("invalid git ls-tree output")
+	}
+	blobHash := parts[2]
+
+	catFileCmd := exec.Command("git", "--git-dir="+gitDir, "cat-file", "-p", blobHash)
+	content, err := catFileCmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("git cat-file failed: %w", err)
+	}
+
+	return string(content), nil
+}
 func CreateNewDirectory(c fiber.Ctx, db *sql.DB) error {
 	body := new(models.CreateNewDirectoryRequest)
 
