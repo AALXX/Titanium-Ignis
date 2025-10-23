@@ -84,3 +84,5 @@ server/messages/
 server/messaging-service/log/api.log
 
 jenkinsfile
+
+.idea/

@@ -23,7 +23,6 @@ const DirectoryTree = ({ node, onFolderCreate, onFolderAdd, onFileClick, onFileA
     const handleClick = () => {
         if (node.is_dir) {
             setExpanded(!expanded)
-            // onFileClick(stripReposPath(node.path))
         } else {
             onFileClick(stripReposPath(node.path))
         }

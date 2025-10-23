@@ -136,26 +136,18 @@ func GetDirectoryStructureFromGit(gitDir, ref, dirPath string) ([]models.FileNod
 			continue
 		}
 
-		node, err := parseGitLsTreeLine(line)
+		node, err := parseGitLsTreeLine(line, dirPath)
 		if err != nil {
 			fmt.Printf("DEBUG: Failed to parse line: %s\n", line)
 			continue 
 		}
 		
-
 		if node.IsDir {
-			var childPath string
-			if dirPath == "" || dirPath == "." {
-				childPath = node.Name
-			} else {
-				childPath = dirPath + "/" + node.Name
-			}
-			
-			children, err := GetDirectoryStructureFromGit(gitDir, ref, childPath)
+			children, err := GetDirectoryStructureFromGit(gitDir, ref, node.Path)
 			if err == nil {
 				node.Children = children
 			} else {
-				fmt.Printf("DEBUG: Failed to get children for %s: %v\n", childPath, err)
+				fmt.Printf("DEBUG: Failed to get children for %s: %v\n", node.Path, err)
 			}
 		}
 
@@ -165,7 +157,7 @@ func GetDirectoryStructureFromGit(gitDir, ref, dirPath string) ([]models.FileNod
 	return nodes, nil
 }
 
-func parseGitLsTreeLine(line string) (models.FileNode, error) {
+func parseGitLsTreeLine(line string, parentPath string) (models.FileNode, error) {
 	// Format: <mode> SP <type> SP <object> TAB <file>
 	parts := strings.Split(line, "\t")
 	if len(parts) != 2 {
@@ -182,10 +174,17 @@ func parseGitLsTreeLine(line string) (models.FileNode, error) {
 
 	isDir := objType == "tree"
 
+	var fullPath string
+	if parentPath == "" || parentPath == "." {
+		fullPath = fileName
+	} else {
+		fullPath = parentPath + "/" + fileName
+	}
+
 	node := models.FileNode{
 		UUID:     uuid.New().String(),
 		Name:     fileName,
-		Path:     fileName,
+		Path:     fullPath,
 		IsDir:    isDir,
 		IsNew:    false,
 		Children: []models.FileNode{},
@@ -210,7 +209,6 @@ func SaveFile(filePath string, content string) error {
 	return nil
 }
 
-// Function to copy directory recursively
 func CopyDir(src string, dst string) error {
 	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
