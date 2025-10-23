@@ -173,9 +173,6 @@ router.get(
 //     ProjectCodeBaseDeployments.executeDeployment, // Assuming this method exists
 // );
 
-// ============================================================================
-// ADVANCED RBAC EXAMPLES - Using alternative middleware functions
-// ============================================================================
 
 // Example: Route that requires specific role
 // router.get(

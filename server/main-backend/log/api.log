@@ -24,3 +24,7 @@
 [10/23/2025, 10:40:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [10/23/2025, 10:40:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [10/23/2025, 10:40:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/23/2025, 11:33:10 PM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(300)
+[10/23/2025, 11:33:10 PM] [ERROR] [REGISTER_USER_WITH_GOOGLE] value too long for type character varying(300)
+[10/23/2025, 11:34:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[10/24/2025, 1:01:29 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
