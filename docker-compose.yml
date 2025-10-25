@@ -96,19 +96,19 @@ services:
   #     - ti-platform
   #   hostname: postgres
       
-  # redis-db:
-  #   image: redis:7-alpine
-  #   container_name: redis-db
-  #   environment:
-  #     - REDIS_PASSWORD=${REDIS_PASSWORD:-serbvn}
-  #   volumes:
-  #     - redis_data:/data
-  #   ports:
-  #     - "6379:6379"
-  #   command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-serbvn}", "--bind", "0.0.0.0"]
-  #   networks:
-  #     - ti-platform
-  #   hostname: redis
+  redis-db:
+    image: redis:7-alpine
+    container_name: redis-db
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-serbvn}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-serbvn}", "--bind", "0.0.0.0"]
+    networks:
+      - ti-platform
+    hostname: redis
 
 volumes:
   postgres_data:

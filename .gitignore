@@ -86,3 +86,6 @@ server/messaging-service/log/api.log
 jenkinsfile
 
 .idea/
+
+server/financial-service/node_modules
+server/financial-service/.env
