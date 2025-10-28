@@ -57,6 +57,9 @@ INSERT INTO resources (name, description, category) VALUES
     -- Cloud Resources
     ('cloud', 'Cloud services and resources', 'cloud');
 
+    -- Financial Resources
+    ('financial', 'Financial and accounting data', 'financial');
+
 -- Insert Roles with proper categorization
 INSERT INTO roles (name, display_name, description, category_id, level, is_system_role) 
 SELECT 

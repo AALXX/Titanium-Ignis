@@ -44,7 +44,7 @@ app.use((req: CustomRequest, res: any, next: NextFunction) => {
 });
 
 //* Routes
-app.use('/api/project-budget-manager/', BugetRoutes);
+app.use('/api/project-buget-manager/', BugetRoutes);
 
 //* Error Handling
 app.use((req: any, res: any, next: NextFunction) => {
