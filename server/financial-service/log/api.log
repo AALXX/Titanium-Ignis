@@ -196,3 +196,219 @@
 [10/28/2025, 10:43:04 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [10/28/2025, 10:43:05 PM] [ERROR] [UPDATE_PROJECT_buget] buget not found: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQOjE3NjE2ODM5Mjd9.GfjUZLkMEvjRFwuG7E_AKd125RJ6emkQoybthDxamtY
 [10/28/2025, 10:43:09 PM] [ERROR] [UPDATE_PROJECT_buget] buget not found: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE2ODM5Mjd9.GfjUZLkMEvjRFwuG7E_AKd125RJ6emkQoybthDxamtY
+[10/29/2025, 3:04:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:48 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:49 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:50 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:51 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:52 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:57 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:04:59 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:00 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:01 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:02 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 3:05:07 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:11:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:11:46 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:11:49 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:11:54 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:12:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:12:28 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 3:14:34 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 7:39:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 7:39:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 7:39:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 7:39:23 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 7:39:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:25:00 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Project token is required
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Project token must be between 1 and 255 characters
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Expense name must be between 1 and 255 characters
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Amount is required
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] User session token is required
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Amount must be a positive number
+[10/29/2025, 8:29:12 PM] [ERROR] [ADD_NEW_EXPENSE] Expense name is required
+[10/29/2025, 8:30:05 PM] [ERROR] [PG_QUERY_FUNC] relation "project_bugets" does not exist
+[10/29/2025, 8:30:05 PM] [ERROR] [ADD_NEW_EXPENSE] relation "project_bugets" does not exist
+[10/29/2025, 8:30:30 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:30:48 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 8:30:48 PM] [ERROR] [PG_QUERY_FUNC] relation "project_expenses" does not exist
+[10/29/2025, 8:30:48 PM] [ERROR] [ADD_NEW_EXPENSE] relation "project_expenses" does not exist
+[10/29/2025, 8:32:03 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 8:32:03 PM] [ERROR] [PG_QUERY_FUNC] column "expense_token" of relation "project_expenses" does not exist
+[10/29/2025, 8:32:03 PM] [ERROR] [ADD_NEW_EXPENSE] column "expense_token" of relation "project_expenses" does not exist
+[10/29/2025, 8:32:55 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:32:59 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:35:52 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:36:16 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:36:23 PM] [ERROR] [ADD_NEW_EXPENSE] Category not found: undefined
+[10/29/2025, 8:37:53 PM] [ERROR] [ADD_NEW_EXPENSE] Expense date must be a valid date
+[10/29/2025, 8:38:03 PM] [ERROR] [ADD_NEW_EXPENSE] Expense date must be a valid date
+[10/29/2025, 8:38:37 PM] [ERROR] [ADD_NEW_EXPENSE] Category not found: undefined
+[10/29/2025, 8:44:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:44:29 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 8:44:29 PM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: 1
+[10/29/2025, 8:46:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:46:46 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:46:56 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:47:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:47:07 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:47:10 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 8:47:18 PM] [ERROR] [ADD_NEW_EXPENSE] Expense name is required
+[10/29/2025, 8:47:18 PM] [ERROR] [ADD_NEW_EXPENSE] Expense name must be between 1 and 255 characters
+[10/29/2025, 8:47:28 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 8:47:28 PM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: 1
+[10/29/2025, 8:47:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:17:59 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:02 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:09 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:12 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:15 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:18:31 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:20:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:21:01 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:21:04 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:21:08 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:21:12 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:21:16 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:38:34 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:43:43 PM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 9:43:43 PM] [INFO] [GET_PROJECT_EXPENSES] Retrieved 1 expense(s) for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 9:44:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:44:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:45:15 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 9:45:23 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:42:57 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:43:02 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 10:43:02 PM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE3NzA1ODJ9.JzQrHksUpobVJWOBQyyVbKwJFoBi65iVzRTj8g_iCGU
+[10/29/2025, 10:43:15 PM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 10:43:34 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 10:43:34 PM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE3NzA2MTR9.Dpa42a7oj6uVU20ghy53uqau6FLFHysxIva5C9VJskE
+[10/29/2025, 10:43:38 PM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 10:50:23 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:50:27 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:50:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:50:49 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:50:52 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:51:38 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:52:29 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:52:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:53:16 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:53:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:53:33 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:53:35 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:54:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:54:52 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:55:03 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/29/2025, 10:56:14 PM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 10:56:14 PM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE3NzEzNzR9.rgOQqupepnUnSitQ17G6S45hdsM4TNezNlfNz3udlOs
+[10/29/2025, 10:56:25 PM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/29/2025, 11:24:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[10/29/2025, 11:24:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:36 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:37 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:38 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/29/2025, 11:24:39 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/30/2025, 10:29:01 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:29:03 AM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/30/2025, 10:29:55 AM] [INFO] [GET_PROJECT_EXPENSES] Fetching expenses for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/30/2025, 10:29:58 AM] [INFO] [ADD_NEW_EXPENSE] Creating new expense for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[10/30/2025, 10:29:58 AM] [INFO] [ADD_NEW_EXPENSE] Expense created successfully: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE4MTI5OTh9.uCnhXWbkv6geJLIB4IC8O_LFUrgh8O2Qg1GykOjgums
+[10/30/2025, 10:31:05 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:07 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:10 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:13 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:17 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:22 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:26 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:31:59 AM] [ERROR] [REMOVE_EXPENSE] Invalid user session token
+[10/30/2025, 10:34:36 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:34:50 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:02 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:04 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:09 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:16 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:29 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:31 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:44 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:46 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:35:53 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:36:48 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:36:49 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:08 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:11 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:14 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:25 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:28 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:35 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:37:41 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 10:38:06 AM] [ERROR] [APPROVE_EXPENSE] Status is required
+[10/30/2025, 10:38:06 AM] [ERROR] [APPROVE_EXPENSE] Status must be either approved or rejected
+[10/30/2025, 10:42:31 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 9:53:57 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/30/2025, 9:53:58 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[10/31/2025, 4:23:42 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:42 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:44 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 4:23:44 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[10/31/2025, 9:07:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:07:42 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:07:56 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:08:47 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:09:36 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:34:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:35:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:36:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:37:33 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:37:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:37:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:37:51 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 9:40:44 PM] [ERROR] [UPLOAD_RECEIPT] Invalid user session token
+[10/31/2025, 9:41:37 PM] [ERROR] [UPLOAD_RECEIPT] Invalid user session token
+[10/31/2025, 11:23:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 11:23:52 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[10/31/2025, 11:23:54 PM] [INFO] [Financial_Api] Server is running on: localhost:5202

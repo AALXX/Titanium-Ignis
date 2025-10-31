@@ -89,3 +89,4 @@ jenkinsfile
 
 server/financial-service/node_modules
 server/financial-service/.env
+server/data

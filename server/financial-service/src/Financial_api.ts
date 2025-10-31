@@ -1,8 +1,9 @@
 import express, { NextFunction } from 'express';
-import http from 'http'; // Add this import
+import http from 'http';
 
 //* imports from route folder
 import BugetRoutes from './routes/BugetRoutes';
+import ExpenseRoutes from './routes/ExpenseRoutes';
 
 //* Configs
 import config from './config/config';
@@ -45,6 +46,7 @@ app.use((req: CustomRequest, res: any, next: NextFunction) => {
 
 //* Routes
 app.use('/api/project-buget-manager/', BugetRoutes);
+app.use('/api/project-expense-manager/', ExpenseRoutes);
 
 //* Error Handling
 app.use((req: any, res: any, next: NextFunction) => {
