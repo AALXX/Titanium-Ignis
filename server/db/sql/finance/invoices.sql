@@ -37,6 +37,7 @@ CREATE INDEX idx_invoices_due_date ON invoices(due_date);
 -- Invoice Line Items table
 CREATE TABLE invoice_line_items (
     id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, 
     invoice_token VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     quantity DECIMAL(10,2) NOT NULL DEFAULT 1 CHECK (quantity > 0),
