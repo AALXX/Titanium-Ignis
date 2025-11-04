@@ -3,8 +3,6 @@ import { validationResult } from 'express-validator';
 import logging from '../config/logging';
 import { connect, CustomRequest, query } from '../config/postgresql';
 import utilFunctions from '../util/utilFunctions';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { PoolClient } from 'pg';
 
 /**
@@ -17,6 +15,73 @@ const CustomRequestValidationResult = validationResult.withDefaults({
         };
     },
 });
+
+/**
+ * Log budget revision to audit table
+ */
+const logBudgetRevision = async (
+    connection: PoolClient,
+    bugetToken: string,
+    projectToken: string,
+    previousAmount: number,
+    newAmount: number,
+    changeReason: string,
+    approvedBy: string,
+    fiscalPeriod?: string,
+): Promise<void> => {
+    const revisionToken = utilFunctions.CreateToken();
+    const revisionType = newAmount > previousAmount ? 'increase' : 'decrease';
+
+    const insertRevisionQuery = `
+        INSERT INTO budget_revisions 
+            (revision_token, buget_token, project_token, previous_amount, new_amount, 
+             change_reason, revision_type, approved_by, fiscal_period, revision_date)
+        VALUES 
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP)
+    `;
+
+    await query(connection, insertRevisionQuery, [revisionToken, bugetToken, projectToken, previousAmount, newAmount, changeReason, revisionType, approvedBy, fiscalPeriod || null]);
+};
+
+/**
+ * Log financial event for budget changes
+ */
+const logFinancialEvent = async (
+    connection: PoolClient,
+    eventType: string,
+    projectToken: string,
+    relatedEntityType: string,
+    relatedEntityToken: string,
+    amount: number,
+    transactionDate: string,
+    description: string,
+    createdBy: string,
+    metadata?: any,
+): Promise<void> => {
+    const eventToken = utilFunctions.CreateToken();
+
+    const insertEventQuery = `
+        INSERT INTO financial_events 
+            (event_token, event_type, project_token, related_entity_type, related_entity_token,
+             amount, currency, transaction_date, description, metadata, created_by, created_at)
+        VALUES 
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP)
+    `;
+
+    await query(connection, insertEventQuery, [
+        eventToken,
+        eventType,
+        projectToken,
+        relatedEntityType,
+        relatedEntityToken,
+        amount,
+        'EUR', 
+        transactionDate,
+        description,
+        metadata ? JSON.stringify(metadata) : null,
+        createdBy,
+    ]);
+};
 
 const GetProjectBugets = async (req: CustomRequest, res: Response) => {
     const errors = CustomRequestValidationResult(req);
@@ -185,10 +250,13 @@ const SetProjectBuget = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await connection.query('BEGIN'); 
+
         const { ProjectToken, UserSessionToken, BugetName, TotalBuget, SpentAmount, Currency, BugetPeriod, Notes } = req.body;
 
         const assignerPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!assignerPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('SET_PROJECT_BUGET', 'Invalid user session token');
             res.status(200).json({
@@ -200,6 +268,7 @@ const SetProjectBuget = async (req: CustomRequest, res: Response) => {
 
         const projectExists = await utilFunctions.checkProjectExists(connection, ProjectToken);
         if (!projectExists) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('SET_PROJECT_BUGET', `Project not found: ${ProjectToken}`);
             res.status(200).json({
@@ -220,12 +289,11 @@ const SetProjectBuget = async (req: CustomRequest, res: Response) => {
         `;
         const params = [ProjectToken, BugetName, bugetToken, TotalBuget, SpentAmount || 0, Currency || 'EUR', BugetPeriod || null, Notes || null];
 
-        console.log(BugetPeriod);
-
         const result = await query(connection, insertQuery, params);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('SET_PROJECT_BUGET', 'Failed to create project buget');
             res.status(200).json({
                 error: true,
@@ -235,6 +303,17 @@ const SetProjectBuget = async (req: CustomRequest, res: Response) => {
         }
 
         const buget = result[0];
+
+        await logBudgetRevision(connection, bugetToken, ProjectToken, 0, parseFloat(TotalBuget), `Initial budget created: ${BugetName}`, assignerPrivateToken, BugetPeriod);
+
+        await logFinancialEvent(connection, 'budget_set', ProjectToken, 'budget', bugetToken, parseFloat(TotalBuget), new Date().toISOString().split('T')[0], `Budget created: ${BugetName}`, assignerPrivateToken, {
+            budget_name: BugetName,
+            budget_period: BugetPeriod,
+            currency: Currency || 'EUR',
+        });
+
+        await connection.query('COMMIT'); 
+        connection.release();
 
         res.status(200).json({
             error: false,
@@ -255,6 +334,7 @@ const SetProjectBuget = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 
@@ -307,10 +387,13 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
             return;
         }
 
-        const { BugetToken, UserSessionToken, TotalBuget, SpentAmount, Currency, BugetPeriod, Notes } = req.body;
+        await connection.query('BEGIN'); 
+
+        const { BugetToken, UserSessionToken, TotalBuget, SpentAmount, Currency, BugetPeriod, Notes, ChangeReason } = req.body;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_PROJECT_BUGET', 'Invalid user session token');
             res.status(200).json({
@@ -321,25 +404,28 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
         }
 
         const bugetCheckQuery = `
-            SELECT buget_token, ProjectToken, total_buget, spent_amount
+            SELECT buget_token, buget_name, ProjectToken, total_buget, spent_amount, buget_period
             FROM projects_bugets 
             WHERE buget_token = $1
         `;
         const bugetResult = await query(connection, bugetCheckQuery, [BugetToken]);
 
         if (!bugetResult || bugetResult.length === 0) {
+            await connection.query('ROLLBACK');
             connection.release();
-            logging.error('UPDATE_PROJECT_buget', `buget not found: ${BugetToken}`);
+            logging.error('UPDATE_PROJECT_BUGET', `Buget not found: ${BugetToken}`);
             res.status(200).json({
                 error: true,
-                errmsg: 'buget not found',
+                errmsg: 'Buget not found',
             });
             return;
         }
 
-        // Validate spent amount doesn't exceed new total buget if both are being updated
+        const existingBuget = bugetResult[0];
+
         if (TotalBuget !== undefined && SpentAmount !== undefined) {
             if (SpentAmount > TotalBuget * 1.2) {
+                await connection.query('ROLLBACK');
                 connection.release();
                 logging.error('UPDATE_PROJECT_BUGET', 'Spent amount exceeds allowed buget (max 120% of total buget)');
                 res.status(200).json({
@@ -349,8 +435,8 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
                 return;
             }
         } else if (SpentAmount !== undefined) {
-            // Check against existing total buget
-            if (SpentAmount > parseFloat(bugetResult[0].total_buget) * 1.2) {
+            if (SpentAmount > parseFloat(existingBuget.total_buget) * 1.2) {
+                await connection.query('ROLLBACK');
                 connection.release();
                 logging.error('UPDATE_PROJECT_BUGET', 'Spent amount exceeds allowed buget (max 120% of total buget)');
                 res.status(200).json({
@@ -360,8 +446,8 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
                 return;
             }
         } else if (TotalBuget !== undefined) {
-            // Check existing spent amount against new total buget
-            if (parseFloat(bugetResult[0].spent_amount) > TotalBuget * 1.2) {
+            if (parseFloat(existingBuget.spent_amount) > TotalBuget * 1.2) {
+                await connection.query('ROLLBACK');
                 connection.release();
                 logging.error('UPDATE_PROJECT_BUGET', 'Cannot reduce buget below current spent amount (max 120% overspend allowed)');
                 res.status(200).json({
@@ -372,14 +458,15 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
             }
         }
 
-        // Build dynamic update query
         const updateFields: string[] = [];
         const updateValues: any[] = [];
         let paramCounter = 1;
+        let budgetChanged = false;
 
         if (TotalBuget !== undefined) {
             updateFields.push(`total_buget = $${paramCounter++}`);
             updateValues.push(TotalBuget);
+            budgetChanged = true;
         }
 
         if (SpentAmount !== undefined) {
@@ -405,7 +492,7 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
         updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
 
         if (updateFields.length === 1) {
-            // Only updated_at would be updated, meaning no actual data to update
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_PROJECT_BUGET', 'No fields to update');
             res.status(200).json({
@@ -425,9 +512,10 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
         `;
 
         const result = await query(connection, updateQuery, updateValues);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('UPDATE_PROJECT_BUGET', 'Failed to update project buget');
             res.status(200).json({
                 error: true,
@@ -437,6 +525,32 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
         }
 
         const buget = result[0];
+
+        if (budgetChanged && TotalBuget !== undefined) {
+            const reason = ChangeReason || `Budget updated from ${existingBuget.total_buget} to ${TotalBuget}`;
+            await logBudgetRevision(connection, BugetToken, existingBuget.projecttoken, parseFloat(existingBuget.total_buget), parseFloat(TotalBuget), reason, userPrivateToken, BugetPeriod || existingBuget.buget_period);
+
+            await logFinancialEvent(
+                connection,
+                'budget_revised',
+                existingBuget.projecttoken,
+                'budget',
+                BugetToken,
+                parseFloat(TotalBuget),
+                new Date().toISOString().split('T')[0],
+                `Budget revised: ${existingBuget.buget_name}`,
+                userPrivateToken,
+                {
+                    previous_amount: parseFloat(existingBuget.total_buget),
+                    new_amount: parseFloat(TotalBuget),
+                    change_amount: parseFloat(TotalBuget) - parseFloat(existingBuget.total_buget),
+                    reason: reason,
+                },
+            );
+        }
+
+        await connection.query('COMMIT'); 
+        connection.release();
 
         res.status(200).json({
             error: false,
@@ -457,6 +571,7 @@ const UpdateProjectBuget = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 
@@ -526,16 +641,7 @@ const DeleteProjectBuget = async (req: CustomRequest, res: Response) => {
 
         if (!bugetResult || bugetResult.length === 0) {
             connection.release();
-            logging.error('UPDATE_PROJECT_buget', `buget not found: ${BugetToken}`);
-            res.status(200).json({
-                error: true,
-                errmsg: 'buget not found',
-            });
-            return;
-        }
-        if (!bugetResult || bugetResult.length === 0) {
-            connection.release();
-            logging.error('DELETE_PROJECT_BUGET', `Buget not found: ${BugetToken} for project: ${ProjectToken}`);
+            logging.error('DELETE_PROJECT_BUGET', `Buget not found: ${BugetToken}`);
             res.status(200).json({
                 error: true,
                 errmsg: 'Buget not found',

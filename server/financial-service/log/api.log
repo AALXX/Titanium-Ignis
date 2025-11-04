@@ -17,3 +17,231 @@
 [11/2/2025, 7:46:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [11/2/2025, 7:46:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [11/2/2025, 7:46:51 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 7:48:38 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 7:50:10 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:15:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:15:56 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:16:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:16:46 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:16:55 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:16:57 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 8:17:04 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 11:35:43 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/2/2025, 11:35:43 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:02 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:32:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 9:36:47 PM] [ERROR] [APPROVE_EXPENSE] Expense is not in pending status: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjIxOTg0MjZ9.ykdRdWaTUqOmSWlmmfjHL_-fwb_XpKdMUmdnJL8PrBE
+[11/3/2025, 9:37:48 PM] [ERROR] [APPROVE_EXPENSE] Expense is not in pending status: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjIxOTg2MjJ9.qISFceeeiTq45jBUNIHmV2JNJhNrZ2Uct-v3oVSLfaY
+[11/3/2025, 9:38:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:11 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:15 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:24 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:30 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:33 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:36 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:39 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:42 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:05:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:01 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:06 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:08 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:10 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:14 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:24 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:30 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:06:34 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:17 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:19 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:25 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:31 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:36 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:43 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:47 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:52 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:07:56 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:10:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:10:58 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:22 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:29 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:32 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:35 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:43 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:46 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:11:49 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:12:54 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:13:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:13:11 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:13:13 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:14:26 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:14:35 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:14:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:14:39 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:17:54 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:17:55 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:13 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:16 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:22 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:25 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:28 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:18:43 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:22:15 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:22:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:22:22 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:23:39 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:23:58 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:03 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:08 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:11 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:20 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 10:24:25 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/3/2025, 11:31:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[11/3/2025, 11:31:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:13 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:14 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/3/2025, 11:31:15 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:21 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:41:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:30 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:31 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:32 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:33 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:34 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/4/2025, 7:41:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:42:00 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:42:03 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:42:19 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:42:22 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 7:42:26 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 7:42:26 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:08:27 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:08:28 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:08:28 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:08:28 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:08:28 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:09:19 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:19 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:09:19 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:19 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:09:24 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:24 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:09:24 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:24 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:09:34 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:09:35 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:35 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:09:35 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:09:35 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:12:03 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:12:03 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:12:03 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:12:03 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:13:18 PM] [ERROR] [ADD_NEW_EXPENSE] Budget not found: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjE2ODM4OTV9.5cd2nDP8tEaKpknwMgvXNDKY3Yq9K5FzweCZiC40Tkg
+[11/4/2025, 8:14:08 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:14:08 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:14:08 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:14:08 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:15:07 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:15:07 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:15:07 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:15:07 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:15:56 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:15:56 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:15:56 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:15:56 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:16:44 PM] [ERROR] [PG_QUERY_FUNC] new row for relation "projects_bugets" violates check constraint "chk_spent_not_exceed"
+[11/4/2025, 8:16:44 PM] [ERROR] [APPROVE_EXPENSE] Failed to update budget: new row for relation "projects_bugets" violates check constraint "chk_spent_not_exceed"
+[11/4/2025, 8:17:58 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:17:58 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:17:58 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:17:58 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:18:21 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:18:21 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:18:21 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:18:21 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:20:35 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:22:17 PM] [INFO] [GET_PROJECT_BUGETS] No bugets found for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[11/4/2025, 8:22:33 PM] [ERROR] [UPDATE_PROJECT_BUGET] Buget not found: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjIyNzk5NzZ9.fsMlE0m_sRCkfHzMxzpwD-FD4mcmIYRRlASExiQDRso
+[11/4/2025, 8:22:50 PM] [INFO] [GET_PROJECT_BUGETS] No bugets found for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[11/4/2025, 8:23:24 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:23:37 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:23:39 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:23:45 PM] [INFO] [GET_PROJECT_BUGETS] No bugets found for project: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjAwMjQyOTh9.omIzUBXZcACD1d-9kxYmKWM18nqaxqzO_U25C0ivSdk
+[11/4/2025, 8:23:58 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:24:11 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:24:11 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:24:11 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:24:11 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:24:33 PM] [ERROR] [ADD_NEW_EXPENSE] Expense date must be a valid date
+[11/4/2025, 8:24:51 PM] [ERROR] [APPROVE_EXPENSE] Expense not found: e4015937-266e-40d6-abf8-7621e1c3576f
+[11/4/2025, 8:25:09 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:25:09 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:25:09 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:25:09 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:25:43 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:25:43 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/4/2025, 8:25:43 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/4/2025, 8:25:43 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/4/2025, 8:26:32 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:26:34 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:26:38 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:26:40 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:26:44 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:26:51 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:27:04 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:27:07 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:27:13 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:27:16 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:27:19 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:43:48 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:43:50 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/4/2025, 8:43:54 PM] [INFO] [Financial_Api] Server is running on: localhost:5202

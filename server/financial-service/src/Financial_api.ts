@@ -5,6 +5,7 @@ import http from 'http';
 import BugetRoutes from './routes/BugetRoutes';
 import ExpenseRoutes from './routes/ExpenseRoutes';
 import InvoicingRoutes from './routes/InvoicingRoutes';
+import ReportingRoutes from './routes/ReportingRoutes';
 
 //* Configs
 import config from './config/config';
@@ -49,6 +50,7 @@ app.use((req: CustomRequest, res: any, next: NextFunction) => {
 app.use('/api/project-buget-manager/', BugetRoutes);
 app.use('/api/project-expense-manager/', ExpenseRoutes);
 app.use('/api/project-invoice-manager/', InvoicingRoutes);
+app.use('/api/project-report-manager/', ReportingRoutes);
 
 //* Error Handling
 app.use((req: any, res: any, next: NextFunction) => {

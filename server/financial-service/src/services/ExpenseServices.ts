@@ -20,7 +20,7 @@ const CustomRequestValidationResult = validationResult.withDefaults({
 
 const checkExpenseExists = async (connection: PoolClient, expenseToken: string): Promise<any> => {
     const checkQuery = `
-        SELECT id, expenses_title, ProjectToken, expense_token, category, user_private_token, 
+        SELECT id, expenses_title, ProjectToken, expense_token, category, buget_token, user_private_token, 
                amount, status, expense_date, description, receipt_url, approval_date, 
                approved_by, rejection_reason, reimbursement_date, created_at, updated_at
         FROM project_expenses 
@@ -28,6 +28,100 @@ const checkExpenseExists = async (connection: PoolClient, expenseToken: string):
     `;
     const expenseResult = await query(connection, checkQuery, [expenseToken]);
     return expenseResult && expenseResult.length > 0 ? expenseResult[0] : null;
+};
+
+/**
+ * Update budget spent amount when expense is approved
+ */
+const updateBudgetSpentAmount = async (connection: PoolClient, bugetToken: string, amountChange: number): Promise<void> => {
+    const updateBudgetQuery = `
+        UPDATE projects_bugets 
+        SET spent_amount = spent_amount + $1,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE buget_token = $2
+        RETURNING total_buget, spent_amount
+    `;
+
+    const result = await query(connection, updateBudgetQuery, [amountChange, bugetToken]);
+
+    if (!result || result.length === 0) {
+        throw new Error('Failed to update budget spent amount');
+    }
+
+    const budget = result[0];
+
+    // Log warning if budget is exceeded
+    if (parseFloat(budget.spent_amount) > parseFloat(budget.total_buget)) {
+        logging.warn('UPDATE_BUDGET_SPENT', `Budget exceeded for token: ${bugetToken}. Spent: ${budget.spent_amount}, Total: ${budget.total_buget}`);
+    }
+};
+
+/**
+ * Log expense audit event
+ */
+const logExpenseAudit = async (
+    connection: PoolClient,
+    expenseToken: string,
+    projectToken: string,
+    actionType: string,
+    fieldChanged: string | null,
+    oldValue: string | null,
+    newValue: string | null,
+    amountImpact: number,
+    changedBy: string,
+    changeReason?: string,
+): Promise<void> => {
+    const auditToken = utilFunctions.CreateToken();
+
+    const insertAuditQuery = `
+        INSERT INTO expense_audit_log 
+            (audit_token, expense_token, project_token, action_type, field_changed, 
+             old_value, new_value, amount_impact, changed_by, change_reason, changed_at)
+        VALUES 
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP)
+    `;
+
+    await query(connection, insertAuditQuery, [auditToken, expenseToken, projectToken, actionType, fieldChanged, oldValue, newValue, amountImpact, changedBy, changeReason || null]);
+};
+
+/**
+ * Log financial event
+ */
+const logFinancialEvent = async (
+    connection: PoolClient,
+    eventType: string,
+    projectToken: string,
+    relatedEntityType: string,
+    relatedEntityToken: string,
+    amount: number,
+    transactionDate: string,
+    description: string,
+    createdBy: string,
+    metadata?: any,
+): Promise<void> => {
+    const eventToken = utilFunctions.CreateToken();
+
+    const insertEventQuery = `
+        INSERT INTO financial_events 
+            (event_token, event_type, project_token, related_entity_type, related_entity_token,
+             amount, currency, transaction_date, description, metadata, created_by, created_at)
+        VALUES 
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP)
+    `;
+
+    await query(connection, insertEventQuery, [
+        eventToken,
+        eventType,
+        projectToken,
+        relatedEntityType,
+        relatedEntityToken,
+        amount,
+        'EUR',
+        transactionDate,
+        description,
+        metadata ? JSON.stringify(metadata) : null,
+        createdBy,
+    ]);
 };
 
 const GetProjectExpenses = async (req: CustomRequest, res: Response) => {
@@ -240,10 +334,13 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await connection.query('BEGIN');
+
         const { BugetToken, ExpenseTitle, ProjectToken, UserSessionToken, Category, Amount, ExpenseDate, Description, ReceiptUrl } = req.body;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('ADD_NEW_EXPENSE', 'Invalid user session token');
             res.status(200).json({
@@ -252,10 +349,12 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
             });
             return;
         }
+
         const userPublicToken = await utilFunctions.getUserPublicTokenFromPrivateToken(connection, userPrivateToken);
 
         const projectExists = await utilFunctions.checkProjectExists(connection, ProjectToken);
         if (!projectExists) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('ADD_NEW_EXPENSE', `Project not found: ${ProjectToken}`);
             res.status(200).json({
@@ -265,7 +364,22 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        const budgetCheckQuery = `SELECT buget_token, total_buget, spent_amount FROM projects_bugets WHERE buget_token = $1`;
+        const budgetResult = await query(connection, budgetCheckQuery, [BugetToken]);
+
+        if (!budgetResult || budgetResult.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
+            logging.error('ADD_NEW_EXPENSE', `Budget not found: ${BugetToken}`);
+            res.status(200).json({
+                error: true,
+                errmsg: 'Budget not found',
+            });
+            return;
+        }
+
         const expenseToken = utilFunctions.CreateToken();
+        const expenseDateValue = ExpenseDate || new Date().toISOString().split('T')[0];
 
         const insertQuery = `
             INSERT INTO project_expenses 
@@ -274,12 +388,13 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING *
         `;
-        const params = [ExpenseTitle, BugetToken, ProjectToken, expenseToken, Category, userPrivateToken, Amount, ExpenseDate || new Date().toISOString().split('T')[0], Description, ReceiptUrl || null];
+        const params = [ExpenseTitle, BugetToken, ProjectToken, expenseToken, Category, userPrivateToken, Amount, expenseDateValue, Description, ReceiptUrl || null];
 
         const result = await query(connection, insertQuery, params);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('ADD_NEW_EXPENSE', 'Failed to create expense');
             res.status(200).json({
                 error: true,
@@ -289,6 +404,17 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
         }
 
         const expense = result[0];
+
+        await logExpenseAudit(connection, expenseToken, ProjectToken, 'created', null, null, 'pending', parseFloat(Amount), userPrivateToken, `Expense created: ${ExpenseTitle}`);
+
+        await logFinancialEvent(connection, 'expense_created', ProjectToken, 'expense', expenseToken, parseFloat(Amount), expenseDateValue, `Expense created: ${ExpenseTitle} - ${Category}`, userPrivateToken, {
+            category: Category,
+            budget_token: BugetToken,
+            status: 'pending',
+        });
+
+        await connection.query('COMMIT');
+        connection.release();
 
         res.status(200).json({
             error: false,
@@ -312,6 +438,7 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 
@@ -320,7 +447,7 @@ const AddNewExpense = async (req: CustomRequest, res: Response) => {
         let errorMessage = error.message;
 
         if (error.code === '23503') {
-            errorMessage = 'Project does not exist';
+            errorMessage = 'Project or Budget does not exist';
         } else if (error.code === '23514') {
             errorMessage = 'Amount must be a positive number';
         }
@@ -356,10 +483,13 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await connection.query('BEGIN');
+
         const { ExpenseToken, UserSessionToken, Category, Amount, ExpenseDate, Description } = req.body;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_EXPENSE', 'Invalid user session token');
             res.status(200).json({
@@ -371,6 +501,7 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
 
         const existingExpense = await checkExpenseExists(connection, ExpenseToken);
         if (!existingExpense) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_EXPENSE', `Expense not found: ${ExpenseToken}`);
             res.status(200).json({
@@ -381,6 +512,7 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
         }
 
         if (existingExpense.status === 'approved' || existingExpense.status === 'reimbursed') {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_EXPENSE', 'Cannot update approved or reimbursed expense');
             res.status(200).json({
@@ -390,7 +522,6 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
-        // Build dynamic update query
         const updateFields: string[] = [];
         const updateValues: any[] = [];
         let paramCounter = 1;
@@ -398,11 +529,27 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
         if (Category !== undefined) {
             updateFields.push(`category = $${paramCounter++}`);
             updateValues.push(Category);
+
+            await logExpenseAudit(connection, ExpenseToken, existingExpense.projecttoken, 'updated', 'category', existingExpense.category, Category, 0, userPrivateToken);
         }
 
         if (Amount !== undefined) {
             updateFields.push(`amount = $${paramCounter++}`);
             updateValues.push(Amount);
+
+            const amountDifference = parseFloat(Amount) - parseFloat(existingExpense.amount);
+            await logExpenseAudit(
+                connection,
+                ExpenseToken,
+                existingExpense.projecttoken,
+                'updated',
+                'amount',
+                existingExpense.amount,
+                Amount.toString(),
+                amountDifference,
+                userPrivateToken,
+                `Amount changed from ${existingExpense.amount} to ${Amount}`,
+            );
         }
 
         if (ExpenseDate !== undefined) {
@@ -418,6 +565,7 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
         updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
 
         if (updateFields.length === 1) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('UPDATE_EXPENSE', 'No fields to update');
             res.status(200).json({
@@ -437,9 +585,10 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
         `;
 
         const result = await query(connection, updateQuery, updateValues);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('UPDATE_EXPENSE', 'Failed to update expense');
             res.status(200).json({
                 error: true,
@@ -447,6 +596,9 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
             });
             return;
         }
+
+        await connection.query('COMMIT');
+        connection.release();
 
         const expense = result[0];
 
@@ -471,6 +623,7 @@ const UpdateExpense = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 
@@ -513,10 +666,13 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await connection.query('BEGIN');
+
         const { ExpenseToken, UserSessionToken } = req.params;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('REMOVE_EXPENSE', 'Invalid user session token');
             res.status(200).json({
@@ -530,6 +686,7 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
 
         const existingExpense = await checkExpenseExists(connection, ExpenseToken);
         if (!existingExpense) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('REMOVE_EXPENSE', `Expense not found: ${ExpenseToken}`);
             res.status(200).json({
@@ -540,6 +697,7 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
         }
 
         if (existingExpense.status === 'approved' || existingExpense.status === 'reimbursed') {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('REMOVE_EXPENSE', 'Cannot delete approved or reimbursed expense');
             res.status(200).json({
@@ -549,6 +707,19 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await logExpenseAudit(
+            connection,
+            ExpenseToken,
+            existingExpense.projecttoken,
+            'deleted',
+            null,
+            existingExpense.status,
+            'deleted',
+            -parseFloat(existingExpense.amount),
+            userPrivateToken,
+            `Expense deleted: ${existingExpense.expenses_title}`,
+        );
+
         const deleteQuery = `
             DELETE FROM project_expenses
             WHERE expense_token = $1
@@ -556,9 +727,10 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
         `;
 
         const result = await query(connection, deleteQuery, [ExpenseToken]);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('REMOVE_EXPENSE', 'Failed to delete expense');
             res.status(200).json({
                 error: true,
@@ -566,6 +738,9 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
             });
             return;
         }
+
+        await connection.query('COMMIT');
+        connection.release();
 
         res.status(200).json({
             error: false,
@@ -588,6 +763,7 @@ const RemoveExpense = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 
@@ -623,10 +799,13 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
             return;
         }
 
+        await connection.query('BEGIN'); 
+
         const { ExpenseToken, UserSessionToken, Status, Notes } = req.body;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('APPROVE_EXPENSE', 'Invalid user session token');
             res.status(200).json({
@@ -640,6 +819,7 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
 
         const existingExpense = await checkExpenseExists(connection, ExpenseToken);
         if (!existingExpense) {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('APPROVE_EXPENSE', `Expense not found: ${ExpenseToken}`);
             res.status(200).json({
@@ -650,6 +830,7 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
         }
 
         if (existingExpense.status !== 'pending') {
+            await connection.query('ROLLBACK');
             connection.release();
             logging.error('APPROVE_EXPENSE', `Expense is not in pending status: ${ExpenseToken}`);
             res.status(200).json({
@@ -674,7 +855,6 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
             `;
             updateParams = [Status, userPrivateToken, ExpenseToken];
         } else {
-            // Status is 'rejected'
             updateQuery = `
                 UPDATE project_expenses 
                 SET status = $1,
@@ -689,9 +869,10 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
         }
 
         const result = await query(connection, updateQuery, updateParams);
-        connection.release();
 
         if (!result || result.length === 0) {
+            await connection.query('ROLLBACK');
+            connection.release();
             logging.error('APPROVE_EXPENSE', 'Failed to update expense status');
             res.status(200).json({
                 error: true,
@@ -701,6 +882,54 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
         }
 
         const expense = result[0];
+
+        if (Status === 'approved') {
+            try {
+                await updateBudgetSpentAmount(connection, existingExpense.buget_token, parseFloat(existingExpense.amount));
+
+                await logFinancialEvent(
+                    connection,
+                    'expense_approved',
+                    existingExpense.projecttoken,
+                    'expense',
+                    ExpenseToken,
+                    parseFloat(existingExpense.amount),
+                    new Date().toISOString().split('T')[0],
+                    `Expense approved: ${existingExpense.expenses_title}`,
+                    userPrivateToken,
+                    {
+                        category: existingExpense.category,
+                        budget_token: existingExpense.buget_token,
+                        approved_by: userPrivateToken,
+                    },
+                );
+            } catch (budgetError: any) {
+                await connection.query('ROLLBACK');
+                connection.release();
+                logging.error('APPROVE_EXPENSE', `Failed to update budget: ${budgetError.message}`);
+                res.status(200).json({
+                    error: true,
+                    errmsg: `Expense status updated but failed to update budget: ${budgetError.message}`,
+                });
+                return;
+            }
+        }
+
+        await logExpenseAudit(
+            connection,
+            ExpenseToken,
+            existingExpense.projecttoken,
+            Status === 'approved' ? 'approved' : 'rejected',
+            'status',
+            'pending',
+            Status,
+            Status === 'approved' ? parseFloat(existingExpense.amount) : 0,
+            userPrivateToken,
+            Status === 'rejected' ? Notes : `Expense ${Status}`,
+        );
+
+        await connection.query('COMMIT'); 
+        connection.release();
 
         res.status(200).json({
             error: false,
@@ -726,6 +955,7 @@ const ApproveExpense = async (req: CustomRequest, res: Response) => {
         });
     } catch (error: any) {
         if (connection) {
+            await connection.query('ROLLBACK');
             connection.release();
         }
 

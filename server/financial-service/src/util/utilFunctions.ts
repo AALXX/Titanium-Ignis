@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { Connection, Pool, PoolClient } from 'pg';
 import { redisClient } from '../config/redis';
+import { v4 } from 'uuid';
 
 //* /////////////////////////////
 //*      Account related       //
@@ -31,8 +32,7 @@ const CreateToken = (): string => {
     const jwtSecretKey = `${process.env.ACCOUNT_SECRET}` + secretExt;
 
     const userprivateToken = jwt.sign({}, jwtSecretKey);
-
-    return userprivateToken;
+    return v4();
 };
 
 
