@@ -1,5 +1,5 @@
 import express from 'express';
-import { body, param } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import logging from '../config/logging';
 import { rbacMiddleware } from '../middlewares/RBAC_Middleware';
 import InvoicingServices from '../services/InvoicingServices';
@@ -26,6 +26,17 @@ router.get(
             .withMessage('User session token must be a string')
             .isLength({ min: 1, max: 500 })
             .withMessage('User session token is invalid'),
+
+        // Optional query filters
+        query('Status').optional().trim().isString().withMessage('Status must be a string').isIn(['draft', 'sent', 'paid', 'partially_paid', 'overdue', 'cancelled']).withMessage('Invalid status'),
+
+        query('ClientName').optional().trim().isString().withMessage('Client name must be a string'),
+
+        query('BillingType').optional().trim().isString().withMessage('Billing type must be a string').isIn(['fixed-price', 'hourly', 'milestone', 'retainer']).withMessage('Invalid billing type'),
+
+        query('StartDate').optional().isISO8601().withMessage('Start date must be a valid date'),
+
+        query('EndDate').optional().isISO8601().withMessage('End date must be a valid date'),
     ],
     InvoicingServices.GetProjectInvoices,
 );
@@ -143,6 +154,8 @@ router.put(
 
         body('BillingType').optional().trim().isString().withMessage('Billing type must be a string').isIn(['fixed-price', 'hourly', 'milestone', 'retainer']).withMessage('Invalid billing type'),
 
+        body('Status').optional().trim().isString().withMessage('Status must be a string').isIn(['draft', 'sent', 'paid', 'partially_paid', 'overdue', 'cancelled']).withMessage('Invalid status'),
+
         body('IssueDate').optional().isISO8601().withMessage('Issue date must be a valid date').toDate(),
 
         body('DueDate').optional().isISO8601().withMessage('Due date must be a valid date').toDate(),
@@ -185,17 +198,86 @@ router.put(
     InvoicingServices.UpdateProjectInvoices,
 );
 
+router.post(
+    '/record-payment',
+    [
+        body('InvoiceToken')
+            .trim()
+            .notEmpty()
+            .withMessage('Invoice token is required')
+            .isString()
+            .withMessage('Invoice token must be a string')
+            .isLength({ min: 1, max: 255 })
+            .withMessage('Invoice token must be between 1 and 255 characters'),
+
+        body('UserSessionToken')
+            .trim()
+            .notEmpty()
+            .withMessage('User session token is required')
+            .isString()
+            .withMessage('User session token must be a string')
+            .isLength({ min: 1, max: 500 })
+            .withMessage('User session token is invalid'),
+
+        body('Amount').notEmpty().withMessage('Payment amount is required').isFloat({ min: 0.01 }).withMessage('Payment amount must be greater than 0').toFloat(),
+
+        body('PaymentDate').optional().isISO8601().withMessage('Payment date must be a valid date').toDate(),
+
+        body('PaymentMethod')
+            .trim()
+            .notEmpty()
+            .withMessage('Payment method is required')
+            .isString()
+            .withMessage('Payment method must be a string')
+            .isIn(['bank_transfer', 'credit_card', 'paypal', 'check', 'cash', 'other'])
+            .withMessage('Invalid payment method'),
+
+        body('TransactionId').optional().trim().isString().withMessage('Transaction ID must be a string').isLength({ max: 255 }).withMessage('Transaction ID cannot exceed 255 characters'),
+
+        body('ReferenceNumber').optional().trim().isString().withMessage('Reference number must be a string').isLength({ max: 100 }).withMessage('Reference number cannot exceed 100 characters'),
+
+        body('Notes').optional().trim().isString().withMessage('Notes must be a string').isLength({ max: 1000 }).withMessage('Notes cannot exceed 1000 characters'),
+    ],
+    InvoicingServices.RecordPayment,
+);
+
+router.get(
+    '/get-invoice-payments/:InvoiceToken/:UserSessionToken',
+    [
+        param('InvoiceToken')
+            .trim()
+            .notEmpty()
+            .withMessage('Invoice token is required')
+            .isString()
+            .withMessage('Invoice token must be a string')
+            .isLength({ min: 1, max: 255 })
+            .withMessage('Invoice token must be between 1 and 255 characters'),
+
+        param('UserSessionToken')
+            .trim()
+            .notEmpty()
+            .withMessage('User session token is required')
+            .isString()
+            .withMessage('User session token must be a string')
+            .isLength({ min: 1, max: 500 })
+            .withMessage('User session token is invalid'),
+    ],
+    InvoicingServices.GetInvoicePayments,
+);
+
+
+
 router.get(
     '/generate-pdf/:InvoiceToken/:UserSessionToken',
     [
         param('InvoiceToken')
             .trim()
             .notEmpty()
-            .withMessage('Buget token is required')
+            .withMessage('Invoice token is required')
             .isString()
-            .withMessage('Buget token must be a string')
+            .withMessage('Invoice token must be a string')
             .isLength({ min: 1, max: 255 })
-            .withMessage('Buget token must be between 1 and 255 characters'),
+            .withMessage('Invoice token must be between 1 and 255 characters'),
 
         param('UserSessionToken').trim().notEmpty().withMessage('User session token is required').isString().withMessage('User session token must be a string'),
     ],
