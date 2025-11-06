@@ -1,0 +1,32 @@
+[11/5/2025, 12:15:00 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/5/2025, 12:15:26 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:15:26 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/5/2025, 12:15:26 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:15:26 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/5/2025, 12:16:39 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:16:39 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/5/2025, 12:16:39 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:16:39 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/5/2025, 12:17:06 AM] [ERROR] [RECORD_PAYMENT] Cannot record payment for draft invoice
+[11/5/2025, 12:17:33 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:17:33 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/5/2025, 12:17:33 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:17:33 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/5/2025, 12:32:52 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:32:52 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/5/2025, 12:32:52 AM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 12:32:52 AM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/5/2025, 12:35:03 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:09 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 12:39:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/5/2025, 11:30:11 AM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/5/2025, 3:05:54 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 3:05:54 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
+[11/5/2025, 3:05:54 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/5/2025, 3:05:54 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available

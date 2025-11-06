@@ -42,19 +42,6 @@ const createFinancialEvent = async (
     return await query(connection, insertEventQuery, [eventToken, eventType, projectToken, relatedEntityType, relatedEntityToken, amount, currency, transactionDate, description, JSON.stringify(metadata), createdBy]);
 };
 
-const createInvoiceStatusHistory = async (connection: PoolClient, invoiceToken: string, previousStatus: string | null, newStatus: string, amount: number, changedBy: string, notes?: string) => {
-    const historyToken = utilFunctions.CreateToken();
-    const insertHistoryQuery = `
-        INSERT INTO invoice_status_history 
-            (history_token, invoice_token, previous_status, new_status, 
-             amount_at_status, changed_by, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING *
-    `;
-
-    return await query(connection, insertHistoryQuery, [historyToken, invoiceToken, previousStatus, newStatus, amount, changedBy, notes || null]);
-};
-
 const getTotalPayments = async (connection: PoolClient, invoiceToken: string): Promise<number> => {
     const paymentsQuery = `
         SELECT COALESCE(SUM(amount), 0) as total_paid
@@ -561,8 +548,6 @@ const CreateInvoice = async (req: CustomRequest, res: Response) => {
                 });
             }
 
-            await createInvoiceStatusHistory(connection, invoiceToken, null, 'draft', totalAmount, userPrivateToken, 'Invoice created');
-
             await createFinancialEvent(
                 connection,
                 'invoice_created',
@@ -869,8 +854,6 @@ const UpdateProjectInvoices = async (req: CustomRequest, res: Response) => {
                 if (Status === 'sent' && !existingInvoice.sent_date) {
                     updateFields.push(`sent_date = CURRENT_TIMESTAMP`);
                 }
-
-                await createInvoiceStatusHistory(connection, InvoiceToken, existingInvoice.status, Status, existingInvoice.total_amount, userPrivateToken, `Status changed from ${existingInvoice.status} to ${Status}`);
 
                 await createFinancialEvent(
                     connection,
@@ -1182,8 +1165,6 @@ const RecordPayment = async (req: CustomRequest, res: Response) => {
                 }
 
                 await query(connection, updateInvoiceQuery, updateParams);
-
-                await createInvoiceStatusHistory(connection, InvoiceToken, invoice.status, newStatus, totalAmount, userPrivateToken, `Payment received: ${paymentAmount} ${invoice.currency} via ${PaymentMethod}`);
             }
 
             await createFinancialEvent(
@@ -1709,8 +1690,6 @@ const GeneratePDF = async (req: CustomRequest, res: Response) => {
         }
     }
 };
-
-
 
 export default {
     GetProjectInvoices,
