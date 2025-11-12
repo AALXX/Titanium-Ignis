@@ -20,3 +20,4 @@ INSERT INTO resources (name, description) VALUES
 ('cloud', 'Cloud services'),
 ('task_group', 'Task groups'),
 ('task', 'Tasks');
+('financial', 'Financial resources');

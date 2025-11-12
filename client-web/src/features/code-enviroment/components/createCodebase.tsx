@@ -2,7 +2,7 @@
 
 import type React from 'react'
 import { useState } from 'react'
-import { Stepper } from './Stepper'
+import { Stepper } from '../../../components/Stepper'
 import axios from 'axios'
 import Image from 'next/image'
 
@@ -178,7 +178,7 @@ const CreateCodebase: React.FC<CreateCodebaseProps> = ({ projectToken = 'default
                 <div className="mb-8">
                     <h1 className="mb-2 text-3xl font-bold">{formData.mode === 'create' ? 'Create Codebase' : 'Add Codebase'}</h1>
                     <p className="text-gray-400">{formData.mode === 'create' ? 'Create a new Git repository on your internal server' : 'Connect your Git or SVN repository to the project'}</p>
-                </div>  
+                </div>
 
                 <div className="mb-6">
                     <Stepper steps={steps} currentStep={currentStep} />

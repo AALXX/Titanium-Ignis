@@ -44,6 +44,12 @@ export const createNewProject = async (req: CustomRequest, res: Response): Promi
 
         const ownerPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection!, UserSessionToken);
 
+        if (!ownerPrivateToken) {
+            res.status(400).json({ error: true, errmsg: 'User not found' });
+            connection?.release();
+            return;
+        }
+
         const projectToken = utilFunctions.CreateToken();
 
         await query(connection!, 'BEGIN');
@@ -245,5 +251,7 @@ GROUP BY
         return;
     }
 };
+
+
 
 export default { getAllProjects, getProjectData, createNewProject };

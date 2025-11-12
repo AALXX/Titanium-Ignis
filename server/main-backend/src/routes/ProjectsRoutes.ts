@@ -8,12 +8,34 @@ import ProjectCodeBaseDeployments from '../services/ProjectsServices/ProjectCode
 
 import { rbacMiddleware, hasRole, hasMinimumLevel } from '../middlewares/RBAC_Middleware';
 import { CustomRequest } from '../config/postgresql';
+import PropjectModulesServices from '../services/ProjectsServices/PropjectModulesServices';
 
 const router = express.Router();
 
 // ============================================================================
 // PROJECTS - Core project management routes
 // ============================================================================
+
+// Get if a module is initalized in a project - requires project read access
+router.get(
+    '/is-module-initialized/:projectToken/:moduleName/:userSessionToken',
+    rbacMiddleware('project', 'read'),
+    param('projectToken').not().isEmpty(),
+    param('moduleName').not().isEmpty(),
+    param('userSessionToken').not().isEmpty(),
+    PropjectModulesServices.getIsModuleInitialized,
+);
+
+router.post(
+    '/initialize-module',
+    rbacMiddleware('project', 'manage'),
+    body('projectToken').not().isEmpty(),
+    body('moduleName').not().isEmpty(),
+    body('userSessionToken').not().isEmpty(),
+    body('moduleData').not().isEmpty(),
+
+    PropjectModulesServices.initializeModule,
+);
 
 // Create project - requires project management permissions
 router.post(
@@ -172,7 +194,6 @@ router.get(
 //     [body('projectToken').not().isEmpty(), body('deploymentConfig').isObject(), body('userSessionToken').not().isEmpty()],
 //     ProjectCodeBaseDeployments.executeDeployment, // Assuming this method exists
 // );
-
 
 // Example: Route that requires specific role
 // router.get(
