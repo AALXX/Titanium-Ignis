@@ -5977,3 +5977,4 @@
 [11/12/2025, 1:26:28 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Time logs table not available or query failed
 [11/12/2025, 1:26:28 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
 [11/12/2025, 1:26:28 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/12/2025, 1:32:10 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
