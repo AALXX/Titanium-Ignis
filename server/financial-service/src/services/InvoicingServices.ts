@@ -299,10 +299,27 @@ const GetProjectInvoices = async (req: CustomRequest, res: Response) => {
             .filter((inv: any) => (inv.status === 'sent' || inv.status === 'overdue') && inv.due_date && new Date(inv.due_date) < currentDate)
             .reduce((sum: number, inv: any) => sum + parseFloat(inv.total_amount), 0);
 
+        const userPublicTokens: { [key: string]: string } = {};
+        await Promise.all(
+            invoicesResult.map(async (invoice: any) => {
+                if (invoice.created_by && !userPublicTokens[invoice.created_by]) {
+                    let userPublicToken = await utilFunctions.getUserPublicTokenFromPrivateToken(connection!, invoice.created_by);
+
+                    if (userPublicToken) {
+                        userPublicTokens[invoice.created_by] = userPublicToken;
+                    } else {
+                        userPublicTokens[invoice.created_by] = '';
+                    }
+                }
+            }),
+        );
+
         const formattedInvoices = invoicesResult.map((invoice: any) => {
             const totalPaid = parseFloat(invoice.total_paid);
             const totalAmount = parseFloat(invoice.total_amount);
             const amountDue = totalAmount - totalPaid;
+
+            const userPublicToken = userPublicTokens[invoice.created_by] || null;
 
             return {
                 InvoiceId: invoice.id,
@@ -325,7 +342,7 @@ const GetProjectInvoices = async (req: CustomRequest, res: Response) => {
                 Notes: invoice.notes,
                 Terms: invoice.terms,
                 PaymentInstructions: invoice.payment_instructions,
-                CreatedBy: invoice.created_by,
+                CreatedBy: userPublicToken,
                 CreatedByName: invoice.created_by_name,
                 CreatedAt: invoice.created_at,
                 UpdatedAt: invoice.updated_at,
@@ -389,7 +406,7 @@ const CreateInvoice = async (req: CustomRequest, res: Response) => {
             return;
         }
 
-        const { ProjectToken, UserSessionToken, ClientName, BillingType, IssueDate, DueDate, Currency, Notes, Terms, PaymentInstructions, LineItems, TaxAmount, DiscountAmount } = req.body;
+        const { ProjectToken, UserSessionToken, ClientName, BillingType, IssueDate, DueDate, Currency, Notes, Terms, Status, PaymentInstructions, LineItems, TaxAmount, DiscountAmount } = req.body;
 
         const userPrivateToken = await utilFunctions.getUserPrivateTokenFromSessionToken(connection, UserSessionToken);
         if (!userPrivateToken) {
@@ -465,10 +482,10 @@ const CreateInvoice = async (req: CustomRequest, res: Response) => {
             const insertInvoiceQuery = `
                 INSERT INTO invoices 
                     (invoice_token, project_token, client_name, billing_type, total_amount, 
-                     subtotal, tax_amount, discount_amount, issue_date, due_date, 
+                     subtotal, tax_amount, discount_amount, status, issue_date, due_date, 
                      currency, notes, terms, payment_instructions, created_by)
                 VALUES 
-                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
                 RETURNING *
             `;
             const invoiceParams = [
@@ -480,6 +497,7 @@ const CreateInvoice = async (req: CustomRequest, res: Response) => {
                 calculatedSubtotal,
                 taxAmountValue,
                 discountAmountValue,
+                Status || 'draft',
                 IssueDate || null,
                 DueDate || null,
                 Currency || 'EUR',

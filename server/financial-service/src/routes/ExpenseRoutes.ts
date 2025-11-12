@@ -112,7 +112,24 @@ router.post(
             .isIn(['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'RON'])
             .withMessage('Invalid currency code'),
 
-        body('Category').trim().isString().withMessage('Category must be a string').isIn(['materials', 'labor', 'equipment', 'travel', 'other']).withMessage('Invalid category'),
+        body('Category')
+            .trim()
+            .isString()
+            .withMessage('Category must be a string')
+            .isIn([
+                'personnel', 
+                'software_licenses', 
+                'hardware', 
+                'cloud_services',
+                'training', 
+                'travel', 
+                'office_expenses',
+                'outsourcing', 
+                'communications',
+                'miscellaneous',
+                'other' 
+            ])
+            .withMessage('Invalid category'),
 
         body('Description').optional().trim().isString().withMessage('Description must be a string').isLength({ max: 2000 }).withMessage('Description cannot exceed 2000 characters'),
 

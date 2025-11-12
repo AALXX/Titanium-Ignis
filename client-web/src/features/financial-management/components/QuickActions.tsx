@@ -5,9 +5,25 @@ import { CreateInvoiceDialog } from './CreateInvoice'
 import { LogExpense } from './LogExpense'
 import { SetBudget } from './SetBuget'
 import { RecordPayment } from './RecordPayment'
-import { ExportData } from './ExportData'
+import { Budget } from '../types/BugetTypes'
+import { Expense } from '../types/ExpensesTypes'
+import { Invoice } from '../types/InvoiceType'
+import ExportData from './ExportData'
 
-export const QuickActions = () => {
+interface QuickActionsProps {
+    onSetBudgetSuccess?: (budget: any) => void
+    onExpenseSuccess?: (newExpense: any) => void
+    onInvoiceSuccess?: (newInvoice: any) => void
+    onRecordPaymentSuccess?: (payment: any) => void
+    budgets: Budget[]
+    invoices: Invoice[]
+    expenses: Expense[]
+
+    projectToken: string
+    userSessionToken: string
+}
+
+export const QuickActions = ({ onExpenseSuccess, budgets, projectToken, userSessionToken, invoices, expenses, onInvoiceSuccess, onRecordPaymentSuccess, onSetBudgetSuccess }: QuickActionsProps) => {
     const [activeDialog, setActiveDialog] = useState('')
 
     const openDialog = (dialogName: SetStateAction<string>) => setActiveDialog(dialogName)
@@ -46,7 +62,6 @@ export const QuickActions = () => {
             isDefault: false,
             dialog: 'payment'
         },
-
         {
             id: 'export',
             icon: Download,
@@ -92,31 +107,31 @@ export const QuickActions = () => {
 
             {activeDialog === 'invoice' && (
                 <PopupCanvas closePopup={closeDialog}>
-                    <CreateInvoiceDialog onClose={closeDialog} />
+                    <CreateInvoiceDialog onClose={closeDialog} onSuccess={onInvoiceSuccess} projectToken={projectToken} userSessionToken={userSessionToken} />
                 </PopupCanvas>
             )}
 
             {activeDialog === 'expense' && (
                 <PopupCanvas closePopup={closeDialog}>
-                    <LogExpense onClose={closeDialog} />
+                    <LogExpense onClose={closeDialog} onSuccess={onExpenseSuccess} budgets={budgets} projectToken={projectToken} userSessionToken={userSessionToken} />
                 </PopupCanvas>
             )}
 
             {activeDialog === 'budget' && (
                 <PopupCanvas closePopup={closeDialog}>
-                    <SetBudget onClose={closeDialog} />
+                    <SetBudget onClose={closeDialog} projectToken={projectToken} userSessionToken={userSessionToken} onSuccess={onSetBudgetSuccess} />
                 </PopupCanvas>
             )}
 
             {activeDialog === 'payment' && (
                 <PopupCanvas closePopup={closeDialog}>
-                    <RecordPayment onClose={closeDialog} />
+                    <RecordPayment onClose={closeDialog} onSuccess={onRecordPaymentSuccess} invoices={invoices} projectToken={projectToken} userSessionToken={userSessionToken} />
                 </PopupCanvas>
             )}
 
             {activeDialog === 'export' && (
                 <PopupCanvas closePopup={closeDialog}>
-                    <ExportData onClose={closeDialog} />
+                    <ExportData onClose={closeDialog} bugetData={budgets} expenseData={expenses} invoiceData={invoices} />
                 </PopupCanvas>
             )}
         </>

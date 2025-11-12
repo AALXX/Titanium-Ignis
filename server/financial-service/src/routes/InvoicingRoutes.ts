@@ -124,7 +124,13 @@ router.post(
 
         body('LineItems.*.TaxRate').optional().isFloat({ min: 0, max: 100 }).withMessage('Line item tax rate must be between 0 and 100').toFloat(),
 
-        body('LineItems.*.ItemType').optional().trim().isString().withMessage('Line item type must be a string').isIn(['service', 'product', 'expense', 'milestone']).withMessage('Invalid line item type'),
+        body('LineItems.*.ItemType')
+            .optional()
+            .trim()
+            .isString()
+            .withMessage('Line item type must be a string')
+            .isIn(['service', 'product', 'subscription', 'milestone', 'retainer', 'training', 'expense', 'maintenance'])
+            .withMessage('Invalid line item type'),
     ],
     InvoicingServices.CreateInvoice,
 );
