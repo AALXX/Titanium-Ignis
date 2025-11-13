@@ -1,6 +1,7 @@
-import CreateCodebase from '@/features/code-enviroment/components/createCodebase'
+import CreateCodebase from '@/features/code-enviroment/components/CreateCodebase'
 import ProjectCodebaseWrapper from '@/features/code-enviroment/ProjectCodebaseWrapper'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
+import { IsModuleInitialized } from '@/lib/utils'
 import axios from 'axios'
 import React from 'react'
 
@@ -38,17 +39,19 @@ const ProjectsView = async ({ params }: { params: Promise<{ ProjectToken: string
         )
     }
 
+    if (!(await IsModuleInitialized(ProjectToken, 'code', accountStatus.accessToken!))) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <CreateCodebase projectToken={ProjectToken} userSessionToken={accountStatus.accessToken!} />
+            </div>
+        )
+    }
+
     try {
         const projectData = await getProjectCodebaseData(ProjectToken, accountStatus.accessToken)
         return (
             <div className="flex h-screen items-center justify-center">
-                {Object.keys(projectData.project).length === 0 ? (
-                    <div className="flex items-center justify-center w-[60rem] h-[30rem]">
-                        <CreateCodebase projectToken={ProjectToken} userSessionToken={accountStatus.accessToken!} />
-                    </div>
-                ) : (
-                    <ProjectCodebaseWrapper ProjectName={projectData.project.projecttoken} ProjectToken={ProjectToken} RepoUrl={projectData.project.repositoryurl} Status={projectData.project.status} Type={projectData.project.projecttype} UserSessionToken={accountStatus.accessToken!} />
-                )}
+                <ProjectCodebaseWrapper ProjectName={projectData.project.projecttoken} ProjectToken={ProjectToken} RepoUrl={projectData.project.repositoryurl} Status={projectData.project.status} Type={projectData.project.projecttype} UserSessionToken={accountStatus.accessToken!} />
             </div>
         )
     } catch (error) {

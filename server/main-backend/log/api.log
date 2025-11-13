@@ -1,36 +1,4 @@
-[10/22/2025, 11:47:03 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/22/2025, 11:47:03 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:21 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:22 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:23 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:24 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:25 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:26 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:27 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:28 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 10:40:29 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
-[10/23/2025, 11:33:10 PM] [ERROR] [PG_QUERY_FUNC] value too long for type character varying(300)
-[10/23/2025, 11:33:10 PM] [ERROR] [REGISTER_USER_WITH_GOOGLE] value too long for type character varying(300)
-[10/23/2025, 11:34:32 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/24/2025, 1:01:29 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/24/2025, 7:24:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/24/2025, 10:25:19 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/25/2025, 10:14:56 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[10/25/2025, 10:15:16 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[11/12/2025, 1:31:11 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
-[11/12/2025, 1:37:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/12/2025, 7:56:06 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/12/2025, 9:58:34 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/12/2025, 10:03:04 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/12/2025, 10:45:02 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

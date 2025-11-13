@@ -5991,3 +5991,12 @@
 [11/12/2025, 1:41:15 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [11/12/2025, 1:41:16 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
 [11/12/2025, 1:41:16 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/12/2025, 8:19:41 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:20:18 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:20:42 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:20:45 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:20:47 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/12/2025, 8:20:47 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/12/2025, 8:20:57 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:21:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/12/2025, 8:38:17 PM] [INFO] [Financial_Api] Server is running on: localhost:5202

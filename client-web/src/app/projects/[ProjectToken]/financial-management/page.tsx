@@ -1,4 +1,4 @@
-import CreateCodebase from '@/features/code-enviroment/components/createCodebase'
+import CreateCodebase from '@/features/code-enviroment/components/CreateCodebase'
 import FinancialManagementDashboard from '@/features/financial-management/FinancialManagementDashboard'
 import InitializeFinanceModule from '@/features/financial-management/InitializeFianceModule'
 import { BudgetResponse, ExpensesResponse, InvoicesResponse, ProjectProfitAndLossData } from '@/features/financial-management/types/ResponseTypes'

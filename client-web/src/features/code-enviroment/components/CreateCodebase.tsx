@@ -14,6 +14,7 @@ interface CreateCodebaseProps {
 
 interface CodebaseFormData {
     projectToken: string
+    userSessionToken: string
     mode: 'create' | 'add'
     repositoryName?: string
     description?: string
@@ -33,12 +34,13 @@ interface CodebaseFormData {
     lastUserCommitUserToken: string
 }
 
-const CreateCodebase: React.FC<CreateCodebaseProps> = ({ projectToken = 'default-project-token', userSessionToken, onSubmit }) => {
+const CreateCodebase: React.FC<CreateCodebaseProps> = ({ projectToken, userSessionToken, onSubmit }) => {
     const [currentStep, setCurrentStep] = useState(0)
     const [errors, setErrors] = useState<Record<string, string>>({})
 
     const [formData, setFormData] = useState<CodebaseFormData>({
-        projectToken,
+        projectToken: projectToken!,
+        userSessionToken: userSessionToken!,
         mode: 'create',
         repositoryName: '',
         description: '',
@@ -565,7 +567,7 @@ const CreateCodebase: React.FC<CreateCodebaseProps> = ({ projectToken = 'default
                         )}
                     </div>
 
-                    <div className="mt-auto flex-shrink-0 border-t border-[#404040] pt-6">
+                    <div className="mt-auto shrink-0 border-t border-[#404040] pt-6">
                         <div className="flex justify-between">
                             <button type="button" onClick={handleBack} disabled={currentStep === 0} className="rounded-lg border border-[#404040] px-6 py-3 transition-all hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-50">
                                 Back

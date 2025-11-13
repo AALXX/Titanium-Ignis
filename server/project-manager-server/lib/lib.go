@@ -248,8 +248,10 @@ func CopyDir(src string, dst string) error {
 		}
 	})
 }
-
 func CheckPermissions(db *sql.DB, userSessionToken string, projectToken string, resource string, action string) bool {
+	log.Printf("[DEBUG] CheckPermissions called with: userSessionToken=%s, projectToken=%s, resource=%s, action=%s", 
+		userSessionToken, projectToken, resource, action)
+	
 	userPrivateToken := GetPrivateTokenBySessionToken(userSessionToken, db)
 
 	if userPrivateToken == "" {
@@ -317,9 +319,9 @@ func CheckPermissions(db *sql.DB, userSessionToken string, projectToken string, 
             `
 
 	rows, err := db.Query(permissionQuery, userPrivateToken, projectToken, resource, action)
-	log.Println("Permission Result: ", rows, err)
-
+	
 	if err != nil {
+		log.Printf("[ERROR] Query execution failed: %v", err)
 		return false
 	}
 
@@ -329,19 +331,40 @@ func CheckPermissions(db *sql.DB, userSessionToken string, projectToken string, 
 	var userLevel int
 	var roleName string
 	var roleDisplayName string
-	var directPermission string
-	var userPermission string
-	var inheritedPermission string
+	var directPermission sql.NullString
+	var userPermission sql.NullString
+	var inheritedPermission sql.NullString
 
+	rowCount := 0
 	for rows.Next() {
+		rowCount++
 		err := rows.Scan(&hasPermission, &userLevel, &roleName, &roleDisplayName, &directPermission, &userPermission, &inheritedPermission)
 		if err != nil {
+			log.Printf("[ERROR] Row scan failed on row %d: %v", rowCount, err)
 			return false
 		}
 
+		log.Printf("[DEBUG] Row %d: hasPermission=%v, userLevel=%d, roleName=%s, roleDisplayName=%s, directPermission=%v, userPermission=%v, inheritedPermission=%v",
+			rowCount, hasPermission, userLevel, roleName, roleDisplayName, 
+			directPermission.String, userPermission.String, inheritedPermission.String)
+
 		if hasPermission {
+			log.Printf("[INFO] Permission GRANTED for user %s on project %s for resource=%s, action=%s (via role: %s)",
+				userPrivateToken, projectToken, resource, action, roleName)
 			return true
 		}
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Printf("[ERROR] Row iteration error: %v", err)
+		return false
+	}
+
+	if rowCount == 0 {
+		log.Printf("[INFO] No rows returned from permission query - user may not be a team member of this project")
+	} else {
+		log.Printf("[INFO] Permission DENIED for user %s on project %s for resource=%s, action=%s",
+			userPrivateToken, projectToken, resource, action)
 	}
 
 	return false

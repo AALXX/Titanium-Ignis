@@ -308,14 +308,16 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 
 	if err := c.Bind().Body(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse body"})
+
 	}
 
 	// Example permission check (uncomment when implemented)
-	// userSessionToken := c.Params("UserSessionToken")
-	// permission := lib.CheckPermissions(db, userSessionToken, body.ProjectToken, "code", "create")
-	// if !permission {
-	//     return c.Status(fiber.StatusForbidden).SendString("You don't have permission to create a repository")
-	// }
+	permission := lib.CheckPermissions(db, body.UserSessionToken, body.ProjectToken, "code", "create")
+	if !permission {
+		return c.Status(fiber.StatusForbidden).SendString("You don't have permission to create a repository")
+	}
+
+	projectToken := body.ProjectToken
 
 	if body.Mode == "create" {
 		if body.RepositoryName == nil {
@@ -382,6 +384,38 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 		}
 		defer rows.Close()
 
+		var moduleID int
+		err2 := db.QueryRow(`
+		SELECT id FROM project_avalible_modules 
+		WHERE moduleName = $1
+	`, "code").Scan(&moduleID)
+
+		if err2 != nil {
+			if err2 == sql.ErrNoRows {
+				return fmt.Errorf("coding module not found in project_avalible_modules")
+			}
+			return fmt.Errorf("error querying module: %w", err)
+		}
+
+		result, err := db.Exec(`
+		UPDATE project_module_links 
+		SET is_module_initialized = TRUE
+		WHERE ProjectToken = $1 AND ModuleID = $2
+	`, projectToken, moduleID)
+
+		if err != nil {
+			return fmt.Errorf("error updating module link: %w", err)
+		}
+
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			return fmt.Errorf("error checking rows affected: %w", err)
+		}
+
+		if rowsAffected == 0 {
+			return fmt.Errorf("project module link not found for project %s and module %d", projectToken, moduleID)
+		}
+
 		log.Printf("Successfully created repository: %s", repoPath)
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 			"message":      "Repository created successfully",
@@ -398,7 +432,6 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 		}
 
 		sourceUrl := *body.RepositoryUrl
-		projectToken := body.ProjectToken
 
 		log.Printf("Adding existing repository: %s (%s)", sourceUrl, *body.ProjectType)
 
@@ -557,7 +590,39 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 			return c.Status(fiber.StatusInternalServerError).SendString("Failed to save repository to database")
 		}
 
-		log.Printf("Successfully added repository: %s", repoPath)
+		var moduleID int
+		err2 := db.QueryRow(`
+		SELECT id FROM project_avalible_modules 
+		WHERE moduleName = $1
+	`, "code").Scan(&moduleID)
+
+		if err2 != nil {
+			if err2 == sql.ErrNoRows {
+				return fmt.Errorf("coding module not found in project_avalible_modules")
+			}
+			return fmt.Errorf("error querying module: %w", err)
+		}
+
+		result, err := db.Exec(`
+		UPDATE project_module_links 
+		SET is_module_initialized = TRUE
+		WHERE ProjectToken = $1 AND ModuleID = $2
+	`, projectToken, moduleID)
+
+		if err != nil {
+			return fmt.Errorf("error updating module link: %w", err)
+		}
+
+		rowsAffected, err := result.RowsAffected()
+		if err != nil {
+			return fmt.Errorf("error checking rows affected: %w", err)
+		}
+
+		if rowsAffected == 0 {
+			return fmt.Errorf("project module link not found for project %s and module %d", projectToken, moduleID)
+		}
+
+		log.Printf("Successfully initialized coding module for project %s", projectToken)
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 			"message":          "Repository added successfully",
 			"projectToken":     projectToken,
@@ -566,5 +631,6 @@ func CreateRepo(c fiber.Ctx, db *sql.DB) error {
 			"repoPath":         repoPath,
 		})
 	}
+
 	return c.Status(fiber.StatusBadRequest).SendString("Invalid mode")
 }

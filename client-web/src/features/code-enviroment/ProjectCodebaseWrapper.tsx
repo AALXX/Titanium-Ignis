@@ -20,9 +20,7 @@ const ProjectCodebaseWrapper: React.FC<IProjectCodebaseWrapper> = ({ ProjectName
         setSelectedFilePath(filePath)
     }
 
-    // Fix: Added empty dependency array to ensure this only runs once
     useEffect(() => {
-        // Create a single socket connection for each server
         const mainSocket = io(`${process.env.NEXT_PUBLIC_BACKEND_SERVER}`, {
             transports: ['websocket'],
             reconnection: true,

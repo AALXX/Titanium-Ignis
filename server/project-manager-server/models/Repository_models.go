@@ -6,6 +6,7 @@ type GenerateRepositoryRequest struct {
 }
 type CodebaseFormData struct {
 	ProjectToken            string  `json:"projectToken" validate:"required"`
+	UserSessionToken        string  `json:"userSessionToken" validate:"required"`
 	Mode                    string  `json:"mode" validate:"required,oneof=create add"`
 	RepositoryName          *string `json:"repositoryName,omitempty"`
 	Description             *string `json:"description,omitempty"`
