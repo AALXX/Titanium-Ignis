@@ -1,4 +1,4 @@
-import DeploymentsOverView from '@/features/deployments/components/OverviewDashBoard'
+import DeploymentsOverView from '@/features/deployments/components/OverviewDashboard'
 import React from 'react'
 import { checkAccountStatus } from '@/hooks/useAccountServerSide'
 import axios from 'axios'

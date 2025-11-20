@@ -2,6 +2,7 @@ import { Pool, PoolClient } from 'pg'
 import logging from '../config/logging'
 import { connect, query } from '../config/postgresql'
 import { Container } from 'dockerode'
+import { ExecOptions, ExecResult } from '../types/DeploymentTypes'
 
 const checkForPermissions = async (connection: PoolClient, projectToken: string, userSessionToken: string, resource: string, action: string): Promise<boolean> => {
     try {
@@ -155,7 +156,6 @@ const getUserPublicTokenFromSessionToken = async (connection: PoolClient, sessio
     }
 }
 
-
 const mapOsToImage = (osName: string): string => {
     osName = osName.toLowerCase().replace(' lts', '').replace(' ', '-')
 
@@ -204,27 +204,51 @@ const mapServiceToImage = (serviceStartCommand: string): string => {
     logging.error('UNKNOWN_SERVICE', serviceStartCommand)
     return ''
 }
-const execInContainer = async (container: Container, cmd: string[], detach = false): Promise<void> => {
+const execInContainer = async (container: Container, cmd: string[], options: ExecOptions = {}): Promise<ExecResult> => {
+    const { captureOutput = true, streamOutput = true, detach = false } = options
+
     const exec = await container.exec({
         Cmd: cmd,
         AttachStdout: !detach,
         AttachStderr: !detach
     })
 
-    return new Promise<void>((resolve, reject) => {
-        exec.start({ Detach: detach }, (err, stream) => {
+    return new Promise<ExecResult>((resolve, reject) => {
+        exec.start({ Detach: detach, Tty: false }, (err, stream) => {
             if (err) return reject(err)
 
-            if (detach) return resolve()
+            if (detach) {
+                return resolve({ exitCode: 0, output: '' })
+            }
 
             let output = ''
-            stream!.on('data', chunk => {
-                output += chunk.toString()
-                process.stdout.write(chunk)
-            })
 
-            stream!.on('end', () => resolve())
-            stream!.on('error', err => reject(err))
+            if (stream) {
+                stream.on('data', (chunk: Buffer) => {
+                    const data = chunk.toString()
+                    if (captureOutput) output += data
+                    if (streamOutput) process.stdout.write(chunk)
+                })
+
+                stream.on('end', async () => {
+                    try {
+                        const inspectData = await exec.inspect()
+                        const exitCode = inspectData.ExitCode ?? 0
+
+                        if (exitCode !== 0) {
+                            reject(new Error(`Command failed with exit code ${exitCode}:\n${output}`))
+                        } else {
+                            resolve({ exitCode, output })
+                        }
+                    } catch (inspectErr) {
+                        reject(inspectErr)
+                    }
+                })
+
+                stream.on('error', streamErr => reject(streamErr))
+            } else {
+                reject(new Error('No stream available'))
+            }
         })
     })
 }

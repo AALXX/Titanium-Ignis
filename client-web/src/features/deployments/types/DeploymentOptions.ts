@@ -73,5 +73,6 @@ export interface ServiceCardPropsRequest {
     lasthealthcheckat: string | null
     healthstatus: string | null
     rollbackreference: number | null
+    requesttrackingenabled: boolean
     tags: string[] | null
 }

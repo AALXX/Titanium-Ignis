@@ -23,7 +23,6 @@ const LeftPanel: React.FC<ILeftPanel> = props => {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_PROJECTS_SERVER}/api/projects/repo-tree`, {
                 params: { projectToken: props.ProjectToken }
             })
-            console.log(response)
             dispatch(setFileTree(response.data))
         } catch (error) {
             console.error('Error fetching file tree:', error)

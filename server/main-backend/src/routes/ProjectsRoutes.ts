@@ -187,50 +187,6 @@ router.get(
     ProjectCodeBaseDeployments.getDeploymentDetails,
 );
 
-// Execute deployment - requires deployment execute permissions
-// router.post(
-//     '/execute-deployment',
-//     rbacMiddleware('deployment', 'execute'),
-//     [body('projectToken').not().isEmpty(), body('deploymentConfig').isObject(), body('userSessionToken').not().isEmpty()],
-//     ProjectCodeBaseDeployments.executeDeployment, // Assuming this method exists
-// );
-
-// Example: Route that requires specific role
-// router.get(
-//     '/admin-only-endpoint/:projectToken/:userSessionToken',
-//     hasRole('PROJECT_OWNER'), // Only PROJECT_OWNER can access
-//     param('projectToken').not().isEmpty(),
-//     param('userSessionToken').not().isEmpty(),
-//     (req, res) => {
-//         res.json({ message: 'Admin only content', userRole: req.userRole });
-//     },
-// );
-
-// Example: Route that requires minimum level
-// router.get(
-//     '/management-endpoint/:projectToken/:userSessionToken',
-//     hasMinimumLevel(80), // Requires level 80 or higher (management level)
-//     param('projectToken').not().isEmpty(),
-//     param('userSessionToken').not().isEmpty(),
-//     (req, res) => {
-//         res.json({ message: 'Management content', userRole: req.userRole });
-//     },
-// );
-
-// Example: Multiple RBAC checks (though you'd typically use one)
-// router.post(
-//     '/critical-operation',
-//     rbacMiddleware('project', 'manage'), // Must have project management permission
-//     hasMinimumLevel(85), // AND must be level 85 or higher
-//     [body('projectToken').not().isEmpty(), body('operation').not().isEmpty(), body('userSessionToken').not().isEmpty()],
-//     (req, res) => {
-//         res.json({
-//             message: 'Critical operation authorized',
-//             userRole: req.userRole,
-//             operation: req.body.operation,
-//         });
-//     },
-// );
 
 // ============================================================================
 // AUDIT AND MONITORING ROUTES

@@ -6,8 +6,8 @@ import type React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import DeploymentCardMenu from './DeploymentCardMenu'
 import type { Socket } from 'socket.io-client'
-import Link from 'next/link'
-import { ServiceCardPropsRequest, DataCenters } from '../types/DeploymentOptions';
+import { ServiceCardPropsRequest, DataCenters } from '../types/DeploymentOptions'
+import { useRouter } from 'next/navigation'
 
 interface ServiceCardProps {
     socket: Socket
@@ -20,13 +20,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
     const menuRef = useRef<HTMLDivElement>(null)
     const buttonRef = useRef<HTMLDivElement>(null)
 
+    const router = useRouter()
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (menuRef.current && !menuRef.current.contains(event.target as Node) && buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
                 setShowMenu(false)
             }
         }
-        console.log(deployment.status)
 
         document.addEventListener('mousedown', handleClickOutside)
         return () => {
@@ -120,7 +121,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
     }
 
     const handleViewDetails = () => {
-        console.log(`Viewing details for deployment ${deployment.id}`)
+        router.push(`/projects/${deployment.projecttoken}/deployments/${deployment.deploymenttoken}`)
 
         setShowMenu(false)
     }
@@ -135,71 +136,74 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ deployment, userSessionToken,
         setShowMenu(false)
     }
 
+    const handleCardClick = (e: React.MouseEvent) => {
+        // Only navigate if clicking on the card itself, not interactive elements
+        router.push(`/projects/${deployment.projecttoken}/deployments/${deployment.deploymenttoken}`)
+    }
+
     return (
-        <Link href={`/projects/${deployment.projecttoken}/deployments/${deployment.deploymenttoken}`}>
-            <div className="h-40 w-full rounded-xl bg-[#00000062] p-4">
-                <div className="flex">
-                    <div className={`flex h-3 w-3 self-center rounded-full ${getStatusColor()}`} />
-                    <h1 className="ml-2 self-center text-lg font-bold text-white">{deployment.name}</h1>
-                    <div className="ml-2 flex items-center rounded-md bg-[#ffffff15] px-2 py-0.5">
-                        {getTypeIcon()}
-                        <span className="ml-1 text-xs text-white">{deployment.type}</span>
+        <div className="h-40 w-full cursor-pointer rounded-xl bg-[#00000062] p-4" onClick={handleCardClick}>
+            <div className="flex">
+                <div className={`flex h-3 w-3 self-center rounded-full ${getStatusColor()}`} />
+                <h1 className="ml-2 self-center text-lg font-bold text-white">{deployment.name}</h1>
+                <div className="ml-2 flex items-center rounded-md bg-[#ffffff15] px-2 py-0.5">
+                    {getTypeIcon()}
+                    <span className="ml-1 text-xs text-white">{deployment.type}</span>
+                </div>
+
+                <div className="relative ml-auto">
+                    <div
+                        ref={buttonRef}
+                        className="z-20 cursor-pointer"
+                        onClick={event => {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            event.nativeEvent.stopImmediatePropagation()
+                            setShowMenu(!showMenu)
+                        }}
+                    >
+                        <MoreVertical className="self-center text-white" />
                     </div>
 
-                    <div className="relative ml-auto">
+                    {showMenu && (
                         <div
-                            ref={buttonRef}
-                            className="z-20 cursor-pointer"
+                            ref={menuRef}
                             onClick={event => {
                                 event.preventDefault()
                                 event.stopPropagation()
                                 event.nativeEvent.stopImmediatePropagation()
-                                setShowMenu(!showMenu)
                             }}
                         >
-                            <MoreVertical className="self-center text-white" />
-                        </div>
-
-                        {showMenu && (
-                            <div
-                                ref={menuRef}
-                                onClick={event => {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                    event.nativeEvent.stopImmediatePropagation()
-                                }}
-                            >
-                                <DeploymentCardMenu currentStatus={deployment.status} deploymentId={deployment.id} deploymentType={deployment.type} onStart={handleStart} onRestart={handleRestart} onStop={handleStop} onDelete={handleDelete} onViewDetails={handleViewDetails} onSSHConnect={handleSSHConnect} onBackup={handleBackup} />
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <div className="mt-1 flex w-full items-center">
-                    <Container className="h-4 w-4 self-center text-[#7c7c7c]" />
-                    <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os.os}</h1>
-                    <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation.datacenterlocation}</span>
-                </div>
-                <div className="mt-4 flex w-full items-center justify-between">
-                    <div className="flex flex-col">
-                        <h1 className="text-sm font-bold text-[#7c7c7c]">IPv4 Address</h1>
-                        <CopyTextDisplay text={deployment.ipv4} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
-                    </div>
-                    {deployment.ipv6 && (
-                        <div className="flex flex-col">
-                            <h1 className="text-sm font-bold text-[#7c7c7c]">IPv6 Address</h1>
-                            <CopyTextDisplay text={deployment.ipv6} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
+                            <DeploymentCardMenu currentStatus={deployment.status} deploymentId={deployment.id} deploymentType={deployment.type} onStart={handleStart} onRestart={handleRestart} onStop={handleStop} onDelete={handleDelete} onViewDetails={handleViewDetails} onSSHConnect={handleSSHConnect} onBackup={handleBackup} />
                         </div>
                     )}
-                    <div className="flex flex-col">
-                        <h1 className="text-sm font-bold text-[#7c7c7c]">Local IP</h1>
-                        <CopyTextDisplay text={deployment.localip} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
-                    </div>
-                </div>
-                <div className="mt-2 text-xs text-[#7c7c7c]">
-                    <span>Ports: {formatPorts()}</span>
                 </div>
             </div>
-        </Link>
+            <div className="mt-1 flex w-full items-center">
+                <Container className="h-4 w-4 self-center text-[#7c7c7c]" />
+                <h1 className="ml-2 self-center text-sm font-bold text-[#7c7c7c]">{deployment.os.os}</h1>
+                <span className="ml-2 text-xs text-[#7c7c7c]">{deployment.datacenterlocation.datacenterlocation}</span>
+            </div>
+            <div className="mt-4 flex w-full items-center justify-between" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-col">
+                    <h1 className="text-sm font-bold text-[#7c7c7c]">IPv4 Address</h1>
+                    <CopyTextDisplay text={deployment.ipv4} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
+                </div>
+                {deployment.ipv6 && (
+                    <div className="flex flex-col">
+                        <h1 className="text-sm font-bold text-[#7c7c7c]">IPv6 Address</h1>
+                        <CopyTextDisplay text={deployment.ipv6} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
+                    </div>
+                )}
+                <div className="flex flex-col">
+                    <h1 className="text-sm font-bold text-[#7c7c7c]">Local IP</h1>
+                    <CopyTextDisplay text={deployment.localip} className="mt-1 flex w-full items-center space-x-2 text-sm text-white" />
+                </div>
+            </div>
+            <div className="mt-2 text-xs text-[#7c7c7c]">
+                <span>Ports: {formatPorts()}</span>
+            </div>
+        </div>
     )
 }
 

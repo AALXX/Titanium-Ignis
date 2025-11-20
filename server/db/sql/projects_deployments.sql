@@ -22,6 +22,7 @@ CREATE TABLE
         Status VARCHAR(50) NOT NULL,
         Environment VARCHAR(50) DEFAULT 'production',
         IsActive BOOLEAN DEFAULT TRUE,
+        RequestTrackingEnabled BOOLEAN DEFAULT FALSE,
         AdditionalInfo JSONB,
         
         ResourceAllocation JSONB,        -- CPU/RAM/Storage allocated

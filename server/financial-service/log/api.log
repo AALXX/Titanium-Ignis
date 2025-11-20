@@ -6000,3 +6000,13 @@
 [11/12/2025, 8:20:57 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [11/12/2025, 8:21:05 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
 [11/12/2025, 8:38:17 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/19/2025, 11:31:58 PM] [INFO] [Financial_Api] Server is running on: localhost:5202
+[11/19/2025, 11:32:08 PM] [ERROR] [PG_QUERY_FUNC] relation "time_logs" does not exist
+[11/19/2025, 11:32:08 PM] [WARN] [GET_PROJECT_PROFIT_LOSS] Labor costs time series not available
+[11/20/2025, 1:45:39 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: Socket closed unexpectedly
+[11/20/2025, 1:45:39 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 1:45:39 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 1:45:39 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379

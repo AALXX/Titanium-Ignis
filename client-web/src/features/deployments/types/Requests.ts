@@ -7,3 +7,12 @@ export interface RecentRequestsProps {
     timestamp: string
     ip: string
 }
+
+
+export interface RequestTrackingState {
+    [deploymentToken: string]: {
+        enabled: boolean
+        proxyPort: number | null
+        logs: RecentRequestsProps[]
+    }
+}

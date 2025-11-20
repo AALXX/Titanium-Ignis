@@ -63,6 +63,7 @@ export interface CreateDeploymentRequest {
     isActive: boolean
     resourceAllocation: ResourceAllocation
     deploymentMethod: string
+    languageConfig: any
     tags: string[]
     framework: string
     version: string
@@ -96,4 +97,61 @@ export enum eDeploymentType {
     KUBERNETES = 'kubernetes'
 }
 
+export interface ExecOptions {
+    captureOutput?: boolean
+    streamOutput?: boolean
+    detach?: boolean
+}
 
+export interface ExecResult {
+    exitCode: number
+    output: string
+}
+
+export interface LogOptions {
+    tail?: number
+    since?: number
+    timestamps?: boolean
+    follow?: boolean
+}
+
+export interface CPUMetrics {
+    usage: number
+    cores: number
+}
+
+export interface MemoryMetrics {
+    usage: number
+    limit: number
+    percent: number
+    usageMB: number
+    limitMB: number
+}
+
+export interface NetworkMetrics {
+    rxBytes: number
+    txBytes: number
+    rxMB: number
+    txMB: number
+}
+
+export interface BlockIOMetrics {
+    readBytes: number
+    writeBytes: number
+    readMB: number
+    writeMB: number
+}
+
+export interface DeploymentMetrics {
+    deploymentToken: string
+    containerID: string
+    status: string
+    running: boolean
+    startedAt: string
+    cpu: CPUMetrics
+    memory: MemoryMetrics
+    network: NetworkMetrics
+    blockIO: BlockIOMetrics
+    pids: number
+    timestamp: string
+}

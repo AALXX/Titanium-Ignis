@@ -24,103 +24,6 @@ const CustomRequestValidationResult = validationResult.withDefaults({
 });
 
 const activeProcesses: Map<string, child_process.ChildProcess> = new Map();
-const startDeploymentProcedure = async (
-    socket: Socket,
-    pool: Pool,
-    userSessionToken: string,
-    name: string,
-    projectToken: string,
-    deploymentID: number,
-    branch: string,
-    version: string,
-    server: string,
-    domain: string,
-    description?: string,
-) => {
-    try {
-        // Generate a unique process ID
-        const processId = randomUUID();
-
-        let projectConfig: IProjectConfig = {
-            services: [],
-            deployments: [],
-        };
-
-        try {
-            projectConfig = JSON.parse(fs.readFileSync(`${process.env.PROJECTS_FOLDER_PATH}/${projectToken}/project-config.json`, 'utf8'));
-        } catch (error: any) {
-            logging.error('STARTS_DEPLOYMENT_READING_FILE_FUNC', error.message);
-        }
-
-        if (projectConfig.services.length < deploymentID) {
-            return socket.emit('deployment-error', {
-                error: true,
-                errmsg: 'Invalid service ID',
-            });
-        }
-
-        switch (projectConfig.deployments[deploymentID - 1].type) {
-            case eDeploymentType.DOCKER_COMPOSE:
-                const connection = await connect(pool);
-
-                const checkQuery = `SELECT id, Status FROM projects_deployments WHERE ProjectToken = $1 AND DeploymentID = $2`;
-                const existingDeployment = await connection!.query(checkQuery, [projectToken, deploymentID]);
-
-                if (existingDeployment.rows.length > 0) {
-                    const updateQuery = `UPDATE projects_deployments SET Status = $1 WHERE ProjectToken = $2 AND DeploymentID = $3`;
-                    await connection!.query(updateQuery, [eDeploymentStatus.STOPPED, projectToken, deploymentID]);
-
-                    logging.info('START_DEPLOYMENT', `Found existing deployment with ID ${deploymentID}. Setting status to STOPPED.`);
-                }
-
-                const insertQuery = `INSERT INTO projects_deployments (ProjectToken, DeploymentID, Name, type, Branch, Version, DeploymentUrl, Server, Status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
-                await connection!.query(insertQuery, [projectToken, deploymentID, name, projectConfig.deployments[deploymentID - 1].type, branch, version, domain, server, eDeploymentStatus.DEPLOYING]);
-
-                socket.emit('deployment-started', {
-                    deploymentID,
-                    deploymentName: name,
-                    status: eDeploymentStatus.DEPLOYING,
-                    environment: 'production',
-                    timestamp: new Date(Date.now()).toISOString(),
-                });
-
-                const deploymentResult = await DeployWithDockerCompose(socket, pool, projectConfig, deploymentID, projectToken);
-
-                if (deploymentResult.success) {
-                    const updateQuery = `UPDATE projects_deployments SET Status = $1, additinaldata = $2 WHERE ProjectToken = $3 AND DeploymentID = $4`;
-                    await connection!.query(updateQuery, [
-                        eDeploymentStatus.DEPLOYED,
-                        JSON.stringify({ containerId: deploymentResult.containerId, containerName: deploymentResult.containerName }),
-                        projectToken,
-                        deploymentID,
-                    ]);
-                    connection!.release();
-                    socket.emit('deployment-update', {
-                        deploymentID,
-                        status: eDeploymentStatus.DEPLOYED,
-                    });
-                } else {
-                    connection!.release();
-                    return socket.emit('deployment-update', {
-                        deploymentID,
-                        status: eDeploymentStatus.FAILED,
-                    });
-                }
-                break;
-
-            default:
-                connection!.release();
-
-                break;
-        }
-    } catch (error: any) {
-        logging.error('START_DEPLOYMENT', error);
-        return socket.emit('deployment-update', {
-            deploymentID,
-            status: eDeploymentStatus.FAILED,
-        });
-    }
-};
 
 const stopService = async (socket: Socket, data: { projectToken: string; processId: string }) => {
     try {
@@ -276,17 +179,14 @@ const DeployWithDockerCompose = async (
         return { success: false };
     }
 };
-
 const getDeploymentsOverviewData = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
     if (!errors.isEmpty()) {
-        errors.array().map((error) => {
-            logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg);
-        });
-
+        errors.array().forEach((error) => logging.error('GET_PROJECT_CODEBASE_DATA_FUNC', error.errorMsg));
         res.status(200).json({ error: true, errors: errors.array() });
         return;
     }
+
     try {
         const connection = await connect(req.pool!);
 
@@ -294,55 +194,64 @@ const getDeploymentsOverviewData = async (req: CustomRequest, res: Response): Pr
         const requestsResult = await query(connection!, getRequestQuery, [req.params.projectToken]);
 
         requestsResult.sort((a: any, b: any) => b.timestamp - a.timestamp);
-        const requests = requestsResult.map((request: any) => {
-            return {
-                id: request.id,
-                method: request.method,
-                path: request.path,
-                status: request.status,
-                time: request.responsetime,
-                timestamp: new Date(request.timestamp).toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                }),
-                ip: request.requestip,
-            };
-        });
 
-        const requestPerHour = requests.reduce((acc: any, request: any) => {
-            const hour = new Date(request.timestamp).getHours();
-            if (!acc[hour]) {
-                acc[hour] = {
-                    count: 1,
-                    totalTime: request.time,
-                };
-            } else {
-                acc[hour].count++;
-                acc[hour].totalTime += request.time;
-            }
-            return acc;
-        }, {});
+        const requests = requestsResult.map((request: any) => ({
+            id: request.id,
+            method: request.method,
+            path: request.path,
+            status: request.status,
+            time: request.responsetime,
+            timestamp: new Date(request.timestamp).toLocaleString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            }),
+            timestampRaw: request.timestamp,
+            ip: request.requestip,
+        }));
 
-        const reequestPerHour = Object.keys(requestPerHour).map((hour: any) => {
-            return {
-                name: `${hour.toString().padStart(2, '0')}:00`, //we use hour as name because we want to display it as x-axis in the chart
-                requests: requestPerHour[hour].count,
-                responseTime: (requestPerHour[hour].totalTime / requestPerHour[hour].count).toFixed(1),
-            };
-        });
+        const formatHour = (date: Date) => `${String(date.getHours()).padStart(2, '0')}:00`;
 
-        const avgResponseTime = requests.reduce((total: any, request: any) => total + request.time, 0) / requests.length;
+        const formatDay = (date: Date) => `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+        const formatMonth = (date: Date) => `${date.toLocaleString('en-US', { month: 'short' })} ${date.getFullYear()}`;
+
+        const bucketReducer = (requests: any[], formatFn: (d: Date) => string) =>
+            requests.reduce((acc: any, req: any) => {
+                const date = new Date(req.timestampRaw);
+                const key = formatFn(date);
+
+                if (!acc[key]) acc[key] = { count: 1, totalTime: req.time };
+                else {
+                    acc[key].count++;
+                    acc[key].totalTime += req.time;
+                }
+                return acc;
+            }, {});
+
+        const requestPerHour = bucketReducer(requests, formatHour);
+        const requestPerDay = bucketReducer(requests, formatDay);
+        const requestPerMonth = bucketReducer(requests, formatMonth);
+
+        const formatData = (data: any) =>
+            Object.keys(data).map((key: string) => ({
+                name: key,
+                requests: data[key].count,
+                responseTime: (data[key].totalTime / data[key].count).toFixed(1),
+            }));
+
+        const avgResponseTime = requests.length > 0 ? requests.reduce((t: number, r: any) => t + r.time, 0) / requests.length : 0;
 
         const projectDeploymentsQuery = `SELECT * FROM projects_deployments WHERE projecttoken = $1`;
         const projectDeploymentsResult = await query(connection!, projectDeploymentsQuery, [req.params.projectToken]);
 
-        const activeDeployments = projectDeploymentsResult.filter((deployment: any) => deployment.status === 'deployed');
+        const activeDeployments = projectDeploymentsResult.filter((d: any) => d.status === 'deployed');
 
         connection?.release();
+
         res.status(200).json({
             error: false,
             requests: requests,
@@ -350,13 +259,15 @@ const getDeploymentsOverviewData = async (req: CustomRequest, res: Response): Pr
             totalRequests: requests.length,
             totalDeployments: projectDeploymentsResult.length,
             activeDeployments: activeDeployments.length,
-            requestPerHour: reequestPerHour,
+            requestPerHour: formatData(requestPerHour),
+            requestPerDay: formatData(requestPerDay),
+            requestPerMonth: formatData(requestPerMonth),
         });
-        return;
     } catch (error: any) {
         logging.error('GET_PROJECT_REQUESTS', error);
     }
 };
+
 
 const getDeploymentOptions = async (req: CustomRequest, res: Response): Promise<void> => {
     const errors = CustomRequestValidationResult(req);
@@ -420,7 +331,6 @@ const getDeploymentDetails = async (req: CustomRequest, res: Response): Promise<
                 [req.params.deploymentToken],
             ),
         ]);
-        console.log(project, deployment);
 
         connection?.release();
 
@@ -439,4 +349,4 @@ const getDeploymentDetails = async (req: CustomRequest, res: Response): Promise<
     }
 };
 
-export default { startDeploymentProcedure, stopService, cleanupSocketProcesses, getDeploymentsOverviewData, getDeploymentOptions, getDeploymentDetails };
+export default { stopService, cleanupSocketProcesses, getDeploymentsOverviewData, getDeploymentOptions, getDeploymentDetails };
