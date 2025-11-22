@@ -324,7 +324,6 @@ const reorderTasks = async (pool: Pool, socket: Socket, io: Server, userSessionT
             })
         }
 
-
         const queryString = `
         UPDATE banner_tasks SET ContainerUUID = $1 WHERE TaskUUID = $2 RETURNING *`
         const result = await query(connection!, queryString, [taskContainerUUID, taskUUID])

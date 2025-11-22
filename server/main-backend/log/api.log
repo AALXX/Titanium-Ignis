@@ -169,3 +169,72 @@
 [11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
 [11/20/2025, 1:45:40 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: connect ECONNREFUSED 0.0.0.0:6379
+[11/20/2025, 6:18:52 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:53 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:54 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:55 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:18:56 PM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/20/2025, 6:30:20 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/20/2025, 6:36:24 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/20/2025, 6:42:08 PM] [ERROR] [PG_QUERY_FUNC] column pml.is_module_initialized does not exist
+[11/20/2025, 6:42:08 PM] [ERROR] [GET_IS_MODULE_INITIALIZED] column pml.is_module_initialized does not exist
+[11/20/2025, 6:42:21 PM] [ERROR] [PG_QUERY_FUNC] column pml.is_module_initialized does not exist
+[11/20/2025, 6:42:21 PM] [ERROR] [GET_IS_MODULE_INITIALIZED] column pml.is_module_initialized does not exist
+[11/20/2025, 6:42:25 PM] [ERROR] [PG_QUERY_FUNC] column "is_module_initialized" of relation "project_module_links" does not exist
+[11/20/2025, 6:42:25 PM] [ERROR] [INITIALIZE_MODULE] column "is_module_initialized" of relation "project_module_links" does not exist
+[11/20/2025, 6:42:32 PM] [ERROR] [PG_QUERY_FUNC] column pml.is_module_initialized does not exist
+[11/20/2025, 6:42:32 PM] [ERROR] [GET_IS_MODULE_INITIALIZED] column pml.is_module_initialized does not exist
+[11/20/2025, 6:53:45 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/20/2025, 11:40:57 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/20/2025, 11:52:07 PM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:12:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:45:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:52:10 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:10 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:11 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:12 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:13 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:14 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:14 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:15 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:15 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:52:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 12:54:09 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:54:55 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:57:28 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:58:34 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 12:59:45 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 1:09:16 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/21/2025, 1:09:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:16 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:17 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:17 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:17 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:17 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:17 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:18 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:09:18 AM] [ERROR] [REDIS_CONNECTION_ERROR] Error: ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+[11/21/2025, 1:11:07 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/22/2025, 8:02:40 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070
+[11/22/2025, 8:27:05 AM] [INFO] [ProjectsPortal_Api] Server is running on: localhost:7070

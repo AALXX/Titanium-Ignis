@@ -26,6 +26,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     const [lastContainerUUID, setLastContainerUUID] = useState<string | null>(null)
     const [draggedTask, setDraggedTask] = useState<ITasks | null>(null)
     const socketRef = useRef<Socket | null>(null)
+    const hasInitialized = useRef<boolean>(false)
 
     // Store original orders for revert animation
     const [originalContainerOrder, setOriginalContainerOrder] = useState<ITaskContainers[]>([])
@@ -47,21 +48,43 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
     const [viewTask, setViewTask] = useState<{ open: boolean; TaskUUID: string }>({ open: false, TaskUUID: '' })
 
     useEffect(() => {
-        socketRef.current = io(process.env.NEXT_PUBLIC_TASKS_SERVER as string)
+        console.log('=== EFFECT RUNNING ===')
+        console.log('hasInitialized:', hasInitialized.current)
 
-        socketRef.current.emit('join', { BannerToken: TaskBannerToken })
-        socketRef.current.emit('get-project-tasks', { BannerToken: TaskBannerToken })
+        if (hasInitialized.current) {
+            console.log('Already initialized, skipping')
+            return
+        }
 
-        socketRef.current.on('PROJECT_TASKS', (data: any) => {
-            setAllTasks(data.tasks)
-            setAllTaskContainers(data.containers)
+        hasInitialized.current = true
+        console.log('Creating socket connection to:', process.env.NEXT_PUBLIC_TASKS_SERVER)
+
+        const socket = io(process.env.NEXT_PUBLIC_TASKS_SERVER as string)
+        socketRef.current = socket
+
+        socket.on('connect', () => {
+            console.log('✅ Socket connected:', socket.id)
         })
 
-        socketRef.current.on('CREATED_TASK_CONTAINER', () => {
+        socket.on('connect_error', error => {
+            console.log('❌ Socket connection error:', error)
+        })
+
+        socket.emit('join', { BannerToken: TaskBannerToken })
+        socket.emit('get-project-tasks', { BannerToken: TaskBannerToken })
+
+        socket.on('PROJECT_TASKS', (data: any) => {
+            console.log('Project tasks received:', data)
+            // Use functional updates to avoid race conditions
+            setAllTasks(() => data.tasks || [])
+            setAllTaskContainers(() => data.containers || [])
+        })
+
+        socket.on('CREATED_TASK_CONTAINER', () => {
             setIsCreatingTaskContainer(false)
         })
 
-        socketRef.current.on('REORDERED_TASK_CONTAINERS', (data: { error: boolean; message: string }) => {
+        socket.on('REORDERED_TASK_CONTAINERS', (data: { error: boolean; message: string }) => {
             if (data.error) {
                 console.error('Error reordering task containers:', data.message)
                 // Revert to original order with smooth animation
@@ -77,7 +100,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             }
         })
 
-        socketRef.current.on('REORDERED_TASK_CONTAINERS_NOT_ALLOWED', (data: { error: boolean; message: string }) => {
+        socket.on('REORDERED_TASK_CONTAINERS_NOT_ALLOWED', (data: { error: boolean; message: string }) => {
             if (data.error) {
                 console.error('Permission denied for reordering containers:', data.message)
             }
@@ -91,12 +114,12 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             }
         })
 
-        socketRef.current.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
+        socket.on('DELETED_TASK_CONTAINER', (data: { error: boolean; containerUUID: string }) => {
             if (data.error) return
             setAllTaskContainers(prev => prev.filter(c => c.containeruuid !== data.containerUUID))
         })
 
-        socketRef.current.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string; taskImportance: string; taskDueDate: Date }) => {
+        socket.on('CREATED_TASK', (data: { error: boolean; taskUUID: string; containerUUID: string; taskName: string; taskImportance: string; taskDueDate: Date }) => {
             if (data.error) return
             setAllTasks(prev => [
                 ...prev,
@@ -110,7 +133,7 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
             ])
         })
 
-        socketRef.current.on('REORDERED_TASKS', (data: { error: boolean; containerUUID: string; taskUUID: string; task: ITasks; message: string }) => {
+        socket.on('REORDERED_TASKS', (data: { error: boolean; containerUUID: string; taskUUID: string; task: ITasks; message: string }) => {
             if (!data.error) {
                 setAllTasks(prev => prev.map(task => (task.TaskUUID === data.taskUUID ? { ...task, ContainerUUID: data.containerUUID } : task)))
                 setOriginalTaskPositions(prev => {
@@ -139,7 +162,14 @@ const ProjectTasks: FC<IProjectTasks> = ({ userSessionToken, TaskBannerToken, pr
         })
 
         return () => {
-            socketRef.current?.disconnect()
+            // Prevent cleanup during strict mode double-mount
+            if (!hasInitialized.current) return
+
+            console.log('Cleaning up socket connection')
+            // Remove all listeners before disconnecting
+            socket.removeAllListeners()
+            socket.disconnect()
+            socketRef.current = null
         }
     }, [TaskBannerToken])
 

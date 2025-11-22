@@ -66,18 +66,19 @@ const getAllTaskBanners = async (req: CustomRequest, res: Response): Promise<voi
         const connection = await connect(req.pool!);
         const queryString = `
     SELECT 
+        projects_task_banners.ProjectToken as ProjectToken,
+        projects_task_banners.BannerToken as BannerToken, 
+        projects_task_banners.BannerName as BannerName, 
+        project_divisions.DivisionName as DepartamentAssignedTo, 
+        users.UserEmail AS AsignerEmail,
+        users.UserName AS AsignerName,
+        roles.Name AS AsignerRole
     
-    projects_task_banners.ProjectToken as ProjectToken,
-    projects_task_banners.BannerToken as BannerToken, 
-    projects_task_banners.BannerName as BannerName, 
-    project_divisions.DivisionName as DepartamentAssignedTo, 
-    users.UserEmail AS AsignerEmail,
-    users.UserName AS AsignerName,
-    roles.Name AS AsignerRole
-    
-    FROM projects_task_banners JOIN users ON users.UserPrivateToken = projects_task_banners.AssigneePrivateToken 
+    FROM projects_task_banners 
+    JOIN users ON users.UserPrivateToken = projects_task_banners.AssigneePrivateToken 
     
     JOIN projects_team_members ON projects_team_members.UserPrivateToken = projects_task_banners.AssigneePrivateToken
+        AND projects_team_members.ProjectToken = projects_task_banners.ProjectToken
 
     JOIN roles ON roles.Id = projects_team_members.role_id
 
@@ -87,6 +88,7 @@ const getAllTaskBanners = async (req: CustomRequest, res: Response): Promise<voi
 
         const allBanners = await query(connection!, queryString, [req.params.projectToken]);
         connection?.release();
+
 
         res.status(200).json({
             error: false,

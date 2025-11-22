@@ -60,6 +60,7 @@ const getExpenses = async (ProjectToken: string, accessToken: string | undefined
 const getInvoices = async (ProjectToken: string, accessToken: string | undefined): Promise<InvoicesResponse> => {
     try {
         const response = await axios.get<InvoicesResponse>(`${process.env.NEXT_PUBLIC_FINANCIAL_SERVER}/api/project-invoice-manager/get-project-invoices/${ProjectToken}/${accessToken}`)
+        
         return response.data
     } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 403) {
@@ -136,6 +137,7 @@ const FinancialManagement = async ({ params }: { params: Promise<{ ProjectToken:
                 </div>
             )
         } else if (error instanceof Error) {
+            console.error('An unexpected error occurred:', error.message)
             return (
                 <div className="flex h-screen items-center justify-center">
                     <h1 className="text-white">An error occurred while fetching data</h1>
