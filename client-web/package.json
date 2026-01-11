@@ -17,7 +17,7 @@
         "framer-motion": "^12.4.7",
         "highlight.js": "^11.10.0",
         "jsonwebtoken": "^9.0.2",
-        "jspdf": "^3.0.3",
+        "jspdf": "^4.0.0",
         "jspdf-autotable": "^5.0.2",
         "lucide-react": "^0.523.0",
         "monaco-editor": "^0.52.0",
