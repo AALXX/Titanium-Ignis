@@ -10,7 +10,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-FROM alpine:latest
+FROM alpine:3.23.3
 
 WORKDIR /app
 
