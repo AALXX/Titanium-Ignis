@@ -43,7 +43,7 @@
         "@types/pg": "^8.11.6",
         "@types/socket.io": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "^8.26.1",
-        "axios": "^1.7.2",
+        "axios": "^1.13.5",
         "bcrypt": "^5.1.1",
         "cassandra-driver": "^4.7.2",
         "dockerode": "^4.0.6",
